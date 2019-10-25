@@ -1,129 +1,1144 @@
-// modules are defined as an array
-// [ module function, map of requires ]
-//
-// map of requires is short require name -> numeric require
-//
-// anything defined in a previous bundle is accessed via the
-// orig method which is the require for previous bundles
-parcelRequire = (function (modules, cache, entry, globalName) {
-  // Save the require from previous bundle to this closure if any
-  var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
-  var nodeRequire = typeof require === 'function' && require;
+(function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-  function newRequire(name, jumped) {
-    if (!cache[name]) {
-      if (!modules[name]) {
-        // if we cannot find the module within our internal map or
-        // cache jump to the current global require ie. the last bundle
-        // that was added to the page.
-        var currentRequire = typeof parcelRequire === 'function' && parcelRequire;
-        if (!jumped && currentRequire) {
-          return currentRequire(name, true);
-        }
-
-        // If there are other bundles on this page the require from the
-        // previous one is saved to 'previousRequire'. Repeat this as
-        // many times as there are bundles until the module is found or
-        // we exhaust the require chain.
-        if (previousRequire) {
-          return previousRequire(name, true);
-        }
-
-        // Try the node require function if it exists.
-        if (nodeRequire && typeof name === 'string') {
-          return nodeRequire(name);
-        }
-
-        var err = new Error('Cannot find module \'' + name + '\'');
-        err.code = 'MODULE_NOT_FOUND';
-        throw err;
-      }
-
-      localRequire.resolve = resolve;
-      localRequire.cache = {};
-
-      var module = cache[name] = new newRequire.Module(name);
-
-      modules[name][0].call(module.exports, localRequire, module, module.exports, this);
-    }
-
-    return cache[name].exports;
-
-    function localRequire(x){
-      return newRequire(localRequire.resolve(x));
-    }
-
-    function resolve(x){
-      return modules[name][1][x] || x;
-    }
-  }
-
-  function Module(moduleName) {
-    this.id = moduleName;
-    this.bundle = newRequire;
-    this.exports = {};
-  }
-
-  newRequire.isParcelRequire = true;
-  newRequire.Module = Module;
-  newRequire.modules = modules;
-  newRequire.cache = cache;
-  newRequire.parent = previousRequire;
-  newRequire.register = function (id, exports) {
-    modules[id] = [function (require, module) {
-      module.exports = exports;
-    }, {}];
-  };
-
-  var error;
-  for (var i = 0; i < entry.length; i++) {
-    try {
-      newRequire(entry[i]);
-    } catch (e) {
-      // Save first error but execute all entries
-      if (!error) {
-        error = e;
-      }
-    }
-  }
-
-  if (entry.length) {
-    // Expose entry point to Node, AMD or browser globals
-    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
-    var mainExports = newRequire(entry[entry.length - 1]);
-
-    // CommonJS
-    if (typeof exports === "object" && typeof module !== "undefined") {
-      module.exports = mainExports;
-
-    // RequireJS
-    } else if (typeof define === "function" && define.amd) {
-     define(function () {
-       return mainExports;
-     });
-
-    // <script>
-    } else if (globalName) {
-      this[globalName] = mainExports;
-    }
-  }
-
-  // Override the current require with this new one
-  parcelRequire = newRequire;
-
-  if (error) {
-    // throw error from earlier, _after updating parcelRequire_
-    throw error;
-  }
-
-  return newRequire;
-})({"../node_modules/ramda/es/F.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+var ramda_1 = __webpack_require__(1);
+exports.loop = function () {
+    var creeps = Game.creeps;
+    console.log(1331);
+    ramda_1.mapObjIndexed(function (creep) {
+        var sources = creep.room.find(FIND_SOURCES);
+        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(sources[0], { visualizePathStyle: { stroke: '#ffaa00' } });
+        }
+    }, creeps);
+};
+module.exports = { loop: exports.loop };
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _F_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "F", function() { return _F_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _T_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "T", function() { return _T_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "__", function() { return _js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _add_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "add", function() { return _add_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _addIndex_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addIndex", function() { return _addIndex_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _adjust_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(14);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "adjust", function() { return _adjust_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _all_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(16);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "all", function() { return _all_js__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _allPass_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(23);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "allPass", function() { return _allPass_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
+/* harmony import */ var _always_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(40);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "always", function() { return _always_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+
+/* harmony import */ var _and_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(41);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "and", function() { return _and_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
+/* harmony import */ var _any_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(42);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "any", function() { return _any_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+
+/* harmony import */ var _anyPass_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(44);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "anyPass", function() { return _anyPass_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+
+/* harmony import */ var _ap_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(45);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ap", function() { return _ap_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+
+/* harmony import */ var _aperture_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(46);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "aperture", function() { return _aperture_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+
+/* harmony import */ var _append_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(49);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "append", function() { return _append_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+
+/* harmony import */ var _apply_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(50);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "apply", function() { return _apply_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+
+/* harmony import */ var _applySpec_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(51);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "applySpec", function() { return _applySpec_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+
+/* harmony import */ var _applyTo_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(53);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "applyTo", function() { return _applyTo_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+
+/* harmony import */ var _ascend_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(54);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ascend", function() { return _ascend_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
+
+/* harmony import */ var _assoc_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(55);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "assoc", function() { return _assoc_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
+
+/* harmony import */ var _assocPath_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(56);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "assocPath", function() { return _assocPath_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+
+/* harmony import */ var _binary_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(59);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "binary", function() { return _binary_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+
+/* harmony import */ var _bind_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(32);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "bind", function() { return _bind_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+
+/* harmony import */ var _both_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(61);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "both", function() { return _both_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+
+/* harmony import */ var _call_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(65);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "call", function() { return _call_js__WEBPACK_IMPORTED_MODULE_24__["default"]; });
+
+/* harmony import */ var _chain_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(67);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "chain", function() { return _chain_js__WEBPACK_IMPORTED_MODULE_25__["default"]; });
+
+/* harmony import */ var _clamp_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(72);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "clamp", function() { return _clamp_js__WEBPACK_IMPORTED_MODULE_26__["default"]; });
+
+/* harmony import */ var _clone_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(73);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "clone", function() { return _clone_js__WEBPACK_IMPORTED_MODULE_27__["default"]; });
+
+/* harmony import */ var _comparator_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(77);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "comparator", function() { return _comparator_js__WEBPACK_IMPORTED_MODULE_28__["default"]; });
+
+/* harmony import */ var _complement_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(78);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "complement", function() { return _complement_js__WEBPACK_IMPORTED_MODULE_29__["default"]; });
+
+/* harmony import */ var _compose_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(80);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "compose", function() { return _compose_js__WEBPACK_IMPORTED_MODULE_30__["default"]; });
+
+/* harmony import */ var _composeK_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(87);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "composeK", function() { return _composeK_js__WEBPACK_IMPORTED_MODULE_31__["default"]; });
+
+/* harmony import */ var _composeP_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(88);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "composeP", function() { return _composeP_js__WEBPACK_IMPORTED_MODULE_32__["default"]; });
+
+/* harmony import */ var _composeWith_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(91);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "composeWith", function() { return _composeWith_js__WEBPACK_IMPORTED_MODULE_33__["default"]; });
+
+/* harmony import */ var _concat_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(97);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "concat", function() { return _concat_js__WEBPACK_IMPORTED_MODULE_34__["default"]; });
+
+/* harmony import */ var _cond_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(116);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "cond", function() { return _cond_js__WEBPACK_IMPORTED_MODULE_35__["default"]; });
+
+/* harmony import */ var _construct_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(117);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "construct", function() { return _construct_js__WEBPACK_IMPORTED_MODULE_36__["default"]; });
+
+/* harmony import */ var _constructN_js__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(118);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "constructN", function() { return _constructN_js__WEBPACK_IMPORTED_MODULE_37__["default"]; });
+
+/* harmony import */ var _contains_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(119);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "contains", function() { return _contains_js__WEBPACK_IMPORTED_MODULE_38__["default"]; });
+
+/* harmony import */ var _converge_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(120);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "converge", function() { return _converge_js__WEBPACK_IMPORTED_MODULE_39__["default"]; });
+
+/* harmony import */ var _countBy_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(121);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "countBy", function() { return _countBy_js__WEBPACK_IMPORTED_MODULE_40__["default"]; });
+
+/* harmony import */ var _curry_js__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(66);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "curry", function() { return _curry_js__WEBPACK_IMPORTED_MODULE_41__["default"]; });
+
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(11);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "curryN", function() { return _curryN_js__WEBPACK_IMPORTED_MODULE_42__["default"]; });
+
+/* harmony import */ var _dec_js__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(124);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dec", function() { return _dec_js__WEBPACK_IMPORTED_MODULE_43__["default"]; });
+
+/* harmony import */ var _defaultTo_js__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(125);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "defaultTo", function() { return _defaultTo_js__WEBPACK_IMPORTED_MODULE_44__["default"]; });
+
+/* harmony import */ var _descend_js__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(126);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "descend", function() { return _descend_js__WEBPACK_IMPORTED_MODULE_45__["default"]; });
+
+/* harmony import */ var _difference_js__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(127);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "difference", function() { return _difference_js__WEBPACK_IMPORTED_MODULE_46__["default"]; });
+
+/* harmony import */ var _differenceWith_js__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(129);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "differenceWith", function() { return _differenceWith_js__WEBPACK_IMPORTED_MODULE_47__["default"]; });
+
+/* harmony import */ var _dissoc_js__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(130);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dissoc", function() { return _dissoc_js__WEBPACK_IMPORTED_MODULE_48__["default"]; });
+
+/* harmony import */ var _dissocPath_js__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(131);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dissocPath", function() { return _dissocPath_js__WEBPACK_IMPORTED_MODULE_49__["default"]; });
+
+/* harmony import */ var _divide_js__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(134);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "divide", function() { return _divide_js__WEBPACK_IMPORTED_MODULE_50__["default"]; });
+
+/* harmony import */ var _drop_js__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(135);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "drop", function() { return _drop_js__WEBPACK_IMPORTED_MODULE_51__["default"]; });
+
+/* harmony import */ var _dropLast_js__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(137);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dropLast", function() { return _dropLast_js__WEBPACK_IMPORTED_MODULE_52__["default"]; });
+
+/* harmony import */ var _dropLastWhile_js__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(142);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dropLastWhile", function() { return _dropLastWhile_js__WEBPACK_IMPORTED_MODULE_53__["default"]; });
+
+/* harmony import */ var _dropRepeats_js__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(145);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dropRepeats", function() { return _dropRepeats_js__WEBPACK_IMPORTED_MODULE_54__["default"]; });
+
+/* harmony import */ var _dropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(147);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dropRepeatsWith", function() { return _dropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_55__["default"]; });
+
+/* harmony import */ var _dropWhile_js__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(149);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dropWhile", function() { return _dropWhile_js__WEBPACK_IMPORTED_MODULE_56__["default"]; });
+
+/* harmony import */ var _either_js__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(151);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "either", function() { return _either_js__WEBPACK_IMPORTED_MODULE_57__["default"]; });
+
+/* harmony import */ var _empty_js__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(153);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "empty", function() { return _empty_js__WEBPACK_IMPORTED_MODULE_58__["default"]; });
+
+/* harmony import */ var _endsWith_js__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(154);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "endsWith", function() { return _endsWith_js__WEBPACK_IMPORTED_MODULE_59__["default"]; });
+
+/* harmony import */ var _eqBy_js__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(156);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "eqBy", function() { return _eqBy_js__WEBPACK_IMPORTED_MODULE_60__["default"]; });
+
+/* harmony import */ var _eqProps_js__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(157);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "eqProps", function() { return _eqProps_js__WEBPACK_IMPORTED_MODULE_61__["default"]; });
+
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(102);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "equals", function() { return _equals_js__WEBPACK_IMPORTED_MODULE_62__["default"]; });
+
+/* harmony import */ var _evolve_js__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(158);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "evolve", function() { return _evolve_js__WEBPACK_IMPORTED_MODULE_63__["default"]; });
+
+/* harmony import */ var _filter_js__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(112);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "filter", function() { return _filter_js__WEBPACK_IMPORTED_MODULE_64__["default"]; });
+
+/* harmony import */ var _find_js__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(159);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "find", function() { return _find_js__WEBPACK_IMPORTED_MODULE_65__["default"]; });
+
+/* harmony import */ var _findIndex_js__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(161);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "findIndex", function() { return _findIndex_js__WEBPACK_IMPORTED_MODULE_66__["default"]; });
+
+/* harmony import */ var _findLast_js__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(163);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "findLast", function() { return _findLast_js__WEBPACK_IMPORTED_MODULE_67__["default"]; });
+
+/* harmony import */ var _findLastIndex_js__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(165);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "findLastIndex", function() { return _findLastIndex_js__WEBPACK_IMPORTED_MODULE_68__["default"]; });
+
+/* harmony import */ var _flatten_js__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(167);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "flatten", function() { return _flatten_js__WEBPACK_IMPORTED_MODULE_69__["default"]; });
+
+/* harmony import */ var _flip_js__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(168);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "flip", function() { return _flip_js__WEBPACK_IMPORTED_MODULE_70__["default"]; });
+
+/* harmony import */ var _forEach_js__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(169);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "forEach", function() { return _forEach_js__WEBPACK_IMPORTED_MODULE_71__["default"]; });
+
+/* harmony import */ var _forEachObjIndexed_js__WEBPACK_IMPORTED_MODULE_72__ = __webpack_require__(170);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "forEachObjIndexed", function() { return _forEachObjIndexed_js__WEBPACK_IMPORTED_MODULE_72__["default"]; });
+
+/* harmony import */ var _fromPairs_js__WEBPACK_IMPORTED_MODULE_73__ = __webpack_require__(171);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromPairs", function() { return _fromPairs_js__WEBPACK_IMPORTED_MODULE_73__["default"]; });
+
+/* harmony import */ var _groupBy_js__WEBPACK_IMPORTED_MODULE_74__ = __webpack_require__(172);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "groupBy", function() { return _groupBy_js__WEBPACK_IMPORTED_MODULE_74__["default"]; });
+
+/* harmony import */ var _groupWith_js__WEBPACK_IMPORTED_MODULE_75__ = __webpack_require__(173);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "groupWith", function() { return _groupWith_js__WEBPACK_IMPORTED_MODULE_75__["default"]; });
+
+/* harmony import */ var _gt_js__WEBPACK_IMPORTED_MODULE_76__ = __webpack_require__(174);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "gt", function() { return _gt_js__WEBPACK_IMPORTED_MODULE_76__["default"]; });
+
+/* harmony import */ var _gte_js__WEBPACK_IMPORTED_MODULE_77__ = __webpack_require__(175);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "gte", function() { return _gte_js__WEBPACK_IMPORTED_MODULE_77__["default"]; });
+
+/* harmony import */ var _has_js__WEBPACK_IMPORTED_MODULE_78__ = __webpack_require__(176);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "has", function() { return _has_js__WEBPACK_IMPORTED_MODULE_78__["default"]; });
+
+/* harmony import */ var _hasIn_js__WEBPACK_IMPORTED_MODULE_79__ = __webpack_require__(178);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hasIn", function() { return _hasIn_js__WEBPACK_IMPORTED_MODULE_79__["default"]; });
+
+/* harmony import */ var _hasPath_js__WEBPACK_IMPORTED_MODULE_80__ = __webpack_require__(177);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hasPath", function() { return _hasPath_js__WEBPACK_IMPORTED_MODULE_80__["default"]; });
+
+/* harmony import */ var _head_js__WEBPACK_IMPORTED_MODULE_81__ = __webpack_require__(93);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "head", function() { return _head_js__WEBPACK_IMPORTED_MODULE_81__["default"]; });
+
+/* harmony import */ var _identical_js__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(179);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "identical", function() { return _identical_js__WEBPACK_IMPORTED_MODULE_82__["default"]; });
+
+/* harmony import */ var _identity_js__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(95);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "identity", function() { return _identity_js__WEBPACK_IMPORTED_MODULE_83__["default"]; });
+
+/* harmony import */ var _ifElse_js__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(180);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ifElse", function() { return _ifElse_js__WEBPACK_IMPORTED_MODULE_84__["default"]; });
+
+/* harmony import */ var _inc_js__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(181);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "inc", function() { return _inc_js__WEBPACK_IMPORTED_MODULE_85__["default"]; });
+
+/* harmony import */ var _includes_js__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(182);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "includes", function() { return _includes_js__WEBPACK_IMPORTED_MODULE_86__["default"]; });
+
+/* harmony import */ var _indexBy_js__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(183);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "indexBy", function() { return _indexBy_js__WEBPACK_IMPORTED_MODULE_87__["default"]; });
+
+/* harmony import */ var _indexOf_js__WEBPACK_IMPORTED_MODULE_88__ = __webpack_require__(184);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "indexOf", function() { return _indexOf_js__WEBPACK_IMPORTED_MODULE_88__["default"]; });
+
+/* harmony import */ var _init_js__WEBPACK_IMPORTED_MODULE_89__ = __webpack_require__(185);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "init", function() { return _init_js__WEBPACK_IMPORTED_MODULE_89__["default"]; });
+
+/* harmony import */ var _innerJoin_js__WEBPACK_IMPORTED_MODULE_90__ = __webpack_require__(186);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "innerJoin", function() { return _innerJoin_js__WEBPACK_IMPORTED_MODULE_90__["default"]; });
+
+/* harmony import */ var _insert_js__WEBPACK_IMPORTED_MODULE_91__ = __webpack_require__(187);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "insert", function() { return _insert_js__WEBPACK_IMPORTED_MODULE_91__["default"]; });
+
+/* harmony import */ var _insertAll_js__WEBPACK_IMPORTED_MODULE_92__ = __webpack_require__(188);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "insertAll", function() { return _insertAll_js__WEBPACK_IMPORTED_MODULE_92__["default"]; });
+
+/* harmony import */ var _intersection_js__WEBPACK_IMPORTED_MODULE_93__ = __webpack_require__(189);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "intersection", function() { return _intersection_js__WEBPACK_IMPORTED_MODULE_93__["default"]; });
+
+/* harmony import */ var _intersperse_js__WEBPACK_IMPORTED_MODULE_94__ = __webpack_require__(192);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "intersperse", function() { return _intersperse_js__WEBPACK_IMPORTED_MODULE_94__["default"]; });
+
+/* harmony import */ var _into_js__WEBPACK_IMPORTED_MODULE_95__ = __webpack_require__(193);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "into", function() { return _into_js__WEBPACK_IMPORTED_MODULE_95__["default"]; });
+
+/* harmony import */ var _invert_js__WEBPACK_IMPORTED_MODULE_96__ = __webpack_require__(197);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "invert", function() { return _invert_js__WEBPACK_IMPORTED_MODULE_96__["default"]; });
+
+/* harmony import */ var _invertObj_js__WEBPACK_IMPORTED_MODULE_97__ = __webpack_require__(198);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "invertObj", function() { return _invertObj_js__WEBPACK_IMPORTED_MODULE_97__["default"]; });
+
+/* harmony import */ var _invoker_js__WEBPACK_IMPORTED_MODULE_98__ = __webpack_require__(199);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "invoker", function() { return _invoker_js__WEBPACK_IMPORTED_MODULE_98__["default"]; });
+
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_99__ = __webpack_require__(200);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "is", function() { return _is_js__WEBPACK_IMPORTED_MODULE_99__["default"]; });
+
+/* harmony import */ var _isEmpty_js__WEBPACK_IMPORTED_MODULE_100__ = __webpack_require__(201);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isEmpty", function() { return _isEmpty_js__WEBPACK_IMPORTED_MODULE_100__["default"]; });
+
+/* harmony import */ var _isNil_js__WEBPACK_IMPORTED_MODULE_101__ = __webpack_require__(58);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isNil", function() { return _isNil_js__WEBPACK_IMPORTED_MODULE_101__["default"]; });
+
+/* harmony import */ var _join_js__WEBPACK_IMPORTED_MODULE_102__ = __webpack_require__(202);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "join", function() { return _join_js__WEBPACK_IMPORTED_MODULE_102__["default"]; });
+
+/* harmony import */ var _juxt_js__WEBPACK_IMPORTED_MODULE_103__ = __webpack_require__(203);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "juxt", function() { return _juxt_js__WEBPACK_IMPORTED_MODULE_103__["default"]; });
+
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_104__ = __webpack_require__(34);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "keys", function() { return _keys_js__WEBPACK_IMPORTED_MODULE_104__["default"]; });
+
+/* harmony import */ var _keysIn_js__WEBPACK_IMPORTED_MODULE_105__ = __webpack_require__(204);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "keysIn", function() { return _keysIn_js__WEBPACK_IMPORTED_MODULE_105__["default"]; });
+
+/* harmony import */ var _last_js__WEBPACK_IMPORTED_MODULE_106__ = __webpack_require__(148);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "last", function() { return _last_js__WEBPACK_IMPORTED_MODULE_106__["default"]; });
+
+/* harmony import */ var _lastIndexOf_js__WEBPACK_IMPORTED_MODULE_107__ = __webpack_require__(205);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lastIndexOf", function() { return _lastIndexOf_js__WEBPACK_IMPORTED_MODULE_107__["default"]; });
+
+/* harmony import */ var _length_js__WEBPACK_IMPORTED_MODULE_108__ = __webpack_require__(206);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "length", function() { return _length_js__WEBPACK_IMPORTED_MODULE_108__["default"]; });
+
+/* harmony import */ var _lens_js__WEBPACK_IMPORTED_MODULE_109__ = __webpack_require__(208);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lens", function() { return _lens_js__WEBPACK_IMPORTED_MODULE_109__["default"]; });
+
+/* harmony import */ var _lensIndex_js__WEBPACK_IMPORTED_MODULE_110__ = __webpack_require__(209);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lensIndex", function() { return _lensIndex_js__WEBPACK_IMPORTED_MODULE_110__["default"]; });
+
+/* harmony import */ var _lensPath_js__WEBPACK_IMPORTED_MODULE_111__ = __webpack_require__(210);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lensPath", function() { return _lensPath_js__WEBPACK_IMPORTED_MODULE_111__["default"]; });
+
+/* harmony import */ var _lensProp_js__WEBPACK_IMPORTED_MODULE_112__ = __webpack_require__(211);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lensProp", function() { return _lensProp_js__WEBPACK_IMPORTED_MODULE_112__["default"]; });
+
+/* harmony import */ var _lift_js__WEBPACK_IMPORTED_MODULE_113__ = __webpack_require__(63);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lift", function() { return _lift_js__WEBPACK_IMPORTED_MODULE_113__["default"]; });
+
+/* harmony import */ var _liftN_js__WEBPACK_IMPORTED_MODULE_114__ = __webpack_require__(64);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "liftN", function() { return _liftN_js__WEBPACK_IMPORTED_MODULE_114__["default"]; });
+
+/* harmony import */ var _lt_js__WEBPACK_IMPORTED_MODULE_115__ = __webpack_require__(212);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lt", function() { return _lt_js__WEBPACK_IMPORTED_MODULE_115__["default"]; });
+
+/* harmony import */ var _lte_js__WEBPACK_IMPORTED_MODULE_116__ = __webpack_require__(213);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lte", function() { return _lte_js__WEBPACK_IMPORTED_MODULE_116__["default"]; });
+
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_117__ = __webpack_require__(26);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "map", function() { return _map_js__WEBPACK_IMPORTED_MODULE_117__["default"]; });
+
+/* harmony import */ var _mapAccum_js__WEBPACK_IMPORTED_MODULE_118__ = __webpack_require__(214);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mapAccum", function() { return _mapAccum_js__WEBPACK_IMPORTED_MODULE_118__["default"]; });
+
+/* harmony import */ var _mapAccumRight_js__WEBPACK_IMPORTED_MODULE_119__ = __webpack_require__(215);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mapAccumRight", function() { return _mapAccumRight_js__WEBPACK_IMPORTED_MODULE_119__["default"]; });
+
+/* harmony import */ var _mapObjIndexed_js__WEBPACK_IMPORTED_MODULE_120__ = __webpack_require__(216);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mapObjIndexed", function() { return _mapObjIndexed_js__WEBPACK_IMPORTED_MODULE_120__["default"]; });
+
+/* harmony import */ var _match_js__WEBPACK_IMPORTED_MODULE_121__ = __webpack_require__(217);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "match", function() { return _match_js__WEBPACK_IMPORTED_MODULE_121__["default"]; });
+
+/* harmony import */ var _mathMod_js__WEBPACK_IMPORTED_MODULE_122__ = __webpack_require__(218);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mathMod", function() { return _mathMod_js__WEBPACK_IMPORTED_MODULE_122__["default"]; });
+
+/* harmony import */ var _max_js__WEBPACK_IMPORTED_MODULE_123__ = __webpack_require__(24);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "max", function() { return _max_js__WEBPACK_IMPORTED_MODULE_123__["default"]; });
+
+/* harmony import */ var _maxBy_js__WEBPACK_IMPORTED_MODULE_124__ = __webpack_require__(219);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "maxBy", function() { return _maxBy_js__WEBPACK_IMPORTED_MODULE_124__["default"]; });
+
+/* harmony import */ var _mean_js__WEBPACK_IMPORTED_MODULE_125__ = __webpack_require__(220);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mean", function() { return _mean_js__WEBPACK_IMPORTED_MODULE_125__["default"]; });
+
+/* harmony import */ var _median_js__WEBPACK_IMPORTED_MODULE_126__ = __webpack_require__(222);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "median", function() { return _median_js__WEBPACK_IMPORTED_MODULE_126__["default"]; });
+
+/* harmony import */ var _memoizeWith_js__WEBPACK_IMPORTED_MODULE_127__ = __webpack_require__(223);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "memoizeWith", function() { return _memoizeWith_js__WEBPACK_IMPORTED_MODULE_127__["default"]; });
+
+/* harmony import */ var _merge_js__WEBPACK_IMPORTED_MODULE_128__ = __webpack_require__(224);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "merge", function() { return _merge_js__WEBPACK_IMPORTED_MODULE_128__["default"]; });
+
+/* harmony import */ var _mergeAll_js__WEBPACK_IMPORTED_MODULE_129__ = __webpack_require__(225);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeAll", function() { return _mergeAll_js__WEBPACK_IMPORTED_MODULE_129__["default"]; });
+
+/* harmony import */ var _mergeDeepLeft_js__WEBPACK_IMPORTED_MODULE_130__ = __webpack_require__(226);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeDeepLeft", function() { return _mergeDeepLeft_js__WEBPACK_IMPORTED_MODULE_130__["default"]; });
+
+/* harmony import */ var _mergeDeepRight_js__WEBPACK_IMPORTED_MODULE_131__ = __webpack_require__(229);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeDeepRight", function() { return _mergeDeepRight_js__WEBPACK_IMPORTED_MODULE_131__["default"]; });
+
+/* harmony import */ var _mergeDeepWith_js__WEBPACK_IMPORTED_MODULE_132__ = __webpack_require__(230);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeDeepWith", function() { return _mergeDeepWith_js__WEBPACK_IMPORTED_MODULE_132__["default"]; });
+
+/* harmony import */ var _mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_133__ = __webpack_require__(227);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeDeepWithKey", function() { return _mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_133__["default"]; });
+
+/* harmony import */ var _mergeLeft_js__WEBPACK_IMPORTED_MODULE_134__ = __webpack_require__(231);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeLeft", function() { return _mergeLeft_js__WEBPACK_IMPORTED_MODULE_134__["default"]; });
+
+/* harmony import */ var _mergeRight_js__WEBPACK_IMPORTED_MODULE_135__ = __webpack_require__(232);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeRight", function() { return _mergeRight_js__WEBPACK_IMPORTED_MODULE_135__["default"]; });
+
+/* harmony import */ var _mergeWith_js__WEBPACK_IMPORTED_MODULE_136__ = __webpack_require__(233);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeWith", function() { return _mergeWith_js__WEBPACK_IMPORTED_MODULE_136__["default"]; });
+
+/* harmony import */ var _mergeWithKey_js__WEBPACK_IMPORTED_MODULE_137__ = __webpack_require__(228);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeWithKey", function() { return _mergeWithKey_js__WEBPACK_IMPORTED_MODULE_137__["default"]; });
+
+/* harmony import */ var _min_js__WEBPACK_IMPORTED_MODULE_138__ = __webpack_require__(234);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "min", function() { return _min_js__WEBPACK_IMPORTED_MODULE_138__["default"]; });
+
+/* harmony import */ var _minBy_js__WEBPACK_IMPORTED_MODULE_139__ = __webpack_require__(235);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "minBy", function() { return _minBy_js__WEBPACK_IMPORTED_MODULE_139__["default"]; });
+
+/* harmony import */ var _modulo_js__WEBPACK_IMPORTED_MODULE_140__ = __webpack_require__(236);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "modulo", function() { return _modulo_js__WEBPACK_IMPORTED_MODULE_140__["default"]; });
+
+/* harmony import */ var _move_js__WEBPACK_IMPORTED_MODULE_141__ = __webpack_require__(237);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "move", function() { return _move_js__WEBPACK_IMPORTED_MODULE_141__["default"]; });
+
+/* harmony import */ var _multiply_js__WEBPACK_IMPORTED_MODULE_142__ = __webpack_require__(238);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "multiply", function() { return _multiply_js__WEBPACK_IMPORTED_MODULE_142__["default"]; });
+
+/* harmony import */ var _nAry_js__WEBPACK_IMPORTED_MODULE_143__ = __webpack_require__(60);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "nAry", function() { return _nAry_js__WEBPACK_IMPORTED_MODULE_143__["default"]; });
+
+/* harmony import */ var _negate_js__WEBPACK_IMPORTED_MODULE_144__ = __webpack_require__(239);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "negate", function() { return _negate_js__WEBPACK_IMPORTED_MODULE_144__["default"]; });
+
+/* harmony import */ var _none_js__WEBPACK_IMPORTED_MODULE_145__ = __webpack_require__(240);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "none", function() { return _none_js__WEBPACK_IMPORTED_MODULE_145__["default"]; });
+
+/* harmony import */ var _not_js__WEBPACK_IMPORTED_MODULE_146__ = __webpack_require__(79);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "not", function() { return _not_js__WEBPACK_IMPORTED_MODULE_146__["default"]; });
+
+/* harmony import */ var _nth_js__WEBPACK_IMPORTED_MODULE_147__ = __webpack_require__(94);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "nth", function() { return _nth_js__WEBPACK_IMPORTED_MODULE_147__["default"]; });
+
+/* harmony import */ var _nthArg_js__WEBPACK_IMPORTED_MODULE_148__ = __webpack_require__(241);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "nthArg", function() { return _nthArg_js__WEBPACK_IMPORTED_MODULE_148__["default"]; });
+
+/* harmony import */ var _o_js__WEBPACK_IMPORTED_MODULE_149__ = __webpack_require__(242);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "o", function() { return _o_js__WEBPACK_IMPORTED_MODULE_149__["default"]; });
+
+/* harmony import */ var _objOf_js__WEBPACK_IMPORTED_MODULE_150__ = __webpack_require__(196);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "objOf", function() { return _objOf_js__WEBPACK_IMPORTED_MODULE_150__["default"]; });
+
+/* harmony import */ var _of_js__WEBPACK_IMPORTED_MODULE_151__ = __webpack_require__(243);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "of", function() { return _of_js__WEBPACK_IMPORTED_MODULE_151__["default"]; });
+
+/* harmony import */ var _omit_js__WEBPACK_IMPORTED_MODULE_152__ = __webpack_require__(245);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "omit", function() { return _omit_js__WEBPACK_IMPORTED_MODULE_152__["default"]; });
+
+/* harmony import */ var _once_js__WEBPACK_IMPORTED_MODULE_153__ = __webpack_require__(246);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "once", function() { return _once_js__WEBPACK_IMPORTED_MODULE_153__["default"]; });
+
+/* harmony import */ var _or_js__WEBPACK_IMPORTED_MODULE_154__ = __webpack_require__(152);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "or", function() { return _or_js__WEBPACK_IMPORTED_MODULE_154__["default"]; });
+
+/* harmony import */ var _otherwise_js__WEBPACK_IMPORTED_MODULE_155__ = __webpack_require__(247);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "otherwise", function() { return _otherwise_js__WEBPACK_IMPORTED_MODULE_155__["default"]; });
+
+/* harmony import */ var _over_js__WEBPACK_IMPORTED_MODULE_156__ = __webpack_require__(249);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "over", function() { return _over_js__WEBPACK_IMPORTED_MODULE_156__["default"]; });
+
+/* harmony import */ var _pair_js__WEBPACK_IMPORTED_MODULE_157__ = __webpack_require__(250);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pair", function() { return _pair_js__WEBPACK_IMPORTED_MODULE_157__["default"]; });
+
+/* harmony import */ var _partial_js__WEBPACK_IMPORTED_MODULE_158__ = __webpack_require__(251);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "partial", function() { return _partial_js__WEBPACK_IMPORTED_MODULE_158__["default"]; });
+
+/* harmony import */ var _partialRight_js__WEBPACK_IMPORTED_MODULE_159__ = __webpack_require__(253);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "partialRight", function() { return _partialRight_js__WEBPACK_IMPORTED_MODULE_159__["default"]; });
+
+/* harmony import */ var _partition_js__WEBPACK_IMPORTED_MODULE_160__ = __webpack_require__(254);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "partition", function() { return _partition_js__WEBPACK_IMPORTED_MODULE_160__["default"]; });
+
+/* harmony import */ var _path_js__WEBPACK_IMPORTED_MODULE_161__ = __webpack_require__(38);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "path", function() { return _path_js__WEBPACK_IMPORTED_MODULE_161__["default"]; });
+
+/* harmony import */ var _pathEq_js__WEBPACK_IMPORTED_MODULE_162__ = __webpack_require__(255);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pathEq", function() { return _pathEq_js__WEBPACK_IMPORTED_MODULE_162__["default"]; });
+
+/* harmony import */ var _pathOr_js__WEBPACK_IMPORTED_MODULE_163__ = __webpack_require__(256);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pathOr", function() { return _pathOr_js__WEBPACK_IMPORTED_MODULE_163__["default"]; });
+
+/* harmony import */ var _pathSatisfies_js__WEBPACK_IMPORTED_MODULE_164__ = __webpack_require__(257);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pathSatisfies", function() { return _pathSatisfies_js__WEBPACK_IMPORTED_MODULE_164__["default"]; });
+
+/* harmony import */ var _pick_js__WEBPACK_IMPORTED_MODULE_165__ = __webpack_require__(258);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pick", function() { return _pick_js__WEBPACK_IMPORTED_MODULE_165__["default"]; });
+
+/* harmony import */ var _pickAll_js__WEBPACK_IMPORTED_MODULE_166__ = __webpack_require__(259);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pickAll", function() { return _pickAll_js__WEBPACK_IMPORTED_MODULE_166__["default"]; });
+
+/* harmony import */ var _pickBy_js__WEBPACK_IMPORTED_MODULE_167__ = __webpack_require__(260);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pickBy", function() { return _pickBy_js__WEBPACK_IMPORTED_MODULE_167__["default"]; });
+
+/* harmony import */ var _pipe_js__WEBPACK_IMPORTED_MODULE_168__ = __webpack_require__(81);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pipe", function() { return _pipe_js__WEBPACK_IMPORTED_MODULE_168__["default"]; });
+
+/* harmony import */ var _pipeK_js__WEBPACK_IMPORTED_MODULE_169__ = __webpack_require__(261);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pipeK", function() { return _pipeK_js__WEBPACK_IMPORTED_MODULE_169__["default"]; });
+
+/* harmony import */ var _pipeP_js__WEBPACK_IMPORTED_MODULE_170__ = __webpack_require__(89);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pipeP", function() { return _pipeP_js__WEBPACK_IMPORTED_MODULE_170__["default"]; });
+
+/* harmony import */ var _pipeWith_js__WEBPACK_IMPORTED_MODULE_171__ = __webpack_require__(92);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pipeWith", function() { return _pipeWith_js__WEBPACK_IMPORTED_MODULE_171__["default"]; });
+
+/* harmony import */ var _pluck_js__WEBPACK_IMPORTED_MODULE_172__ = __webpack_require__(25);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pluck", function() { return _pluck_js__WEBPACK_IMPORTED_MODULE_172__["default"]; });
+
+/* harmony import */ var _prepend_js__WEBPACK_IMPORTED_MODULE_173__ = __webpack_require__(262);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "prepend", function() { return _prepend_js__WEBPACK_IMPORTED_MODULE_173__["default"]; });
+
+/* harmony import */ var _product_js__WEBPACK_IMPORTED_MODULE_174__ = __webpack_require__(263);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "product", function() { return _product_js__WEBPACK_IMPORTED_MODULE_174__["default"]; });
+
+/* harmony import */ var _project_js__WEBPACK_IMPORTED_MODULE_175__ = __webpack_require__(264);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "project", function() { return _project_js__WEBPACK_IMPORTED_MODULE_175__["default"]; });
+
+/* harmony import */ var _prop_js__WEBPACK_IMPORTED_MODULE_176__ = __webpack_require__(37);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "prop", function() { return _prop_js__WEBPACK_IMPORTED_MODULE_176__["default"]; });
+
+/* harmony import */ var _propEq_js__WEBPACK_IMPORTED_MODULE_177__ = __webpack_require__(266);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "propEq", function() { return _propEq_js__WEBPACK_IMPORTED_MODULE_177__["default"]; });
+
+/* harmony import */ var _propIs_js__WEBPACK_IMPORTED_MODULE_178__ = __webpack_require__(267);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "propIs", function() { return _propIs_js__WEBPACK_IMPORTED_MODULE_178__["default"]; });
+
+/* harmony import */ var _propOr_js__WEBPACK_IMPORTED_MODULE_179__ = __webpack_require__(268);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "propOr", function() { return _propOr_js__WEBPACK_IMPORTED_MODULE_179__["default"]; });
+
+/* harmony import */ var _propSatisfies_js__WEBPACK_IMPORTED_MODULE_180__ = __webpack_require__(269);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "propSatisfies", function() { return _propSatisfies_js__WEBPACK_IMPORTED_MODULE_180__["default"]; });
+
+/* harmony import */ var _props_js__WEBPACK_IMPORTED_MODULE_181__ = __webpack_require__(270);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "props", function() { return _props_js__WEBPACK_IMPORTED_MODULE_181__["default"]; });
+
+/* harmony import */ var _range_js__WEBPACK_IMPORTED_MODULE_182__ = __webpack_require__(271);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "range", function() { return _range_js__WEBPACK_IMPORTED_MODULE_182__["default"]; });
+
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_183__ = __webpack_require__(39);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reduce", function() { return _reduce_js__WEBPACK_IMPORTED_MODULE_183__["default"]; });
+
+/* harmony import */ var _reduceBy_js__WEBPACK_IMPORTED_MODULE_184__ = __webpack_require__(122);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reduceBy", function() { return _reduceBy_js__WEBPACK_IMPORTED_MODULE_184__["default"]; });
+
+/* harmony import */ var _reduceRight_js__WEBPACK_IMPORTED_MODULE_185__ = __webpack_require__(272);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reduceRight", function() { return _reduceRight_js__WEBPACK_IMPORTED_MODULE_185__["default"]; });
+
+/* harmony import */ var _reduceWhile_js__WEBPACK_IMPORTED_MODULE_186__ = __webpack_require__(273);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reduceWhile", function() { return _reduceWhile_js__WEBPACK_IMPORTED_MODULE_186__["default"]; });
+
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_187__ = __webpack_require__(274);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reduced", function() { return _reduced_js__WEBPACK_IMPORTED_MODULE_187__["default"]; });
+
+/* harmony import */ var _reject_js__WEBPACK_IMPORTED_MODULE_188__ = __webpack_require__(110);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reject", function() { return _reject_js__WEBPACK_IMPORTED_MODULE_188__["default"]; });
+
+/* harmony import */ var _remove_js__WEBPACK_IMPORTED_MODULE_189__ = __webpack_require__(132);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "remove", function() { return _remove_js__WEBPACK_IMPORTED_MODULE_189__["default"]; });
+
+/* harmony import */ var _repeat_js__WEBPACK_IMPORTED_MODULE_190__ = __webpack_require__(275);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "repeat", function() { return _repeat_js__WEBPACK_IMPORTED_MODULE_190__["default"]; });
+
+/* harmony import */ var _replace_js__WEBPACK_IMPORTED_MODULE_191__ = __webpack_require__(277);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "replace", function() { return _replace_js__WEBPACK_IMPORTED_MODULE_191__["default"]; });
+
+/* harmony import */ var _reverse_js__WEBPACK_IMPORTED_MODULE_192__ = __webpack_require__(86);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reverse", function() { return _reverse_js__WEBPACK_IMPORTED_MODULE_192__["default"]; });
+
+/* harmony import */ var _scan_js__WEBPACK_IMPORTED_MODULE_193__ = __webpack_require__(278);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scan", function() { return _scan_js__WEBPACK_IMPORTED_MODULE_193__["default"]; });
+
+/* harmony import */ var _sequence_js__WEBPACK_IMPORTED_MODULE_194__ = __webpack_require__(279);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "sequence", function() { return _sequence_js__WEBPACK_IMPORTED_MODULE_194__["default"]; });
+
+/* harmony import */ var _set_js__WEBPACK_IMPORTED_MODULE_195__ = __webpack_require__(280);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "set", function() { return _set_js__WEBPACK_IMPORTED_MODULE_195__["default"]; });
+
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_196__ = __webpack_require__(85);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "slice", function() { return _slice_js__WEBPACK_IMPORTED_MODULE_196__["default"]; });
+
+/* harmony import */ var _sort_js__WEBPACK_IMPORTED_MODULE_197__ = __webpack_require__(281);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "sort", function() { return _sort_js__WEBPACK_IMPORTED_MODULE_197__["default"]; });
+
+/* harmony import */ var _sortBy_js__WEBPACK_IMPORTED_MODULE_198__ = __webpack_require__(282);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "sortBy", function() { return _sortBy_js__WEBPACK_IMPORTED_MODULE_198__["default"]; });
+
+/* harmony import */ var _sortWith_js__WEBPACK_IMPORTED_MODULE_199__ = __webpack_require__(283);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "sortWith", function() { return _sortWith_js__WEBPACK_IMPORTED_MODULE_199__["default"]; });
+
+/* harmony import */ var _split_js__WEBPACK_IMPORTED_MODULE_200__ = __webpack_require__(284);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "split", function() { return _split_js__WEBPACK_IMPORTED_MODULE_200__["default"]; });
+
+/* harmony import */ var _splitAt_js__WEBPACK_IMPORTED_MODULE_201__ = __webpack_require__(285);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "splitAt", function() { return _splitAt_js__WEBPACK_IMPORTED_MODULE_201__["default"]; });
+
+/* harmony import */ var _splitEvery_js__WEBPACK_IMPORTED_MODULE_202__ = __webpack_require__(286);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "splitEvery", function() { return _splitEvery_js__WEBPACK_IMPORTED_MODULE_202__["default"]; });
+
+/* harmony import */ var _splitWhen_js__WEBPACK_IMPORTED_MODULE_203__ = __webpack_require__(287);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "splitWhen", function() { return _splitWhen_js__WEBPACK_IMPORTED_MODULE_203__["default"]; });
+
+/* harmony import */ var _startsWith_js__WEBPACK_IMPORTED_MODULE_204__ = __webpack_require__(288);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "startsWith", function() { return _startsWith_js__WEBPACK_IMPORTED_MODULE_204__["default"]; });
+
+/* harmony import */ var _subtract_js__WEBPACK_IMPORTED_MODULE_205__ = __webpack_require__(289);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "subtract", function() { return _subtract_js__WEBPACK_IMPORTED_MODULE_205__["default"]; });
+
+/* harmony import */ var _sum_js__WEBPACK_IMPORTED_MODULE_206__ = __webpack_require__(221);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "sum", function() { return _sum_js__WEBPACK_IMPORTED_MODULE_206__["default"]; });
+
+/* harmony import */ var _symmetricDifference_js__WEBPACK_IMPORTED_MODULE_207__ = __webpack_require__(290);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "symmetricDifference", function() { return _symmetricDifference_js__WEBPACK_IMPORTED_MODULE_207__["default"]; });
+
+/* harmony import */ var _symmetricDifferenceWith_js__WEBPACK_IMPORTED_MODULE_208__ = __webpack_require__(291);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "symmetricDifferenceWith", function() { return _symmetricDifferenceWith_js__WEBPACK_IMPORTED_MODULE_208__["default"]; });
+
+/* harmony import */ var _tail_js__WEBPACK_IMPORTED_MODULE_209__ = __webpack_require__(83);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tail", function() { return _tail_js__WEBPACK_IMPORTED_MODULE_209__["default"]; });
+
+/* harmony import */ var _take_js__WEBPACK_IMPORTED_MODULE_210__ = __webpack_require__(139);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "take", function() { return _take_js__WEBPACK_IMPORTED_MODULE_210__["default"]; });
+
+/* harmony import */ var _takeLast_js__WEBPACK_IMPORTED_MODULE_211__ = __webpack_require__(155);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "takeLast", function() { return _takeLast_js__WEBPACK_IMPORTED_MODULE_211__["default"]; });
+
+/* harmony import */ var _takeLastWhile_js__WEBPACK_IMPORTED_MODULE_212__ = __webpack_require__(292);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "takeLastWhile", function() { return _takeLastWhile_js__WEBPACK_IMPORTED_MODULE_212__["default"]; });
+
+/* harmony import */ var _takeWhile_js__WEBPACK_IMPORTED_MODULE_213__ = __webpack_require__(293);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "takeWhile", function() { return _takeWhile_js__WEBPACK_IMPORTED_MODULE_213__["default"]; });
+
+/* harmony import */ var _tap_js__WEBPACK_IMPORTED_MODULE_214__ = __webpack_require__(295);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tap", function() { return _tap_js__WEBPACK_IMPORTED_MODULE_214__["default"]; });
+
+/* harmony import */ var _test_js__WEBPACK_IMPORTED_MODULE_215__ = __webpack_require__(297);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "test", function() { return _test_js__WEBPACK_IMPORTED_MODULE_215__["default"]; });
+
+/* harmony import */ var _then_js__WEBPACK_IMPORTED_MODULE_216__ = __webpack_require__(299);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "then", function() { return _then_js__WEBPACK_IMPORTED_MODULE_216__["default"]; });
+
+/* harmony import */ var _times_js__WEBPACK_IMPORTED_MODULE_217__ = __webpack_require__(276);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "times", function() { return _times_js__WEBPACK_IMPORTED_MODULE_217__["default"]; });
+
+/* harmony import */ var _toLower_js__WEBPACK_IMPORTED_MODULE_218__ = __webpack_require__(300);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toLower", function() { return _toLower_js__WEBPACK_IMPORTED_MODULE_218__["default"]; });
+
+/* harmony import */ var _toPairs_js__WEBPACK_IMPORTED_MODULE_219__ = __webpack_require__(301);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toPairs", function() { return _toPairs_js__WEBPACK_IMPORTED_MODULE_219__["default"]; });
+
+/* harmony import */ var _toPairsIn_js__WEBPACK_IMPORTED_MODULE_220__ = __webpack_require__(302);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toPairsIn", function() { return _toPairsIn_js__WEBPACK_IMPORTED_MODULE_220__["default"]; });
+
+/* harmony import */ var _toString_js__WEBPACK_IMPORTED_MODULE_221__ = __webpack_require__(98);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toString", function() { return _toString_js__WEBPACK_IMPORTED_MODULE_221__["default"]; });
+
+/* harmony import */ var _toUpper_js__WEBPACK_IMPORTED_MODULE_222__ = __webpack_require__(303);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toUpper", function() { return _toUpper_js__WEBPACK_IMPORTED_MODULE_222__["default"]; });
+
+/* harmony import */ var _transduce_js__WEBPACK_IMPORTED_MODULE_223__ = __webpack_require__(304);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "transduce", function() { return _transduce_js__WEBPACK_IMPORTED_MODULE_223__["default"]; });
+
+/* harmony import */ var _transpose_js__WEBPACK_IMPORTED_MODULE_224__ = __webpack_require__(305);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "transpose", function() { return _transpose_js__WEBPACK_IMPORTED_MODULE_224__["default"]; });
+
+/* harmony import */ var _traverse_js__WEBPACK_IMPORTED_MODULE_225__ = __webpack_require__(306);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "traverse", function() { return _traverse_js__WEBPACK_IMPORTED_MODULE_225__["default"]; });
+
+/* harmony import */ var _trim_js__WEBPACK_IMPORTED_MODULE_226__ = __webpack_require__(307);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "trim", function() { return _trim_js__WEBPACK_IMPORTED_MODULE_226__["default"]; });
+
+/* harmony import */ var _tryCatch_js__WEBPACK_IMPORTED_MODULE_227__ = __webpack_require__(308);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tryCatch", function() { return _tryCatch_js__WEBPACK_IMPORTED_MODULE_227__["default"]; });
+
+/* harmony import */ var _type_js__WEBPACK_IMPORTED_MODULE_228__ = __webpack_require__(76);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "type", function() { return _type_js__WEBPACK_IMPORTED_MODULE_228__["default"]; });
+
+/* harmony import */ var _unapply_js__WEBPACK_IMPORTED_MODULE_229__ = __webpack_require__(309);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unapply", function() { return _unapply_js__WEBPACK_IMPORTED_MODULE_229__["default"]; });
+
+/* harmony import */ var _unary_js__WEBPACK_IMPORTED_MODULE_230__ = __webpack_require__(310);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unary", function() { return _unary_js__WEBPACK_IMPORTED_MODULE_230__["default"]; });
+
+/* harmony import */ var _uncurryN_js__WEBPACK_IMPORTED_MODULE_231__ = __webpack_require__(311);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "uncurryN", function() { return _uncurryN_js__WEBPACK_IMPORTED_MODULE_231__["default"]; });
+
+/* harmony import */ var _unfold_js__WEBPACK_IMPORTED_MODULE_232__ = __webpack_require__(312);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unfold", function() { return _unfold_js__WEBPACK_IMPORTED_MODULE_232__["default"]; });
+
+/* harmony import */ var _union_js__WEBPACK_IMPORTED_MODULE_233__ = __webpack_require__(313);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "union", function() { return _union_js__WEBPACK_IMPORTED_MODULE_233__["default"]; });
+
+/* harmony import */ var _unionWith_js__WEBPACK_IMPORTED_MODULE_234__ = __webpack_require__(314);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unionWith", function() { return _unionWith_js__WEBPACK_IMPORTED_MODULE_234__["default"]; });
+
+/* harmony import */ var _uniq_js__WEBPACK_IMPORTED_MODULE_235__ = __webpack_require__(190);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "uniq", function() { return _uniq_js__WEBPACK_IMPORTED_MODULE_235__["default"]; });
+
+/* harmony import */ var _uniqBy_js__WEBPACK_IMPORTED_MODULE_236__ = __webpack_require__(191);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "uniqBy", function() { return _uniqBy_js__WEBPACK_IMPORTED_MODULE_236__["default"]; });
+
+/* harmony import */ var _uniqWith_js__WEBPACK_IMPORTED_MODULE_237__ = __webpack_require__(315);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "uniqWith", function() { return _uniqWith_js__WEBPACK_IMPORTED_MODULE_237__["default"]; });
+
+/* harmony import */ var _unless_js__WEBPACK_IMPORTED_MODULE_238__ = __webpack_require__(316);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unless", function() { return _unless_js__WEBPACK_IMPORTED_MODULE_238__["default"]; });
+
+/* harmony import */ var _unnest_js__WEBPACK_IMPORTED_MODULE_239__ = __webpack_require__(317);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unnest", function() { return _unnest_js__WEBPACK_IMPORTED_MODULE_239__["default"]; });
+
+/* harmony import */ var _until_js__WEBPACK_IMPORTED_MODULE_240__ = __webpack_require__(318);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "until", function() { return _until_js__WEBPACK_IMPORTED_MODULE_240__["default"]; });
+
+/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_241__ = __webpack_require__(133);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "update", function() { return _update_js__WEBPACK_IMPORTED_MODULE_241__["default"]; });
+
+/* harmony import */ var _useWith_js__WEBPACK_IMPORTED_MODULE_242__ = __webpack_require__(265);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useWith", function() { return _useWith_js__WEBPACK_IMPORTED_MODULE_242__["default"]; });
+
+/* harmony import */ var _values_js__WEBPACK_IMPORTED_MODULE_243__ = __webpack_require__(52);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "values", function() { return _values_js__WEBPACK_IMPORTED_MODULE_243__["default"]; });
+
+/* harmony import */ var _valuesIn_js__WEBPACK_IMPORTED_MODULE_244__ = __webpack_require__(319);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "valuesIn", function() { return _valuesIn_js__WEBPACK_IMPORTED_MODULE_244__["default"]; });
+
+/* harmony import */ var _view_js__WEBPACK_IMPORTED_MODULE_245__ = __webpack_require__(320);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "view", function() { return _view_js__WEBPACK_IMPORTED_MODULE_245__["default"]; });
+
+/* harmony import */ var _when_js__WEBPACK_IMPORTED_MODULE_246__ = __webpack_require__(321);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "when", function() { return _when_js__WEBPACK_IMPORTED_MODULE_246__["default"]; });
+
+/* harmony import */ var _where_js__WEBPACK_IMPORTED_MODULE_247__ = __webpack_require__(322);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "where", function() { return _where_js__WEBPACK_IMPORTED_MODULE_247__["default"]; });
+
+/* harmony import */ var _whereEq_js__WEBPACK_IMPORTED_MODULE_248__ = __webpack_require__(323);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "whereEq", function() { return _whereEq_js__WEBPACK_IMPORTED_MODULE_248__["default"]; });
+
+/* harmony import */ var _without_js__WEBPACK_IMPORTED_MODULE_249__ = __webpack_require__(324);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "without", function() { return _without_js__WEBPACK_IMPORTED_MODULE_249__["default"]; });
+
+/* harmony import */ var _xprod_js__WEBPACK_IMPORTED_MODULE_250__ = __webpack_require__(325);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "xprod", function() { return _xprod_js__WEBPACK_IMPORTED_MODULE_250__["default"]; });
+
+/* harmony import */ var _zip_js__WEBPACK_IMPORTED_MODULE_251__ = __webpack_require__(326);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "zip", function() { return _zip_js__WEBPACK_IMPORTED_MODULE_251__["default"]; });
+
+/* harmony import */ var _zipObj_js__WEBPACK_IMPORTED_MODULE_252__ = __webpack_require__(327);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "zipObj", function() { return _zipObj_js__WEBPACK_IMPORTED_MODULE_252__["default"]; });
+
+/* harmony import */ var _zipWith_js__WEBPACK_IMPORTED_MODULE_253__ = __webpack_require__(328);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "zipWith", function() { return _zipWith_js__WEBPACK_IMPORTED_MODULE_253__["default"]; });
+
+/* harmony import */ var _thunkify_js__WEBPACK_IMPORTED_MODULE_254__ = __webpack_require__(329);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "thunkify", function() { return _thunkify_js__WEBPACK_IMPORTED_MODULE_254__["default"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
 
 /**
  * A function that always returns `false`. Any passed in parameters are ignored.
@@ -143,16 +1158,15 @@ exports.default = void 0;
 var F = function () {
   return false;
 };
+/* harmony default export */ __webpack_exports__["default"] = (F);
 
-var _default = F;
-exports.default = _default;
-},{}],"../node_modules/ramda/es/T.js":[function(require,module,exports) {
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
 /**
  * A function that always returns `true`. Any passed in parameters are ignored.
@@ -172,17 +1186,14 @@ exports.default = void 0;
 var T = function () {
   return true;
 };
+/* harmony default export */ __webpack_exports__["default"] = (T);
 
-var _default = T;
-exports.default = _default;
-},{}],"../node_modules/ramda/es/__.js":[function(require,module,exports) {
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
+__webpack_require__.r(__webpack_exports__);
 /**
  * A special placeholder value used to specify "gaps" within curried functions,
  * allowing partial application of any combination of arguments, regardless of
@@ -210,103 +1221,16 @@ exports.default = void 0;
  *      const greet = R.replace('{name}', R.__, 'Hello, {name}!');
  *      greet('Alice'); //=> 'Hello, Alice!'
  */
-var _default = {
-  '@@functional/placeholder': true
-};
-exports.default = _default;
-},{}],"../node_modules/ramda/es/internal/_isPlaceholder.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = ({ '@@functional/placeholder': true });
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _isPlaceholder;
-
-function _isPlaceholder(a) {
-  return a != null && typeof a === 'object' && a['@@functional/placeholder'] === true;
-}
-},{}],"../node_modules/ramda/es/internal/_curry1.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _curry1;
-
-var _isPlaceholder2 = _interopRequireDefault(require("./_isPlaceholder.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Optimized internal one-arity curry function.
- *
- * @private
- * @category Function
- * @param {Function} fn The function to curry.
- * @return {Function} The curried function.
- */
-function _curry1(fn) {
-  return function f1(a) {
-    if (arguments.length === 0 || (0, _isPlaceholder2.default)(a)) {
-      return f1;
-    } else {
-      return fn.apply(this, arguments);
-    }
-  };
-}
-},{"./_isPlaceholder.js":"../node_modules/ramda/es/internal/_isPlaceholder.js"}],"../node_modules/ramda/es/internal/_curry2.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _curry2;
-
-var _curry = _interopRequireDefault(require("./_curry1.js"));
-
-var _isPlaceholder2 = _interopRequireDefault(require("./_isPlaceholder.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Optimized internal two-arity curry function.
- *
- * @private
- * @category Function
- * @param {Function} fn The function to curry.
- * @return {Function} The curried function.
- */
-function _curry2(fn) {
-  return function f2(a, b) {
-    switch (arguments.length) {
-      case 0:
-        return f2;
-
-      case 1:
-        return (0, _isPlaceholder2.default)(a) ? f2 : (0, _curry.default)(function (_b) {
-          return fn(a, _b);
-        });
-
-      default:
-        return (0, _isPlaceholder2.default)(a) && (0, _isPlaceholder2.default)(b) ? f2 : (0, _isPlaceholder2.default)(a) ? (0, _curry.default)(function (_a) {
-          return fn(_a, b);
-        }) : (0, _isPlaceholder2.default)(b) ? (0, _curry.default)(function (_b) {
-          return fn(a, _b);
-        }) : fn(a, b);
-    }
-  };
-}
-},{"./_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./_isPlaceholder.js":"../node_modules/ramda/es/internal/_isPlaceholder.js"}],"../node_modules/ramda/es/add.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Adds two values.
@@ -325,21 +1249,149 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.add(2, 3);       //=>  5
  *      R.add(7)(10);      //=> 17
  */
-var add =
-/*#__PURE__*/
-(0, _curry.default)(function add(a, b) {
+var add = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function add(a, b) {
   return Number(a) + Number(b);
 });
-var _default = add;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_concat.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (add);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _curry2; });
+/* harmony import */ var _curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Optimized internal two-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+function _curry2(fn) {
+  return function f2(a, b) {
+    switch (arguments.length) {
+      case 0:
+        return f2;
+      case 1:
+        return Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(a) ? f2 : Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_b) {
+          return fn(a, _b);
+        });
+      default:
+        return Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(a) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(b) ? f2 : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(a) ? Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_a) {
+          return fn(_a, b);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(b) ? Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_b) {
+          return fn(a, _b);
+        }) : fn(a, b);
+    }
+  };
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _curry1; });
+/* harmony import */ var _isPlaceholder_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+
+
+/**
+ * Optimized internal one-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+function _curry1(fn) {
+  return function f1(a) {
+    if (arguments.length === 0 || Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_0__["default"])(a)) {
+      return f1;
+    } else {
+      return fn.apply(this, arguments);
+    }
+  };
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isPlaceholder; });
+function _isPlaceholder(a) {
+       return a != null && typeof a === 'object' && a['@@functional/placeholder'] === true;
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+
+
+
+
+/**
+ * Creates a new list iteration function from an existing one by adding two new
+ * parameters to its callback function: the current index, and the entire list.
+ *
+ * This would turn, for instance, [`R.map`](#map) function into one that
+ * more closely resembles `Array.prototype.map`. Note that this will only work
+ * for functions in which the iteration callback function is the first
+ * parameter, and where the list is the last parameter. (This latter might be
+ * unimportant if the list parameter is not used.)
+ *
+ * @func
+ * @memberOf R
+ * @since v0.15.0
+ * @category Function
+ * @category List
+ * @sig ((a ... -> b) ... -> [a] -> *) -> ((a ..., Int, [a] -> b) ... -> [a] -> *)
+ * @param {Function} fn A list iteration function that does not pass index or list to its callback
+ * @return {Function} An altered list iteration function that passes (item, index, list) to its callback
+ * @example
+ *
+ *      const mapIndexed = R.addIndex(R.map);
+ *      mapIndexed((val, idx) => idx + '-' + val, ['f', 'o', 'o', 'b', 'a', 'r']);
+ *      //=> ['0-f', '1-o', '2-o', '3-b', '4-a', '5-r']
+ */
+var addIndex = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function addIndex(fn) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_2__["default"])(fn.length, function () {
+    var idx = 0;
+    var origFn = arguments[0];
+    var list = arguments[arguments.length - 1];
+    var args = Array.prototype.slice.call(arguments, 0);
+    args[0] = function () {
+      var result = origFn.apply(this, Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arguments, [idx, list]));
+      idx += 1;
+      return result;
+    };
+    return fn.apply(this, args);
+  });
 });
-exports.default = _concat;
+/* harmony default export */ __webpack_exports__["default"] = (addIndex);
 
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _concat; });
 /**
  * Private `concat` function to merge two array-like objects.
  *
@@ -358,162 +1410,34 @@ function _concat(set1, set2) {
   var len1 = set1.length;
   var len2 = set2.length;
   var result = [];
-  idx = 0;
 
+  idx = 0;
   while (idx < len1) {
     result[result.length] = set1[idx];
     idx += 1;
   }
-
   idx = 0;
-
   while (idx < len2) {
     result[result.length] = set2[idx];
     idx += 1;
   }
-
   return result;
 }
-},{}],"../node_modules/ramda/es/internal/_arity.js":[function(require,module,exports) {
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
+/* harmony import */ var _internal_curryN_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _arity;
 
-function _arity(n, fn) {
-  /* eslint-disable no-unused-vars */
-  switch (n) {
-    case 0:
-      return function () {
-        return fn.apply(this, arguments);
-      };
 
-    case 1:
-      return function (a0) {
-        return fn.apply(this, arguments);
-      };
 
-    case 2:
-      return function (a0, a1) {
-        return fn.apply(this, arguments);
-      };
-
-    case 3:
-      return function (a0, a1, a2) {
-        return fn.apply(this, arguments);
-      };
-
-    case 4:
-      return function (a0, a1, a2, a3) {
-        return fn.apply(this, arguments);
-      };
-
-    case 5:
-      return function (a0, a1, a2, a3, a4) {
-        return fn.apply(this, arguments);
-      };
-
-    case 6:
-      return function (a0, a1, a2, a3, a4, a5) {
-        return fn.apply(this, arguments);
-      };
-
-    case 7:
-      return function (a0, a1, a2, a3, a4, a5, a6) {
-        return fn.apply(this, arguments);
-      };
-
-    case 8:
-      return function (a0, a1, a2, a3, a4, a5, a6, a7) {
-        return fn.apply(this, arguments);
-      };
-
-    case 9:
-      return function (a0, a1, a2, a3, a4, a5, a6, a7, a8) {
-        return fn.apply(this, arguments);
-      };
-
-    case 10:
-      return function (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
-        return fn.apply(this, arguments);
-      };
-
-    default:
-      throw new Error('First argument to _arity must be a non-negative integer no greater than ten');
-  }
-}
-},{}],"../node_modules/ramda/es/internal/_curryN.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _curryN;
-
-var _arity2 = _interopRequireDefault(require("./_arity.js"));
-
-var _isPlaceholder2 = _interopRequireDefault(require("./_isPlaceholder.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Internal curryN function.
- *
- * @private
- * @category Function
- * @param {Number} length The arity of the curried function.
- * @param {Array} received An array of arguments received thus far.
- * @param {Function} fn The function to curry.
- * @return {Function} The curried function.
- */
-function _curryN(length, received, fn) {
-  return function () {
-    var combined = [];
-    var argsIdx = 0;
-    var left = length;
-    var combinedIdx = 0;
-
-    while (combinedIdx < received.length || argsIdx < arguments.length) {
-      var result;
-
-      if (combinedIdx < received.length && (!(0, _isPlaceholder2.default)(received[combinedIdx]) || argsIdx >= arguments.length)) {
-        result = received[combinedIdx];
-      } else {
-        result = arguments[argsIdx];
-        argsIdx += 1;
-      }
-
-      combined[combinedIdx] = result;
-
-      if (!(0, _isPlaceholder2.default)(result)) {
-        left -= 1;
-      }
-
-      combinedIdx += 1;
-    }
-
-    return left <= 0 ? fn.apply(this, combined) : (0, _arity2.default)(left, _curryN(length, combined, fn));
-  };
-}
-},{"./_arity.js":"../node_modules/ramda/es/internal/_arity.js","./_isPlaceholder.js":"../node_modules/ramda/es/internal/_isPlaceholder.js"}],"../node_modules/ramda/es/curryN.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _curry3 = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _curryN2 = _interopRequireDefault(require("./internal/_curryN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a curried equivalent of the provided function, with the specified
@@ -557,151 +1481,129 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const g = f(3);
  *      g(4); //=> 10
  */
-var curryN =
-/*#__PURE__*/
-(0, _curry3.default)(function curryN(length, fn) {
+var curryN = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function curryN(length, fn) {
   if (length === 1) {
-    return (0, _curry.default)(fn);
+    return Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fn);
   }
-
-  return (0, _arity2.default)(length, (0, _curryN2.default)(length, [], fn));
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(length, Object(_internal_curryN_js__WEBPACK_IMPORTED_MODULE_3__["default"])(length, [], fn));
 });
-var _default = curryN;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_curryN.js":"../node_modules/ramda/es/internal/_curryN.js"}],"../node_modules/ramda/es/addIndex.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (curryN);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _arity; });
+function _arity(n, fn) {
+  /* eslint-disable no-unused-vars */
+  switch (n) {
+    case 0:
+      return function () {
+        return fn.apply(this, arguments);
+      };
+    case 1:
+      return function (a0) {
+        return fn.apply(this, arguments);
+      };
+    case 2:
+      return function (a0, a1) {
+        return fn.apply(this, arguments);
+      };
+    case 3:
+      return function (a0, a1, a2) {
+        return fn.apply(this, arguments);
+      };
+    case 4:
+      return function (a0, a1, a2, a3) {
+        return fn.apply(this, arguments);
+      };
+    case 5:
+      return function (a0, a1, a2, a3, a4) {
+        return fn.apply(this, arguments);
+      };
+    case 6:
+      return function (a0, a1, a2, a3, a4, a5) {
+        return fn.apply(this, arguments);
+      };
+    case 7:
+      return function (a0, a1, a2, a3, a4, a5, a6) {
+        return fn.apply(this, arguments);
+      };
+    case 8:
+      return function (a0, a1, a2, a3, a4, a5, a6, a7) {
+        return fn.apply(this, arguments);
+      };
+    case 9:
+      return function (a0, a1, a2, a3, a4, a5, a6, a7, a8) {
+        return fn.apply(this, arguments);
+      };
+    case 10:
+      return function (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+        return fn.apply(this, arguments);
+      };
+    default:
+      throw new Error('First argument to _arity must be a non-negative integer no greater than ten');
+  }
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _curryN; });
+/* harmony import */ var _arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Creates a new list iteration function from an existing one by adding two new
- * parameters to its callback function: the current index, and the entire list.
- *
- * This would turn, for instance, [`R.map`](#map) function into one that
- * more closely resembles `Array.prototype.map`. Note that this will only work
- * for functions in which the iteration callback function is the first
- * parameter, and where the list is the last parameter. (This latter might be
- * unimportant if the list parameter is not used.)
- *
- * @func
- * @memberOf R
- * @since v0.15.0
- * @category Function
- * @category List
- * @sig ((a ... -> b) ... -> [a] -> *) -> ((a ..., Int, [a] -> b) ... -> [a] -> *)
- * @param {Function} fn A list iteration function that does not pass index or list to its callback
- * @return {Function} An altered list iteration function that passes (item, index, list) to its callback
- * @example
- *
- *      const mapIndexed = R.addIndex(R.map);
- *      mapIndexed((val, idx) => idx + '-' + val, ['f', 'o', 'o', 'b', 'a', 'r']);
- *      //=> ['0-f', '1-o', '2-o', '3-b', '4-a', '5-r']
- */
-var addIndex =
-/*#__PURE__*/
-(0, _curry.default)(function addIndex(fn) {
-  return (0, _curryN.default)(fn.length, function () {
-    var idx = 0;
-    var origFn = arguments[0];
-    var list = arguments[arguments.length - 1];
-    var args = Array.prototype.slice.call(arguments, 0);
-
-    args[0] = function () {
-      var result = origFn.apply(this, (0, _concat2.default)(arguments, [idx, list]));
-      idx += 1;
-      return result;
-    };
-
-    return fn.apply(this, args);
-  });
-});
-var _default = addIndex;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/internal/_curry3.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _curry3;
-
-var _curry = _interopRequireDefault(require("./_curry1.js"));
-
-var _curry4 = _interopRequireDefault(require("./_curry2.js"));
-
-var _isPlaceholder2 = _interopRequireDefault(require("./_isPlaceholder.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Optimized internal three-arity curry function.
+ * Internal curryN function.
  *
  * @private
  * @category Function
+ * @param {Number} length The arity of the curried function.
+ * @param {Array} received An array of arguments received thus far.
  * @param {Function} fn The function to curry.
  * @return {Function} The curried function.
  */
-function _curry3(fn) {
-  return function f3(a, b, c) {
-    switch (arguments.length) {
-      case 0:
-        return f3;
-
-      case 1:
-        return (0, _isPlaceholder2.default)(a) ? f3 : (0, _curry4.default)(function (_b, _c) {
-          return fn(a, _b, _c);
-        });
-
-      case 2:
-        return (0, _isPlaceholder2.default)(a) && (0, _isPlaceholder2.default)(b) ? f3 : (0, _isPlaceholder2.default)(a) ? (0, _curry4.default)(function (_a, _c) {
-          return fn(_a, b, _c);
-        }) : (0, _isPlaceholder2.default)(b) ? (0, _curry4.default)(function (_b, _c) {
-          return fn(a, _b, _c);
-        }) : (0, _curry.default)(function (_c) {
-          return fn(a, b, _c);
-        });
-
-      default:
-        return (0, _isPlaceholder2.default)(a) && (0, _isPlaceholder2.default)(b) && (0, _isPlaceholder2.default)(c) ? f3 : (0, _isPlaceholder2.default)(a) && (0, _isPlaceholder2.default)(b) ? (0, _curry4.default)(function (_a, _b) {
-          return fn(_a, _b, c);
-        }) : (0, _isPlaceholder2.default)(a) && (0, _isPlaceholder2.default)(c) ? (0, _curry4.default)(function (_a, _c) {
-          return fn(_a, b, _c);
-        }) : (0, _isPlaceholder2.default)(b) && (0, _isPlaceholder2.default)(c) ? (0, _curry4.default)(function (_b, _c) {
-          return fn(a, _b, _c);
-        }) : (0, _isPlaceholder2.default)(a) ? (0, _curry.default)(function (_a) {
-          return fn(_a, b, c);
-        }) : (0, _isPlaceholder2.default)(b) ? (0, _curry.default)(function (_b) {
-          return fn(a, _b, c);
-        }) : (0, _isPlaceholder2.default)(c) ? (0, _curry.default)(function (_c) {
-          return fn(a, b, _c);
-        }) : fn(a, b, c);
+function _curryN(length, received, fn) {
+  return function () {
+    var combined = [];
+    var argsIdx = 0;
+    var left = length;
+    var combinedIdx = 0;
+    while (combinedIdx < received.length || argsIdx < arguments.length) {
+      var result;
+      if (combinedIdx < received.length && (!Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(received[combinedIdx]) || argsIdx >= arguments.length)) {
+        result = received[combinedIdx];
+      } else {
+        result = arguments[argsIdx];
+        argsIdx += 1;
+      }
+      combined[combinedIdx] = result;
+      if (!Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_1__["default"])(result)) {
+        left -= 1;
+      }
+      combinedIdx += 1;
     }
+    return left <= 0 ? fn.apply(this, combined) : Object(_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(left, _curryN(length, combined, fn));
   };
 }
-},{"./_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_isPlaceholder.js":"../node_modules/ramda/es/internal/_isPlaceholder.js"}],"../node_modules/ramda/es/adjust.js":[function(require,module,exports) {
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Applies a function to the value at the given index of an array, returning a
@@ -728,217 +1630,87 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.adjust(-1, f, [a, b]) = [a, f(b)]
  * @symb R.adjust(0, f, [a, b]) = [f(a), b]
  */
-var adjust =
-/*#__PURE__*/
-(0, _curry.default)(function adjust(idx, fn, list) {
+var adjust = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function adjust(idx, fn, list) {
   if (idx >= list.length || idx < -list.length) {
     return list;
   }
-
   var start = idx < 0 ? list.length : 0;
-
   var _idx = start + idx;
-
-  var _list = (0, _concat2.default)(list);
-
+  var _list = Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list);
   _list[_idx] = fn(list[_idx]);
   return _list;
 });
-var _default = adjust;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/internal/_isArray.js":[function(require,module,exports) {
-"use strict";
+/* harmony default export */ __webpack_exports__["default"] = (adjust);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _curry3; });
+/* harmony import */ var _curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+
+
+
 
 /**
- * Tests whether or not an object is an array.
+ * Optimized internal three-arity curry function.
  *
  * @private
- * @param {*} val The object to test.
- * @return {Boolean} `true` if `val` is an array, `false` otherwise.
- * @example
- *
- *      _isArray([]); //=> true
- *      _isArray(null); //=> false
- *      _isArray({}); //=> false
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
  */
-var _default = Array.isArray || function _isArray(val) {
-  return val != null && val.length >= 0 && Object.prototype.toString.call(val) === '[object Array]';
-};
-
-exports.default = _default;
-},{}],"../node_modules/ramda/es/internal/_isTransformer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _isTransformer;
-
-function _isTransformer(obj) {
-  return obj != null && typeof obj['@@transducer/step'] === 'function';
-}
-},{}],"../node_modules/ramda/es/internal/_dispatchable.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _dispatchable;
-
-var _isArray2 = _interopRequireDefault(require("./_isArray.js"));
-
-var _isTransformer2 = _interopRequireDefault(require("./_isTransformer.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns a function that dispatches with different strategies based on the
- * object in list position (last argument). If it is an array, executes [fn].
- * Otherwise, if it has a function with one of the given method names, it will
- * execute that function (functor case). Otherwise, if it is a transformer,
- * uses transducer [xf] to return a new transformer (transducer case).
- * Otherwise, it will default to executing [fn].
- *
- * @private
- * @param {Array} methodNames properties to check for a custom implementation
- * @param {Function} xf transducer to initialize if object is transformer
- * @param {Function} fn default ramda implementation
- * @return {Function} A function that dispatches on object in list position
- */
-function _dispatchable(methodNames, xf, fn) {
-  return function () {
-    if (arguments.length === 0) {
-      return fn();
+function _curry3(fn) {
+  return function f3(a, b, c) {
+    switch (arguments.length) {
+      case 0:
+        return f3;
+      case 1:
+        return Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) ? f3 : Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_b, _c) {
+          return fn(a, _b, _c);
+        });
+      case 2:
+        return Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(b) ? f3 : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) ? Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_a, _c) {
+          return fn(_a, b, _c);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(b) ? Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_b, _c) {
+          return fn(a, _b, _c);
+        }) : Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_c) {
+          return fn(a, b, _c);
+        });
+      default:
+        return Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(b) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(c) ? f3 : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(b) ? Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_a, _b) {
+          return fn(_a, _b, c);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(c) ? Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_a, _c) {
+          return fn(_a, b, _c);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(b) && Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(c) ? Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_b, _c) {
+          return fn(a, _b, _c);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a) ? Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_a) {
+          return fn(_a, b, c);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(b) ? Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_b) {
+          return fn(a, _b, c);
+        }) : Object(_isPlaceholder_js__WEBPACK_IMPORTED_MODULE_2__["default"])(c) ? Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (_c) {
+          return fn(a, b, _c);
+        }) : fn(a, b, c);
     }
-
-    var args = Array.prototype.slice.call(arguments, 0);
-    var obj = args.pop();
-
-    if (!(0, _isArray2.default)(obj)) {
-      var idx = 0;
-
-      while (idx < methodNames.length) {
-        if (typeof obj[methodNames[idx]] === 'function') {
-          return obj[methodNames[idx]].apply(obj, args);
-        }
-
-        idx += 1;
-      }
-
-      if ((0, _isTransformer2.default)(obj)) {
-        var transducer = xf.apply(null, args);
-        return transducer(obj);
-      }
-    }
-
-    return fn.apply(this, arguments);
   };
 }
-},{"./_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./_isTransformer.js":"../node_modules/ramda/es/internal/_isTransformer.js"}],"../node_modules/ramda/es/internal/_reduced.js":[function(require,module,exports) {
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xall_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _reduced;
 
-function _reduced(x) {
-  return x && x['@@transducer/reduced'] ? x : {
-    '@@transducer/value': x,
-    '@@transducer/reduced': true
-  };
-}
-},{}],"../node_modules/ramda/es/internal/_xfBase.js":[function(require,module,exports) {
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
-  init: function () {
-    return this.xf['@@transducer/init']();
-  },
-  result: function (result) {
-    return this.xf['@@transducer/result'](result);
-  }
-};
-exports.default = _default;
-},{}],"../node_modules/ramda/es/internal/_xall.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-var _reduced2 = _interopRequireDefault(require("./_reduced.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XAll =
-/*#__PURE__*/
-function () {
-  function XAll(f, xf) {
-    this.xf = xf;
-    this.f = f;
-    this.all = true;
-  }
-
-  XAll.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XAll.prototype['@@transducer/result'] = function (result) {
-    if (this.all) {
-      result = this.xf['@@transducer/step'](result, true);
-    }
-
-    return this.xf['@@transducer/result'](result);
-  };
-
-  XAll.prototype['@@transducer/step'] = function (result, input) {
-    if (!this.f(input)) {
-      this.all = false;
-      result = (0, _reduced2.default)(this.xf['@@transducer/step'](result, false));
-    }
-
-    return result;
-  };
-
-  return XAll;
-}();
-
-var _xall =
-/*#__PURE__*/
-(0, _curry.default)(function _xall(f, xf) {
-  return new XAll(f, xf);
-});
-
-var _default = _xall;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduced.js":"../node_modules/ramda/es/internal/_reduced.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/all.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xall2 = _interopRequireDefault(require("./internal/_xall.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if all elements of the list match the predicate, `false` if
@@ -964,36 +1736,237 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.all(equals3)([3, 3, 3, 3]); //=> true
  *      R.all(equals3)([3, 3, 1, 3]); //=> false
  */
-var all =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['all'], _xall2.default, function all(fn, list) {
+var all = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['all'], _internal_xall_js__WEBPACK_IMPORTED_MODULE_2__["default"], function all(fn, list) {
   var idx = 0;
-
   while (idx < list.length) {
     if (!fn(list[idx])) {
       return false;
     }
-
     idx += 1;
   }
-
   return true;
 }));
-var _default = all;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xall.js":"../node_modules/ramda/es/internal/_xall.js"}],"../node_modules/ramda/es/max.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (all);
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _dispatchable; });
+/* harmony import */ var _isArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+/* harmony import */ var _isTransformer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Returns a function that dispatches with different strategies based on the
+ * object in list position (last argument). If it is an array, executes [fn].
+ * Otherwise, if it has a function with one of the given method names, it will
+ * execute that function (functor case). Otherwise, if it is a transformer,
+ * uses transducer [xf] to return a new transformer (transducer case).
+ * Otherwise, it will default to executing [fn].
+ *
+ * @private
+ * @param {Array} methodNames properties to check for a custom implementation
+ * @param {Function} xf transducer to initialize if object is transformer
+ * @param {Function} fn default ramda implementation
+ * @return {Function} A function that dispatches on object in list position
+ */
+function _dispatchable(methodNames, xf, fn) {
+  return function () {
+    if (arguments.length === 0) {
+      return fn();
+    }
+    var args = Array.prototype.slice.call(arguments, 0);
+    var obj = args.pop();
+    if (!Object(_isArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(obj)) {
+      var idx = 0;
+      while (idx < methodNames.length) {
+        if (typeof obj[methodNames[idx]] === 'function') {
+          return obj[methodNames[idx]].apply(obj, args);
+        }
+        idx += 1;
+      }
+      if (Object(_isTransformer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj)) {
+        var transducer = xf.apply(null, args);
+        return transducer(obj);
+      }
+    }
+    return fn.apply(this, arguments);
+  };
+}
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Tests whether or not an object is an array.
+ *
+ * @private
+ * @param {*} val The object to test.
+ * @return {Boolean} `true` if `val` is an array, `false` otherwise.
+ * @example
+ *
+ *      _isArray([]); //=> true
+ *      _isArray(null); //=> false
+ *      _isArray({}); //=> false
+ */
+/* harmony default export */ __webpack_exports__["default"] = (Array.isArray || function _isArray(val) {
+  return val != null && val.length >= 0 && Object.prototype.toString.call(val) === '[object Array]';
 });
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isTransformer; });
+function _isTransformer(obj) {
+  return obj != null && typeof obj['@@transducer/step'] === 'function';
+}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+
+
+
+
+var XAll = /*#__PURE__*/function () {
+  function XAll(f, xf) {
+    this.xf = xf;
+    this.f = f;
+    this.all = true;
+  }
+  XAll.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XAll.prototype['@@transducer/result'] = function (result) {
+    if (this.all) {
+      result = this.xf['@@transducer/step'](result, true);
+    }
+    return this.xf['@@transducer/result'](result);
+  };
+  XAll.prototype['@@transducer/step'] = function (result, input) {
+    if (!this.f(input)) {
+      this.all = false;
+      result = Object(_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"])(this.xf['@@transducer/step'](result, false));
+    }
+    return result;
+  };
+
+  return XAll;
+}();
+
+var _xall = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xall(f, xf) {
+  return new XAll(f, xf);
+});
+/* harmony default export */ __webpack_exports__["default"] = (_xall);
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _reduced; });
+function _reduced(x) {
+  return x && x['@@transducer/reduced'] ? x : {
+    '@@transducer/value': x,
+    '@@transducer/reduced': true
+  };
+}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  init: function () {
+    return this.xf['@@transducer/init']();
+  },
+  result: function (result) {
+    return this.xf['@@transducer/result'](result);
+  }
+});
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var _max_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
+/* harmony import */ var _pluck_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(39);
+
+
+
+
+
+
+/**
+ * Takes a list of predicates and returns a predicate that returns true for a
+ * given list of arguments if every one of the provided predicates is satisfied
+ * by those arguments.
+ *
+ * The function returned is a curried function whose arity matches that of the
+ * highest-arity predicate.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.9.0
+ * @category Logic
+ * @sig [(*... -> Boolean)] -> (*... -> Boolean)
+ * @param {Array} predicates An array of predicates to check
+ * @return {Function} The combined predicate
+ * @see R.anyPass
+ * @example
+ *
+ *      const isQueen = R.propEq('rank', 'Q');
+ *      const isSpade = R.propEq('suit', '♠︎');
+ *      const isQueenOfSpades = R.allPass([isQueen, isSpade]);
+ *
+ *      isQueenOfSpades({rank: 'Q', suit: '♣︎'}); //=> false
+ *      isQueenOfSpades({rank: 'Q', suit: '♠︎'}); //=> true
+ */
+var allPass = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function allPass(preds) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_reduce_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_max_js__WEBPACK_IMPORTED_MODULE_2__["default"], 0, Object(_pluck_js__WEBPACK_IMPORTED_MODULE_3__["default"])('length', preds)), function () {
+    var idx = 0;
+    var len = preds.length;
+    while (idx < len) {
+      if (!preds[idx].apply(this, arguments)) {
+        return false;
+      }
+      idx += 1;
+    }
+    return true;
+  });
+});
+/* harmony default export */ __webpack_exports__["default"] = (allPass);
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
 
 /**
  * Returns the larger of its two arguments.
@@ -1012,479 +1985,76 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.max(789, 123); //=> 789
  *      R.max('a', 'b'); //=> 'b'
  */
-var max =
-/*#__PURE__*/
-(0, _curry.default)(function max(a, b) {
+var max = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function max(a, b) {
   return b > a ? b : a;
 });
-var _default = max;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_map.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (max);
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26);
+/* harmony import */ var _prop_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(37);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _map;
 
-function _map(fn, functor) {
-  var idx = 0;
-  var len = functor.length;
-  var result = Array(len);
 
-  while (idx < len) {
-    result[idx] = fn(functor[idx]);
-    idx += 1;
-  }
-
-  return result;
-}
-},{}],"../node_modules/ramda/es/internal/_isString.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _isString;
-
-function _isString(x) {
-  return Object.prototype.toString.call(x) === '[object String]';
-}
-},{}],"../node_modules/ramda/es/internal/_isArrayLike.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./_curry1.js"));
-
-var _isArray2 = _interopRequireDefault(require("./_isArray.js"));
-
-var _isString2 = _interopRequireDefault(require("./_isString.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Tests whether or not an object is similar to an array.
+ * Returns a new list by plucking the same named property off all objects in
+ * the list supplied.
  *
- * @private
- * @category Type
- * @category List
- * @sig * -> Boolean
- * @param {*} x The object to test.
- * @return {Boolean} `true` if `x` has a numeric length property and extreme indices defined; `false` otherwise.
- * @example
- *
- *      _isArrayLike([]); //=> true
- *      _isArrayLike(true); //=> false
- *      _isArrayLike({}); //=> false
- *      _isArrayLike({length: 10}); //=> false
- *      _isArrayLike({0: 'zero', 9: 'nine', length: 10}); //=> true
- */
-var _isArrayLike =
-/*#__PURE__*/
-(0, _curry.default)(function isArrayLike(x) {
-  if ((0, _isArray2.default)(x)) {
-    return true;
-  }
-
-  if (!x) {
-    return false;
-  }
-
-  if (typeof x !== 'object') {
-    return false;
-  }
-
-  if ((0, _isString2.default)(x)) {
-    return false;
-  }
-
-  if (x.nodeType === 1) {
-    return !!x.length;
-  }
-
-  if (x.length === 0) {
-    return true;
-  }
-
-  if (x.length > 0) {
-    return x.hasOwnProperty(0) && x.hasOwnProperty(x.length - 1);
-  }
-
-  return false;
-});
-
-var _default = _isArrayLike;
-exports.default = _default;
-},{"./_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./_isString.js":"../node_modules/ramda/es/internal/_isString.js"}],"../node_modules/ramda/es/internal/_xwrap.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _xwrap;
-
-var XWrap =
-/*#__PURE__*/
-function () {
-  function XWrap(fn) {
-    this.f = fn;
-  }
-
-  XWrap.prototype['@@transducer/init'] = function () {
-    throw new Error('init not implemented on XWrap');
-  };
-
-  XWrap.prototype['@@transducer/result'] = function (acc) {
-    return acc;
-  };
-
-  XWrap.prototype['@@transducer/step'] = function (acc, x) {
-    return this.f(acc, x);
-  };
-
-  return XWrap;
-}();
-
-function _xwrap(fn) {
-  return new XWrap(fn);
-}
-},{}],"../node_modules/ramda/es/bind.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Creates a function that is bound to a context.
- * Note: `R.bind` does not provide the additional argument-binding capabilities of
- * [Function.prototype.bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
- *
- * @func
- * @memberOf R
- * @since v0.6.0
- * @category Function
- * @category Object
- * @sig (* -> *) -> {*} -> (* -> *)
- * @param {Function} fn The function to bind to context
- * @param {Object} thisObj The context to bind `fn` to
- * @return {Function} A function that will execute in the context of `thisObj`.
- * @see R.partial
- * @example
- *
- *      const log = R.bind(console.log, console);
- *      R.pipe(R.assoc('a', 2), R.tap(log), R.assoc('a', 3))({a: 1}); //=> {a: 3}
- *      // logs {a: 2}
- * @symb R.bind(f, o)(a, b) = f.call(o, a, b)
- */
-var bind =
-/*#__PURE__*/
-(0, _curry.default)(function bind(fn, thisObj) {
-  return (0, _arity2.default)(fn.length, function () {
-    return fn.apply(thisObj, arguments);
-  });
-});
-var _default = bind;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_reduce.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _reduce;
-
-var _isArrayLike2 = _interopRequireDefault(require("./_isArrayLike.js"));
-
-var _xwrap2 = _interopRequireDefault(require("./_xwrap.js"));
-
-var _bind = _interopRequireDefault(require("../bind.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _arrayReduce(xf, acc, list) {
-  var idx = 0;
-  var len = list.length;
-
-  while (idx < len) {
-    acc = xf['@@transducer/step'](acc, list[idx]);
-
-    if (acc && acc['@@transducer/reduced']) {
-      acc = acc['@@transducer/value'];
-      break;
-    }
-
-    idx += 1;
-  }
-
-  return xf['@@transducer/result'](acc);
-}
-
-function _iterableReduce(xf, acc, iter) {
-  var step = iter.next();
-
-  while (!step.done) {
-    acc = xf['@@transducer/step'](acc, step.value);
-
-    if (acc && acc['@@transducer/reduced']) {
-      acc = acc['@@transducer/value'];
-      break;
-    }
-
-    step = iter.next();
-  }
-
-  return xf['@@transducer/result'](acc);
-}
-
-function _methodReduce(xf, acc, obj, methodName) {
-  return xf['@@transducer/result'](obj[methodName]((0, _bind.default)(xf['@@transducer/step'], xf), acc));
-}
-
-var symIterator = typeof Symbol !== 'undefined' ? Symbol.iterator : '@@iterator';
-
-function _reduce(fn, acc, list) {
-  if (typeof fn === 'function') {
-    fn = (0, _xwrap2.default)(fn);
-  }
-
-  if ((0, _isArrayLike2.default)(list)) {
-    return _arrayReduce(fn, acc, list);
-  }
-
-  if (typeof list['fantasy-land/reduce'] === 'function') {
-    return _methodReduce(fn, acc, list, 'fantasy-land/reduce');
-  }
-
-  if (list[symIterator] != null) {
-    return _iterableReduce(fn, acc, list[symIterator]());
-  }
-
-  if (typeof list.next === 'function') {
-    return _iterableReduce(fn, acc, list);
-  }
-
-  if (typeof list.reduce === 'function') {
-    return _methodReduce(fn, acc, list, 'reduce');
-  }
-
-  throw new TypeError('reduce: list must be array or iterable');
-}
-},{"./_isArrayLike.js":"../node_modules/ramda/es/internal/_isArrayLike.js","./_xwrap.js":"../node_modules/ramda/es/internal/_xwrap.js","../bind.js":"../node_modules/ramda/es/bind.js"}],"../node_modules/ramda/es/internal/_xmap.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XMap =
-/*#__PURE__*/
-function () {
-  function XMap(f, xf) {
-    this.xf = xf;
-    this.f = f;
-  }
-
-  XMap.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XMap.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XMap.prototype['@@transducer/step'] = function (result, input) {
-    return this.xf['@@transducer/step'](result, this.f(input));
-  };
-
-  return XMap;
-}();
-
-var _xmap =
-/*#__PURE__*/
-(0, _curry.default)(function _xmap(f, xf) {
-  return new XMap(f, xf);
-});
-
-var _default = _xmap;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/internal/_has.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _has;
-
-function _has(prop, obj) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-},{}],"../node_modules/ramda/es/internal/_isArguments.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _has2 = _interopRequireDefault(require("./_has.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var toString = Object.prototype.toString;
-
-var _isArguments =
-/*#__PURE__*/
-function () {
-  return toString.call(arguments) === '[object Arguments]' ? function _isArguments(x) {
-    return toString.call(x) === '[object Arguments]';
-  } : function _isArguments(x) {
-    return (0, _has2.default)('callee', x);
-  };
-}();
-
-var _default = _isArguments;
-exports.default = _default;
-},{"./_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/keys.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-var _isArguments2 = _interopRequireDefault(require("./internal/_isArguments.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// cover IE < 9 keys issues
-var hasEnumBug = !
-/*#__PURE__*/
-{
-  toString: null
-}.propertyIsEnumerable('toString');
-var nonEnumerableProps = ['constructor', 'valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString']; // Safari bug
-
-var hasArgsEnumBug =
-/*#__PURE__*/
-function () {
-  'use strict';
-
-  return arguments.propertyIsEnumerable('length');
-}();
-
-var contains = function contains(list, item) {
-  var idx = 0;
-
-  while (idx < list.length) {
-    if (list[idx] === item) {
-      return true;
-    }
-
-    idx += 1;
-  }
-
-  return false;
-};
-/**
- * Returns a list containing the names of all the enumerable own properties of
- * the supplied object.
- * Note that the order of the output array is not guaranteed to be consistent
- * across different JS platforms.
+ * `pluck` will work on
+ * any [functor](https://github.com/fantasyland/fantasy-land#functor) in
+ * addition to arrays, as it is equivalent to `R.map(R.prop(k), f)`.
  *
  * @func
  * @memberOf R
  * @since v0.1.0
- * @category Object
- * @sig {k: v} -> [k]
- * @param {Object} obj The object to extract properties from
- * @return {Array} An array of the object's own properties.
- * @see R.keysIn, R.values
+ * @category List
+ * @sig Functor f => k -> f {k: v} -> f v
+ * @param {Number|String} key The key name to pluck off of each object.
+ * @param {Array} f The array or functor to consider.
+ * @return {Array} The list of values for the given key.
+ * @see R.props
  * @example
  *
- *      R.keys({a: 1, b: 2, c: 3}); //=> ['a', 'b', 'c']
+ *      var getAges = R.pluck('age');
+ *      getAges([{name: 'fred', age: 29}, {name: 'wilma', age: 27}]); //=> [29, 27]
+ *
+ *      R.pluck(0, [[1, 2], [3, 4]]);               //=> [1, 3]
+ *      R.pluck('val', {a: {val: 3}, b: {val: 5}}); //=> {a: 3, b: 5}
+ * @symb R.pluck('x', [{x: 1, y: 2}, {x: 3, y: 4}, {x: 5, y: 6}]) = [1, 3, 5]
+ * @symb R.pluck(0, [[1, 2], [3, 4], [5, 6]]) = [1, 3, 5]
  */
-
-
-var keys = typeof Object.keys === 'function' && !hasArgsEnumBug ?
-/*#__PURE__*/
-(0, _curry.default)(function keys(obj) {
-  return Object(obj) !== obj ? [] : Object.keys(obj);
-}) :
-/*#__PURE__*/
-(0, _curry.default)(function keys(obj) {
-  if (Object(obj) !== obj) {
-    return [];
-  }
-
-  var prop, nIdx;
-  var ks = [];
-  var checkArgsLength = hasArgsEnumBug && (0, _isArguments2.default)(obj);
-
-  for (prop in obj) {
-    if ((0, _has2.default)(prop, obj) && (!checkArgsLength || prop !== 'length')) {
-      ks[ks.length] = prop;
-    }
-  }
-
-  if (hasEnumBug) {
-    nIdx = nonEnumerableProps.length - 1;
-
-    while (nIdx >= 0) {
-      prop = nonEnumerableProps[nIdx];
-
-      if ((0, _has2.default)(prop, obj) && !contains(ks, prop)) {
-        ks[ks.length] = prop;
-      }
-
-      nIdx -= 1;
-    }
-  }
-
-  return ks;
+var pluck = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pluck(p, list) {
+  return Object(_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_prop_js__WEBPACK_IMPORTED_MODULE_2__["default"])(p), list);
 });
-var _default = keys;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js","./internal/_isArguments.js":"../node_modules/ramda/es/internal/_isArguments.js"}],"../node_modules/ramda/es/map.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pluck);
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(27);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28);
+/* harmony import */ var _internal_xmap_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(33);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
 
-var _map2 = _interopRequireDefault(require("./internal/_map.js"));
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
 
-var _xmap2 = _interopRequireDefault(require("./internal/_xmap.js"));
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a function and
@@ -1521,91 +2091,397 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.map(f, { x: a, y: b }) = { x: f(a), y: f(b) }
  * @symb R.map(f, functor_o) = functor_o.map(f)
  */
-var map =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['fantasy-land/map', 'map'], _xmap2.default, function map(fn, functor) {
+var map = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['fantasy-land/map', 'map'], _internal_xmap_js__WEBPACK_IMPORTED_MODULE_4__["default"], function map(fn, functor) {
   switch (Object.prototype.toString.call(functor)) {
     case '[object Function]':
-      return (0, _curryN.default)(functor.length, function () {
+      return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_5__["default"])(functor.length, function () {
         return fn.call(this, functor.apply(this, arguments));
       });
-
     case '[object Object]':
-      return (0, _reduce2.default)(function (acc, key) {
+      return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__["default"])(function (acc, key) {
         acc[key] = fn(functor[key]);
         return acc;
-      }, {}, (0, _keys.default)(functor));
-
+      }, {}, Object(_keys_js__WEBPACK_IMPORTED_MODULE_6__["default"])(functor));
     default:
-      return (0, _map2.default)(fn, functor);
+      return Object(_internal_map_js__WEBPACK_IMPORTED_MODULE_2__["default"])(fn, functor);
   }
 }));
-var _default = map;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_map.js":"../node_modules/ramda/es/internal/_map.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./internal/_xmap.js":"../node_modules/ramda/es/internal/_xmap.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/path.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (map);
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _map; });
+function _map(fn, functor) {
+  var idx = 0;
+  var len = functor.length;
+  var result = Array(len);
+  while (idx < len) {
+    result[idx] = fn(functor[idx]);
+    idx += 1;
+  }
+  return result;
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _reduce; });
+/* harmony import */ var _isArrayLike_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _xwrap_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
+/* harmony import */ var _bind_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(32);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+
+
+function _arrayReduce(xf, acc, list) {
+  var idx = 0;
+  var len = list.length;
+  while (idx < len) {
+    acc = xf['@@transducer/step'](acc, list[idx]);
+    if (acc && acc['@@transducer/reduced']) {
+      acc = acc['@@transducer/value'];
+      break;
+    }
+    idx += 1;
+  }
+  return xf['@@transducer/result'](acc);
+}
+
+function _iterableReduce(xf, acc, iter) {
+  var step = iter.next();
+  while (!step.done) {
+    acc = xf['@@transducer/step'](acc, step.value);
+    if (acc && acc['@@transducer/reduced']) {
+      acc = acc['@@transducer/value'];
+      break;
+    }
+    step = iter.next();
+  }
+  return xf['@@transducer/result'](acc);
+}
+
+function _methodReduce(xf, acc, obj, methodName) {
+  return xf['@@transducer/result'](obj[methodName](Object(_bind_js__WEBPACK_IMPORTED_MODULE_2__["default"])(xf['@@transducer/step'], xf), acc));
+}
+
+var symIterator = typeof Symbol !== 'undefined' ? Symbol.iterator : '@@iterator';
+
+function _reduce(fn, acc, list) {
+  if (typeof fn === 'function') {
+    fn = Object(_xwrap_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fn);
+  }
+  if (Object(_isArrayLike_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list)) {
+    return _arrayReduce(fn, acc, list);
+  }
+  if (typeof list['fantasy-land/reduce'] === 'function') {
+    return _methodReduce(fn, acc, list, 'fantasy-land/reduce');
+  }
+  if (list[symIterator] != null) {
+    return _iterableReduce(fn, acc, list[symIterator]());
+  }
+  if (typeof list.next === 'function') {
+    return _iterableReduce(fn, acc, list);
+  }
+  if (typeof list.reduce === 'function') {
+    return _methodReduce(fn, acc, list, 'reduce');
+  }
+
+  throw new TypeError('reduce: list must be array or iterable');
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _isArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
+/* harmony import */ var _isString_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
+
+
+
 
 /**
- * Retrieve the value at a given path.
+ * Tests whether or not an object is similar to an array.
+ *
+ * @private
+ * @category Type
+ * @category List
+ * @sig * -> Boolean
+ * @param {*} x The object to test.
+ * @return {Boolean} `true` if `x` has a numeric length property and extreme indices defined; `false` otherwise.
+ * @example
+ *
+ *      _isArrayLike([]); //=> true
+ *      _isArrayLike(true); //=> false
+ *      _isArrayLike({}); //=> false
+ *      _isArrayLike({length: 10}); //=> false
+ *      _isArrayLike({0: 'zero', 9: 'nine', length: 10}); //=> true
+ */
+var _isArrayLike = /*#__PURE__*/Object(_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function isArrayLike(x) {
+  if (Object(_isArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(x)) {
+    return true;
+  }
+  if (!x) {
+    return false;
+  }
+  if (typeof x !== 'object') {
+    return false;
+  }
+  if (Object(_isString_js__WEBPACK_IMPORTED_MODULE_2__["default"])(x)) {
+    return false;
+  }
+  if (x.nodeType === 1) {
+    return !!x.length;
+  }
+  if (x.length === 0) {
+    return true;
+  }
+  if (x.length > 0) {
+    return x.hasOwnProperty(0) && x.hasOwnProperty(x.length - 1);
+  }
+  return false;
+});
+/* harmony default export */ __webpack_exports__["default"] = (_isArrayLike);
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isString; });
+function _isString(x) {
+  return Object.prototype.toString.call(x) === '[object String]';
+}
+
+/***/ }),
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _xwrap; });
+var XWrap = /*#__PURE__*/function () {
+  function XWrap(fn) {
+    this.f = fn;
+  }
+  XWrap.prototype['@@transducer/init'] = function () {
+    throw new Error('init not implemented on XWrap');
+  };
+  XWrap.prototype['@@transducer/result'] = function (acc) {
+    return acc;
+  };
+  XWrap.prototype['@@transducer/step'] = function (acc, x) {
+    return this.f(acc, x);
+  };
+
+  return XWrap;
+}();
+
+function _xwrap(fn) {
+  return new XWrap(fn);
+}
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+
+
+
+/**
+ * Creates a function that is bound to a context.
+ * Note: `R.bind` does not provide the additional argument-binding capabilities of
+ * [Function.prototype.bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
  *
  * @func
  * @memberOf R
- * @since v0.2.0
+ * @since v0.6.0
+ * @category Function
  * @category Object
- * @typedefn Idx = String | Int
- * @sig [Idx] -> {a} -> a | Undefined
- * @param {Array} path The path to use.
- * @param {Object} obj The object to retrieve the nested property from.
- * @return {*} The data at `path`.
- * @see R.prop
+ * @sig (* -> *) -> {*} -> (* -> *)
+ * @param {Function} fn The function to bind to context
+ * @param {Object} thisObj The context to bind `fn` to
+ * @return {Function} A function that will execute in the context of `thisObj`.
+ * @see R.partial
  * @example
  *
- *      R.path(['a', 'b'], {a: {b: 2}}); //=> 2
- *      R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
+ *      const log = R.bind(console.log, console);
+ *      R.pipe(R.assoc('a', 2), R.tap(log), R.assoc('a', 3))({a: 1}); //=> {a: 3}
+ *      // logs {a: 2}
+ * @symb R.bind(f, o)(a, b) = f.call(o, a, b)
  */
-var path =
-/*#__PURE__*/
-(0, _curry.default)(function path(paths, obj) {
-  var val = obj;
+var bind = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function bind(fn, thisObj) {
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(fn.length, function () {
+    return fn.apply(thisObj, arguments);
+  });
+});
+/* harmony default export */ __webpack_exports__["default"] = (bind);
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
+
+
+
+var XMap = /*#__PURE__*/function () {
+  function XMap(f, xf) {
+    this.xf = xf;
+    this.f = f;
+  }
+  XMap.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XMap.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].result;
+  XMap.prototype['@@transducer/step'] = function (result, input) {
+    return this.xf['@@transducer/step'](result, this.f(input));
+  };
+
+  return XMap;
+}();
+
+var _xmap = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xmap(f, xf) {
+  return new XMap(f, xf);
+});
+/* harmony default export */ __webpack_exports__["default"] = (_xmap);
+
+/***/ }),
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
+/* harmony import */ var _internal_isArguments_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36);
+
+
+
+
+// cover IE < 9 keys issues
+var hasEnumBug = ! /*#__PURE__*/{ toString: null }.propertyIsEnumerable('toString');
+var nonEnumerableProps = ['constructor', 'valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+// Safari bug
+var hasArgsEnumBug = /*#__PURE__*/function () {
+  'use strict';
+
+  return arguments.propertyIsEnumerable('length');
+}();
+
+var contains = function contains(list, item) {
   var idx = 0;
-
-  while (idx < paths.length) {
-    if (val == null) {
-      return;
+  while (idx < list.length) {
+    if (list[idx] === item) {
+      return true;
     }
-
-    val = val[paths[idx]];
     idx += 1;
   }
+  return false;
+};
 
-  return val;
+/**
+ * Returns a list containing the names of all the enumerable own properties of
+ * the supplied object.
+ * Note that the order of the output array is not guaranteed to be consistent
+ * across different JS platforms.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig {k: v} -> [k]
+ * @param {Object} obj The object to extract properties from
+ * @return {Array} An array of the object's own properties.
+ * @see R.keysIn, R.values
+ * @example
+ *
+ *      R.keys({a: 1, b: 2, c: 3}); //=> ['a', 'b', 'c']
+ */
+var keys = typeof Object.keys === 'function' && !hasArgsEnumBug ? /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function keys(obj) {
+  return Object(obj) !== obj ? [] : Object.keys(obj);
+}) : /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function keys(obj) {
+  if (Object(obj) !== obj) {
+    return [];
+  }
+  var prop, nIdx;
+  var ks = [];
+  var checkArgsLength = hasArgsEnumBug && Object(_internal_isArguments_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj);
+  for (prop in obj) {
+    if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(prop, obj) && (!checkArgsLength || prop !== 'length')) {
+      ks[ks.length] = prop;
+    }
+  }
+  if (hasEnumBug) {
+    nIdx = nonEnumerableProps.length - 1;
+    while (nIdx >= 0) {
+      prop = nonEnumerableProps[nIdx];
+      if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(prop, obj) && !contains(ks, prop)) {
+        ks[ks.length] = prop;
+      }
+      nIdx -= 1;
+    }
+  }
+  return ks;
 });
-var _default = path;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/prop.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (keys);
+
+/***/ }),
+/* 35 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _has; });
+function _has(prop, obj) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 36 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _has_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35);
 
-var _path = _interopRequireDefault(require("./path.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var toString = Object.prototype.toString;
+var _isArguments = /*#__PURE__*/function () {
+  return toString.call(arguments) === '[object Arguments]' ? function _isArguments(x) {
+    return toString.call(x) === '[object Arguments]';
+  } : function _isArguments(x) {
+    return Object(_has_js__WEBPACK_IMPORTED_MODULE_0__["default"])('callee', x);
+  };
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (_isArguments);
+
+/***/ }),
+/* 37 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
+
+
 
 /**
  * Returns a function that when supplied an object returns the indicated
@@ -1626,76 +2502,63 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.prop('x', {}); //=> undefined
  *      R.compose(R.inc, R.prop('x'))({ x: 3 }) //=> 4
  */
-var prop =
-/*#__PURE__*/
-(0, _curry.default)(function prop(p, obj) {
-  return (0, _path.default)([p], obj);
+
+var prop = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function prop(p, obj) {
+  return Object(_path_js__WEBPACK_IMPORTED_MODULE_1__["default"])([p], obj);
 });
-var _default = prop;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./path.js":"../node_modules/ramda/es/path.js"}],"../node_modules/ramda/es/pluck.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (prop);
+
+/***/ }),
+/* 38 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _map = _interopRequireDefault(require("./map.js"));
-
-var _prop = _interopRequireDefault(require("./prop.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Returns a new list by plucking the same named property off all objects in
- * the list supplied.
- *
- * `pluck` will work on
- * any [functor](https://github.com/fantasyland/fantasy-land#functor) in
- * addition to arrays, as it is equivalent to `R.map(R.prop(k), f)`.
+ * Retrieve the value at a given path.
  *
  * @func
  * @memberOf R
- * @since v0.1.0
- * @category List
- * @sig Functor f => k -> f {k: v} -> f v
- * @param {Number|String} key The key name to pluck off of each object.
- * @param {Array} f The array or functor to consider.
- * @return {Array} The list of values for the given key.
- * @see R.props
+ * @since v0.2.0
+ * @category Object
+ * @typedefn Idx = String | Int
+ * @sig [Idx] -> {a} -> a | Undefined
+ * @param {Array} path The path to use.
+ * @param {Object} obj The object to retrieve the nested property from.
+ * @return {*} The data at `path`.
+ * @see R.prop
  * @example
  *
- *      var getAges = R.pluck('age');
- *      getAges([{name: 'fred', age: 29}, {name: 'wilma', age: 27}]); //=> [29, 27]
- *
- *      R.pluck(0, [[1, 2], [3, 4]]);               //=> [1, 3]
- *      R.pluck('val', {a: {val: 3}, b: {val: 5}}); //=> {a: 3, b: 5}
- * @symb R.pluck('x', [{x: 1, y: 2}, {x: 3, y: 4}, {x: 5, y: 6}]) = [1, 3, 5]
- * @symb R.pluck(0, [[1, 2], [3, 4], [5, 6]]) = [1, 3, 5]
+ *      R.path(['a', 'b'], {a: {b: 2}}); //=> 2
+ *      R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
  */
-var pluck =
-/*#__PURE__*/
-(0, _curry.default)(function pluck(p, list) {
-  return (0, _map.default)((0, _prop.default)(p), list);
+var path = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function path(paths, obj) {
+  var val = obj;
+  var idx = 0;
+  while (idx < paths.length) {
+    if (val == null) {
+      return;
+    }
+    val = val[paths[idx]];
+    idx += 1;
+  }
+  return val;
 });
-var _default = pluck;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./map.js":"../node_modules/ramda/es/map.js","./prop.js":"../node_modules/ramda/es/prop.js"}],"../node_modules/ramda/es/reduce.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (path);
+
+/***/ }),
+/* 39 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a single item by iterating through the list, successively calling
@@ -1743,87 +2606,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @symb R.reduce(f, a, [b, c, d]) = f(f(f(a, b), c), d)
  */
-var reduce =
-/*#__PURE__*/
-(0, _curry.default)(_reduce2.default);
-var _default = reduce;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js"}],"../node_modules/ramda/es/allPass.js":[function(require,module,exports) {
+var reduce = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (reduce);
+
+/***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _max = _interopRequireDefault(require("./max.js"));
-
-var _pluck = _interopRequireDefault(require("./pluck.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Takes a list of predicates and returns a predicate that returns true for a
- * given list of arguments if every one of the provided predicates is satisfied
- * by those arguments.
- *
- * The function returned is a curried function whose arity matches that of the
- * highest-arity predicate.
- *
- * @func
- * @memberOf R
- * @since v0.9.0
- * @category Logic
- * @sig [(*... -> Boolean)] -> (*... -> Boolean)
- * @param {Array} predicates An array of predicates to check
- * @return {Function} The combined predicate
- * @see R.anyPass
- * @example
- *
- *      const isQueen = R.propEq('rank', 'Q');
- *      const isSpade = R.propEq('suit', '♠︎');
- *      const isQueenOfSpades = R.allPass([isQueen, isSpade]);
- *
- *      isQueenOfSpades({rank: 'Q', suit: '♣︎'}); //=> false
- *      isQueenOfSpades({rank: 'Q', suit: '♠︎'}); //=> true
- */
-var allPass =
-/*#__PURE__*/
-(0, _curry.default)(function allPass(preds) {
-  return (0, _curryN.default)((0, _reduce.default)(_max.default, 0, (0, _pluck.default)('length', preds)), function () {
-    var idx = 0;
-    var len = preds.length;
-
-    while (idx < len) {
-      if (!preds[idx].apply(this, arguments)) {
-        return false;
-      }
-
-      idx += 1;
-    }
-
-    return true;
-  });
-});
-var _default = allPass;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./max.js":"../node_modules/ramda/es/max.js","./pluck.js":"../node_modules/ramda/es/pluck.js","./reduce.js":"../node_modules/ramda/es/reduce.js"}],"../node_modules/ramda/es/always.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a function that always returns the given value. Note that for
@@ -1844,26 +2637,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const t = R.always('Tee');
  *      t(); //=> 'Tee'
  */
-var always =
-/*#__PURE__*/
-(0, _curry.default)(function always(val) {
+var always = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function always(val) {
   return function () {
     return val;
   };
 });
-var _default = always;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/and.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (always);
+
+/***/ }),
+/* 41 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if both arguments are `true`; `false` otherwise.
@@ -1884,83 +2672,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.and(false, true); //=> false
  *      R.and(false, false); //=> false
  */
-var and =
-/*#__PURE__*/
-(0, _curry.default)(function and(a, b) {
+var and = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function and(a, b) {
   return a && b;
 });
-var _default = and;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_xany.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (and);
+
+/***/ }),
+/* 42 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xany_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _reduced2 = _interopRequireDefault(require("./_reduced.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XAny =
-/*#__PURE__*/
-function () {
-  function XAny(f, xf) {
-    this.xf = xf;
-    this.f = f;
-    this.any = false;
-  }
-
-  XAny.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XAny.prototype['@@transducer/result'] = function (result) {
-    if (!this.any) {
-      result = this.xf['@@transducer/step'](result, false);
-    }
-
-    return this.xf['@@transducer/result'](result);
-  };
-
-  XAny.prototype['@@transducer/step'] = function (result, input) {
-    if (this.f(input)) {
-      this.any = true;
-      result = (0, _reduced2.default)(this.xf['@@transducer/step'](result, true));
-    }
-
-    return result;
-  };
-
-  return XAny;
-}();
-
-var _xany =
-/*#__PURE__*/
-(0, _curry.default)(function _xany(f, xf) {
-  return new XAny(f, xf);
-});
-
-var _default = _xany;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduced.js":"../node_modules/ramda/es/internal/_reduced.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/any.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xany2 = _interopRequireDefault(require("./internal/_xany.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if at least one of the elements of the list match the predicate,
@@ -1987,44 +2715,76 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.any(lessThan0)([1, 2]); //=> false
  *      R.any(lessThan2)([1, 2]); //=> true
  */
-var any =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['any'], _xany2.default, function any(fn, list) {
+var any = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['any'], _internal_xany_js__WEBPACK_IMPORTED_MODULE_2__["default"], function any(fn, list) {
   var idx = 0;
-
   while (idx < list.length) {
     if (fn(list[idx])) {
       return true;
     }
-
     idx += 1;
   }
-
   return false;
 }));
-var _default = any;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xany.js":"../node_modules/ramda/es/internal/_xany.js"}],"../node_modules/ramda/es/anyPass.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (any);
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+var XAny = /*#__PURE__*/function () {
+  function XAny(f, xf) {
+    this.xf = xf;
+    this.f = f;
+    this.any = false;
+  }
+  XAny.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XAny.prototype['@@transducer/result'] = function (result) {
+    if (!this.any) {
+      result = this.xf['@@transducer/step'](result, false);
+    }
+    return this.xf['@@transducer/result'](result);
+  };
+  XAny.prototype['@@transducer/step'] = function (result, input) {
+    if (this.f(input)) {
+      this.any = true;
+      result = Object(_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"])(this.xf['@@transducer/step'](result, true));
+    }
+    return result;
+  };
+
+  return XAny;
+}();
+
+var _xany = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xany(f, xf) {
+  return new XAny(f, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xany);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var _max_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
+/* harmony import */ var _pluck_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(39);
 
-var _max = _interopRequireDefault(require("./max.js"));
 
-var _pluck = _interopRequireDefault(require("./pluck.js"));
 
-var _reduce = _interopRequireDefault(require("./reduce.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Takes a list of predicates and returns a predicate that returns true for a
@@ -2052,43 +2812,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      isBlackCard({rank: 'Q', suit: '♠'}); //=> true
  *      isBlackCard({rank: 'Q', suit: '♦'}); //=> false
  */
-var anyPass =
-/*#__PURE__*/
-(0, _curry.default)(function anyPass(preds) {
-  return (0, _curryN.default)((0, _reduce.default)(_max.default, 0, (0, _pluck.default)('length', preds)), function () {
+var anyPass = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function anyPass(preds) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_reduce_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_max_js__WEBPACK_IMPORTED_MODULE_2__["default"], 0, Object(_pluck_js__WEBPACK_IMPORTED_MODULE_3__["default"])('length', preds)), function () {
     var idx = 0;
     var len = preds.length;
-
     while (idx < len) {
       if (preds[idx].apply(this, arguments)) {
         return true;
       }
-
       idx += 1;
     }
-
     return false;
   });
 });
-var _default = anyPass;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./max.js":"../node_modules/ramda/es/max.js","./pluck.js":"../node_modules/ramda/es/pluck.js","./reduce.js":"../node_modules/ramda/es/reduce.js"}],"../node_modules/ramda/es/ap.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (anyPass);
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _map = _interopRequireDefault(require("./map.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * ap applies a list of functions to a list of values.
@@ -2116,117 +2868,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.ap(R.concat, R.toUpper)('Ramda') //=> 'RamdaRAMDA'
  * @symb R.ap([f, g], [a, b]) = [f(a), f(b), g(a), g(b)]
  */
-var ap =
-/*#__PURE__*/
-(0, _curry.default)(function ap(applyF, applyX) {
+var ap = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function ap(applyF, applyX) {
   return typeof applyX['fantasy-land/ap'] === 'function' ? applyX['fantasy-land/ap'](applyF) : typeof applyF.ap === 'function' ? applyF.ap(applyX) : typeof applyF === 'function' ? function (x) {
     return applyF(x)(applyX(x));
-  } : (0, _reduce2.default)(function (acc, f) {
-    return (0, _concat2.default)(acc, (0, _map.default)(f, applyX));
+  } : Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function (acc, f) {
+    return Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])(acc, Object(_map_js__WEBPACK_IMPORTED_MODULE_3__["default"])(f, applyX));
   }, [], applyF);
 });
-var _default = ap;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./map.js":"../node_modules/ramda/es/map.js"}],"../node_modules/ramda/es/internal/_aperture.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (ap);
+
+/***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_aperture_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17);
+/* harmony import */ var _internal_xaperture_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _aperture;
 
-function _aperture(n, list) {
-  var idx = 0;
-  var limit = list.length - (n - 1);
-  var acc = new Array(limit >= 0 ? limit : 0);
 
-  while (idx < limit) {
-    acc[idx] = Array.prototype.slice.call(list, idx, idx + n);
-    idx += 1;
-  }
 
-  return acc;
-}
-},{}],"../node_modules/ramda/es/internal/_xaperture.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _concat2 = _interopRequireDefault(require("./_concat.js"));
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XAperture =
-/*#__PURE__*/
-function () {
-  function XAperture(n, xf) {
-    this.xf = xf;
-    this.pos = 0;
-    this.full = false;
-    this.acc = new Array(n);
-  }
-
-  XAperture.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XAperture.prototype['@@transducer/result'] = function (result) {
-    this.acc = null;
-    return this.xf['@@transducer/result'](result);
-  };
-
-  XAperture.prototype['@@transducer/step'] = function (result, input) {
-    this.store(input);
-    return this.full ? this.xf['@@transducer/step'](result, this.getCopy()) : result;
-  };
-
-  XAperture.prototype.store = function (input) {
-    this.acc[this.pos] = input;
-    this.pos += 1;
-
-    if (this.pos === this.acc.length) {
-      this.pos = 0;
-      this.full = true;
-    }
-  };
-
-  XAperture.prototype.getCopy = function () {
-    return (0, _concat2.default)(Array.prototype.slice.call(this.acc, this.pos), Array.prototype.slice.call(this.acc, 0, this.pos));
-  };
-
-  return XAperture;
-}();
-
-var _xaperture =
-/*#__PURE__*/
-(0, _curry.default)(function _xaperture(n, xf) {
-  return new XAperture(n, xf);
-});
-
-var _default = _xaperture;
-exports.default = _default;
-},{"./_concat.js":"../node_modules/ramda/es/internal/_concat.js","./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/aperture.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _aperture2 = _interopRequireDefault(require("./internal/_aperture.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xaperture2 = _interopRequireDefault(require("./internal/_xaperture.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list, composed of n-tuples of consecutive elements. If `n` is
@@ -2249,26 +2913,86 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.aperture(3, [1, 2, 3, 4, 5]); //=> [[1, 2, 3], [2, 3, 4], [3, 4, 5]]
  *      R.aperture(7, [1, 2, 3, 4, 5]); //=> []
  */
-var aperture =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xaperture2.default, _aperture2.default));
-var _default = aperture;
-exports.default = _default;
-},{"./internal/_aperture.js":"../node_modules/ramda/es/internal/_aperture.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xaperture.js":"../node_modules/ramda/es/internal/_xaperture.js"}],"../node_modules/ramda/es/append.js":[function(require,module,exports) {
+var aperture = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_2__["default"])([], _internal_xaperture_js__WEBPACK_IMPORTED_MODULE_3__["default"], _internal_aperture_js__WEBPACK_IMPORTED_MODULE_0__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (aperture);
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _aperture; });
+function _aperture(n, list) {
+  var idx = 0;
+  var limit = list.length - (n - 1);
+  var acc = new Array(limit >= 0 ? limit : 0);
+  while (idx < limit) {
+    acc[idx] = Array.prototype.slice.call(list, idx, idx + n);
+    idx += 1;
+  }
+  return acc;
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+
+
+
+
+var XAperture = /*#__PURE__*/function () {
+  function XAperture(n, xf) {
+    this.xf = xf;
+    this.pos = 0;
+    this.full = false;
+    this.acc = new Array(n);
+  }
+  XAperture.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XAperture.prototype['@@transducer/result'] = function (result) {
+    this.acc = null;
+    return this.xf['@@transducer/result'](result);
+  };
+  XAperture.prototype['@@transducer/step'] = function (result, input) {
+    this.store(input);
+    return this.full ? this.xf['@@transducer/step'](result, this.getCopy()) : result;
+  };
+  XAperture.prototype.store = function (input) {
+    this.acc[this.pos] = input;
+    this.pos += 1;
+    if (this.pos === this.acc.length) {
+      this.pos = 0;
+      this.full = true;
+    }
+  };
+  XAperture.prototype.getCopy = function () {
+    return Object(_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Array.prototype.slice.call(this.acc, this.pos), Array.prototype.slice.call(this.acc, 0, this.pos));
+  };
+
+  return XAperture;
+}();
+
+var _xaperture = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function _xaperture(n, xf) {
+  return new XAperture(n, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xaperture);
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
+/***/ }),
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Returns a new list containing the contents of the given list, followed by
@@ -2290,24 +3014,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.append('tests', []); //=> ['tests']
  *      R.append(['tests'], ['write', 'more']); //=> ['write', 'more', ['tests']]
  */
-var append =
-/*#__PURE__*/
-(0, _curry.default)(function append(el, list) {
-  return (0, _concat2.default)(list, [el]);
+var append = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function append(el, list) {
+  return Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list, [el]);
 });
-var _default = append;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/apply.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (append);
+
+/***/ }),
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Applies function `fn` to the argument list `args`. This is useful for
@@ -2329,95 +3048,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.apply(Math.max, nums); //=> 42
  * @symb R.apply(f, [a, b, c]) = f(a, b, c)
  */
-var apply =
-/*#__PURE__*/
-(0, _curry.default)(function apply(fn, args) {
+var apply = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function apply(fn, args) {
   return fn.apply(this, args);
 });
-var _default = apply;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/values.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (apply);
+
+/***/ }),
+/* 51 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _apply_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(50);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+/* harmony import */ var _max_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
+/* harmony import */ var _pluck_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(25);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(39);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34);
+/* harmony import */ var _values_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(52);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _keys = _interopRequireDefault(require("./keys.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Returns a list of all the enumerable own properties of the supplied object.
- * Note that the order of the output array is not guaranteed across different
- * JS platforms.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Object
- * @sig {k: v} -> [v]
- * @param {Object} obj The object to extract values from
- * @return {Array} An array of the values of the object's own properties.
- * @see R.valuesIn, R.keys
- * @example
- *
- *      R.values({a: 1, b: 2, c: 3}); //=> [1, 2, 3]
- */
-var values =
-/*#__PURE__*/
-(0, _curry.default)(function values(obj) {
-  var props = (0, _keys.default)(obj);
-  var len = props.length;
-  var vals = [];
-  var idx = 0;
 
-  while (idx < len) {
-    vals[idx] = obj[props[idx]];
-    idx += 1;
-  }
 
-  return vals;
-});
-var _default = values;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/applySpec.js":[function(require,module,exports) {
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _apply = _interopRequireDefault(require("./apply.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _max = _interopRequireDefault(require("./max.js"));
-
-var _pluck = _interopRequireDefault(require("./pluck.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-var _values = _interopRequireDefault(require("./values.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Use custom mapValues function to avoid issues with specs that include a "map" key and R.map
 // delegating calls to .map
 function mapValues(fn, obj) {
-  return (0, _keys.default)(obj).reduce(function (acc, key) {
+  return Object(_keys_js__WEBPACK_IMPORTED_MODULE_6__["default"])(obj).reduce(function (acc, key) {
     acc[key] = fn(obj[key]);
     return acc;
   }, {});
 }
+
 /**
  * Given a spec object recursively mapping properties to functions, creates a
  * function producing an object of the same structure, by mapping each property
@@ -2443,34 +3110,69 @@ function mapValues(fn, obj) {
  *      getMetrics(2, 4); // => { sum: 6, nested: { mul: 8 } }
  * @symb R.applySpec({ x: f, y: { z: g } })(a, b) = { x: f(a, b), y: { z: g(a, b) } }
  */
-
-
-var applySpec =
-/*#__PURE__*/
-(0, _curry.default)(function applySpec(spec) {
+var applySpec = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function applySpec(spec) {
   spec = mapValues(function (v) {
     return typeof v == 'function' ? v : applySpec(v);
   }, spec);
-  return (0, _curryN.default)((0, _reduce.default)(_max.default, 0, (0, _pluck.default)('length', (0, _values.default)(spec))), function () {
+
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_reduce_js__WEBPACK_IMPORTED_MODULE_5__["default"])(_max_js__WEBPACK_IMPORTED_MODULE_3__["default"], 0, Object(_pluck_js__WEBPACK_IMPORTED_MODULE_4__["default"])('length', Object(_values_js__WEBPACK_IMPORTED_MODULE_7__["default"])(spec))), function () {
     var args = arguments;
     return mapValues(function (f) {
-      return (0, _apply.default)(f, args);
+      return Object(_apply_js__WEBPACK_IMPORTED_MODULE_1__["default"])(f, args);
     }, spec);
   });
 });
-var _default = applySpec;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./apply.js":"../node_modules/ramda/es/apply.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./max.js":"../node_modules/ramda/es/max.js","./pluck.js":"../node_modules/ramda/es/pluck.js","./reduce.js":"../node_modules/ramda/es/reduce.js","./keys.js":"../node_modules/ramda/es/keys.js","./values.js":"../node_modules/ramda/es/values.js"}],"../node_modules/ramda/es/applyTo.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (applySpec);
+
+/***/ }),
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Returns a list of all the enumerable own properties of the supplied object.
+ * Note that the order of the output array is not guaranteed across different
+ * JS platforms.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig {k: v} -> [v]
+ * @param {Object} obj The object to extract values from
+ * @return {Array} An array of the values of the object's own properties.
+ * @see R.valuesIn, R.keys
+ * @example
+ *
+ *      R.values({a: 1, b: 2, c: 3}); //=> [1, 2, 3]
+ */
+var values = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function values(obj) {
+  var props = Object(_keys_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj);
+  var len = props.length;
+  var vals = [];
+  var idx = 0;
+  while (idx < len) {
+    vals[idx] = obj[props[idx]];
+    idx += 1;
+  }
+  return vals;
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (values);
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
 
 /**
  * Takes a value and applies a function to it.
@@ -2491,24 +3193,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      t42(R.identity); //=> 42
  *      t42(R.add(1)); //=> 43
  */
-var applyTo =
-/*#__PURE__*/
-(0, _curry.default)(function applyTo(x, f) {
+var applyTo = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function applyTo(x, f) {
   return f(x);
 });
-var _default = applyTo;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/ascend.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (applyTo);
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Makes an ascending comparator function out of a function that returns a value
@@ -2535,26 +3232,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const peopleByYoungestFirst = R.sort(byAge, people);
  *        //=> [{ name: 'Mikhail', age: 62 },{ name: 'Emma', age: 70 }, { name: 'Peter', age: 78 }]
  */
-var ascend =
-/*#__PURE__*/
-(0, _curry.default)(function ascend(fn, a, b) {
+var ascend = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function ascend(fn, a, b) {
   var aa = fn(a);
   var bb = fn(b);
   return aa < bb ? -1 : aa > bb ? 1 : 0;
 });
-var _default = ascend;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/assoc.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (ascend);
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Makes a shallow clone of an object, setting or overriding the specified
@@ -2576,98 +3268,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.assoc('c', 3, {a: 1, b: 2}); //=> {a: 1, b: 2, c: 3}
  */
-var assoc =
-/*#__PURE__*/
-(0, _curry.default)(function assoc(prop, val, obj) {
+var assoc = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function assoc(prop, val, obj) {
   var result = {};
-
   for (var p in obj) {
     result[p] = obj[p];
   }
-
   result[prop] = val;
   return result;
 });
-var _default = assoc;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/internal/_isInteger.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (assoc);
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
+/* harmony import */ var _internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
+/* harmony import */ var _internal_isInteger_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57);
+/* harmony import */ var _assoc_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55);
+/* harmony import */ var _isNil_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(58);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-/**
- * Determine if the passed argument is an integer.
- *
- * @private
- * @param {*} n
- * @category Type
- * @return {Boolean}
- */
-var _default = Number.isInteger || function _isInteger(n) {
-  return n << 0 === n;
-};
 
-exports.default = _default;
-},{}],"../node_modules/ramda/es/isNil.js":[function(require,module,exports) {
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Checks if the input value is `null` or `undefined`.
- *
- * @func
- * @memberOf R
- * @since v0.9.0
- * @category Type
- * @sig * -> Boolean
- * @param {*} x The value to test.
- * @return {Boolean} `true` if `x` is `undefined` or `null`, otherwise `false`.
- * @example
- *
- *      R.isNil(null); //=> true
- *      R.isNil(undefined); //=> true
- *      R.isNil(0); //=> false
- *      R.isNil([]); //=> false
- */
-var isNil =
-/*#__PURE__*/
-(0, _curry.default)(function isNil(x) {
-  return x == null;
-});
-var _default = isNil;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/assocPath.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-var _isArray2 = _interopRequireDefault(require("./internal/_isArray.js"));
-
-var _isInteger2 = _interopRequireDefault(require("./internal/_isInteger.js"));
-
-var _assoc = _interopRequireDefault(require("./assoc.js"));
-
-var _isNil = _interopRequireDefault(require("./isNil.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Makes a shallow clone of an object, setting or overriding the nodes required
@@ -2693,41 +3321,126 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // Any missing or non-object keys in path will be overridden
  *      R.assocPath(['a', 'b', 'c'], 42, {a: 5}); //=> {a: {b: {c: 42}}}
  */
-var assocPath =
-/*#__PURE__*/
-(0, _curry.default)(function assocPath(path, val, obj) {
+var assocPath = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function assocPath(path, val, obj) {
   if (path.length === 0) {
     return val;
   }
-
   var idx = path[0];
-
   if (path.length > 1) {
-    var nextObj = !(0, _isNil.default)(obj) && (0, _has2.default)(idx, obj) ? obj[idx] : (0, _isInteger2.default)(path[1]) ? [] : {};
+    var nextObj = !Object(_isNil_js__WEBPACK_IMPORTED_MODULE_5__["default"])(obj) && Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(idx, obj) ? obj[idx] : Object(_internal_isInteger_js__WEBPACK_IMPORTED_MODULE_3__["default"])(path[1]) ? [] : {};
     val = assocPath(Array.prototype.slice.call(path, 1), val, nextObj);
   }
-
-  if ((0, _isInteger2.default)(idx) && (0, _isArray2.default)(obj)) {
+  if (Object(_internal_isInteger_js__WEBPACK_IMPORTED_MODULE_3__["default"])(idx) && Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj)) {
     var arr = [].concat(obj);
     arr[idx] = val;
     return arr;
   } else {
-    return (0, _assoc.default)(idx, val, obj);
+    return Object(_assoc_js__WEBPACK_IMPORTED_MODULE_4__["default"])(idx, val, obj);
   }
 });
-var _default = assocPath;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js","./internal/_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./internal/_isInteger.js":"../node_modules/ramda/es/internal/_isInteger.js","./assoc.js":"../node_modules/ramda/es/assoc.js","./isNil.js":"../node_modules/ramda/es/isNil.js"}],"../node_modules/ramda/es/nAry.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (assocPath);
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Determine if the passed argument is an integer.
+ *
+ * @private
+ * @param {*} n
+ * @category Type
+ * @return {Boolean}
+ */
+/* harmony default export */ __webpack_exports__["default"] = (Number.isInteger || function _isInteger(n) {
+  return n << 0 === n;
 });
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+
+
+/**
+ * Checks if the input value is `null` or `undefined`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.9.0
+ * @category Type
+ * @sig * -> Boolean
+ * @param {*} x The value to test.
+ * @return {Boolean} `true` if `x` is `undefined` or `null`, otherwise `false`.
+ * @example
+ *
+ *      R.isNil(null); //=> true
+ *      R.isNil(undefined); //=> true
+ *      R.isNil(0); //=> false
+ *      R.isNil([]); //=> false
+ */
+var isNil = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function isNil(x) {
+  return x == null;
+});
+/* harmony default export */ __webpack_exports__["default"] = (isNil);
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _nAry_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(60);
+
+
+
+/**
+ * Wraps a function of any arity (including nullary) in a function that accepts
+ * exactly 2 parameters. Any extraneous parameters will not be passed to the
+ * supplied function.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.2.0
+ * @category Function
+ * @sig (* -> c) -> (a, b -> c)
+ * @param {Function} fn The function to wrap.
+ * @return {Function} A new function wrapping `fn`. The new function is guaranteed to be of
+ *         arity 2.
+ * @see R.nAry, R.unary
+ * @example
+ *
+ *      const takesThreeArgs = function(a, b, c) {
+ *        return [a, b, c];
+ *      };
+ *      takesThreeArgs.length; //=> 3
+ *      takesThreeArgs(1, 2, 3); //=> [1, 2, 3]
+ *
+ *      const takesTwoArgs = R.binary(takesThreeArgs);
+ *      takesTwoArgs.length; //=> 2
+ *      // Only 2 arguments are passed to the wrapped function
+ *      takesTwoArgs(1, 2, 3); //=> [1, 2, undefined]
+ * @symb R.binary(f)(a, b, c) = f(a, b)
+ */
+var binary = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function binary(fn) {
+  return Object(_nAry_js__WEBPACK_IMPORTED_MODULE_1__["default"])(2, fn);
+});
+/* harmony default export */ __webpack_exports__["default"] = (binary);
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
 
 /**
  * Wraps a function of any arity (including nullary) in a function that accepts
@@ -2759,238 +3472,72 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.nAry(1, f)(a, b) = f(a)
  * @symb R.nAry(2, f)(a, b) = f(a, b)
  */
-var nAry =
-/*#__PURE__*/
-(0, _curry.default)(function nAry(n, fn) {
+var nAry = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function nAry(n, fn) {
   switch (n) {
     case 0:
       return function () {
         return fn.call(this);
       };
-
     case 1:
       return function (a0) {
         return fn.call(this, a0);
       };
-
     case 2:
       return function (a0, a1) {
         return fn.call(this, a0, a1);
       };
-
     case 3:
       return function (a0, a1, a2) {
         return fn.call(this, a0, a1, a2);
       };
-
     case 4:
       return function (a0, a1, a2, a3) {
         return fn.call(this, a0, a1, a2, a3);
       };
-
     case 5:
       return function (a0, a1, a2, a3, a4) {
         return fn.call(this, a0, a1, a2, a3, a4);
       };
-
     case 6:
       return function (a0, a1, a2, a3, a4, a5) {
         return fn.call(this, a0, a1, a2, a3, a4, a5);
       };
-
     case 7:
       return function (a0, a1, a2, a3, a4, a5, a6) {
         return fn.call(this, a0, a1, a2, a3, a4, a5, a6);
       };
-
     case 8:
       return function (a0, a1, a2, a3, a4, a5, a6, a7) {
         return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7);
       };
-
     case 9:
       return function (a0, a1, a2, a3, a4, a5, a6, a7, a8) {
         return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7, a8);
       };
-
     case 10:
       return function (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
         return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
       };
-
     default:
       throw new Error('First argument to nAry must be a non-negative integer no greater than ten');
   }
 });
-var _default = nAry;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/binary.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (nAry);
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isFunction_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62);
+/* harmony import */ var _and_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
+/* harmony import */ var _lift_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _nAry = _interopRequireDefault(require("./nAry.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Wraps a function of any arity (including nullary) in a function that accepts
- * exactly 2 parameters. Any extraneous parameters will not be passed to the
- * supplied function.
- *
- * @func
- * @memberOf R
- * @since v0.2.0
- * @category Function
- * @sig (* -> c) -> (a, b -> c)
- * @param {Function} fn The function to wrap.
- * @return {Function} A new function wrapping `fn`. The new function is guaranteed to be of
- *         arity 2.
- * @see R.nAry, R.unary
- * @example
- *
- *      const takesThreeArgs = function(a, b, c) {
- *        return [a, b, c];
- *      };
- *      takesThreeArgs.length; //=> 3
- *      takesThreeArgs(1, 2, 3); //=> [1, 2, 3]
- *
- *      const takesTwoArgs = R.binary(takesThreeArgs);
- *      takesTwoArgs.length; //=> 2
- *      // Only 2 arguments are passed to the wrapped function
- *      takesTwoArgs(1, 2, 3); //=> [1, 2, undefined]
- * @symb R.binary(f)(a, b, c) = f(a, b)
- */
-var binary =
-/*#__PURE__*/
-(0, _curry.default)(function binary(fn) {
-  return (0, _nAry.default)(2, fn);
-});
-var _default = binary;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./nAry.js":"../node_modules/ramda/es/nAry.js"}],"../node_modules/ramda/es/internal/_isFunction.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _isFunction;
-
-function _isFunction(x) {
-  return Object.prototype.toString.call(x) === '[object Function]';
-}
-},{}],"../node_modules/ramda/es/liftN.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _ap = _interopRequireDefault(require("./ap.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _map = _interopRequireDefault(require("./map.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * "lifts" a function to be the specified arity, so that it may "map over" that
- * many lists, Functions or other objects that satisfy the [FantasyLand Apply spec](https://github.com/fantasyland/fantasy-land#apply).
- *
- * @func
- * @memberOf R
- * @since v0.7.0
- * @category Function
- * @sig Number -> (*... -> *) -> ([*]... -> [*])
- * @param {Function} fn The function to lift into higher context
- * @return {Function} The lifted function.
- * @see R.lift, R.ap
- * @example
- *
- *      const madd3 = R.liftN(3, (...args) => R.sum(args));
- *      madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
- */
-var liftN =
-/*#__PURE__*/
-(0, _curry.default)(function liftN(arity, fn) {
-  var lifted = (0, _curryN.default)(arity, fn);
-  return (0, _curryN.default)(arity, function () {
-    return (0, _reduce2.default)(_ap.default, (0, _map.default)(lifted, arguments[0]), Array.prototype.slice.call(arguments, 1));
-  });
-});
-var _default = liftN;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./ap.js":"../node_modules/ramda/es/ap.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./map.js":"../node_modules/ramda/es/map.js"}],"../node_modules/ramda/es/lift.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _liftN = _interopRequireDefault(require("./liftN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * "lifts" a function of arity > 1 so that it may "map over" a list, Function or other
- * object that satisfies the [FantasyLand Apply spec](https://github.com/fantasyland/fantasy-land#apply).
- *
- * @func
- * @memberOf R
- * @since v0.7.0
- * @category Function
- * @sig (*... -> *) -> ([*]... -> [*])
- * @param {Function} fn The function to lift into higher context
- * @return {Function} The lifted function.
- * @see R.liftN
- * @example
- *
- *      const madd3 = R.lift((a, b, c) => a + b + c);
- *
- *      madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
- *
- *      const madd5 = R.lift((a, b, c, d, e) => a + b + c + d + e);
- *
- *      madd5([1,2], [3], [4, 5], [6], [7, 8]); //=> [21, 22, 22, 23, 22, 23, 23, 24]
- */
-var lift =
-/*#__PURE__*/
-(0, _curry.default)(function lift(fn) {
-  return (0, _liftN.default)(fn.length, fn);
-});
-var _default = lift;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./liftN.js":"../node_modules/ramda/es/liftN.js"}],"../node_modules/ramda/es/both.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _isFunction2 = _interopRequireDefault(require("./internal/_isFunction.js"));
-
-var _and = _interopRequireDefault(require("./and.js"));
-
-var _lift = _interopRequireDefault(require("./lift.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * A function which calls the two provided functions and returns the `&&`
@@ -3023,28 +3570,160 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.both(Maybe.Just(false), Maybe.Just(55)); // => Maybe.Just(false)
  *      R.both([false, false, 'a'], [11]); //=> [false, false, 11]
  */
-var both =
-/*#__PURE__*/
-(0, _curry.default)(function both(f, g) {
-  return (0, _isFunction2.default)(f) ? function _both() {
+var both = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function both(f, g) {
+  return Object(_internal_isFunction_js__WEBPACK_IMPORTED_MODULE_1__["default"])(f) ? function _both() {
     return f.apply(this, arguments) && g.apply(this, arguments);
-  } : (0, _lift.default)(_and.default)(f, g);
+  } : Object(_lift_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_and_js__WEBPACK_IMPORTED_MODULE_2__["default"])(f, g);
 });
-var _default = both;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isFunction.js":"../node_modules/ramda/es/internal/_isFunction.js","./and.js":"../node_modules/ramda/es/and.js","./lift.js":"../node_modules/ramda/es/lift.js"}],"../node_modules/ramda/es/curry.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (both);
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isFunction; });
+function _isFunction(x) {
+  return Object.prototype.toString.call(x) === '[object Function]';
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+/***/ }),
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _liftN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(64);
+
+
+
+/**
+ * "lifts" a function of arity > 1 so that it may "map over" a list, Function or other
+ * object that satisfies the [FantasyLand Apply spec](https://github.com/fantasyland/fantasy-land#apply).
+ *
+ * @func
+ * @memberOf R
+ * @since v0.7.0
+ * @category Function
+ * @sig (*... -> *) -> ([*]... -> [*])
+ * @param {Function} fn The function to lift into higher context
+ * @return {Function} The lifted function.
+ * @see R.liftN
+ * @example
+ *
+ *      const madd3 = R.lift((a, b, c) => a + b + c);
+ *
+ *      madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
+ *
+ *      const madd5 = R.lift((a, b, c, d, e) => a + b + c + d + e);
+ *
+ *      madd5([1,2], [3], [4, 5], [6], [7, 8]); //=> [21, 22, 22, 23, 22, 23, 23, 24]
+ */
+var lift = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lift(fn) {
+  return Object(_liftN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fn.length, fn);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (lift);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _ap_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(11);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+
+
+
+
+/**
+ * "lifts" a function to be the specified arity, so that it may "map over" that
+ * many lists, Functions or other objects that satisfy the [FantasyLand Apply spec](https://github.com/fantasyland/fantasy-land#apply).
+ *
+ * @func
+ * @memberOf R
+ * @since v0.7.0
+ * @category Function
+ * @sig Number -> (*... -> *) -> ([*]... -> [*])
+ * @param {Function} fn The function to lift into higher context
+ * @return {Function} The lifted function.
+ * @see R.lift, R.ap
+ * @example
+ *
+ *      const madd3 = R.liftN(3, (...args) => R.sum(args));
+ *      madd3([1,2,3], [1,2,3], [1]); //=> [3, 4, 5, 4, 5, 6, 5, 6, 7]
+ */
+var liftN = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function liftN(arity, fn) {
+  var lifted = Object(_curryN_js__WEBPACK_IMPORTED_MODULE_3__["default"])(arity, fn);
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_3__["default"])(arity, function () {
+    return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_ap_js__WEBPACK_IMPORTED_MODULE_2__["default"], Object(_map_js__WEBPACK_IMPORTED_MODULE_4__["default"])(lifted, arguments[0]), Array.prototype.slice.call(arguments, 1));
+  });
+});
+/* harmony default export */ __webpack_exports__["default"] = (liftN);
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(66);
+
+
+/**
+ * Returns the result of calling its first argument with the remaining
+ * arguments. This is occasionally useful as a converging function for
+ * [`R.converge`](#converge): the first branch can produce a function while the
+ * remaining branches produce values to be passed to that function as its
+ * arguments.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.9.0
+ * @category Function
+ * @sig (*... -> a),*... -> a
+ * @param {Function} fn The function to apply to the remaining arguments.
+ * @param {...*} args Any number of positional arguments.
+ * @return {*}
+ * @see R.apply
+ * @example
+ *
+ *      R.call(R.add, 1, 2); //=> 3
+ *
+ *      const indentN = R.pipe(R.repeat(' '),
+ *                           R.join(''),
+ *                           R.replace(/^(?!$)/gm));
+ *
+ *      const format = R.converge(R.call, [
+ *                                  R.pipe(R.prop('indent'), indentN),
+ *                                  R.prop('value')
+ *                              ]);
+ *
+ *      format({indent: 2, value: 'foo\nbar\nbaz\n'}); //=> '  foo\n  bar\n  baz\n'
+ * @symb R.call(f, a, b) = f(a, b)
+ */
+var call = /*#__PURE__*/Object(_curry_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function call(fn) {
+  return fn.apply(this, Array.prototype.slice.call(arguments, 1));
+});
+/* harmony default export */ __webpack_exports__["default"] = (call);
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+
+
 
 /**
  * Returns a curried equivalent of the provided function. The curried function
@@ -3087,212 +3766,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const g = f(3);
  *      g(4); //=> 10
  */
-var curry =
-/*#__PURE__*/
-(0, _curry.default)(function curry(fn) {
-  return (0, _curryN.default)(fn.length, fn);
+var curry = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function curry(fn) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fn.length, fn);
 });
-var _default = curry;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/call.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (curry);
+
+/***/ }),
+/* 67 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_makeFlat_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68);
+/* harmony import */ var _internal_xchain_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(69);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./curry.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Returns the result of calling its first argument with the remaining
- * arguments. This is occasionally useful as a converging function for
- * [`R.converge`](#converge): the first branch can produce a function while the
- * remaining branches produce values to be passed to that function as its
- * arguments.
- *
- * @func
- * @memberOf R
- * @since v0.9.0
- * @category Function
- * @sig (*... -> a),*... -> a
- * @param {Function} fn The function to apply to the remaining arguments.
- * @param {...*} args Any number of positional arguments.
- * @return {*}
- * @see R.apply
- * @example
- *
- *      R.call(R.add, 1, 2); //=> 3
- *
- *      const indentN = R.pipe(R.repeat(' '),
- *                           R.join(''),
- *                           R.replace(/^(?!$)/gm));
- *
- *      const format = R.converge(R.call, [
- *                                  R.pipe(R.prop('indent'), indentN),
- *                                  R.prop('value')
- *                              ]);
- *
- *      format({indent: 2, value: 'foo\nbar\nbaz\n'}); //=> '  foo\n  bar\n  baz\n'
- * @symb R.call(f, a, b) = f(a, b)
- */
-var call =
-/*#__PURE__*/
-(0, _curry.default)(function call(fn) {
-  return fn.apply(this, Array.prototype.slice.call(arguments, 1));
-});
-var _default = call;
-exports.default = _default;
-},{"./curry.js":"../node_modules/ramda/es/curry.js"}],"../node_modules/ramda/es/internal/_makeFlat.js":[function(require,module,exports) {
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _makeFlat;
-
-var _isArrayLike2 = _interopRequireDefault(require("./_isArrayLike.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * `_makeFlat` is a helper function that returns a one-level or fully recursive
- * function based on the flag passed in.
- *
- * @private
- */
-function _makeFlat(recursive) {
-  return function flatt(list) {
-    var value, jlen, j;
-    var result = [];
-    var idx = 0;
-    var ilen = list.length;
-
-    while (idx < ilen) {
-      if ((0, _isArrayLike2.default)(list[idx])) {
-        value = recursive ? flatt(list[idx]) : list[idx];
-        j = 0;
-        jlen = value.length;
-
-        while (j < jlen) {
-          result[result.length] = value[j];
-          j += 1;
-        }
-      } else {
-        result[result.length] = list[idx];
-      }
-
-      idx += 1;
-    }
-
-    return result;
-  };
-}
-},{"./_isArrayLike.js":"../node_modules/ramda/es/internal/_isArrayLike.js"}],"../node_modules/ramda/es/internal/_forceReduced.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _forceReduced;
-
-function _forceReduced(x) {
-  return {
-    '@@transducer/value': x,
-    '@@transducer/reduced': true
-  };
-}
-},{}],"../node_modules/ramda/es/internal/_flatCat.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _forceReduced2 = _interopRequireDefault(require("./_forceReduced.js"));
-
-var _isArrayLike2 = _interopRequireDefault(require("./_isArrayLike.js"));
-
-var _reduce2 = _interopRequireDefault(require("./_reduce.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var preservingReduced = function (xf) {
-  return {
-    '@@transducer/init': _xfBase2.default.init,
-    '@@transducer/result': function (result) {
-      return xf['@@transducer/result'](result);
-    },
-    '@@transducer/step': function (result, input) {
-      var ret = xf['@@transducer/step'](result, input);
-      return ret['@@transducer/reduced'] ? (0, _forceReduced2.default)(ret) : ret;
-    }
-  };
-};
-
-var _flatCat = function _xcat(xf) {
-  var rxf = preservingReduced(xf);
-  return {
-    '@@transducer/init': _xfBase2.default.init,
-    '@@transducer/result': function (result) {
-      return rxf['@@transducer/result'](result);
-    },
-    '@@transducer/step': function (result, input) {
-      return !(0, _isArrayLike2.default)(input) ? (0, _reduce2.default)(rxf, result, [input]) : (0, _reduce2.default)(rxf, result, input);
-    }
-  };
-};
-
-var _default = _flatCat;
-exports.default = _default;
-},{"./_forceReduced.js":"../node_modules/ramda/es/internal/_forceReduced.js","./_isArrayLike.js":"../node_modules/ramda/es/internal/_isArrayLike.js","./_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/internal/_xchain.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-var _flatCat2 = _interopRequireDefault(require("./_flatCat.js"));
-
-var _map = _interopRequireDefault(require("../map.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _xchain =
-/*#__PURE__*/
-(0, _curry.default)(function _xchain(f, xf) {
-  return (0, _map.default)(f, (0, _flatCat2.default)(xf));
-});
-
-var _default = _xchain;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_flatCat.js":"../node_modules/ramda/es/internal/_flatCat.js","../map.js":"../node_modules/ramda/es/map.js"}],"../node_modules/ramda/es/chain.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _makeFlat2 = _interopRequireDefault(require("./internal/_makeFlat.js"));
-
-var _xchain2 = _interopRequireDefault(require("./internal/_xchain.js"));
-
-var _map = _interopRequireDefault(require("./map.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * `chain` maps a function over a list and concatenates the results. `chain`
@@ -3320,32 +3814,140 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.chain(R.append, R.head)([1, 2, 3]); //=> [1, 2, 3, 1]
  */
-var chain =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['fantasy-land/chain', 'chain'], _xchain2.default, function chain(fn, monad) {
+var chain = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['fantasy-land/chain', 'chain'], _internal_xchain_js__WEBPACK_IMPORTED_MODULE_3__["default"], function chain(fn, monad) {
   if (typeof monad === 'function') {
     return function (x) {
       return fn(monad(x))(x);
     };
   }
-
-  return (0, _makeFlat2.default)(false)((0, _map.default)(fn, monad));
+  return Object(_internal_makeFlat_js__WEBPACK_IMPORTED_MODULE_2__["default"])(false)(Object(_map_js__WEBPACK_IMPORTED_MODULE_4__["default"])(fn, monad));
 }));
-var _default = chain;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_makeFlat.js":"../node_modules/ramda/es/internal/_makeFlat.js","./internal/_xchain.js":"../node_modules/ramda/es/internal/_xchain.js","./map.js":"../node_modules/ramda/es/map.js"}],"../node_modules/ramda/es/clamp.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (chain);
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _makeFlat; });
+/* harmony import */ var _isArrayLike_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+/**
+ * `_makeFlat` is a helper function that returns a one-level or fully recursive
+ * function based on the flag passed in.
+ *
+ * @private
+ */
+function _makeFlat(recursive) {
+  return function flatt(list) {
+    var value, jlen, j;
+    var result = [];
+    var idx = 0;
+    var ilen = list.length;
+
+    while (idx < ilen) {
+      if (Object(_isArrayLike_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list[idx])) {
+        value = recursive ? flatt(list[idx]) : list[idx];
+        j = 0;
+        jlen = value.length;
+        while (j < jlen) {
+          result[result.length] = value[j];
+          j += 1;
+        }
+      } else {
+        result[result.length] = list[idx];
+      }
+      idx += 1;
+    }
+    return result;
+  };
+}
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _flatCat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(70);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
+
+
+
+
+var _xchain = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xchain(f, xf) {
+  return Object(_map_js__WEBPACK_IMPORTED_MODULE_2__["default"])(f, Object(_flatCat_js__WEBPACK_IMPORTED_MODULE_1__["default"])(xf));
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xchain);
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
+/***/ }),
+/* 70 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _forceReduced_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(71);
+/* harmony import */ var _isArrayLike_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22);
+
+
+
+
+
+var preservingReduced = function (xf) {
+  return {
+    '@@transducer/init': _xfBase_js__WEBPACK_IMPORTED_MODULE_3__["default"].init,
+    '@@transducer/result': function (result) {
+      return xf['@@transducer/result'](result);
+    },
+    '@@transducer/step': function (result, input) {
+      var ret = xf['@@transducer/step'](result, input);
+      return ret['@@transducer/reduced'] ? Object(_forceReduced_js__WEBPACK_IMPORTED_MODULE_0__["default"])(ret) : ret;
+    }
+  };
+};
+
+var _flatCat = function _xcat(xf) {
+  var rxf = preservingReduced(xf);
+  return {
+    '@@transducer/init': _xfBase_js__WEBPACK_IMPORTED_MODULE_3__["default"].init,
+    '@@transducer/result': function (result) {
+      return rxf['@@transducer/result'](result);
+    },
+    '@@transducer/step': function (result, input) {
+      return !Object(_isArrayLike_js__WEBPACK_IMPORTED_MODULE_1__["default"])(input) ? Object(_reduce_js__WEBPACK_IMPORTED_MODULE_2__["default"])(rxf, result, [input]) : Object(_reduce_js__WEBPACK_IMPORTED_MODULE_2__["default"])(rxf, result, input);
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (_flatCat);
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _forceReduced; });
+function _forceReduced(x) {
+  return {
+    '@@transducer/value': x,
+    '@@transducer/reduced': true
+  };
+}
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+
 
 /**
  * Restricts a number to be within a range.
@@ -3367,39 +3969,123 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.clamp(1, 10, 15) // => 10
  *      R.clamp(1, 10, 4)  // => 4
  */
-var clamp =
-/*#__PURE__*/
-(0, _curry.default)(function clamp(min, max, value) {
+var clamp = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function clamp(min, max, value) {
   if (min > max) {
     throw new Error('min must not be greater than max in clamp(min, max, value)');
   }
-
   return value < min ? min : value > max ? max : value;
 });
-var _default = clamp;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/internal/_cloneRegExp.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (clamp);
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_clone_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Creates a deep copy of the value which may contain (nested) `Array`s and
+ * `Object`s, `Number`s, `String`s, `Boolean`s and `Date`s. `Function`s are
+ * assigned by reference rather than copied
+ *
+ * Dispatches to a `clone` method if present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig {*} -> {*}
+ * @param {*} value The object or array to clone
+ * @return {*} A deeply cloned copy of `val`
+ * @example
+ *
+ *      const objects = [{}, {}, {}];
+ *      const objectsClone = R.clone(objects);
+ *      objects === objectsClone; //=> false
+ *      objects[0] === objectsClone[0]; //=> false
+ */
+var clone = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function clone(value) {
+  return value != null && typeof value.clone === 'function' ? value.clone() : Object(_internal_clone_js__WEBPACK_IMPORTED_MODULE_0__["default"])(value, [], [], true);
 });
-exports.default = _cloneRegExp;
+/* harmony default export */ __webpack_exports__["default"] = (clone);
 
-function _cloneRegExp(pattern) {
-  return new RegExp(pattern.source, (pattern.global ? 'g' : '') + (pattern.ignoreCase ? 'i' : '') + (pattern.multiline ? 'm' : '') + (pattern.sticky ? 'y' : '') + (pattern.unicode ? 'u' : ''));
+/***/ }),
+/* 74 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _clone; });
+/* harmony import */ var _cloneRegExp_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75);
+/* harmony import */ var _type_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76);
+
+
+
+/**
+ * Copies an object.
+ *
+ * @private
+ * @param {*} value The value to be copied
+ * @param {Array} refFrom Array containing the source references
+ * @param {Array} refTo Array containing the copied source references
+ * @param {Boolean} deep Whether or not to perform deep cloning.
+ * @return {*} The copied value.
+ */
+function _clone(value, refFrom, refTo, deep) {
+  var copy = function copy(copiedValue) {
+    var len = refFrom.length;
+    var idx = 0;
+    while (idx < len) {
+      if (value === refFrom[idx]) {
+        return refTo[idx];
+      }
+      idx += 1;
+    }
+    refFrom[idx + 1] = value;
+    refTo[idx + 1] = copiedValue;
+    for (var key in value) {
+      copiedValue[key] = deep ? _clone(value[key], refFrom, refTo, true) : value[key];
+    }
+    return copiedValue;
+  };
+  switch (Object(_type_js__WEBPACK_IMPORTED_MODULE_1__["default"])(value)) {
+    case 'Object':
+      return copy({});
+    case 'Array':
+      return copy([]);
+    case 'Date':
+      return new Date(value.valueOf());
+    case 'RegExp':
+      return Object(_cloneRegExp_js__WEBPACK_IMPORTED_MODULE_0__["default"])(value);
+    default:
+      return value;
+  }
 }
-},{}],"../node_modules/ramda/es/type.js":[function(require,module,exports) {
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _cloneRegExp; });
+function _cloneRegExp(pattern) {
+                                  return new RegExp(pattern.source, (pattern.global ? 'g' : '') + (pattern.ignoreCase ? 'i' : '') + (pattern.multiline ? 'm' : '') + (pattern.sticky ? 'y' : '') + (pattern.unicode ? 'u' : ''));
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Gives a single-word string description of the (native) type of a value,
@@ -3426,130 +4112,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.type(() => {}); //=> "Function"
  *      R.type(undefined); //=> "Undefined"
  */
-var type =
-/*#__PURE__*/
-(0, _curry.default)(function type(val) {
+var type = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function type(val) {
   return val === null ? 'Null' : val === undefined ? 'Undefined' : Object.prototype.toString.call(val).slice(8, -1);
 });
-var _default = type;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/internal/_clone.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (type);
+
+/***/ }),
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _clone;
-
-var _cloneRegExp2 = _interopRequireDefault(require("./_cloneRegExp.js"));
-
-var _type = _interopRequireDefault(require("../type.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Copies an object.
- *
- * @private
- * @param {*} value The value to be copied
- * @param {Array} refFrom Array containing the source references
- * @param {Array} refTo Array containing the copied source references
- * @param {Boolean} deep Whether or not to perform deep cloning.
- * @return {*} The copied value.
- */
-function _clone(value, refFrom, refTo, deep) {
-  var copy = function copy(copiedValue) {
-    var len = refFrom.length;
-    var idx = 0;
-
-    while (idx < len) {
-      if (value === refFrom[idx]) {
-        return refTo[idx];
-      }
-
-      idx += 1;
-    }
-
-    refFrom[idx + 1] = value;
-    refTo[idx + 1] = copiedValue;
-
-    for (var key in value) {
-      copiedValue[key] = deep ? _clone(value[key], refFrom, refTo, true) : value[key];
-    }
-
-    return copiedValue;
-  };
-
-  switch ((0, _type.default)(value)) {
-    case 'Object':
-      return copy({});
-
-    case 'Array':
-      return copy([]);
-
-    case 'Date':
-      return new Date(value.valueOf());
-
-    case 'RegExp':
-      return (0, _cloneRegExp2.default)(value);
-
-    default:
-      return value;
-  }
-}
-},{"./_cloneRegExp.js":"../node_modules/ramda/es/internal/_cloneRegExp.js","../type.js":"../node_modules/ramda/es/type.js"}],"../node_modules/ramda/es/clone.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _clone2 = _interopRequireDefault(require("./internal/_clone.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Creates a deep copy of the value which may contain (nested) `Array`s and
- * `Object`s, `Number`s, `String`s, `Boolean`s and `Date`s. `Function`s are
- * assigned by reference rather than copied
- *
- * Dispatches to a `clone` method if present.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Object
- * @sig {*} -> {*}
- * @param {*} value The object or array to clone
- * @return {*} A deeply cloned copy of `val`
- * @example
- *
- *      const objects = [{}, {}, {}];
- *      const objectsClone = R.clone(objects);
- *      objects === objectsClone; //=> false
- *      objects[0] === objectsClone[0]; //=> false
- */
-var clone =
-/*#__PURE__*/
-(0, _curry.default)(function clone(value) {
-  return value != null && typeof value.clone === 'function' ? value.clone() : (0, _clone2.default)(value, [], [], true);
-});
-var _default = clone;
-exports.default = _default;
-},{"./internal/_clone.js":"../node_modules/ramda/es/internal/_clone.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/comparator.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Makes a comparator function out of a function that reports whether the first
@@ -3574,66 +4149,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const peopleByIncreasingAge = R.sort(byAge, people);
  *        //=> [{ name: 'Mikhail', age: 62 },{ name: 'Emma', age: 70 }, { name: 'Peter', age: 78 }]
  */
-var comparator =
-/*#__PURE__*/
-(0, _curry.default)(function comparator(pred) {
+var comparator = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function comparator(pred) {
   return function (a, b) {
     return pred(a, b) ? -1 : pred(b, a) ? 1 : 0;
   };
 });
-var _default = comparator;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/not.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (comparator);
+
+/***/ }),
+/* 78 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _lift_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63);
+/* harmony import */ var _not_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(79);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * A function that returns the `!` of its argument. It will return `true` when
- * passed false-y value, and `false` when passed a truth-y one.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Logic
- * @sig * -> Boolean
- * @param {*} a any value
- * @return {Boolean} the logical inverse of passed argument.
- * @see R.complement
- * @example
- *
- *      R.not(true); //=> false
- *      R.not(false); //=> true
- *      R.not(0); //=> true
- *      R.not(1); //=> false
- */
-var not =
-/*#__PURE__*/
-(0, _curry.default)(function not(a) {
-  return !a;
-});
-var _default = not;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/complement.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _lift = _interopRequireDefault(require("./lift.js"));
-
-var _not = _interopRequireDefault(require("./not.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a function `f` and returns a function `g` such that if called with the same arguments
@@ -3657,263 +4189,53 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      isNil(7); //=> false
  *      isNotNil(7); //=> true
  */
-var complement =
-/*#__PURE__*/
-(0, _lift.default)(_not.default);
-var _default = complement;
-exports.default = _default;
-},{"./lift.js":"../node_modules/ramda/es/lift.js","./not.js":"../node_modules/ramda/es/not.js"}],"../node_modules/ramda/es/internal/_pipe.js":[function(require,module,exports) {
+var complement = /*#__PURE__*/Object(_lift_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_not_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (complement);
+
+/***/ }),
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _pipe;
-
-function _pipe(f, g) {
-  return function () {
-    return g.call(this, f.apply(this, arguments));
-  };
-}
-},{}],"../node_modules/ramda/es/internal/_checkForMethod.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _checkForMethod;
-
-var _isArray2 = _interopRequireDefault(require("./_isArray.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * This checks whether a function has a [methodname] function. If it isn't an
- * array it will execute that function otherwise it will default to the ramda
- * implementation.
- *
- * @private
- * @param {Function} fn ramda implemtation
- * @param {String} methodname property to check for a custom implementation
- * @return {Object} Whatever the return value of the method is.
- */
-function _checkForMethod(methodname, fn) {
-  return function () {
-    var length = arguments.length;
-
-    if (length === 0) {
-      return fn();
-    }
-
-    var obj = arguments[length - 1];
-    return (0, _isArray2.default)(obj) || typeof obj[methodname] !== 'function' ? fn.apply(this, arguments) : obj[methodname].apply(obj, Array.prototype.slice.call(arguments, 0, length - 1));
-  };
-}
-},{"./_isArray.js":"../node_modules/ramda/es/internal/_isArray.js"}],"../node_modules/ramda/es/slice.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _checkForMethod2 = _interopRequireDefault(require("./internal/_checkForMethod.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns the elements of the given list or string (or object with a `slice`
- * method) from `fromIndex` (inclusive) to `toIndex` (exclusive).
- *
- * Dispatches to the `slice` method of the third argument, if present.
- *
- * @func
- * @memberOf R
- * @since v0.1.4
- * @category List
- * @sig Number -> Number -> [a] -> [a]
- * @sig Number -> Number -> String -> String
- * @param {Number} fromIndex The start index (inclusive).
- * @param {Number} toIndex The end index (exclusive).
- * @param {*} list
- * @return {*}
- * @example
- *
- *      R.slice(1, 3, ['a', 'b', 'c', 'd']);        //=> ['b', 'c']
- *      R.slice(1, Infinity, ['a', 'b', 'c', 'd']); //=> ['b', 'c', 'd']
- *      R.slice(0, -1, ['a', 'b', 'c', 'd']);       //=> ['a', 'b', 'c']
- *      R.slice(-3, -1, ['a', 'b', 'c', 'd']);      //=> ['b', 'c']
- *      R.slice(0, 3, 'ramda');                     //=> 'ram'
- */
-var slice =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _checkForMethod2.default)('slice', function slice(fromIndex, toIndex, list) {
-  return Array.prototype.slice.call(list, fromIndex, toIndex);
-}));
-var _default = slice;
-exports.default = _default;
-},{"./internal/_checkForMethod.js":"../node_modules/ramda/es/internal/_checkForMethod.js","./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/tail.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _checkForMethod2 = _interopRequireDefault(require("./internal/_checkForMethod.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns all but the first element of the given list or string (or object
- * with a `tail` method).
- *
- * Dispatches to the `slice` method of the first argument, if present.
+ * A function that returns the `!` of its argument. It will return `true` when
+ * passed false-y value, and `false` when passed a truth-y one.
  *
  * @func
  * @memberOf R
  * @since v0.1.0
- * @category List
- * @sig [a] -> [a]
- * @sig String -> String
- * @param {*} list
- * @return {*}
- * @see R.head, R.init, R.last
+ * @category Logic
+ * @sig * -> Boolean
+ * @param {*} a any value
+ * @return {Boolean} the logical inverse of passed argument.
+ * @see R.complement
  * @example
  *
- *      R.tail([1, 2, 3]);  //=> [2, 3]
- *      R.tail([1, 2]);     //=> [2]
- *      R.tail([1]);        //=> []
- *      R.tail([]);         //=> []
- *
- *      R.tail('abc');  //=> 'bc'
- *      R.tail('ab');   //=> 'b'
- *      R.tail('a');    //=> ''
- *      R.tail('');     //=> ''
+ *      R.not(true); //=> false
+ *      R.not(false); //=> true
+ *      R.not(0); //=> true
+ *      R.not(1); //=> false
  */
-var tail =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _checkForMethod2.default)('tail',
-/*#__PURE__*/
-(0, _slice.default)(1, Infinity)));
-var _default = tail;
-exports.default = _default;
-},{"./internal/_checkForMethod.js":"../node_modules/ramda/es/internal/_checkForMethod.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/pipe.js":[function(require,module,exports) {
+var not = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function not(a) {
+  return !a;
+});
+/* harmony default export */ __webpack_exports__["default"] = (not);
+
+/***/ }),
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return compose; });
+/* harmony import */ var _pipe_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81);
+/* harmony import */ var _reverse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = pipe;
 
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
-
-var _pipe2 = _interopRequireDefault(require("./internal/_pipe.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-var _tail = _interopRequireDefault(require("./tail.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Performs left-to-right function composition. The leftmost function may have
- * any arity; the remaining functions must be unary.
- *
- * In some libraries this function is named `sequence`.
- *
- * **Note:** The result of pipe is not automatically curried.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Function
- * @sig (((a, b, ..., n) -> o), (o -> p), ..., (x -> y), (y -> z)) -> ((a, b, ..., n) -> z)
- * @param {...Function} functions
- * @return {Function}
- * @see R.compose
- * @example
- *
- *      const f = R.pipe(Math.pow, R.negate, R.inc);
- *
- *      f(3, 4); // -(3^4) + 1
- * @symb R.pipe(f, g, h)(a, b) = h(g(f(a, b)))
- */
-function pipe() {
-  if (arguments.length === 0) {
-    throw new Error('pipe requires at least one argument');
-  }
-
-  return (0, _arity2.default)(arguments[0].length, (0, _reduce.default)(_pipe2.default, arguments[0], (0, _tail.default)(arguments)));
-}
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_pipe.js":"../node_modules/ramda/es/internal/_pipe.js","./reduce.js":"../node_modules/ramda/es/reduce.js","./tail.js":"../node_modules/ramda/es/tail.js"}],"../node_modules/ramda/es/reverse.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _isString2 = _interopRequireDefault(require("./internal/_isString.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns a new list or string with the elements or characters in reverse
- * order.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category List
- * @sig [a] -> [a]
- * @sig String -> String
- * @param {Array|String} list
- * @return {Array|String}
- * @example
- *
- *      R.reverse([1, 2, 3]);  //=> [3, 2, 1]
- *      R.reverse([1, 2]);     //=> [2, 1]
- *      R.reverse([1]);        //=> [1]
- *      R.reverse([]);         //=> []
- *
- *      R.reverse('abc');      //=> 'cba'
- *      R.reverse('ab');       //=> 'ba'
- *      R.reverse('a');        //=> 'a'
- *      R.reverse('');         //=> ''
- */
-var reverse =
-/*#__PURE__*/
-(0, _curry.default)(function reverse(list) {
-  return (0, _isString2.default)(list) ? list.split('').reverse().join('') : Array.prototype.slice.call(list, 0).reverse();
-});
-var _default = reverse;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_isString.js":"../node_modules/ramda/es/internal/_isString.js"}],"../node_modules/ramda/es/compose.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = compose;
-
-var _pipe = _interopRequireDefault(require("./pipe.js"));
-
-var _reverse = _interopRequireDefault(require("./reverse.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Performs right-to-left function composition. The rightmost function may have
@@ -3943,24 +4265,235 @@ function compose() {
   if (arguments.length === 0) {
     throw new Error('compose requires at least one argument');
   }
-
-  return _pipe.default.apply(this, (0, _reverse.default)(arguments));
+  return _pipe_js__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, Object(_reverse_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arguments));
 }
-},{"./pipe.js":"../node_modules/ramda/es/pipe.js","./reverse.js":"../node_modules/ramda/es/reverse.js"}],"../node_modules/ramda/es/composeK.js":[function(require,module,exports) {
+
+/***/ }),
+/* 81 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pipe; });
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_pipe_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(82);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39);
+/* harmony import */ var _tail_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+
+/**
+ * Performs left-to-right function composition. The leftmost function may have
+ * any arity; the remaining functions must be unary.
+ *
+ * In some libraries this function is named `sequence`.
+ *
+ * **Note:** The result of pipe is not automatically curried.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Function
+ * @sig (((a, b, ..., n) -> o), (o -> p), ..., (x -> y), (y -> z)) -> ((a, b, ..., n) -> z)
+ * @param {...Function} functions
+ * @return {Function}
+ * @see R.compose
+ * @example
+ *
+ *      const f = R.pipe(Math.pow, R.negate, R.inc);
+ *
+ *      f(3, 4); // -(3^4) + 1
+ * @symb R.pipe(f, g, h)(a, b) = h(g(f(a, b)))
+ */
+function pipe() {
+  if (arguments.length === 0) {
+    throw new Error('pipe requires at least one argument');
+  }
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arguments[0].length, Object(_reduce_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_internal_pipe_js__WEBPACK_IMPORTED_MODULE_1__["default"], arguments[0], Object(_tail_js__WEBPACK_IMPORTED_MODULE_3__["default"])(arguments)));
+}
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _pipe; });
+function _pipe(f, g) {
+  return function () {
+    return g.call(this, f.apply(this, arguments));
+  };
+}
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(84);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(85);
+
+
+
+
+/**
+ * Returns all but the first element of the given list or string (or object
+ * with a `tail` method).
+ *
+ * Dispatches to the `slice` method of the first argument, if present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig [a] -> [a]
+ * @sig String -> String
+ * @param {*} list
+ * @return {*}
+ * @see R.head, R.init, R.last
+ * @example
+ *
+ *      R.tail([1, 2, 3]);  //=> [2, 3]
+ *      R.tail([1, 2]);     //=> [2]
+ *      R.tail([1]);        //=> []
+ *      R.tail([]);         //=> []
+ *
+ *      R.tail('abc');  //=> 'bc'
+ *      R.tail('ab');   //=> 'b'
+ *      R.tail('a');    //=> ''
+ *      R.tail('');     //=> ''
+ */
+var tail = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__["default"])('tail', /*#__PURE__*/Object(_slice_js__WEBPACK_IMPORTED_MODULE_2__["default"])(1, Infinity)));
+/* harmony default export */ __webpack_exports__["default"] = (tail);
+
+/***/ }),
+/* 84 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _checkForMethod; });
+/* harmony import */ var _isArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
+
+
+/**
+ * This checks whether a function has a [methodname] function. If it isn't an
+ * array it will execute that function otherwise it will default to the ramda
+ * implementation.
+ *
+ * @private
+ * @param {Function} fn ramda implemtation
+ * @param {String} methodname property to check for a custom implementation
+ * @return {Object} Whatever the return value of the method is.
+ */
+function _checkForMethod(methodname, fn) {
+  return function () {
+    var length = arguments.length;
+    if (length === 0) {
+      return fn();
+    }
+    var obj = arguments[length - 1];
+    return Object(_isArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(obj) || typeof obj[methodname] !== 'function' ? fn.apply(this, arguments) : obj[methodname].apply(obj, Array.prototype.slice.call(arguments, 0, length - 1));
+  };
+}
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(84);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+
+
+
+/**
+ * Returns the elements of the given list or string (or object with a `slice`
+ * method) from `fromIndex` (inclusive) to `toIndex` (exclusive).
+ *
+ * Dispatches to the `slice` method of the third argument, if present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.4
+ * @category List
+ * @sig Number -> Number -> [a] -> [a]
+ * @sig Number -> Number -> String -> String
+ * @param {Number} fromIndex The start index (inclusive).
+ * @param {Number} toIndex The end index (exclusive).
+ * @param {*} list
+ * @return {*}
+ * @example
+ *
+ *      R.slice(1, 3, ['a', 'b', 'c', 'd']);        //=> ['b', 'c']
+ *      R.slice(1, Infinity, ['a', 'b', 'c', 'd']); //=> ['b', 'c', 'd']
+ *      R.slice(0, -1, ['a', 'b', 'c', 'd']);       //=> ['a', 'b', 'c']
+ *      R.slice(-3, -1, ['a', 'b', 'c', 'd']);      //=> ['b', 'c']
+ *      R.slice(0, 3, 'ramda');                     //=> 'ram'
+ */
+var slice = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__["default"])('slice', function slice(fromIndex, toIndex, list) {
+  return Array.prototype.slice.call(list, fromIndex, toIndex);
+}));
+/* harmony default export */ __webpack_exports__["default"] = (slice);
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_isString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
+
+
+
+/**
+ * Returns a new list or string with the elements or characters in reverse
+ * order.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig [a] -> [a]
+ * @sig String -> String
+ * @param {Array|String} list
+ * @return {Array|String}
+ * @example
+ *
+ *      R.reverse([1, 2, 3]);  //=> [3, 2, 1]
+ *      R.reverse([1, 2]);     //=> [2, 1]
+ *      R.reverse([1]);        //=> [1]
+ *      R.reverse([]);         //=> []
+ *
+ *      R.reverse('abc');      //=> 'cba'
+ *      R.reverse('ab');       //=> 'ba'
+ *      R.reverse('a');        //=> 'a'
+ *      R.reverse('');         //=> ''
+ */
+var reverse = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function reverse(list) {
+  return Object(_internal_isString_js__WEBPACK_IMPORTED_MODULE_1__["default"])(list) ? list.split('').reverse().join('') : Array.prototype.slice.call(list, 0).reverse();
 });
-exports.default = composeK;
+/* harmony default export */ __webpack_exports__["default"] = (reverse);
 
-var _chain = _interopRequireDefault(require("./chain.js"));
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _compose = _interopRequireDefault(require("./compose.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return composeK; });
+/* harmony import */ var _chain_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67);
+/* harmony import */ var _compose_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
 
-var _map = _interopRequireDefault(require("./map.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Returns the right-to-left Kleisli composition of the provided functions,
@@ -3997,84 +4530,22 @@ function composeK() {
   if (arguments.length === 0) {
     throw new Error('composeK requires at least one argument');
   }
-
   var init = Array.prototype.slice.call(arguments);
   var last = init.pop();
-  return (0, _compose.default)(_compose.default.apply(this, (0, _map.default)(_chain.default, init)), last);
+  return Object(_compose_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_compose_js__WEBPACK_IMPORTED_MODULE_1__["default"].apply(this, Object(_map_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_chain_js__WEBPACK_IMPORTED_MODULE_0__["default"], init)), last);
 }
-},{"./chain.js":"../node_modules/ramda/es/chain.js","./compose.js":"../node_modules/ramda/es/compose.js","./map.js":"../node_modules/ramda/es/map.js"}],"../node_modules/ramda/es/internal/_pipeP.js":[function(require,module,exports) {
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return composeP; });
+/* harmony import */ var _pipeP_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(89);
+/* harmony import */ var _reverse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _pipeP;
 
-function _pipeP(f, g) {
-  return function () {
-    var ctx = this;
-    return f.apply(ctx, arguments).then(function (x) {
-      return g.call(ctx, x);
-    });
-  };
-}
-},{}],"../node_modules/ramda/es/pipeP.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = pipeP;
-
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
-
-var _pipeP2 = _interopRequireDefault(require("./internal/_pipeP.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-var _tail = _interopRequireDefault(require("./tail.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Performs left-to-right composition of one or more Promise-returning
- * functions. The leftmost function may have any arity; the remaining functions
- * must be unary.
- *
- * @func
- * @memberOf R
- * @since v0.10.0
- * @category Function
- * @sig ((a -> Promise b), (b -> Promise c), ..., (y -> Promise z)) -> (a -> Promise z)
- * @param {...Function} functions
- * @return {Function}
- * @see R.composeP
- * @deprecated since v0.26.0
- * @example
- *
- *      //  followersForUser :: String -> Promise [User]
- *      const followersForUser = R.pipeP(db.getUserById, db.getFollowers);
- */
-function pipeP() {
-  if (arguments.length === 0) {
-    throw new Error('pipeP requires at least one argument');
-  }
-
-  return (0, _arity2.default)(arguments[0].length, (0, _reduce.default)(_pipeP2.default, arguments[0], (0, _tail.default)(arguments)));
-}
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_pipeP.js":"../node_modules/ramda/es/internal/_pipeP.js","./reduce.js":"../node_modules/ramda/es/reduce.js","./tail.js":"../node_modules/ramda/es/tail.js"}],"../node_modules/ramda/es/composeP.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = composeP;
-
-var _pipeP = _interopRequireDefault(require("./pipeP.js"));
-
-var _reverse = _interopRequireDefault(require("./reverse.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Performs right-to-left composition of one or more Promise-returning
@@ -4115,22 +4586,206 @@ function composeP() {
   if (arguments.length === 0) {
     throw new Error('composeP requires at least one argument');
   }
-
-  return _pipeP.default.apply(this, (0, _reverse.default)(arguments));
+  return _pipeP_js__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, Object(_reverse_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arguments));
 }
-},{"./pipeP.js":"../node_modules/ramda/es/pipeP.js","./reverse.js":"../node_modules/ramda/es/reverse.js"}],"../node_modules/ramda/es/nth.js":[function(require,module,exports) {
+
+/***/ }),
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pipeP; });
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_pipeP_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(90);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39);
+/* harmony import */ var _tail_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+
+/**
+ * Performs left-to-right composition of one or more Promise-returning
+ * functions. The leftmost function may have any arity; the remaining functions
+ * must be unary.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.10.0
+ * @category Function
+ * @sig ((a -> Promise b), (b -> Promise c), ..., (y -> Promise z)) -> (a -> Promise z)
+ * @param {...Function} functions
+ * @return {Function}
+ * @see R.composeP
+ * @deprecated since v0.26.0
+ * @example
+ *
+ *      //  followersForUser :: String -> Promise [User]
+ *      const followersForUser = R.pipeP(db.getUserById, db.getFollowers);
+ */
+function pipeP() {
+  if (arguments.length === 0) {
+    throw new Error('pipeP requires at least one argument');
+  }
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arguments[0].length, Object(_reduce_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_internal_pipeP_js__WEBPACK_IMPORTED_MODULE_1__["default"], arguments[0], Object(_tail_js__WEBPACK_IMPORTED_MODULE_3__["default"])(arguments)));
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _pipeP; });
+function _pipeP(f, g) {
+  return function () {
+    var ctx = this;
+    return f.apply(ctx, arguments).then(function (x) {
+      return g.call(ctx, x);
+    });
+  };
+}
+
+/***/ }),
+/* 91 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _pipeWith_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(92);
+/* harmony import */ var _reverse_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
+
+
+
+
+/**
+ * Performs right-to-left function composition using transforming function. The rightmost function may have
+ * any arity; the remaining functions must be unary.
+ *
+ * **Note:** The result of compose is not automatically curried.
+ *
+ * @func
+ * @memberOf R
+ * @category Function
+ * @sig ((* -> *), [(y -> z), (x -> y), ..., (o -> p), ((a, b, ..., n) -> o)]) -> ((a, b, ..., n) -> z)
+ * @param {...Function} ...functions The functions to compose
+ * @return {Function}
+ * @see R.compose, R.pipeWith
+ * @example
+ *
+ *      const composeWhileNotNil = R.composeWith((f, res) => R.isNil(res) ? res : f(res));
+ *
+ *      composeWhileNotNil([R.inc, R.prop('age')])({age: 1}) //=> 2
+ *      composeWhileNotNil([R.inc, R.prop('age')])({}) //=> undefined
+ *
+ * @symb R.composeWith(f)([g, h, i])(...args) = f(g, f(h, f(i, ...args)))
+ */
+var composeWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function composeWith(xf, list) {
+  return _pipeWith_js__WEBPACK_IMPORTED_MODULE_1__["default"].apply(this, [xf, Object(_reverse_js__WEBPACK_IMPORTED_MODULE_2__["default"])(list)]);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (composeWith);
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _isString2 = _interopRequireDefault(require("./internal/_isString.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _head_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(93);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28);
+/* harmony import */ var _tail_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(83);
+/* harmony import */ var _identity_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(95);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+
+
+
+
+
+/**
+ * Performs left-to-right function composition using transforming function. The leftmost function may have
+ * any arity; the remaining functions must be unary.
+ *
+ * **Note:** The result of pipeWith is not automatically curried.
+ *
+ * @func
+ * @memberOf R
+ * @category Function
+ * @sig ((* -> *), [((a, b, ..., n) -> o), (o -> p), ..., (x -> y), (y -> z)]) -> ((a, b, ..., n) -> z)
+ * @param {...Function} functions
+ * @return {Function}
+ * @see R.composeWith, R.pipe
+ * @example
+ *
+ *      const pipeWhileNotNil = R.pipeWith((f, res) => R.isNil(res) ? res : f(res));
+ *      const f = pipeWhileNotNil([Math.pow, R.negate, R.inc])
+ *
+ *      f(3, 4); // -(3^4) + 1
+ * @symb R.pipeWith(f)([g, h, i])(...args) = f(i, f(h, f(g, ...args)))
+ */
+var pipeWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function pipeWith(xf, list) {
+  if (list.length <= 0) {
+    return _identity_js__WEBPACK_IMPORTED_MODULE_5__["default"];
+  }
+
+  var headList = Object(_head_js__WEBPACK_IMPORTED_MODULE_2__["default"])(list);
+  var tailList = Object(_tail_js__WEBPACK_IMPORTED_MODULE_4__["default"])(list);
+
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(headList.length, function () {
+    return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__["default"])(function (result, f) {
+      return xf.call(this, f, result);
+    }, headList.apply(this, arguments), tailList);
+  });
+});
+/* harmony default export */ __webpack_exports__["default"] = (pipeWith);
+
+/***/ }),
+/* 93 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _nth_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(94);
+
+
+/**
+ * Returns the first element of the given list or string. In some libraries
+ * this function is named `first`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig [a] -> a | Undefined
+ * @sig String -> String
+ * @param {Array|String} list
+ * @return {*}
+ * @see R.tail, R.init, R.last
+ * @example
+ *
+ *      R.head(['fi', 'fo', 'fum']); //=> 'fi'
+ *      R.head([]); //=> undefined
+ *
+ *      R.head('abc'); //=> 'a'
+ *      R.head(''); //=> ''
+ */
+var head = /*#__PURE__*/Object(_nth_js__WEBPACK_IMPORTED_MODULE_0__["default"])(0);
+/* harmony default export */ __webpack_exports__["default"] = (head);
+
+/***/ }),
+/* 94 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
+
+
 
 /**
  * Returns the nth element of the given list or string. If n is negative the
@@ -4158,76 +4813,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.nth(0, [a, b, c]) = a
  * @symb R.nth(1, [a, b, c]) = b
  */
-var nth =
-/*#__PURE__*/
-(0, _curry.default)(function nth(offset, list) {
+var nth = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function nth(offset, list) {
   var idx = offset < 0 ? list.length + offset : offset;
-  return (0, _isString2.default)(list) ? list.charAt(idx) : list[idx];
+  return Object(_internal_isString_js__WEBPACK_IMPORTED_MODULE_1__["default"])(list) ? list.charAt(idx) : list[idx];
 });
-var _default = nth;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isString.js":"../node_modules/ramda/es/internal/_isString.js"}],"../node_modules/ramda/es/head.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (nth);
+
+/***/ }),
+/* 95 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_identity_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(96);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _nth = _interopRequireDefault(require("./nth.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns the first element of the given list or string. In some libraries
- * this function is named `first`.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category List
- * @sig [a] -> a | Undefined
- * @sig String -> String
- * @param {Array|String} list
- * @return {*}
- * @see R.tail, R.init, R.last
- * @example
- *
- *      R.head(['fi', 'fo', 'fum']); //=> 'fi'
- *      R.head([]); //=> undefined
- *
- *      R.head('abc'); //=> 'a'
- *      R.head(''); //=> ''
- */
-var head =
-/*#__PURE__*/
-(0, _nth.default)(0);
-var _default = head;
-exports.default = _default;
-},{"./nth.js":"../node_modules/ramda/es/nth.js"}],"../node_modules/ramda/es/internal/_identity.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _identity;
-
-function _identity(x) {
-  return x;
-}
-},{}],"../node_modules/ramda/es/identity.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _identity2 = _interopRequireDefault(require("./internal/_identity.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * A function that does nothing but return the parameter supplied to it. Good
@@ -4248,837 +4849,98 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.identity(obj) === obj; //=> true
  * @symb R.identity(a) = a
  */
-var identity =
-/*#__PURE__*/
-(0, _curry.default)(_identity2.default);
-var _default = identity;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_identity.js":"../node_modules/ramda/es/internal/_identity.js"}],"../node_modules/ramda/es/pipeWith.js":[function(require,module,exports) {
+var identity = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_internal_identity_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (identity);
+
+/***/ }),
+/* 96 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _identity; });
+function _identity(x) {
+  return x;
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 97 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
+/* harmony import */ var _internal_isFunction_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(62);
+/* harmony import */ var _internal_isString_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
+/* harmony import */ var _toString_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(98);
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _head = _interopRequireDefault(require("./head.js"));
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
 
-var _tail = _interopRequireDefault(require("./tail.js"));
 
-var _identity = _interopRequireDefault(require("./identity.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Performs left-to-right function composition using transforming function. The leftmost function may have
- * any arity; the remaining functions must be unary.
+ * Returns the result of concatenating the given lists or strings.
  *
- * **Note:** The result of pipeWith is not automatically curried.
+ * Note: `R.concat` expects both arguments to be of the same type,
+ * unlike the native `Array.prototype.concat` method. It will throw
+ * an error if you `concat` an Array with a non-Array value.
  *
- * @func
- * @memberOf R
- * @category Function
- * @sig ((* -> *), [((a, b, ..., n) -> o), (o -> p), ..., (x -> y), (y -> z)]) -> ((a, b, ..., n) -> z)
- * @param {...Function} functions
- * @return {Function}
- * @see R.composeWith, R.pipe
- * @example
- *
- *      const pipeWhileNotNil = R.pipeWith((f, res) => R.isNil(res) ? res : f(res));
- *      const f = pipeWhileNotNil([Math.pow, R.negate, R.inc])
- *
- *      f(3, 4); // -(3^4) + 1
- * @symb R.pipeWith(f)([g, h, i])(...args) = f(i, f(h, f(g, ...args)))
- */
-var pipeWith =
-/*#__PURE__*/
-(0, _curry.default)(function pipeWith(xf, list) {
-  if (list.length <= 0) {
-    return _identity.default;
-  }
-
-  var headList = (0, _head.default)(list);
-  var tailList = (0, _tail.default)(list);
-  return (0, _arity2.default)(headList.length, function () {
-    return (0, _reduce2.default)(function (result, f) {
-      return xf.call(this, f, result);
-    }, headList.apply(this, arguments), tailList);
-  });
-});
-var _default = pipeWith;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./head.js":"../node_modules/ramda/es/head.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./tail.js":"../node_modules/ramda/es/tail.js","./identity.js":"../node_modules/ramda/es/identity.js"}],"../node_modules/ramda/es/composeWith.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _pipeWith = _interopRequireDefault(require("./pipeWith.js"));
-
-var _reverse = _interopRequireDefault(require("./reverse.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Performs right-to-left function composition using transforming function. The rightmost function may have
- * any arity; the remaining functions must be unary.
- *
- * **Note:** The result of compose is not automatically curried.
- *
- * @func
- * @memberOf R
- * @category Function
- * @sig ((* -> *), [(y -> z), (x -> y), ..., (o -> p), ((a, b, ..., n) -> o)]) -> ((a, b, ..., n) -> z)
- * @param {...Function} ...functions The functions to compose
- * @return {Function}
- * @see R.compose, R.pipeWith
- * @example
- *
- *      const composeWhileNotNil = R.composeWith((f, res) => R.isNil(res) ? res : f(res));
- *
- *      composeWhileNotNil([R.inc, R.prop('age')])({age: 1}) //=> 2
- *      composeWhileNotNil([R.inc, R.prop('age')])({}) //=> undefined
- *
- * @symb R.composeWith(f)([g, h, i])(...args) = f(g, f(h, f(i, ...args)))
- */
-var composeWith =
-/*#__PURE__*/
-(0, _curry.default)(function composeWith(xf, list) {
-  return _pipeWith.default.apply(this, [xf, (0, _reverse.default)(list)]);
-});
-var _default = composeWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./pipeWith.js":"../node_modules/ramda/es/pipeWith.js","./reverse.js":"../node_modules/ramda/es/reverse.js"}],"../node_modules/ramda/es/internal/_arrayFromIterator.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _arrayFromIterator;
-
-function _arrayFromIterator(iter) {
-  var list = [];
-  var next;
-
-  while (!(next = iter.next()).done) {
-    list.push(next.value);
-  }
-
-  return list;
-}
-},{}],"../node_modules/ramda/es/internal/_includesWith.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _includesWith;
-
-function _includesWith(pred, x, list) {
-  var idx = 0;
-  var len = list.length;
-
-  while (idx < len) {
-    if (pred(x, list[idx])) {
-      return true;
-    }
-
-    idx += 1;
-  }
-
-  return false;
-}
-},{}],"../node_modules/ramda/es/internal/_functionName.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _functionName;
-
-function _functionName(f) {
-  // String(x => x) evaluates to "x => x", so the pattern may not match.
-  var match = String(f).match(/^function (\w*)/);
-  return match == null ? '' : match[1];
-}
-},{}],"../node_modules/ramda/es/internal/_objectIs.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-// Based on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-function _objectIs(a, b) {
-  // SameValue algorithm
-  if (a === b) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    return a !== 0 || 1 / a === 1 / b;
-  } else {
-    // Step 6.a: NaN == NaN
-    return a !== a && b !== b;
-  }
-}
-
-var _default = typeof Object.is === 'function' ? Object.is : _objectIs;
-
-exports.default = _default;
-},{}],"../node_modules/ramda/es/internal/_equals.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _equals;
-
-var _arrayFromIterator2 = _interopRequireDefault(require("./_arrayFromIterator.js"));
-
-var _includesWith2 = _interopRequireDefault(require("./_includesWith.js"));
-
-var _functionName2 = _interopRequireDefault(require("./_functionName.js"));
-
-var _has2 = _interopRequireDefault(require("./_has.js"));
-
-var _objectIs2 = _interopRequireDefault(require("./_objectIs.js"));
-
-var _keys = _interopRequireDefault(require("../keys.js"));
-
-var _type = _interopRequireDefault(require("../type.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * private _uniqContentEquals function.
- * That function is checking equality of 2 iterator contents with 2 assumptions
- * - iterators lengths are the same
- * - iterators values are unique
- *
- * false-positive result will be returned for comparision of, e.g.
- * - [1,2,3] and [1,2,3,4]
- * - [1,1,1] and [1,2,3]
- * */
-function _uniqContentEquals(aIterator, bIterator, stackA, stackB) {
-  var a = (0, _arrayFromIterator2.default)(aIterator);
-  var b = (0, _arrayFromIterator2.default)(bIterator);
-
-  function eq(_a, _b) {
-    return _equals(_a, _b, stackA.slice(), stackB.slice());
-  } // if *a* array contains any element that is not included in *b*
-
-
-  return !(0, _includesWith2.default)(function (b, aItem) {
-    return !(0, _includesWith2.default)(eq, aItem, b);
-  }, b, a);
-}
-
-function _equals(a, b, stackA, stackB) {
-  if ((0, _objectIs2.default)(a, b)) {
-    return true;
-  }
-
-  var typeA = (0, _type.default)(a);
-
-  if (typeA !== (0, _type.default)(b)) {
-    return false;
-  }
-
-  if (a == null || b == null) {
-    return false;
-  }
-
-  if (typeof a['fantasy-land/equals'] === 'function' || typeof b['fantasy-land/equals'] === 'function') {
-    return typeof a['fantasy-land/equals'] === 'function' && a['fantasy-land/equals'](b) && typeof b['fantasy-land/equals'] === 'function' && b['fantasy-land/equals'](a);
-  }
-
-  if (typeof a.equals === 'function' || typeof b.equals === 'function') {
-    return typeof a.equals === 'function' && a.equals(b) && typeof b.equals === 'function' && b.equals(a);
-  }
-
-  switch (typeA) {
-    case 'Arguments':
-    case 'Array':
-    case 'Object':
-      if (typeof a.constructor === 'function' && (0, _functionName2.default)(a.constructor) === 'Promise') {
-        return a === b;
-      }
-
-      break;
-
-    case 'Boolean':
-    case 'Number':
-    case 'String':
-      if (!(typeof a === typeof b && (0, _objectIs2.default)(a.valueOf(), b.valueOf()))) {
-        return false;
-      }
-
-      break;
-
-    case 'Date':
-      if (!(0, _objectIs2.default)(a.valueOf(), b.valueOf())) {
-        return false;
-      }
-
-      break;
-
-    case 'Error':
-      return a.name === b.name && a.message === b.message;
-
-    case 'RegExp':
-      if (!(a.source === b.source && a.global === b.global && a.ignoreCase === b.ignoreCase && a.multiline === b.multiline && a.sticky === b.sticky && a.unicode === b.unicode)) {
-        return false;
-      }
-
-      break;
-  }
-
-  var idx = stackA.length - 1;
-
-  while (idx >= 0) {
-    if (stackA[idx] === a) {
-      return stackB[idx] === b;
-    }
-
-    idx -= 1;
-  }
-
-  switch (typeA) {
-    case 'Map':
-      if (a.size !== b.size) {
-        return false;
-      }
-
-      return _uniqContentEquals(a.entries(), b.entries(), stackA.concat([a]), stackB.concat([b]));
-
-    case 'Set':
-      if (a.size !== b.size) {
-        return false;
-      }
-
-      return _uniqContentEquals(a.values(), b.values(), stackA.concat([a]), stackB.concat([b]));
-
-    case 'Arguments':
-    case 'Array':
-    case 'Object':
-    case 'Boolean':
-    case 'Number':
-    case 'String':
-    case 'Date':
-    case 'Error':
-    case 'RegExp':
-    case 'Int8Array':
-    case 'Uint8Array':
-    case 'Uint8ClampedArray':
-    case 'Int16Array':
-    case 'Uint16Array':
-    case 'Int32Array':
-    case 'Uint32Array':
-    case 'Float32Array':
-    case 'Float64Array':
-    case 'ArrayBuffer':
-      break;
-
-    default:
-      // Values of other types are only equal if identical.
-      return false;
-  }
-
-  var keysA = (0, _keys.default)(a);
-
-  if (keysA.length !== (0, _keys.default)(b).length) {
-    return false;
-  }
-
-  var extendedStackA = stackA.concat([a]);
-  var extendedStackB = stackB.concat([b]);
-  idx = keysA.length - 1;
-
-  while (idx >= 0) {
-    var key = keysA[idx];
-
-    if (!((0, _has2.default)(key, b) && _equals(b[key], a[key], extendedStackA, extendedStackB))) {
-      return false;
-    }
-
-    idx -= 1;
-  }
-
-  return true;
-}
-},{"./_arrayFromIterator.js":"../node_modules/ramda/es/internal/_arrayFromIterator.js","./_includesWith.js":"../node_modules/ramda/es/internal/_includesWith.js","./_functionName.js":"../node_modules/ramda/es/internal/_functionName.js","./_has.js":"../node_modules/ramda/es/internal/_has.js","./_objectIs.js":"../node_modules/ramda/es/internal/_objectIs.js","../keys.js":"../node_modules/ramda/es/keys.js","../type.js":"../node_modules/ramda/es/type.js"}],"../node_modules/ramda/es/equals.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _equals2 = _interopRequireDefault(require("./internal/_equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns `true` if its arguments are equivalent, `false` otherwise. Handles
- * cyclical data structures.
- *
- * Dispatches symmetrically to the `equals` methods of both arguments, if
- * present.
- *
- * @func
- * @memberOf R
- * @since v0.15.0
- * @category Relation
- * @sig a -> b -> Boolean
- * @param {*} a
- * @param {*} b
- * @return {Boolean}
- * @example
- *
- *      R.equals(1, 1); //=> true
- *      R.equals(1, '1'); //=> false
- *      R.equals([1, 2, 3], [1, 2, 3]); //=> true
- *
- *      const a = {}; a.v = a;
- *      const b = {}; b.v = b;
- *      R.equals(a, b); //=> true
- */
-var equals =
-/*#__PURE__*/
-(0, _curry.default)(function equals(a, b) {
-  return (0, _equals2.default)(a, b, [], []);
-});
-var _default = equals;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_equals.js":"../node_modules/ramda/es/internal/_equals.js"}],"../node_modules/ramda/es/internal/_indexOf.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _indexOf;
-
-var _equals = _interopRequireDefault(require("../equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _indexOf(list, a, idx) {
-  var inf, item; // Array.prototype.indexOf doesn't exist below IE9
-
-  if (typeof list.indexOf === 'function') {
-    switch (typeof a) {
-      case 'number':
-        if (a === 0) {
-          // manually crawl the list to distinguish between +0 and -0
-          inf = 1 / a;
-
-          while (idx < list.length) {
-            item = list[idx];
-
-            if (item === 0 && 1 / item === inf) {
-              return idx;
-            }
-
-            idx += 1;
-          }
-
-          return -1;
-        } else if (a !== a) {
-          // NaN
-          while (idx < list.length) {
-            item = list[idx];
-
-            if (typeof item === 'number' && item !== item) {
-              return idx;
-            }
-
-            idx += 1;
-          }
-
-          return -1;
-        } // non-zero numbers can utilise Set
-
-
-        return list.indexOf(a, idx);
-      // all these types can utilise Set
-
-      case 'string':
-      case 'boolean':
-      case 'function':
-      case 'undefined':
-        return list.indexOf(a, idx);
-
-      case 'object':
-        if (a === null) {
-          // null can utilise Set
-          return list.indexOf(a, idx);
-        }
-
-    }
-  } // anything else not covered above, defer to R.equals
-
-
-  while (idx < list.length) {
-    if ((0, _equals.default)(list[idx], a)) {
-      return idx;
-    }
-
-    idx += 1;
-  }
-
-  return -1;
-}
-},{"../equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/internal/_includes.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _includes;
-
-var _indexOf2 = _interopRequireDefault(require("./_indexOf.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _includes(a, list) {
-  return (0, _indexOf2.default)(list, a, 0) >= 0;
-}
-},{"./_indexOf.js":"../node_modules/ramda/es/internal/_indexOf.js"}],"../node_modules/ramda/es/internal/_quote.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _quote;
-
-function _quote(s) {
-  var escaped = s.replace(/\\/g, '\\\\').replace(/[\b]/g, '\\b') // \b matches word boundary; [\b] matches backspace
-  .replace(/\f/g, '\\f').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\v/g, '\\v').replace(/\0/g, '\\0');
-  return '"' + escaped.replace(/"/g, '\\"') + '"';
-}
-},{}],"../node_modules/ramda/es/internal/_toISOString.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-/**
- * Polyfill from <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString>.
- */
-var pad = function pad(n) {
-  return (n < 10 ? '0' : '') + n;
-};
-
-var _toISOString = typeof Date.prototype.toISOString === 'function' ? function _toISOString(d) {
-  return d.toISOString();
-} : function _toISOString(d) {
-  return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + '.' + (d.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) + 'Z';
-};
-
-var _default = _toISOString;
-exports.default = _default;
-},{}],"../node_modules/ramda/es/internal/_complement.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _complement;
-
-function _complement(f) {
-  return function () {
-    return !f.apply(this, arguments);
-  };
-}
-},{}],"../node_modules/ramda/es/internal/_filter.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _filter;
-
-function _filter(fn, list) {
-  var idx = 0;
-  var len = list.length;
-  var result = [];
-
-  while (idx < len) {
-    if (fn(list[idx])) {
-      result[result.length] = list[idx];
-    }
-
-    idx += 1;
-  }
-
-  return result;
-}
-},{}],"../node_modules/ramda/es/internal/_isObject.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _isObject;
-
-function _isObject(x) {
-  return Object.prototype.toString.call(x) === '[object Object]';
-}
-},{}],"../node_modules/ramda/es/internal/_xfilter.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XFilter =
-/*#__PURE__*/
-function () {
-  function XFilter(f, xf) {
-    this.xf = xf;
-    this.f = f;
-  }
-
-  XFilter.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XFilter.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XFilter.prototype['@@transducer/step'] = function (result, input) {
-    return this.f(input) ? this.xf['@@transducer/step'](result, input) : result;
-  };
-
-  return XFilter;
-}();
-
-var _xfilter =
-/*#__PURE__*/
-(0, _curry.default)(function _xfilter(f, xf) {
-  return new XFilter(f, xf);
-});
-
-var _default = _xfilter;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/filter.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _filter2 = _interopRequireDefault(require("./internal/_filter.js"));
-
-var _isObject2 = _interopRequireDefault(require("./internal/_isObject.js"));
-
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _xfilter2 = _interopRequireDefault(require("./internal/_xfilter.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Takes a predicate and a `Filterable`, and returns a new filterable of the
- * same type containing the members of the given filterable which satisfy the
- * given predicate. Filterable objects include plain objects or any object
- * that has a filter method such as `Array`.
- *
- * Dispatches to the `filter` method of the second argument, if present.
- *
- * Acts as a transducer if a transformer is given in list position.
+ * Dispatches to the `concat` method of the first argument, if present.
+ * Can also concatenate two members of a [fantasy-land
+ * compatible semigroup](https://github.com/fantasyland/fantasy-land#semigroup).
  *
  * @func
  * @memberOf R
  * @since v0.1.0
  * @category List
- * @sig Filterable f => (a -> Boolean) -> f a -> f a
- * @param {Function} pred
- * @param {Array} filterable
- * @return {Array} Filterable
- * @see R.reject, R.transduce, R.addIndex
+ * @sig [a] -> [a] -> [a]
+ * @sig String -> String -> String
+ * @param {Array|String} firstList The first list
+ * @param {Array|String} secondList The second list
+ * @return {Array|String} A list consisting of the elements of `firstList` followed by the elements of
+ * `secondList`.
+ *
  * @example
  *
- *      const isEven = n => n % 2 === 0;
- *
- *      R.filter(isEven, [1, 2, 3, 4]); //=> [2, 4]
- *
- *      R.filter(isEven, {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, d: 4}
+ *      R.concat('ABC', 'DEF'); // 'ABCDEF'
+ *      R.concat([4, 5, 6], [1, 2, 3]); //=> [4, 5, 6, 1, 2, 3]
+ *      R.concat([], []); //=> []
  */
-var filter =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['filter'], _xfilter2.default, function (pred, filterable) {
-  return (0, _isObject2.default)(filterable) ? (0, _reduce2.default)(function (acc, key) {
-    if (pred(filterable[key])) {
-      acc[key] = filterable[key];
+var concat = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function concat(a, b) {
+  if (Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(a)) {
+    if (Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(b)) {
+      return a.concat(b);
     }
-
-    return acc;
-  }, {}, (0, _keys.default)(filterable)) : // else
-  (0, _filter2.default)(pred, filterable);
-}));
-var _default = filter;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_filter.js":"../node_modules/ramda/es/internal/_filter.js","./internal/_isObject.js":"../node_modules/ramda/es/internal/_isObject.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./internal/_xfilter.js":"../node_modules/ramda/es/internal/_xfilter.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/reject.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _complement2 = _interopRequireDefault(require("./internal/_complement.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _filter = _interopRequireDefault(require("./filter.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * The complement of [`filter`](#filter).
- *
- * Acts as a transducer if a transformer is given in list position. Filterable
- * objects include plain objects or any object that has a filter method such
- * as `Array`.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category List
- * @sig Filterable f => (a -> Boolean) -> f a -> f a
- * @param {Function} pred
- * @param {Array} filterable
- * @return {Array}
- * @see R.filter, R.transduce, R.addIndex
- * @example
- *
- *      const isOdd = (n) => n % 2 === 1;
- *
- *      R.reject(isOdd, [1, 2, 3, 4]); //=> [2, 4]
- *
- *      R.reject(isOdd, {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, d: 4}
- */
-var reject =
-/*#__PURE__*/
-(0, _curry.default)(function reject(pred, filterable) {
-  return (0, _filter.default)((0, _complement2.default)(pred), filterable);
-});
-var _default = reject;
-exports.default = _default;
-},{"./internal/_complement.js":"../node_modules/ramda/es/internal/_complement.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./filter.js":"../node_modules/ramda/es/filter.js"}],"../node_modules/ramda/es/internal/_toString.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _toString;
-
-var _includes2 = _interopRequireDefault(require("./_includes.js"));
-
-var _map2 = _interopRequireDefault(require("./_map.js"));
-
-var _quote2 = _interopRequireDefault(require("./_quote.js"));
-
-var _toISOString2 = _interopRequireDefault(require("./_toISOString.js"));
-
-var _keys = _interopRequireDefault(require("../keys.js"));
-
-var _reject = _interopRequireDefault(require("../reject.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toString(x, seen) {
-  var recur = function recur(y) {
-    var xs = seen.concat([x]);
-    return (0, _includes2.default)(y, xs) ? '<Circular>' : _toString(y, xs);
-  }; //  mapPairs :: (Object, [String]) -> [String]
-
-
-  var mapPairs = function (obj, keys) {
-    return (0, _map2.default)(function (k) {
-      return (0, _quote2.default)(k) + ': ' + recur(obj[k]);
-    }, keys.slice().sort());
-  };
-
-  switch (Object.prototype.toString.call(x)) {
-    case '[object Arguments]':
-      return '(function() { return arguments; }(' + (0, _map2.default)(recur, x).join(', ') + '))';
-
-    case '[object Array]':
-      return '[' + (0, _map2.default)(recur, x).concat(mapPairs(x, (0, _reject.default)(function (k) {
-        return /^\d+$/.test(k);
-      }, (0, _keys.default)(x)))).join(', ') + ']';
-
-    case '[object Boolean]':
-      return typeof x === 'object' ? 'new Boolean(' + recur(x.valueOf()) + ')' : x.toString();
-
-    case '[object Date]':
-      return 'new Date(' + (isNaN(x.valueOf()) ? recur(NaN) : (0, _quote2.default)((0, _toISOString2.default)(x))) + ')';
-
-    case '[object Null]':
-      return 'null';
-
-    case '[object Number]':
-      return typeof x === 'object' ? 'new Number(' + recur(x.valueOf()) + ')' : 1 / x === -Infinity ? '-0' : x.toString(10);
-
-    case '[object String]':
-      return typeof x === 'object' ? 'new String(' + recur(x.valueOf()) + ')' : (0, _quote2.default)(x);
-
-    case '[object Undefined]':
-      return 'undefined';
-
-    default:
-      if (typeof x.toString === 'function') {
-        var repr = x.toString();
-
-        if (repr !== '[object Object]') {
-          return repr;
-        }
-      }
-
-      return '{' + mapPairs(x, (0, _keys.default)(x)).join(', ') + '}';
+    throw new TypeError(Object(_toString_js__WEBPACK_IMPORTED_MODULE_4__["default"])(b) + ' is not an array');
   }
-}
-},{"./_includes.js":"../node_modules/ramda/es/internal/_includes.js","./_map.js":"../node_modules/ramda/es/internal/_map.js","./_quote.js":"../node_modules/ramda/es/internal/_quote.js","./_toISOString.js":"../node_modules/ramda/es/internal/_toISOString.js","../keys.js":"../node_modules/ramda/es/keys.js","../reject.js":"../node_modules/ramda/es/reject.js"}],"../node_modules/ramda/es/toString.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+  if (Object(_internal_isString_js__WEBPACK_IMPORTED_MODULE_3__["default"])(a)) {
+    if (Object(_internal_isString_js__WEBPACK_IMPORTED_MODULE_3__["default"])(b)) {
+      return a + b;
+    }
+    throw new TypeError(Object(_toString_js__WEBPACK_IMPORTED_MODULE_4__["default"])(b) + ' is not a string');
+  }
+  if (a != null && Object(_internal_isFunction_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a['fantasy-land/concat'])) {
+    return a['fantasy-land/concat'](b);
+  }
+  if (a != null && Object(_internal_isFunction_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a.concat)) {
+    return a.concat(b);
+  }
+  throw new TypeError(Object(_toString_js__WEBPACK_IMPORTED_MODULE_4__["default"])(a) + ' does not have a method named "concat" or "fantasy-land/concat"');
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (concat);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+/***/ }),
+/* 98 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _toString2 = _interopRequireDefault(require("./internal/_toString.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_toString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Returns the string representation of the given value. `eval`'ing the output
@@ -5116,111 +4978,657 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.toString({foo: 1, bar: 2, baz: 3}); //=> '{"bar": 2, "baz": 3, "foo": 1}'
  *      R.toString(new Date('2001-02-03T04:05:06Z')); //=> 'new Date("2001-02-03T04:05:06.000Z")'
  */
-var toString =
-/*#__PURE__*/
-(0, _curry.default)(function toString(val) {
-  return (0, _toString2.default)(val, []);
+var toString = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function toString(val) {
+  return Object(_internal_toString_js__WEBPACK_IMPORTED_MODULE_1__["default"])(val, []);
 });
-var _default = toString;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_toString.js":"../node_modules/ramda/es/internal/_toString.js"}],"../node_modules/ramda/es/concat.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (toString);
+
+/***/ }),
+/* 99 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _toString; });
+/* harmony import */ var _includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(100);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var _quote_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(108);
+/* harmony import */ var _toISOString_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(109);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34);
+/* harmony import */ var _reject_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(110);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _isArray2 = _interopRequireDefault(require("./internal/_isArray.js"));
 
-var _isFunction2 = _interopRequireDefault(require("./internal/_isFunction.js"));
 
-var _isString2 = _interopRequireDefault(require("./internal/_isString.js"));
 
-var _toString = _interopRequireDefault(require("./toString.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _toString(x, seen) {
+  var recur = function recur(y) {
+    var xs = seen.concat([x]);
+    return Object(_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"])(y, xs) ? '<Circular>' : _toString(y, xs);
+  };
+
+  //  mapPairs :: (Object, [String]) -> [String]
+  var mapPairs = function (obj, keys) {
+    return Object(_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (k) {
+      return Object(_quote_js__WEBPACK_IMPORTED_MODULE_2__["default"])(k) + ': ' + recur(obj[k]);
+    }, keys.slice().sort());
+  };
+
+  switch (Object.prototype.toString.call(x)) {
+    case '[object Arguments]':
+      return '(function() { return arguments; }(' + Object(_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(recur, x).join(', ') + '))';
+    case '[object Array]':
+      return '[' + Object(_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(recur, x).concat(mapPairs(x, Object(_reject_js__WEBPACK_IMPORTED_MODULE_5__["default"])(function (k) {
+        return (/^\d+$/.test(k)
+        );
+      }, Object(_keys_js__WEBPACK_IMPORTED_MODULE_4__["default"])(x)))).join(', ') + ']';
+    case '[object Boolean]':
+      return typeof x === 'object' ? 'new Boolean(' + recur(x.valueOf()) + ')' : x.toString();
+    case '[object Date]':
+      return 'new Date(' + (isNaN(x.valueOf()) ? recur(NaN) : Object(_quote_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_toISOString_js__WEBPACK_IMPORTED_MODULE_3__["default"])(x))) + ')';
+    case '[object Null]':
+      return 'null';
+    case '[object Number]':
+      return typeof x === 'object' ? 'new Number(' + recur(x.valueOf()) + ')' : 1 / x === -Infinity ? '-0' : x.toString(10);
+    case '[object String]':
+      return typeof x === 'object' ? 'new String(' + recur(x.valueOf()) + ')' : Object(_quote_js__WEBPACK_IMPORTED_MODULE_2__["default"])(x);
+    case '[object Undefined]':
+      return 'undefined';
+    default:
+      if (typeof x.toString === 'function') {
+        var repr = x.toString();
+        if (repr !== '[object Object]') {
+          return repr;
+        }
+      }
+      return '{' + mapPairs(x, Object(_keys_js__WEBPACK_IMPORTED_MODULE_4__["default"])(x)).join(', ') + '}';
+  }
+}
+
+/***/ }),
+/* 100 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _includes; });
+/* harmony import */ var _indexOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(101);
+
+
+function _includes(a, list) {
+  return Object(_indexOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list, a, 0) >= 0;
+}
+
+/***/ }),
+/* 101 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _indexOf; });
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(102);
+
+
+function _indexOf(list, a, idx) {
+  var inf, item;
+  // Array.prototype.indexOf doesn't exist below IE9
+  if (typeof list.indexOf === 'function') {
+    switch (typeof a) {
+      case 'number':
+        if (a === 0) {
+          // manually crawl the list to distinguish between +0 and -0
+          inf = 1 / a;
+          while (idx < list.length) {
+            item = list[idx];
+            if (item === 0 && 1 / item === inf) {
+              return idx;
+            }
+            idx += 1;
+          }
+          return -1;
+        } else if (a !== a) {
+          // NaN
+          while (idx < list.length) {
+            item = list[idx];
+            if (typeof item === 'number' && item !== item) {
+              return idx;
+            }
+            idx += 1;
+          }
+          return -1;
+        }
+        // non-zero numbers can utilise Set
+        return list.indexOf(a, idx);
+
+      // all these types can utilise Set
+      case 'string':
+      case 'boolean':
+      case 'function':
+      case 'undefined':
+        return list.indexOf(a, idx);
+
+      case 'object':
+        if (a === null) {
+          // null can utilise Set
+          return list.indexOf(a, idx);
+        }
+    }
+  }
+  // anything else not covered above, defer to R.equals
+  while (idx < list.length) {
+    if (Object(_equals_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list[idx], a)) {
+      return idx;
+    }
+    idx += 1;
+  }
+  return -1;
+}
+
+/***/ }),
+/* 102 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(103);
+
+
 
 /**
- * Returns the result of concatenating the given lists or strings.
+ * Returns `true` if its arguments are equivalent, `false` otherwise. Handles
+ * cyclical data structures.
  *
- * Note: `R.concat` expects both arguments to be of the same type,
- * unlike the native `Array.prototype.concat` method. It will throw
- * an error if you `concat` an Array with a non-Array value.
+ * Dispatches symmetrically to the `equals` methods of both arguments, if
+ * present.
  *
- * Dispatches to the `concat` method of the first argument, if present.
- * Can also concatenate two members of a [fantasy-land
- * compatible semigroup](https://github.com/fantasyland/fantasy-land#semigroup).
+ * @func
+ * @memberOf R
+ * @since v0.15.0
+ * @category Relation
+ * @sig a -> b -> Boolean
+ * @param {*} a
+ * @param {*} b
+ * @return {Boolean}
+ * @example
+ *
+ *      R.equals(1, 1); //=> true
+ *      R.equals(1, '1'); //=> false
+ *      R.equals([1, 2, 3], [1, 2, 3]); //=> true
+ *
+ *      const a = {}; a.v = a;
+ *      const b = {}; b.v = b;
+ *      R.equals(a, b); //=> true
+ */
+var equals = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function equals(a, b) {
+  return Object(_internal_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(a, b, [], []);
+});
+/* harmony default export */ __webpack_exports__["default"] = (equals);
+
+/***/ }),
+/* 103 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _equals; });
+/* harmony import */ var _arrayFromIterator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(104);
+/* harmony import */ var _includesWith_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(105);
+/* harmony import */ var _functionName_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(106);
+/* harmony import */ var _has_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(35);
+/* harmony import */ var _objectIs_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(107);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(34);
+/* harmony import */ var _type_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(76);
+
+
+
+
+
+
+
+
+/**
+ * private _uniqContentEquals function.
+ * That function is checking equality of 2 iterator contents with 2 assumptions
+ * - iterators lengths are the same
+ * - iterators values are unique
+ *
+ * false-positive result will be returned for comparision of, e.g.
+ * - [1,2,3] and [1,2,3,4]
+ * - [1,1,1] and [1,2,3]
+ * */
+
+function _uniqContentEquals(aIterator, bIterator, stackA, stackB) {
+  var a = Object(_arrayFromIterator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(aIterator);
+  var b = Object(_arrayFromIterator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(bIterator);
+
+  function eq(_a, _b) {
+    return _equals(_a, _b, stackA.slice(), stackB.slice());
+  }
+
+  // if *a* array contains any element that is not included in *b*
+  return !Object(_includesWith_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (b, aItem) {
+    return !Object(_includesWith_js__WEBPACK_IMPORTED_MODULE_1__["default"])(eq, aItem, b);
+  }, b, a);
+}
+
+function _equals(a, b, stackA, stackB) {
+  if (Object(_objectIs_js__WEBPACK_IMPORTED_MODULE_4__["default"])(a, b)) {
+    return true;
+  }
+
+  var typeA = Object(_type_js__WEBPACK_IMPORTED_MODULE_6__["default"])(a);
+
+  if (typeA !== Object(_type_js__WEBPACK_IMPORTED_MODULE_6__["default"])(b)) {
+    return false;
+  }
+
+  if (a == null || b == null) {
+    return false;
+  }
+
+  if (typeof a['fantasy-land/equals'] === 'function' || typeof b['fantasy-land/equals'] === 'function') {
+    return typeof a['fantasy-land/equals'] === 'function' && a['fantasy-land/equals'](b) && typeof b['fantasy-land/equals'] === 'function' && b['fantasy-land/equals'](a);
+  }
+
+  if (typeof a.equals === 'function' || typeof b.equals === 'function') {
+    return typeof a.equals === 'function' && a.equals(b) && typeof b.equals === 'function' && b.equals(a);
+  }
+
+  switch (typeA) {
+    case 'Arguments':
+    case 'Array':
+    case 'Object':
+      if (typeof a.constructor === 'function' && Object(_functionName_js__WEBPACK_IMPORTED_MODULE_2__["default"])(a.constructor) === 'Promise') {
+        return a === b;
+      }
+      break;
+    case 'Boolean':
+    case 'Number':
+    case 'String':
+      if (!(typeof a === typeof b && Object(_objectIs_js__WEBPACK_IMPORTED_MODULE_4__["default"])(a.valueOf(), b.valueOf()))) {
+        return false;
+      }
+      break;
+    case 'Date':
+      if (!Object(_objectIs_js__WEBPACK_IMPORTED_MODULE_4__["default"])(a.valueOf(), b.valueOf())) {
+        return false;
+      }
+      break;
+    case 'Error':
+      return a.name === b.name && a.message === b.message;
+    case 'RegExp':
+      if (!(a.source === b.source && a.global === b.global && a.ignoreCase === b.ignoreCase && a.multiline === b.multiline && a.sticky === b.sticky && a.unicode === b.unicode)) {
+        return false;
+      }
+      break;
+  }
+
+  var idx = stackA.length - 1;
+  while (idx >= 0) {
+    if (stackA[idx] === a) {
+      return stackB[idx] === b;
+    }
+    idx -= 1;
+  }
+
+  switch (typeA) {
+    case 'Map':
+      if (a.size !== b.size) {
+        return false;
+      }
+
+      return _uniqContentEquals(a.entries(), b.entries(), stackA.concat([a]), stackB.concat([b]));
+    case 'Set':
+      if (a.size !== b.size) {
+        return false;
+      }
+
+      return _uniqContentEquals(a.values(), b.values(), stackA.concat([a]), stackB.concat([b]));
+    case 'Arguments':
+    case 'Array':
+    case 'Object':
+    case 'Boolean':
+    case 'Number':
+    case 'String':
+    case 'Date':
+    case 'Error':
+    case 'RegExp':
+    case 'Int8Array':
+    case 'Uint8Array':
+    case 'Uint8ClampedArray':
+    case 'Int16Array':
+    case 'Uint16Array':
+    case 'Int32Array':
+    case 'Uint32Array':
+    case 'Float32Array':
+    case 'Float64Array':
+    case 'ArrayBuffer':
+      break;
+    default:
+      // Values of other types are only equal if identical.
+      return false;
+  }
+
+  var keysA = Object(_keys_js__WEBPACK_IMPORTED_MODULE_5__["default"])(a);
+  if (keysA.length !== Object(_keys_js__WEBPACK_IMPORTED_MODULE_5__["default"])(b).length) {
+    return false;
+  }
+
+  var extendedStackA = stackA.concat([a]);
+  var extendedStackB = stackB.concat([b]);
+
+  idx = keysA.length - 1;
+  while (idx >= 0) {
+    var key = keysA[idx];
+    if (!(Object(_has_js__WEBPACK_IMPORTED_MODULE_3__["default"])(key, b) && _equals(b[key], a[key], extendedStackA, extendedStackB))) {
+      return false;
+    }
+    idx -= 1;
+  }
+  return true;
+}
+
+/***/ }),
+/* 104 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _arrayFromIterator; });
+function _arrayFromIterator(iter) {
+  var list = [];
+  var next;
+  while (!(next = iter.next()).done) {
+    list.push(next.value);
+  }
+  return list;
+}
+
+/***/ }),
+/* 105 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _includesWith; });
+function _includesWith(pred, x, list) {
+  var idx = 0;
+  var len = list.length;
+
+  while (idx < len) {
+    if (pred(x, list[idx])) {
+      return true;
+    }
+    idx += 1;
+  }
+  return false;
+}
+
+/***/ }),
+/* 106 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _functionName; });
+function _functionName(f) {
+  // String(x => x) evaluates to "x => x", so the pattern may not match.
+  var match = String(f).match(/^function (\w*)/);
+  return match == null ? '' : match[1];
+}
+
+/***/ }),
+/* 107 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Based on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+function _objectIs(a, b) {
+  // SameValue algorithm
+  if (a === b) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    return a !== 0 || 1 / a === 1 / b;
+  } else {
+    // Step 6.a: NaN == NaN
+    return a !== a && b !== b;
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (typeof Object.is === 'function' ? Object.is : _objectIs);
+
+/***/ }),
+/* 108 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _quote; });
+function _quote(s) {
+  var escaped = s.replace(/\\/g, '\\\\').replace(/[\b]/g, '\\b') // \b matches word boundary; [\b] matches backspace
+  .replace(/\f/g, '\\f').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\v/g, '\\v').replace(/\0/g, '\\0');
+
+  return '"' + escaped.replace(/"/g, '\\"') + '"';
+}
+
+/***/ }),
+/* 109 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * Polyfill from <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString>.
+ */
+var pad = function pad(n) {
+  return (n < 10 ? '0' : '') + n;
+};
+
+var _toISOString = typeof Date.prototype.toISOString === 'function' ? function _toISOString(d) {
+  return d.toISOString();
+} : function _toISOString(d) {
+  return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + '.' + (d.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) + 'Z';
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (_toISOString);
+
+/***/ }),
+/* 110 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_complement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(111);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(112);
+
+
+
+
+/**
+ * The complement of [`filter`](#filter).
+ *
+ * Acts as a transducer if a transformer is given in list position. Filterable
+ * objects include plain objects or any object that has a filter method such
+ * as `Array`.
  *
  * @func
  * @memberOf R
  * @since v0.1.0
  * @category List
- * @sig [a] -> [a] -> [a]
- * @sig String -> String -> String
- * @param {Array|String} firstList The first list
- * @param {Array|String} secondList The second list
- * @return {Array|String} A list consisting of the elements of `firstList` followed by the elements of
- * `secondList`.
- *
+ * @sig Filterable f => (a -> Boolean) -> f a -> f a
+ * @param {Function} pred
+ * @param {Array} filterable
+ * @return {Array}
+ * @see R.filter, R.transduce, R.addIndex
  * @example
  *
- *      R.concat('ABC', 'DEF'); // 'ABCDEF'
- *      R.concat([4, 5, 6], [1, 2, 3]); //=> [4, 5, 6, 1, 2, 3]
- *      R.concat([], []); //=> []
+ *      const isOdd = (n) => n % 2 === 1;
+ *
+ *      R.reject(isOdd, [1, 2, 3, 4]); //=> [2, 4]
+ *
+ *      R.reject(isOdd, {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, d: 4}
  */
-var concat =
-/*#__PURE__*/
-(0, _curry.default)(function concat(a, b) {
-  if ((0, _isArray2.default)(a)) {
-    if ((0, _isArray2.default)(b)) {
-      return a.concat(b);
-    }
-
-    throw new TypeError((0, _toString.default)(b) + ' is not an array');
-  }
-
-  if ((0, _isString2.default)(a)) {
-    if ((0, _isString2.default)(b)) {
-      return a + b;
-    }
-
-    throw new TypeError((0, _toString.default)(b) + ' is not a string');
-  }
-
-  if (a != null && (0, _isFunction2.default)(a['fantasy-land/concat'])) {
-    return a['fantasy-land/concat'](b);
-  }
-
-  if (a != null && (0, _isFunction2.default)(a.concat)) {
-    return a.concat(b);
-  }
-
-  throw new TypeError((0, _toString.default)(a) + ' does not have a method named "concat" or "fantasy-land/concat"');
+var reject = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function reject(pred, filterable) {
+  return Object(_filter_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_internal_complement_js__WEBPACK_IMPORTED_MODULE_0__["default"])(pred), filterable);
 });
-var _default = concat;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./internal/_isFunction.js":"../node_modules/ramda/es/internal/_isFunction.js","./internal/_isString.js":"../node_modules/ramda/es/internal/_isString.js","./toString.js":"../node_modules/ramda/es/toString.js"}],"../node_modules/ramda/es/cond.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (reject);
+
+/***/ }),
+/* 111 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _complement; });
+function _complement(f) {
+  return function () {
+    return !f.apply(this, arguments);
+  };
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+/***/ }),
+/* 112 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(113);
+/* harmony import */ var _internal_isObject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(114);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(28);
+/* harmony import */ var _internal_xfilter_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(115);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34);
+
+
+
+
+
+
+
+
+/**
+ * Takes a predicate and a `Filterable`, and returns a new filterable of the
+ * same type containing the members of the given filterable which satisfy the
+ * given predicate. Filterable objects include plain objects or any object
+ * that has a filter method such as `Array`.
+ *
+ * Dispatches to the `filter` method of the second argument, if present.
+ *
+ * Acts as a transducer if a transformer is given in list position.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig Filterable f => (a -> Boolean) -> f a -> f a
+ * @param {Function} pred
+ * @param {Array} filterable
+ * @return {Array} Filterable
+ * @see R.reject, R.transduce, R.addIndex
+ * @example
+ *
+ *      const isEven = n => n % 2 === 0;
+ *
+ *      R.filter(isEven, [1, 2, 3, 4]); //=> [2, 4]
+ *
+ *      R.filter(isEven, {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, d: 4}
+ */
+var filter = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['filter'], _internal_xfilter_js__WEBPACK_IMPORTED_MODULE_5__["default"], function (pred, filterable) {
+  return Object(_internal_isObject_js__WEBPACK_IMPORTED_MODULE_3__["default"])(filterable) ? Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_4__["default"])(function (acc, key) {
+    if (pred(filterable[key])) {
+      acc[key] = filterable[key];
+    }
+    return acc;
+  }, {}, Object(_keys_js__WEBPACK_IMPORTED_MODULE_6__["default"])(filterable)) :
+  // else
+  Object(_internal_filter_js__WEBPACK_IMPORTED_MODULE_2__["default"])(pred, filterable);
+}));
+/* harmony default export */ __webpack_exports__["default"] = (filter);
+
+/***/ }),
+/* 113 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _filter; });
+function _filter(fn, list) {
+  var idx = 0;
+  var len = list.length;
+  var result = [];
+
+  while (idx < len) {
+    if (fn(list[idx])) {
+      result[result.length] = list[idx];
+    }
+    idx += 1;
+  }
+  return result;
+}
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isObject; });
+function _isObject(x) {
+  return Object.prototype.toString.call(x) === '[object Object]';
+}
+
+/***/ }),
+/* 115 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
+
+
+
+var XFilter = /*#__PURE__*/function () {
+  function XFilter(f, xf) {
+    this.xf = xf;
+    this.f = f;
+  }
+  XFilter.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XFilter.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].result;
+  XFilter.prototype['@@transducer/step'] = function (result, input) {
+    return this.f(input) ? this.xf['@@transducer/step'](result, input) : result;
+  };
+
+  return XFilter;
+}();
+
+var _xfilter = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xfilter(f, xf) {
+  return new XFilter(f, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xfilter);
 
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
+/* harmony import */ var _max_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(39);
 
-var _map = _interopRequireDefault(require("./map.js"));
 
-var _max = _interopRequireDefault(require("./max.js"));
 
-var _reduce = _interopRequireDefault(require("./reduce.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Returns a function, `fn`, which encapsulates `if/else, if/else, ...` logic.
@@ -5249,41 +5657,82 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      fn(50); //=> 'nothing special happens at 50°C'
  *      fn(100); //=> 'water boils at 100°C'
  */
-var cond =
-/*#__PURE__*/
-(0, _curry.default)(function cond(pairs) {
-  var arity = (0, _reduce.default)(_max.default, 0, (0, _map.default)(function (pair) {
+var cond = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function cond(pairs) {
+  var arity = Object(_reduce_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_max_js__WEBPACK_IMPORTED_MODULE_3__["default"], 0, Object(_map_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function (pair) {
     return pair[0].length;
   }, pairs));
-  return (0, _arity2.default)(arity, function () {
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arity, function () {
     var idx = 0;
-
     while (idx < pairs.length) {
       if (pairs[idx][0].apply(this, arguments)) {
         return pairs[idx][1].apply(this, arguments);
       }
-
       idx += 1;
     }
   });
 });
-var _default = cond;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./map.js":"../node_modules/ramda/es/map.js","./max.js":"../node_modules/ramda/es/max.js","./reduce.js":"../node_modules/ramda/es/reduce.js"}],"../node_modules/ramda/es/constructN.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (cond);
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _constructN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(118);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Wraps a constructor function inside a curried function that can be called
+ * with the same arguments and returns the same type.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Function
+ * @sig (* -> {*}) -> (* -> {*})
+ * @param {Function} fn The constructor function to wrap.
+ * @return {Function} A wrapped, curried constructor function.
+ * @see R.invoker
+ * @example
+ *
+ *      // Constructor function
+ *      function Animal(kind) {
+ *        this.kind = kind;
+ *      };
+ *      Animal.prototype.sighting = function() {
+ *        return "It's a " + this.kind + "!";
+ *      }
+ *
+ *      const AnimalConstructor = R.construct(Animal)
+ *
+ *      // Notice we no longer need the 'new' keyword:
+ *      AnimalConstructor('Pig'); //=> {"kind": "Pig", "sighting": function (){...}};
+ *
+ *      const animalTypes = ["Lion", "Tiger", "Bear"];
+ *      const animalSighting = R.invoker(0, 'sighting');
+ *      const sightNewAnimal = R.compose(animalSighting, AnimalConstructor);
+ *      R.map(sightNewAnimal, animalTypes); //=> ["It's a Lion!", "It's a Tiger!", "It's a Bear!"]
+ */
+var construct = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function construct(Fn) {
+  return Object(_constructN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Fn.length, Fn);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (construct);
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry3 = _interopRequireDefault(require("./curry.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _curry_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(66);
+/* harmony import */ var _nAry_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(60);
 
-var _nAry = _interopRequireDefault(require("./nAry.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Wraps a constructor function inside a curried function that can be called
@@ -5320,121 +5769,52 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // Add a dollop of Potato Chips
  *      // Add a dollop of Ketchup
  */
-var constructN =
-/*#__PURE__*/
-(0, _curry.default)(function constructN(n, Fn) {
+var constructN = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function constructN(n, Fn) {
   if (n > 10) {
     throw new Error('Constructor with greater than ten arguments');
   }
-
   if (n === 0) {
     return function () {
       return new Fn();
     };
   }
-
-  return (0, _curry3.default)((0, _nAry.default)(n, function ($0, $1, $2, $3, $4, $5, $6, $7, $8, $9) {
+  return Object(_curry_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_nAry_js__WEBPACK_IMPORTED_MODULE_2__["default"])(n, function ($0, $1, $2, $3, $4, $5, $6, $7, $8, $9) {
     switch (arguments.length) {
       case 1:
         return new Fn($0);
-
       case 2:
         return new Fn($0, $1);
-
       case 3:
         return new Fn($0, $1, $2);
-
       case 4:
         return new Fn($0, $1, $2, $3);
-
       case 5:
         return new Fn($0, $1, $2, $3, $4);
-
       case 6:
         return new Fn($0, $1, $2, $3, $4, $5);
-
       case 7:
         return new Fn($0, $1, $2, $3, $4, $5, $6);
-
       case 8:
         return new Fn($0, $1, $2, $3, $4, $5, $6, $7);
-
       case 9:
         return new Fn($0, $1, $2, $3, $4, $5, $6, $7, $8);
-
       case 10:
         return new Fn($0, $1, $2, $3, $4, $5, $6, $7, $8, $9);
     }
   }));
 });
-var _default = constructN;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./curry.js":"../node_modules/ramda/es/curry.js","./nAry.js":"../node_modules/ramda/es/nAry.js"}],"../node_modules/ramda/es/construct.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (constructN);
+
+/***/ }),
+/* 119 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(100);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _constructN = _interopRequireDefault(require("./constructN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Wraps a constructor function inside a curried function that can be called
- * with the same arguments and returns the same type.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Function
- * @sig (* -> {*}) -> (* -> {*})
- * @param {Function} fn The constructor function to wrap.
- * @return {Function} A wrapped, curried constructor function.
- * @see R.invoker
- * @example
- *
- *      // Constructor function
- *      function Animal(kind) {
- *        this.kind = kind;
- *      };
- *      Animal.prototype.sighting = function() {
- *        return "It's a " + this.kind + "!";
- *      }
- *
- *      const AnimalConstructor = R.construct(Animal)
- *
- *      // Notice we no longer need the 'new' keyword:
- *      AnimalConstructor('Pig'); //=> {"kind": "Pig", "sighting": function (){...}};
- *
- *      const animalTypes = ["Lion", "Tiger", "Bear"];
- *      const animalSighting = R.invoker(0, 'sighting');
- *      const sightNewAnimal = R.compose(animalSighting, AnimalConstructor);
- *      R.map(sightNewAnimal, animalTypes); //=> ["It's a Lion!", "It's a Tiger!", "It's a Bear!"]
- */
-var construct =
-/*#__PURE__*/
-(0, _curry.default)(function construct(Fn) {
-  return (0, _constructN.default)(Fn.length, Fn);
-});
-var _default = construct;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./constructN.js":"../node_modules/ramda/es/constructN.js"}],"../node_modules/ramda/es/contains.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _includes2 = _interopRequireDefault(require("./internal/_includes.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the specified value is equal, in [`R.equals`](#equals)
@@ -5459,32 +5839,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.contains([42], [[42]]); //=> true
  *      R.contains('ba', 'banana'); //=>true
  */
-var contains =
-/*#__PURE__*/
-(0, _curry.default)(_includes2.default);
-var _default = contains;
-exports.default = _default;
-},{"./internal/_includes.js":"../node_modules/ramda/es/internal/_includes.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/converge.js":[function(require,module,exports) {
+var contains = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_internal_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (contains);
+
+/***/ }),
+/* 120 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+/* harmony import */ var _max_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
+/* harmony import */ var _pluck_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(25);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(39);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _map2 = _interopRequireDefault(require("./internal/_map.js"));
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
 
-var _max = _interopRequireDefault(require("./max.js"));
 
-var _pluck = _interopRequireDefault(require("./pluck.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Accepts a converging function and a list of branching functions and returns
@@ -5514,103 +5889,71 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @symb R.converge(f, [g, h])(a, b) = f(g(a, b), h(a, b))
  */
-var converge =
-/*#__PURE__*/
-(0, _curry.default)(function converge(after, fns) {
-  return (0, _curryN.default)((0, _reduce.default)(_max.default, 0, (0, _pluck.default)('length', fns)), function () {
+var converge = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function converge(after, fns) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_reduce_js__WEBPACK_IMPORTED_MODULE_5__["default"])(_max_js__WEBPACK_IMPORTED_MODULE_3__["default"], 0, Object(_pluck_js__WEBPACK_IMPORTED_MODULE_4__["default"])('length', fns)), function () {
     var args = arguments;
     var context = this;
-    return after.apply(context, (0, _map2.default)(function (fn) {
+    return after.apply(context, Object(_internal_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (fn) {
       return fn.apply(context, args);
     }, fns));
   });
 });
-var _default = converge;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_map.js":"../node_modules/ramda/es/internal/_map.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./max.js":"../node_modules/ramda/es/max.js","./pluck.js":"../node_modules/ramda/es/pluck.js","./reduce.js":"../node_modules/ramda/es/reduce.js"}],"../node_modules/ramda/es/internal/_xreduceBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (converge);
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _reduceBy_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(122);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curryN2 = _interopRequireDefault(require("./_curryN.js"));
+/**
+ * Counts the elements of a list according to how many match each value of a
+ * key generated by the supplied function. Returns an object mapping the keys
+ * produced by `fn` to the number of occurrences in the list. Note that all
+ * keys are coerced to strings because of how JavaScript objects work.
+ *
+ * Acts as a transducer if a transformer is given in list position.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Relation
+ * @sig (a -> String) -> [a] -> {*}
+ * @param {Function} fn The function used to map values to keys.
+ * @param {Array} list The list to count elements from.
+ * @return {Object} An object mapping keys to number of occurrences in the list.
+ * @example
+ *
+ *      const numbers = [1.0, 1.1, 1.2, 2.0, 3.0, 2.2];
+ *      R.countBy(Math.floor)(numbers);    //=> {'1': 3, '2': 2, '3': 1}
+ *
+ *      const letters = ['a', 'b', 'A', 'a', 'B', 'c'];
+ *      R.countBy(R.toLower)(letters);   //=> {'a': 3, 'b': 2, 'c': 1}
+ */
+var countBy = /*#__PURE__*/Object(_reduceBy_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (acc, elem) {
+  return acc + 1;
+}, 0);
+/* harmony default export */ __webpack_exports__["default"] = (countBy);
 
-var _has2 = _interopRequireDefault(require("./_has.js"));
+/***/ }),
+/* 122 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XReduceBy =
-/*#__PURE__*/
-function () {
-  function XReduceBy(valueFn, valueAcc, keyFn, xf) {
-    this.valueFn = valueFn;
-    this.valueAcc = valueAcc;
-    this.keyFn = keyFn;
-    this.xf = xf;
-    this.inputs = {};
-  }
-
-  XReduceBy.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XReduceBy.prototype['@@transducer/result'] = function (result) {
-    var key;
-
-    for (key in this.inputs) {
-      if ((0, _has2.default)(key, this.inputs)) {
-        result = this.xf['@@transducer/step'](result, this.inputs[key]);
-
-        if (result['@@transducer/reduced']) {
-          result = result['@@transducer/value'];
-          break;
-        }
-      }
-    }
-
-    this.inputs = null;
-    return this.xf['@@transducer/result'](result);
-  };
-
-  XReduceBy.prototype['@@transducer/step'] = function (result, input) {
-    var key = this.keyFn(input);
-    this.inputs[key] = this.inputs[key] || [key, this.valueAcc];
-    this.inputs[key][1] = this.valueFn(this.inputs[key][1], input);
-    return result;
-  };
-
-  return XReduceBy;
-}();
-
-var _xreduceBy =
-/*#__PURE__*/
-(0, _curryN2.default)(4, [], function _xreduceBy(valueFn, valueAcc, keyFn, xf) {
-  return new XReduceBy(valueFn, valueAcc, keyFn, xf);
-});
-
-var _default = _xreduceBy;
-exports.default = _default;
-},{"./_curryN.js":"../node_modules/ramda/es/internal/_curryN.js","./_has.js":"../node_modules/ramda/es/internal/_has.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/reduceBy.js":[function(require,module,exports) {
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curryN_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28);
+/* harmony import */ var _internal_xreduceBy_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(123);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curryN2 = _interopRequireDefault(require("./internal/_curryN.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
 
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _xreduceBy2 = _interopRequireDefault(require("./internal/_xreduceBy.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Groups the elements of the list according to the result of calling
@@ -5653,73 +5996,74 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      reduceBy(groupNames, [], toGrade, students)
  *      //=> {"A": ["Dora"], "B": ["Abby", "Curt"], "F": ["Bart"]}
  */
-var reduceBy =
-/*#__PURE__*/
-(0, _curryN2.default)(4, [],
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xreduceBy2.default, function reduceBy(valueFn, valueAcc, keyFn, list) {
-  return (0, _reduce2.default)(function (acc, elt) {
+var reduceBy = /*#__PURE__*/Object(_internal_curryN_js__WEBPACK_IMPORTED_MODULE_0__["default"])(4, [], /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xreduceBy_js__WEBPACK_IMPORTED_MODULE_4__["default"], function reduceBy(valueFn, valueAcc, keyFn, list) {
+  return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__["default"])(function (acc, elt) {
     var key = keyFn(elt);
-    acc[key] = valueFn((0, _has2.default)(key, acc) ? acc[key] : valueAcc, elt);
+    acc[key] = valueFn(Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_2__["default"])(key, acc) ? acc[key] : valueAcc, elt);
     return acc;
   }, {}, list);
 }));
-var _default = reduceBy;
-exports.default = _default;
-},{"./internal/_curryN.js":"../node_modules/ramda/es/internal/_curryN.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./internal/_xreduceBy.js":"../node_modules/ramda/es/internal/_xreduceBy.js"}],"../node_modules/ramda/es/countBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (reduceBy);
+
+/***/ }),
+/* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+var XReduceBy = /*#__PURE__*/function () {
+  function XReduceBy(valueFn, valueAcc, keyFn, xf) {
+    this.valueFn = valueFn;
+    this.valueAcc = valueAcc;
+    this.keyFn = keyFn;
+    this.xf = xf;
+    this.inputs = {};
+  }
+  XReduceBy.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XReduceBy.prototype['@@transducer/result'] = function (result) {
+    var key;
+    for (key in this.inputs) {
+      if (Object(_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(key, this.inputs)) {
+        result = this.xf['@@transducer/step'](result, this.inputs[key]);
+        if (result['@@transducer/reduced']) {
+          result = result['@@transducer/value'];
+          break;
+        }
+      }
+    }
+    this.inputs = null;
+    return this.xf['@@transducer/result'](result);
+  };
+  XReduceBy.prototype['@@transducer/step'] = function (result, input) {
+    var key = this.keyFn(input);
+    this.inputs[key] = this.inputs[key] || [key, this.valueAcc];
+    this.inputs[key][1] = this.valueFn(this.inputs[key][1], input);
+    return result;
+  };
+
+  return XReduceBy;
+}();
+
+var _xreduceBy = /*#__PURE__*/Object(_curryN_js__WEBPACK_IMPORTED_MODULE_0__["default"])(4, [], function _xreduceBy(valueFn, valueAcc, keyFn, xf) {
+  return new XReduceBy(valueFn, valueAcc, keyFn, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xreduceBy);
 
-var _reduceBy = _interopRequireDefault(require("./reduceBy.js"));
+/***/ }),
+/* 124 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Counts the elements of a list according to how many match each value of a
- * key generated by the supplied function. Returns an object mapping the keys
- * produced by `fn` to the number of occurrences in the list. Note that all
- * keys are coerced to strings because of how JavaScript objects work.
- *
- * Acts as a transducer if a transformer is given in list position.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Relation
- * @sig (a -> String) -> [a] -> {*}
- * @param {Function} fn The function used to map values to keys.
- * @param {Array} list The list to count elements from.
- * @return {Object} An object mapping keys to number of occurrences in the list.
- * @example
- *
- *      const numbers = [1.0, 1.1, 1.2, 2.0, 3.0, 2.2];
- *      R.countBy(Math.floor)(numbers);    //=> {'1': 3, '2': 2, '3': 1}
- *
- *      const letters = ['a', 'b', 'A', 'a', 'B', 'c'];
- *      R.countBy(R.toLower)(letters);   //=> {'a': 3, 'b': 2, 'c': 1}
- */
-var countBy =
-/*#__PURE__*/
-(0, _reduceBy.default)(function (acc, elem) {
-  return acc + 1;
-}, 0);
-var _default = countBy;
-exports.default = _default;
-},{"./reduceBy.js":"../node_modules/ramda/es/reduceBy.js"}],"../node_modules/ramda/es/dec.js":[function(require,module,exports) {
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _add_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _add = _interopRequireDefault(require("./add.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Decrements its argument.
@@ -5736,22 +6080,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.dec(42); //=> 41
  */
-var dec =
-/*#__PURE__*/
-(0, _add.default)(-1);
-var _default = dec;
-exports.default = _default;
-},{"./add.js":"../node_modules/ramda/es/add.js"}],"../node_modules/ramda/es/defaultTo.js":[function(require,module,exports) {
+var dec = /*#__PURE__*/Object(_add_js__WEBPACK_IMPORTED_MODULE_0__["default"])(-1);
+/* harmony default export */ __webpack_exports__["default"] = (dec);
+
+/***/ }),
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the second argument if it is not `null`, `undefined` or `NaN`;
@@ -5776,24 +6115,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // parseInt('string') results in NaN
  *      defaultTo42(parseInt('string')); //=> 42
  */
-var defaultTo =
-/*#__PURE__*/
-(0, _curry.default)(function defaultTo(d, v) {
+var defaultTo = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function defaultTo(d, v) {
   return v == null || v !== v ? d : v;
 });
-var _default = defaultTo;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/descend.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (defaultTo);
+
+/***/ }),
+/* 126 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Makes a descending comparator function out of a function that returns a value
@@ -5820,240 +6154,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const peopleByOldestFirst = R.sort(byAge, people);
  *        //=> [{ name: 'Peter', age: 78 }, { name: 'Emma', age: 70 }, { name: 'Mikhail', age: 62 }]
  */
-var descend =
-/*#__PURE__*/
-(0, _curry.default)(function descend(fn, a, b) {
+var descend = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function descend(fn, a, b) {
   var aa = fn(a);
   var bb = fn(b);
   return aa > bb ? -1 : aa < bb ? 1 : 0;
 });
-var _default = descend;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/internal/_Set.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (descend);
+
+/***/ }),
+/* 127 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _includes2 = _interopRequireDefault(require("./_includes.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _Set =
-/*#__PURE__*/
-function () {
-  function _Set() {
-    /* globals Set */
-    this._nativeSet = typeof Set === 'function' ? new Set() : null;
-    this._items = {};
-  } // until we figure out why jsdoc chokes on this
-  // @param item The item to add to the Set
-  // @returns {boolean} true if the item did not exist prior, otherwise false
-  //
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_Set_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
 
 
-  _Set.prototype.add = function (item) {
-    return !hasOrAdd(item, true, this);
-  }; //
-  // @param item The item to check for existence in the Set
-  // @returns {boolean} true if the item exists in the Set, otherwise false
-  //
-
-
-  _Set.prototype.has = function (item) {
-    return hasOrAdd(item, false, this);
-  }; //
-  // Combines the logic for checking whether an item is a member of the set and
-  // for adding a new item to the set.
-  //
-  // @param item       The item to check or add to the Set instance.
-  // @param shouldAdd  If true, the item will be added to the set if it doesn't
-  //                   already exist.
-  // @param set        The set instance to check or add to.
-  // @return {boolean} true if the item already existed, otherwise false.
-  //
-
-
-  return _Set;
-}();
-
-function hasOrAdd(item, shouldAdd, set) {
-  var type = typeof item;
-  var prevSize, newSize;
-
-  switch (type) {
-    case 'string':
-    case 'number':
-      // distinguish between +0 and -0
-      if (item === 0 && 1 / item === -Infinity) {
-        if (set._items['-0']) {
-          return true;
-        } else {
-          if (shouldAdd) {
-            set._items['-0'] = true;
-          }
-
-          return false;
-        }
-      } // these types can all utilise the native Set
-
-
-      if (set._nativeSet !== null) {
-        if (shouldAdd) {
-          prevSize = set._nativeSet.size;
-
-          set._nativeSet.add(item);
-
-          newSize = set._nativeSet.size;
-          return newSize === prevSize;
-        } else {
-          return set._nativeSet.has(item);
-        }
-      } else {
-        if (!(type in set._items)) {
-          if (shouldAdd) {
-            set._items[type] = {};
-            set._items[type][item] = true;
-          }
-
-          return false;
-        } else if (item in set._items[type]) {
-          return true;
-        } else {
-          if (shouldAdd) {
-            set._items[type][item] = true;
-          }
-
-          return false;
-        }
-      }
-
-    case 'boolean':
-      // set._items['boolean'] holds a two element array
-      // representing [ falseExists, trueExists ]
-      if (type in set._items) {
-        var bIdx = item ? 1 : 0;
-
-        if (set._items[type][bIdx]) {
-          return true;
-        } else {
-          if (shouldAdd) {
-            set._items[type][bIdx] = true;
-          }
-
-          return false;
-        }
-      } else {
-        if (shouldAdd) {
-          set._items[type] = item ? [false, true] : [true, false];
-        }
-
-        return false;
-      }
-
-    case 'function':
-      // compare functions for reference equality
-      if (set._nativeSet !== null) {
-        if (shouldAdd) {
-          prevSize = set._nativeSet.size;
-
-          set._nativeSet.add(item);
-
-          newSize = set._nativeSet.size;
-          return newSize === prevSize;
-        } else {
-          return set._nativeSet.has(item);
-        }
-      } else {
-        if (!(type in set._items)) {
-          if (shouldAdd) {
-            set._items[type] = [item];
-          }
-
-          return false;
-        }
-
-        if (!(0, _includes2.default)(item, set._items[type])) {
-          if (shouldAdd) {
-            set._items[type].push(item);
-          }
-
-          return false;
-        }
-
-        return true;
-      }
-
-    case 'undefined':
-      if (set._items[type]) {
-        return true;
-      } else {
-        if (shouldAdd) {
-          set._items[type] = true;
-        }
-
-        return false;
-      }
-
-    case 'object':
-      if (item === null) {
-        if (!set._items['null']) {
-          if (shouldAdd) {
-            set._items['null'] = true;
-          }
-
-          return false;
-        }
-
-        return true;
-      }
-
-    /* falls through */
-
-    default:
-      // reduce the search size of heterogeneous sets by creating buckets
-      // for each type.
-      type = Object.prototype.toString.call(item);
-
-      if (!(type in set._items)) {
-        if (shouldAdd) {
-          set._items[type] = [item];
-        }
-
-        return false;
-      } // scan through all previously applied items
-
-
-      if (!(0, _includes2.default)(item, set._items[type])) {
-        if (shouldAdd) {
-          set._items[type].push(item);
-        }
-
-        return false;
-      }
-
-      return true;
-  }
-} // A simple Set type that honours R.equals semantics
-
-
-var _default = _Set;
-exports.default = _default;
-},{"./_includes.js":"../node_modules/ramda/es/internal/_includes.js"}],"../node_modules/ramda/es/difference.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _Set2 = _interopRequireDefault(require("./internal/_Set.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Finds the set (i.e. no duplicates) of all elements in the first list not
@@ -6075,14 +6192,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.difference([7,6,5,4,3], [1,2,3,4]); //=> [7,6,5]
  *      R.difference([{a: 1}, {b: 2}], [{a: 1}, {c: 3}]) //=> [{b: 2}]
  */
-var difference =
-/*#__PURE__*/
-(0, _curry.default)(function difference(first, second) {
+var difference = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function difference(first, second) {
   var out = [];
   var idx = 0;
   var firstLen = first.length;
   var secondLen = second.length;
-  var toFilterOut = new _Set2.default();
+  var toFilterOut = new _internal_Set_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
   for (var i = 0; i < secondLen; i += 1) {
     toFilterOut.add(second[i]);
@@ -6092,27 +6207,203 @@ var difference =
     if (toFilterOut.add(first[idx])) {
       out[out.length] = first[idx];
     }
-
     idx += 1;
   }
-
   return out;
 });
-var _default = difference;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_Set.js":"../node_modules/ramda/es/internal/_Set.js"}],"../node_modules/ramda/es/differenceWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (difference);
+
+/***/ }),
+/* 128 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(100);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _includesWith2 = _interopRequireDefault(require("./internal/_includesWith.js"));
+var _Set = /*#__PURE__*/function () {
+  function _Set() {
+    /* globals Set */
+    this._nativeSet = typeof Set === 'function' ? new Set() : null;
+    this._items = {};
+  }
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
+  // until we figure out why jsdoc chokes on this
+  // @param item The item to add to the Set
+  // @returns {boolean} true if the item did not exist prior, otherwise false
+  //
+  _Set.prototype.add = function (item) {
+    return !hasOrAdd(item, true, this);
+  };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  //
+  // @param item The item to check for existence in the Set
+  // @returns {boolean} true if the item exists in the Set, otherwise false
+  //
+  _Set.prototype.has = function (item) {
+    return hasOrAdd(item, false, this);
+  };
+
+  //
+  // Combines the logic for checking whether an item is a member of the set and
+  // for adding a new item to the set.
+  //
+  // @param item       The item to check or add to the Set instance.
+  // @param shouldAdd  If true, the item will be added to the set if it doesn't
+  //                   already exist.
+  // @param set        The set instance to check or add to.
+  // @return {boolean} true if the item already existed, otherwise false.
+  //
+  return _Set;
+}();
+
+function hasOrAdd(item, shouldAdd, set) {
+  var type = typeof item;
+  var prevSize, newSize;
+  switch (type) {
+    case 'string':
+    case 'number':
+      // distinguish between +0 and -0
+      if (item === 0 && 1 / item === -Infinity) {
+        if (set._items['-0']) {
+          return true;
+        } else {
+          if (shouldAdd) {
+            set._items['-0'] = true;
+          }
+          return false;
+        }
+      }
+      // these types can all utilise the native Set
+      if (set._nativeSet !== null) {
+        if (shouldAdd) {
+          prevSize = set._nativeSet.size;
+          set._nativeSet.add(item);
+          newSize = set._nativeSet.size;
+          return newSize === prevSize;
+        } else {
+          return set._nativeSet.has(item);
+        }
+      } else {
+        if (!(type in set._items)) {
+          if (shouldAdd) {
+            set._items[type] = {};
+            set._items[type][item] = true;
+          }
+          return false;
+        } else if (item in set._items[type]) {
+          return true;
+        } else {
+          if (shouldAdd) {
+            set._items[type][item] = true;
+          }
+          return false;
+        }
+      }
+
+    case 'boolean':
+      // set._items['boolean'] holds a two element array
+      // representing [ falseExists, trueExists ]
+      if (type in set._items) {
+        var bIdx = item ? 1 : 0;
+        if (set._items[type][bIdx]) {
+          return true;
+        } else {
+          if (shouldAdd) {
+            set._items[type][bIdx] = true;
+          }
+          return false;
+        }
+      } else {
+        if (shouldAdd) {
+          set._items[type] = item ? [false, true] : [true, false];
+        }
+        return false;
+      }
+
+    case 'function':
+      // compare functions for reference equality
+      if (set._nativeSet !== null) {
+        if (shouldAdd) {
+          prevSize = set._nativeSet.size;
+          set._nativeSet.add(item);
+          newSize = set._nativeSet.size;
+          return newSize === prevSize;
+        } else {
+          return set._nativeSet.has(item);
+        }
+      } else {
+        if (!(type in set._items)) {
+          if (shouldAdd) {
+            set._items[type] = [item];
+          }
+          return false;
+        }
+        if (!Object(_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"])(item, set._items[type])) {
+          if (shouldAdd) {
+            set._items[type].push(item);
+          }
+          return false;
+        }
+        return true;
+      }
+
+    case 'undefined':
+      if (set._items[type]) {
+        return true;
+      } else {
+        if (shouldAdd) {
+          set._items[type] = true;
+        }
+        return false;
+      }
+
+    case 'object':
+      if (item === null) {
+        if (!set._items['null']) {
+          if (shouldAdd) {
+            set._items['null'] = true;
+          }
+          return false;
+        }
+        return true;
+      }
+    /* falls through */
+    default:
+      // reduce the search size of heterogeneous sets by creating buckets
+      // for each type.
+      type = Object.prototype.toString.call(item);
+      if (!(type in set._items)) {
+        if (shouldAdd) {
+          set._items[type] = [item];
+        }
+        return false;
+      }
+      // scan through all previously applied items
+      if (!Object(_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"])(item, set._items[type])) {
+        if (shouldAdd) {
+          set._items[type].push(item);
+        }
+        return false;
+      }
+      return true;
+  }
+}
+
+// A simple Set type that honours R.equals semantics
+/* harmony default export */ __webpack_exports__["default"] = (_Set);
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+
+
 
 /**
  * Finds the set (i.e. no duplicates) of all elements in the first list not
@@ -6136,36 +6427,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const l2 = [{a: 3}, {a: 4}];
  *      R.differenceWith(cmp, l1, l2); //=> [{a: 1}, {a: 2}]
  */
-var differenceWith =
-/*#__PURE__*/
-(0, _curry.default)(function differenceWith(pred, first, second) {
+var differenceWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function differenceWith(pred, first, second) {
   var out = [];
   var idx = 0;
   var firstLen = first.length;
-
   while (idx < firstLen) {
-    if (!(0, _includesWith2.default)(pred, first[idx], second) && !(0, _includesWith2.default)(pred, first[idx], out)) {
+    if (!Object(_internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__["default"])(pred, first[idx], second) && !Object(_internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__["default"])(pred, first[idx], out)) {
       out.push(first[idx]);
     }
-
     idx += 1;
   }
-
   return out;
 });
-var _default = differenceWith;
-exports.default = _default;
-},{"./internal/_includesWith.js":"../node_modules/ramda/es/internal/_includesWith.js","./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/dissoc.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (differenceWith);
+
+/***/ }),
+/* 130 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new object that does not contain a `prop` property.
@@ -6183,31 +6466,84 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.dissoc('b', {a: 1, b: 2, c: 3}); //=> {a: 1, c: 3}
  */
-var dissoc =
-/*#__PURE__*/
-(0, _curry.default)(function dissoc(prop, obj) {
+var dissoc = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function dissoc(prop, obj) {
   var result = {};
-
   for (var p in obj) {
     result[p] = obj[p];
   }
-
   delete result[prop];
   return result;
 });
-var _default = dissoc;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/remove.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (dissoc);
+
+/***/ }),
+/* 131 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isInteger_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57);
+/* harmony import */ var _internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
+/* harmony import */ var _assoc_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55);
+/* harmony import */ var _dissoc_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(130);
+/* harmony import */ var _remove_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(132);
+/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(133);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+
+
+
+
+/**
+ * Makes a shallow clone of an object, omitting the property at the given path.
+ * Note that this copies and flattens prototype properties onto the new object
+ * as well. All non-primitive properties are copied by reference.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.11.0
+ * @category Object
+ * @typedefn Idx = String | Int
+ * @sig [Idx] -> {k: v} -> {k: v}
+ * @param {Array} path The path to the value to omit
+ * @param {Object} obj The object to clone
+ * @return {Object} A new object without the property at path
+ * @see R.assocPath
+ * @example
+ *
+ *      R.dissocPath(['a', 'b', 'c'], {a: {b: {c: 42}}}); //=> {a: {b: {}}}
+ */
+var dissocPath = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function dissocPath(path, obj) {
+  switch (path.length) {
+    case 0:
+      return obj;
+    case 1:
+      return Object(_internal_isInteger_js__WEBPACK_IMPORTED_MODULE_1__["default"])(path[0]) && Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj) ? Object(_remove_js__WEBPACK_IMPORTED_MODULE_5__["default"])(path[0], 1, obj) : Object(_dissoc_js__WEBPACK_IMPORTED_MODULE_4__["default"])(path[0], obj);
+    default:
+      var head = path[0];
+      var tail = Array.prototype.slice.call(path, 1);
+      if (obj[head] == null) {
+        return obj;
+      } else if (Object(_internal_isInteger_js__WEBPACK_IMPORTED_MODULE_1__["default"])(head) && Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj)) {
+        return Object(_update_js__WEBPACK_IMPORTED_MODULE_6__["default"])(head, dissocPath(tail, obj[head]), obj);
+      } else {
+        return Object(_assoc_js__WEBPACK_IMPORTED_MODULE_3__["default"])(head, dissocPath(tail, obj[head]), obj);
+      }
+  }
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (dissocPath);
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
+/***/ }),
+/* 132 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+
 
 /**
  * Removes the sub-list of `list` starting at index `start` and containing
@@ -6229,30 +6565,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.remove(2, 3, [1,2,3,4,5,6,7,8]); //=> [1,2,6,7,8]
  */
-var remove =
-/*#__PURE__*/
-(0, _curry.default)(function remove(start, count, list) {
+var remove = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function remove(start, count, list) {
   var result = Array.prototype.slice.call(list, 0);
   result.splice(start, count);
   return result;
 });
-var _default = remove;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/update.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (remove);
+
+/***/ }),
+/* 133 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _adjust_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+/* harmony import */ var _always_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _adjust = _interopRequireDefault(require("./adjust.js"));
-
-var _always = _interopRequireDefault(require("./always.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new copy of the array with the element at the provided index
@@ -6276,93 +6607,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.update(0, a, [b, c]) = [a, c]
  * @symb R.update(1, a, [b, c]) = [b, a]
  */
-var update =
-/*#__PURE__*/
-(0, _curry.default)(function update(idx, x, list) {
-  return (0, _adjust.default)(idx, (0, _always.default)(x), list);
+var update = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function update(idx, x, list) {
+  return Object(_adjust_js__WEBPACK_IMPORTED_MODULE_1__["default"])(idx, Object(_always_js__WEBPACK_IMPORTED_MODULE_2__["default"])(x), list);
 });
-var _default = update;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./adjust.js":"../node_modules/ramda/es/adjust.js","./always.js":"../node_modules/ramda/es/always.js"}],"../node_modules/ramda/es/dissocPath.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (update);
+
+/***/ }),
+/* 134 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _isInteger2 = _interopRequireDefault(require("./internal/_isInteger.js"));
-
-var _isArray2 = _interopRequireDefault(require("./internal/_isArray.js"));
-
-var _assoc = _interopRequireDefault(require("./assoc.js"));
-
-var _dissoc = _interopRequireDefault(require("./dissoc.js"));
-
-var _remove = _interopRequireDefault(require("./remove.js"));
-
-var _update = _interopRequireDefault(require("./update.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Makes a shallow clone of an object, omitting the property at the given path.
- * Note that this copies and flattens prototype properties onto the new object
- * as well. All non-primitive properties are copied by reference.
- *
- * @func
- * @memberOf R
- * @since v0.11.0
- * @category Object
- * @typedefn Idx = String | Int
- * @sig [Idx] -> {k: v} -> {k: v}
- * @param {Array} path The path to the value to omit
- * @param {Object} obj The object to clone
- * @return {Object} A new object without the property at path
- * @see R.assocPath
- * @example
- *
- *      R.dissocPath(['a', 'b', 'c'], {a: {b: {c: 42}}}); //=> {a: {b: {}}}
- */
-var dissocPath =
-/*#__PURE__*/
-(0, _curry.default)(function dissocPath(path, obj) {
-  switch (path.length) {
-    case 0:
-      return obj;
-
-    case 1:
-      return (0, _isInteger2.default)(path[0]) && (0, _isArray2.default)(obj) ? (0, _remove.default)(path[0], 1, obj) : (0, _dissoc.default)(path[0], obj);
-
-    default:
-      var head = path[0];
-      var tail = Array.prototype.slice.call(path, 1);
-
-      if (obj[head] == null) {
-        return obj;
-      } else if ((0, _isInteger2.default)(head) && (0, _isArray2.default)(obj)) {
-        return (0, _update.default)(head, dissocPath(tail, obj[head]), obj);
-      } else {
-        return (0, _assoc.default)(head, dissocPath(tail, obj[head]), obj);
-      }
-
-  }
-});
-var _default = dissocPath;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isInteger.js":"../node_modules/ramda/es/internal/_isInteger.js","./internal/_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./assoc.js":"../node_modules/ramda/es/assoc.js","./dissoc.js":"../node_modules/ramda/es/dissoc.js","./remove.js":"../node_modules/ramda/es/remove.js","./update.js":"../node_modules/ramda/es/update.js"}],"../node_modules/ramda/es/divide.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Divides two numbers. Equivalent to `a / b`.
@@ -6386,75 +6643,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const reciprocal = R.divide(1);
  *      reciprocal(4);   //=> 0.25
  */
-var divide =
-/*#__PURE__*/
-(0, _curry.default)(function divide(a, b) {
+var divide = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function divide(a, b) {
   return a / b;
 });
-var _default = divide;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_xdrop.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (divide);
+
+/***/ }),
+/* 135 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xdrop_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(136);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XDrop =
-/*#__PURE__*/
-function () {
-  function XDrop(n, xf) {
-    this.xf = xf;
-    this.n = n;
-  }
-
-  XDrop.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XDrop.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XDrop.prototype['@@transducer/step'] = function (result, input) {
-    if (this.n > 0) {
-      this.n -= 1;
-      return result;
-    }
-
-    return this.xf['@@transducer/step'](result, input);
-  };
-
-  return XDrop;
-}();
-
-var _xdrop =
-/*#__PURE__*/
-(0, _curry.default)(function _xdrop(n, xf) {
-  return new XDrop(n, xf);
-});
-
-var _default = _xdrop;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/drop.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xdrop2 = _interopRequireDefault(require("./internal/_xdrop.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns all but the first `n` elements of the given list, string, or
@@ -6480,77 +6687,114 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.drop(4, ['foo', 'bar', 'baz']); //=> []
  *      R.drop(3, 'ramda');               //=> 'da'
  */
-var drop =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['drop'], _xdrop2.default, function drop(n, xs) {
-  return (0, _slice.default)(Math.max(0, n), Infinity, xs);
+var drop = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['drop'], _internal_xdrop_js__WEBPACK_IMPORTED_MODULE_2__["default"], function drop(n, xs) {
+  return Object(_slice_js__WEBPACK_IMPORTED_MODULE_3__["default"])(Math.max(0, n), Infinity, xs);
 }));
-var _default = drop;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xdrop.js":"../node_modules/ramda/es/internal/_xdrop.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/internal/_xtake.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (drop);
+
+/***/ }),
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _reduced2 = _interopRequireDefault(require("./_reduced.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XTake =
-/*#__PURE__*/
-function () {
-  function XTake(n, xf) {
+var XDrop = /*#__PURE__*/function () {
+  function XDrop(n, xf) {
     this.xf = xf;
     this.n = n;
-    this.i = 0;
   }
-
-  XTake.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XTake.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XTake.prototype['@@transducer/step'] = function (result, input) {
-    this.i += 1;
-    var ret = this.n === 0 ? result : this.xf['@@transducer/step'](result, input);
-    return this.n >= 0 && this.i >= this.n ? (0, _reduced2.default)(ret) : ret;
+  XDrop.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XDrop.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].result;
+  XDrop.prototype['@@transducer/step'] = function (result, input) {
+    if (this.n > 0) {
+      this.n -= 1;
+      return result;
+    }
+    return this.xf['@@transducer/step'](result, input);
   };
 
-  return XTake;
+  return XDrop;
 }();
 
-var _xtake =
-/*#__PURE__*/
-(0, _curry.default)(function _xtake(n, xf) {
-  return new XTake(n, xf);
+var _xdrop = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xdrop(n, xf) {
+  return new XDrop(n, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xdrop);
 
-var _default = _xtake;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduced.js":"../node_modules/ramda/es/internal/_reduced.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/take.js":[function(require,module,exports) {
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_dropLast_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(138);
+/* harmony import */ var _internal_xdropLast_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(141);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
 
-var _xtake2 = _interopRequireDefault(require("./internal/_xtake.js"));
 
-var _slice = _interopRequireDefault(require("./slice.js"));
+/**
+ * Returns a list containing all but the last `n` elements of the given `list`.
+ *
+ * Acts as a transducer if a transformer is given in list position.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.16.0
+ * @category List
+ * @sig Number -> [a] -> [a]
+ * @sig Number -> String -> String
+ * @param {Number} n The number of elements of `list` to skip.
+ * @param {Array} list The list of elements to consider.
+ * @return {Array} A copy of the list with only the first `list.length - n` elements
+ * @see R.takeLast, R.drop, R.dropWhile, R.dropLastWhile
+ * @example
+ *
+ *      R.dropLast(1, ['foo', 'bar', 'baz']); //=> ['foo', 'bar']
+ *      R.dropLast(2, ['foo', 'bar', 'baz']); //=> ['foo']
+ *      R.dropLast(3, ['foo', 'bar', 'baz']); //=> []
+ *      R.dropLast(4, ['foo', 'bar', 'baz']); //=> []
+ *      R.dropLast(3, 'ramda');               //=> 'ra'
+ */
+var dropLast = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xdropLast_js__WEBPACK_IMPORTED_MODULE_3__["default"], _internal_dropLast_js__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (dropLast);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/***/ }),
+/* 138 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return dropLast; });
+/* harmony import */ var _take_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(139);
+
+
+function dropLast(n, xs) {
+  return Object(_take_js__WEBPACK_IMPORTED_MODULE_0__["default"])(n < xs.length ? xs.length - n : 0, xs);
+}
+
+/***/ }),
+/* 139 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xtake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(140);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(85);
+
+
+
+
 
 /**
  * Returns the first `n` elements of the given list, string, or
@@ -6595,74 +6839,79 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.take(1, [a, b]) = [a]
  * @symb R.take(2, [a, b]) = [a, b]
  */
-var take =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['take'], _xtake2.default, function take(n, xs) {
-  return (0, _slice.default)(0, n < 0 ? Infinity : n, xs);
+var take = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['take'], _internal_xtake_js__WEBPACK_IMPORTED_MODULE_2__["default"], function take(n, xs) {
+  return Object(_slice_js__WEBPACK_IMPORTED_MODULE_3__["default"])(0, n < 0 ? Infinity : n, xs);
 }));
-var _default = take;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xtake.js":"../node_modules/ramda/es/internal/_xtake.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/internal/_dropLast.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (take);
+
+/***/ }),
+/* 140 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+var XTake = /*#__PURE__*/function () {
+  function XTake(n, xf) {
+    this.xf = xf;
+    this.n = n;
+    this.i = 0;
+  }
+  XTake.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XTake.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].result;
+  XTake.prototype['@@transducer/step'] = function (result, input) {
+    this.i += 1;
+    var ret = this.n === 0 ? result : this.xf['@@transducer/step'](result, input);
+    return this.n >= 0 && this.i >= this.n ? Object(_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"])(ret) : ret;
+  };
+
+  return XTake;
+}();
+
+var _xtake = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xtake(n, xf) {
+  return new XTake(n, xf);
 });
-exports.default = dropLast;
+/* harmony default export */ __webpack_exports__["default"] = (_xtake);
 
-var _take = _interopRequireDefault(require("../take.js"));
+/***/ }),
+/* 141 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function dropLast(n, xs) {
-  return (0, _take.default)(n < xs.length ? xs.length - n : 0, xs);
-}
-},{"../take.js":"../node_modules/ramda/es/take.js"}],"../node_modules/ramda/es/internal/_xdropLast.js":[function(require,module,exports) {
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XDropLast =
-/*#__PURE__*/
-function () {
+var XDropLast = /*#__PURE__*/function () {
   function XDropLast(n, xf) {
     this.xf = xf;
     this.pos = 0;
     this.full = false;
     this.acc = new Array(n);
   }
-
-  XDropLast.prototype['@@transducer/init'] = _xfBase2.default.init;
-
+  XDropLast.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
   XDropLast.prototype['@@transducer/result'] = function (result) {
     this.acc = null;
     return this.xf['@@transducer/result'](result);
   };
-
   XDropLast.prototype['@@transducer/step'] = function (result, input) {
     if (this.full) {
       result = this.xf['@@transducer/step'](result, this.acc[this.pos]);
     }
-
     this.store(input);
     return result;
   };
-
   XDropLast.prototype.store = function (input) {
     this.acc[this.pos] = input;
     this.pos += 1;
-
     if (this.pos === this.acc.length) {
       this.pos = 0;
       this.full = true;
@@ -6672,158 +6921,25 @@ function () {
   return XDropLast;
 }();
 
-var _xdropLast =
-/*#__PURE__*/
-(0, _curry.default)(function _xdropLast(n, xf) {
+var _xdropLast = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xdropLast(n, xf) {
   return new XDropLast(n, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xdropLast);
 
-var _default = _xdropLast;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/dropLast.js":[function(require,module,exports) {
+/***/ }),
+/* 142 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_dropLastWhile_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(143);
+/* harmony import */ var _internal_xdropLastWhile_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(144);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
 
-var _dropLast2 = _interopRequireDefault(require("./internal/_dropLast.js"));
-
-var _xdropLast2 = _interopRequireDefault(require("./internal/_xdropLast.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns a list containing all but the last `n` elements of the given `list`.
- *
- * Acts as a transducer if a transformer is given in list position.
- *
- * @func
- * @memberOf R
- * @since v0.16.0
- * @category List
- * @sig Number -> [a] -> [a]
- * @sig Number -> String -> String
- * @param {Number} n The number of elements of `list` to skip.
- * @param {Array} list The list of elements to consider.
- * @return {Array} A copy of the list with only the first `list.length - n` elements
- * @see R.takeLast, R.drop, R.dropWhile, R.dropLastWhile
- * @example
- *
- *      R.dropLast(1, ['foo', 'bar', 'baz']); //=> ['foo', 'bar']
- *      R.dropLast(2, ['foo', 'bar', 'baz']); //=> ['foo']
- *      R.dropLast(3, ['foo', 'bar', 'baz']); //=> []
- *      R.dropLast(4, ['foo', 'bar', 'baz']); //=> []
- *      R.dropLast(3, 'ramda');               //=> 'ra'
- */
-var dropLast =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xdropLast2.default, _dropLast2.default));
-var _default = dropLast;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_dropLast.js":"../node_modules/ramda/es/internal/_dropLast.js","./internal/_xdropLast.js":"../node_modules/ramda/es/internal/_xdropLast.js"}],"../node_modules/ramda/es/internal/_dropLastWhile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = dropLastWhile;
-
-var _slice = _interopRequireDefault(require("../slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function dropLastWhile(pred, xs) {
-  var idx = xs.length - 1;
-
-  while (idx >= 0 && pred(xs[idx])) {
-    idx -= 1;
-  }
-
-  return (0, _slice.default)(0, idx + 1, xs);
-}
-},{"../slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/internal/_xdropLastWhile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-var _reduce2 = _interopRequireDefault(require("./_reduce.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XDropLastWhile =
-/*#__PURE__*/
-function () {
-  function XDropLastWhile(fn, xf) {
-    this.f = fn;
-    this.retained = [];
-    this.xf = xf;
-  }
-
-  XDropLastWhile.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XDropLastWhile.prototype['@@transducer/result'] = function (result) {
-    this.retained = null;
-    return this.xf['@@transducer/result'](result);
-  };
-
-  XDropLastWhile.prototype['@@transducer/step'] = function (result, input) {
-    return this.f(input) ? this.retain(result, input) : this.flush(result, input);
-  };
-
-  XDropLastWhile.prototype.flush = function (result, input) {
-    result = (0, _reduce2.default)(this.xf['@@transducer/step'], result, this.retained);
-    this.retained = [];
-    return this.xf['@@transducer/step'](result, input);
-  };
-
-  XDropLastWhile.prototype.retain = function (result, input) {
-    this.retained.push(input);
-    return result;
-  };
-
-  return XDropLastWhile;
-}();
-
-var _xdropLastWhile =
-/*#__PURE__*/
-(0, _curry.default)(function _xdropLastWhile(fn, xf) {
-  return new XDropLastWhile(fn, xf);
-});
-
-var _default = _xdropLastWhile;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/dropLastWhile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _dropLastWhile2 = _interopRequireDefault(require("./internal/_dropLastWhile.js"));
-
-var _xdropLastWhile2 = _interopRequireDefault(require("./internal/_xdropLastWhile.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list excluding all the tailing elements of a given list which
@@ -6852,30 +6968,122 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.dropLastWhile(x => x !== 'd' , 'Ramda'); //=> 'Ramd'
  */
-var dropLastWhile =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xdropLastWhile2.default, _dropLastWhile2.default));
-var _default = dropLastWhile;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_dropLastWhile.js":"../node_modules/ramda/es/internal/_dropLastWhile.js","./internal/_xdropLastWhile.js":"../node_modules/ramda/es/internal/_xdropLastWhile.js"}],"../node_modules/ramda/es/internal/_xdropRepeatsWith.js":[function(require,module,exports) {
+var dropLastWhile = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xdropLastWhile_js__WEBPACK_IMPORTED_MODULE_3__["default"], _internal_dropLastWhile_js__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (dropLastWhile);
+
+/***/ }),
+/* 143 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return dropLastWhile; });
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+function dropLastWhile(pred, xs) {
+  var idx = xs.length - 1;
+  while (idx >= 0 && pred(xs[idx])) {
+    idx -= 1;
+  }
+  return Object(_slice_js__WEBPACK_IMPORTED_MODULE_0__["default"])(0, idx + 1, xs);
+}
+
+/***/ }),
+/* 144 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+
+
+
+
+var XDropLastWhile = /*#__PURE__*/function () {
+  function XDropLastWhile(fn, xf) {
+    this.f = fn;
+    this.retained = [];
+    this.xf = xf;
+  }
+  XDropLastWhile.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XDropLastWhile.prototype['@@transducer/result'] = function (result) {
+    this.retained = null;
+    return this.xf['@@transducer/result'](result);
+  };
+  XDropLastWhile.prototype['@@transducer/step'] = function (result, input) {
+    return this.f(input) ? this.retain(result, input) : this.flush(result, input);
+  };
+  XDropLastWhile.prototype.flush = function (result, input) {
+    result = Object(_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"])(this.xf['@@transducer/step'], result, this.retained);
+    this.retained = [];
+    return this.xf['@@transducer/step'](result, input);
+  };
+  XDropLastWhile.prototype.retain = function (result, input) {
+    this.retained.push(input);
+    return result;
+  };
+
+  return XDropLastWhile;
+}();
+
+var _xdropLastWhile = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xdropLastWhile(fn, xf) {
+  return new XDropLastWhile(fn, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xdropLastWhile);
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
+/***/ }),
+/* 145 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xdropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(146);
+/* harmony import */ var _dropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(147);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(102);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var XDropRepeatsWith =
-/*#__PURE__*/
-function () {
+
+
+
+
+/**
+ * Returns a new list without any consecutively repeating elements.
+ * [`R.equals`](#equals) is used to determine equality.
+ *
+ * Acts as a transducer if a transformer is given in list position.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.14.0
+ * @category List
+ * @sig [a] -> [a]
+ * @param {Array} list The array to consider.
+ * @return {Array} `list` without repeating elements.
+ * @see R.transduce
+ * @example
+ *
+ *     R.dropRepeats([1, 1, 1, 2, 3, 4, 4, 2, 2]); //=> [1, 2, 3, 4, 2]
+ */
+var dropRepeats = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], /*#__PURE__*/Object(_internal_xdropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_equals_js__WEBPACK_IMPORTED_MODULE_4__["default"]), /*#__PURE__*/Object(_dropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_equals_js__WEBPACK_IMPORTED_MODULE_4__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (dropRepeats);
+
+/***/ }),
+/* 146 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
+
+
+
+var XDropRepeatsWith = /*#__PURE__*/function () {
   function XDropRepeatsWith(pred, xf) {
     this.xf = xf;
     this.pred = pred;
@@ -6883,18 +7091,15 @@ function () {
     this.seenFirstValue = false;
   }
 
-  XDropRepeatsWith.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XDropRepeatsWith.prototype['@@transducer/result'] = _xfBase2.default.result;
-
+  XDropRepeatsWith.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XDropRepeatsWith.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].result;
   XDropRepeatsWith.prototype['@@transducer/step'] = function (result, input) {
     var sameAsLast = false;
-
     if (!this.seenFirstValue) {
       this.seenFirstValue = true;
     } else if (this.pred(this.lastValue, input)) {
       sameAsLast = true;
     }
-
     this.lastValue = input;
     return sameAsLast ? result : this.xf['@@transducer/step'](result, input);
   };
@@ -6902,68 +7107,25 @@ function () {
   return XDropRepeatsWith;
 }();
 
-var _xdropRepeatsWith =
-/*#__PURE__*/
-(0, _curry.default)(function _xdropRepeatsWith(pred, xf) {
+var _xdropRepeatsWith = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xdropRepeatsWith(pred, xf) {
   return new XDropRepeatsWith(pred, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xdropRepeatsWith);
 
-var _default = _xdropRepeatsWith;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/last.js":[function(require,module,exports) {
+/***/ }),
+/* 147 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xdropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(146);
+/* harmony import */ var _last_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(148);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _nth = _interopRequireDefault(require("./nth.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Returns the last element of the given list or string.
- *
- * @func
- * @memberOf R
- * @since v0.1.4
- * @category List
- * @sig [a] -> a | Undefined
- * @sig String -> String
- * @param {*} list
- * @return {*}
- * @see R.init, R.head, R.tail
- * @example
- *
- *      R.last(['fi', 'fo', 'fum']); //=> 'fum'
- *      R.last([]); //=> undefined
- *
- *      R.last('abc'); //=> 'c'
- *      R.last(''); //=> ''
- */
-var last =
-/*#__PURE__*/
-(0, _nth.default)(-1);
-var _default = last;
-exports.default = _default;
-},{"./nth.js":"../node_modules/ramda/es/nth.js"}],"../node_modules/ramda/es/dropRepeatsWith.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xdropRepeatsWith2 = _interopRequireDefault(require("./internal/_xdropRepeatsWith.js"));
-
-var _last = _interopRequireDefault(require("./last.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list without any consecutively repeating elements. Equality is
@@ -6986,145 +7148,69 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const l = [1, -1, 1, 3, 4, -4, -4, -5, 5, 3, 3];
  *      R.dropRepeatsWith(R.eqBy(Math.abs), l); //=> [1, 3, 4, -5, 3]
  */
-var dropRepeatsWith =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xdropRepeatsWith2.default, function dropRepeatsWith(pred, list) {
+var dropRepeatsWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xdropRepeatsWith_js__WEBPACK_IMPORTED_MODULE_2__["default"], function dropRepeatsWith(pred, list) {
   var result = [];
   var idx = 1;
   var len = list.length;
-
   if (len !== 0) {
     result[0] = list[0];
-
     while (idx < len) {
-      if (!pred((0, _last.default)(result), list[idx])) {
+      if (!pred(Object(_last_js__WEBPACK_IMPORTED_MODULE_3__["default"])(result), list[idx])) {
         result[result.length] = list[idx];
       }
-
       idx += 1;
     }
   }
-
   return result;
 }));
-var _default = dropRepeatsWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xdropRepeatsWith.js":"../node_modules/ramda/es/internal/_xdropRepeatsWith.js","./last.js":"../node_modules/ramda/es/last.js"}],"../node_modules/ramda/es/dropRepeats.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (dropRepeatsWith);
+
+/***/ }),
+/* 148 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _nth_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(94);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xdropRepeatsWith2 = _interopRequireDefault(require("./internal/_xdropRepeatsWith.js"));
-
-var _dropRepeatsWith = _interopRequireDefault(require("./dropRepeatsWith.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Returns a new list without any consecutively repeating elements.
- * [`R.equals`](#equals) is used to determine equality.
- *
- * Acts as a transducer if a transformer is given in list position.
+ * Returns the last element of the given list or string.
  *
  * @func
  * @memberOf R
- * @since v0.14.0
+ * @since v0.1.4
  * @category List
- * @sig [a] -> [a]
- * @param {Array} list The array to consider.
- * @return {Array} `list` without repeating elements.
- * @see R.transduce
+ * @sig [a] -> a | Undefined
+ * @sig String -> String
+ * @param {*} list
+ * @return {*}
+ * @see R.init, R.head, R.tail
  * @example
  *
- *     R.dropRepeats([1, 1, 1, 2, 3, 4, 4, 2, 2]); //=> [1, 2, 3, 4, 2]
+ *      R.last(['fi', 'fo', 'fum']); //=> 'fum'
+ *      R.last([]); //=> undefined
+ *
+ *      R.last('abc'); //=> 'c'
+ *      R.last(''); //=> ''
  */
-var dropRepeats =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([],
-/*#__PURE__*/
-(0, _xdropRepeatsWith2.default)(_equals.default),
-/*#__PURE__*/
-(0, _dropRepeatsWith.default)(_equals.default)));
-var _default = dropRepeats;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xdropRepeatsWith.js":"../node_modules/ramda/es/internal/_xdropRepeatsWith.js","./dropRepeatsWith.js":"../node_modules/ramda/es/dropRepeatsWith.js","./equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/internal/_xdropWhile.js":[function(require,module,exports) {
+var last = /*#__PURE__*/Object(_nth_js__WEBPACK_IMPORTED_MODULE_0__["default"])(-1);
+/* harmony default export */ __webpack_exports__["default"] = (last);
+
+/***/ }),
+/* 149 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xdropWhile_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(150);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XDropWhile =
-/*#__PURE__*/
-function () {
-  function XDropWhile(f, xf) {
-    this.xf = xf;
-    this.f = f;
-  }
-
-  XDropWhile.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XDropWhile.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XDropWhile.prototype['@@transducer/step'] = function (result, input) {
-    if (this.f) {
-      if (this.f(input)) {
-        return result;
-      }
-
-      this.f = null;
-    }
-
-    return this.xf['@@transducer/step'](result, input);
-  };
-
-  return XDropWhile;
-}();
-
-var _xdropWhile =
-/*#__PURE__*/
-(0, _curry.default)(function _xdropWhile(f, xf) {
-  return new XDropWhile(f, xf);
-});
-
-var _default = _xdropWhile;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/dropWhile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xdropWhile2 = _interopRequireDefault(require("./internal/_xdropWhile.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list excluding the leading elements of a given list which
@@ -7154,78 +7240,66 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.dropWhile(x => x !== 'd' , 'Ramda'); //=> 'da'
  */
-var dropWhile =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['dropWhile'], _xdropWhile2.default, function dropWhile(pred, xs) {
+var dropWhile = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['dropWhile'], _internal_xdropWhile_js__WEBPACK_IMPORTED_MODULE_2__["default"], function dropWhile(pred, xs) {
   var idx = 0;
   var len = xs.length;
-
   while (idx < len && pred(xs[idx])) {
     idx += 1;
   }
-
-  return (0, _slice.default)(idx, Infinity, xs);
+  return Object(_slice_js__WEBPACK_IMPORTED_MODULE_3__["default"])(idx, Infinity, xs);
 }));
-var _default = dropWhile;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xdropWhile.js":"../node_modules/ramda/es/internal/_xdropWhile.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/or.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (dropWhile);
+
+/***/ }),
+/* 150 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+var XDropWhile = /*#__PURE__*/function () {
+  function XDropWhile(f, xf) {
+    this.xf = xf;
+    this.f = f;
+  }
+  XDropWhile.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XDropWhile.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].result;
+  XDropWhile.prototype['@@transducer/step'] = function (result, input) {
+    if (this.f) {
+      if (this.f(input)) {
+        return result;
+      }
+      this.f = null;
+    }
+    return this.xf['@@transducer/step'](result, input);
+  };
+
+  return XDropWhile;
+}();
+
+var _xdropWhile = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xdropWhile(f, xf) {
+  return new XDropWhile(f, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xdropWhile);
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 151 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns `true` if one or both of its arguments are `true`. Returns `false`
- * if both arguments are `false`.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Logic
- * @sig a -> b -> a | b
- * @param {Any} a
- * @param {Any} b
- * @return {Any} the first argument if truthy, otherwise the second argument.
- * @see R.either
- * @example
- *
- *      R.or(true, true); //=> true
- *      R.or(true, false); //=> true
- *      R.or(false, true); //=> true
- *      R.or(false, false); //=> false
- */
-var or =
-/*#__PURE__*/
-(0, _curry.default)(function or(a, b) {
-  return a || b;
-});
-var _default = or;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/either.js":[function(require,module,exports) {
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isFunction_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62);
+/* harmony import */ var _lift_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63);
+/* harmony import */ var _or_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(152);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _isFunction2 = _interopRequireDefault(require("./internal/_isFunction.js"));
 
-var _lift = _interopRequireDefault(require("./lift.js"));
-
-var _or = _interopRequireDefault(require("./or.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * A function wrapping calls to the two functions in an `||` operation,
@@ -7257,34 +7331,63 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.either(Maybe.Just(false), Maybe.Just(55)); // => Maybe.Just(55)
  *      R.either([false, false, 'a'], [11]) // => [11, 11, "a"]
  */
-var either =
-/*#__PURE__*/
-(0, _curry.default)(function either(f, g) {
-  return (0, _isFunction2.default)(f) ? function _either() {
+var either = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function either(f, g) {
+  return Object(_internal_isFunction_js__WEBPACK_IMPORTED_MODULE_1__["default"])(f) ? function _either() {
     return f.apply(this, arguments) || g.apply(this, arguments);
-  } : (0, _lift.default)(_or.default)(f, g);
+  } : Object(_lift_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_or_js__WEBPACK_IMPORTED_MODULE_3__["default"])(f, g);
 });
-var _default = either;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isFunction.js":"../node_modules/ramda/es/internal/_isFunction.js","./lift.js":"../node_modules/ramda/es/lift.js","./or.js":"../node_modules/ramda/es/or.js"}],"../node_modules/ramda/es/empty.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (either);
+
+/***/ }),
+/* 152 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+/**
+ * Returns `true` if one or both of its arguments are `true`. Returns `false`
+ * if both arguments are `false`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Logic
+ * @sig a -> b -> a | b
+ * @param {Any} a
+ * @param {Any} b
+ * @return {Any} the first argument if truthy, otherwise the second argument.
+ * @see R.either
+ * @example
+ *
+ *      R.or(true, true); //=> true
+ *      R.or(true, false); //=> true
+ *      R.or(false, true); //=> true
+ *      R.or(false, false); //=> false
+ */
+var or = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function or(a, b) {
+  return a || b;
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (or);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+/***/ }),
+/* 153 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _isArguments2 = _interopRequireDefault(require("./internal/_isArguments.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_isArguments_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36);
+/* harmony import */ var _internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
+/* harmony import */ var _internal_isObject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(114);
+/* harmony import */ var _internal_isString_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(30);
 
-var _isArray2 = _interopRequireDefault(require("./internal/_isArray.js"));
 
-var _isObject2 = _interopRequireDefault(require("./internal/_isObject.js"));
 
-var _isString2 = _interopRequireDefault(require("./internal/_isString.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Returns the empty value of its argument's type. Ramda defines the empty
@@ -7309,74 +7412,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.empty('unicorns');    //=> ''
  *      R.empty({x: 1, y: 2});  //=> {}
  */
-var empty =
-/*#__PURE__*/
-(0, _curry.default)(function empty(x) {
-  return x != null && typeof x['fantasy-land/empty'] === 'function' ? x['fantasy-land/empty']() : x != null && x.constructor != null && typeof x.constructor['fantasy-land/empty'] === 'function' ? x.constructor['fantasy-land/empty']() : x != null && typeof x.empty === 'function' ? x.empty() : x != null && x.constructor != null && typeof x.constructor.empty === 'function' ? x.constructor.empty() : (0, _isArray2.default)(x) ? [] : (0, _isString2.default)(x) ? '' : (0, _isObject2.default)(x) ? {} : (0, _isArguments2.default)(x) ? function () {
+var empty = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function empty(x) {
+  return x != null && typeof x['fantasy-land/empty'] === 'function' ? x['fantasy-land/empty']() : x != null && x.constructor != null && typeof x.constructor['fantasy-land/empty'] === 'function' ? x.constructor['fantasy-land/empty']() : x != null && typeof x.empty === 'function' ? x.empty() : x != null && x.constructor != null && typeof x.constructor.empty === 'function' ? x.constructor.empty() : Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(x) ? [] : Object(_internal_isString_js__WEBPACK_IMPORTED_MODULE_4__["default"])(x) ? '' : Object(_internal_isObject_js__WEBPACK_IMPORTED_MODULE_3__["default"])(x) ? {} : Object(_internal_isArguments_js__WEBPACK_IMPORTED_MODULE_1__["default"])(x) ? function () {
     return arguments;
   }() : void 0 // else
   ;
 });
-var _default = empty;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_isArguments.js":"../node_modules/ramda/es/internal/_isArguments.js","./internal/_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./internal/_isObject.js":"../node_modules/ramda/es/internal/_isObject.js","./internal/_isString.js":"../node_modules/ramda/es/internal/_isString.js"}],"../node_modules/ramda/es/takeLast.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (empty);
+
+/***/ }),
+/* 154 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
+/* harmony import */ var _takeLast_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(155);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _drop = _interopRequireDefault(require("./drop.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns a new list containing the last `n` elements of the given list.
- * If `n > list.length`, returns a list of `list.length` elements.
- *
- * @func
- * @memberOf R
- * @since v0.16.0
- * @category List
- * @sig Number -> [a] -> [a]
- * @sig Number -> String -> String
- * @param {Number} n The number of elements to return.
- * @param {Array} xs The collection to consider.
- * @return {Array}
- * @see R.dropLast
- * @example
- *
- *      R.takeLast(1, ['foo', 'bar', 'baz']); //=> ['baz']
- *      R.takeLast(2, ['foo', 'bar', 'baz']); //=> ['bar', 'baz']
- *      R.takeLast(3, ['foo', 'bar', 'baz']); //=> ['foo', 'bar', 'baz']
- *      R.takeLast(4, ['foo', 'bar', 'baz']); //=> ['foo', 'bar', 'baz']
- *      R.takeLast(3, 'ramda');               //=> 'mda'
- */
-var takeLast =
-/*#__PURE__*/
-(0, _curry.default)(function takeLast(n, xs) {
-  return (0, _drop.default)(n >= 0 ? xs.length - n : 0, xs);
-});
-var _default = takeLast;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./drop.js":"../node_modules/ramda/es/drop.js"}],"../node_modules/ramda/es/endsWith.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-var _takeLast = _interopRequireDefault(require("./takeLast.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Checks if a list ends with the provided sublist.
@@ -7400,26 +7455,59 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.endsWith(['c'], ['a', 'b', 'c'])    //=> true
  *      R.endsWith(['b'], ['a', 'b', 'c'])    //=> false
  */
-var endsWith =
-/*#__PURE__*/
-(0, _curry.default)(function (suffix, list) {
-  return (0, _equals.default)((0, _takeLast.default)(suffix.length, list), suffix);
+var endsWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (suffix, list) {
+  return Object(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_takeLast_js__WEBPACK_IMPORTED_MODULE_2__["default"])(suffix.length, list), suffix);
 });
-var _default = endsWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./equals.js":"../node_modules/ramda/es/equals.js","./takeLast.js":"../node_modules/ramda/es/takeLast.js"}],"../node_modules/ramda/es/eqBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (endsWith);
+
+/***/ }),
+/* 155 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _drop_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(135);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Returns a new list containing the last `n` elements of the given list.
+ * If `n > list.length`, returns a list of `list.length` elements.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.16.0
+ * @category List
+ * @sig Number -> [a] -> [a]
+ * @sig Number -> String -> String
+ * @param {Number} n The number of elements to return.
+ * @param {Array} xs The collection to consider.
+ * @return {Array}
+ * @see R.dropLast
+ * @example
+ *
+ *      R.takeLast(1, ['foo', 'bar', 'baz']); //=> ['baz']
+ *      R.takeLast(2, ['foo', 'bar', 'baz']); //=> ['bar', 'baz']
+ *      R.takeLast(3, ['foo', 'bar', 'baz']); //=> ['foo', 'bar', 'baz']
+ *      R.takeLast(4, ['foo', 'bar', 'baz']); //=> ['foo', 'bar', 'baz']
+ *      R.takeLast(3, 'ramda');               //=> 'mda'
+ */
+var takeLast = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function takeLast(n, xs) {
+  return Object(_drop_js__WEBPACK_IMPORTED_MODULE_1__["default"])(n >= 0 ? xs.length - n : 0, xs);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (takeLast);
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
+/***/ }),
+/* 156 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _equals = _interopRequireDefault(require("./equals.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Takes a function and two values in its domain and returns `true` if the
@@ -7438,26 +7526,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.eqBy(Math.abs, 5, -5); //=> true
  */
-var eqBy =
-/*#__PURE__*/
-(0, _curry.default)(function eqBy(f, x, y) {
-  return (0, _equals.default)(f(x), f(y));
+var eqBy = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function eqBy(f, x, y) {
+  return Object(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(f(x), f(y));
 });
-var _default = eqBy;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/eqProps.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (eqBy);
+
+/***/ }),
+/* 157 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Reports whether two objects have the same value, in [`R.equals`](#equals)
@@ -7480,24 +7563,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.eqProps('a', o1, o2); //=> false
  *      R.eqProps('c', o1, o2); //=> true
  */
-var eqProps =
-/*#__PURE__*/
-(0, _curry.default)(function eqProps(prop, obj1, obj2) {
-  return (0, _equals.default)(obj1[prop], obj2[prop]);
+var eqProps = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function eqProps(prop, obj1, obj2) {
+  return Object(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj1[prop], obj2[prop]);
 });
-var _default = eqProps;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/evolve.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (eqProps);
+
+/***/ }),
+/* 158 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object by recursively evolving a shallow copy of `object`,
@@ -7526,92 +7604,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      };
  *      R.evolve(transformations, tomato); //=> {firstName: 'Tomato', data: {elapsed: 101, remaining: 1399}, id:123}
  */
-var evolve =
-/*#__PURE__*/
-(0, _curry.default)(function evolve(transformations, object) {
+var evolve = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function evolve(transformations, object) {
   var result = object instanceof Array ? [] : {};
   var transformation, key, type;
-
   for (key in object) {
     transformation = transformations[key];
     type = typeof transformation;
     result[key] = type === 'function' ? transformation(object[key]) : transformation && type === 'object' ? evolve(transformation, object[key]) : object[key];
   }
-
   return result;
 });
-var _default = evolve;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_xfind.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (evolve);
+
+/***/ }),
+/* 159 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xfind_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(160);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _reduced2 = _interopRequireDefault(require("./_reduced.js"));
-
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XFind =
-/*#__PURE__*/
-function () {
-  function XFind(f, xf) {
-    this.xf = xf;
-    this.f = f;
-    this.found = false;
-  }
-
-  XFind.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XFind.prototype['@@transducer/result'] = function (result) {
-    if (!this.found) {
-      result = this.xf['@@transducer/step'](result, void 0);
-    }
-
-    return this.xf['@@transducer/result'](result);
-  };
-
-  XFind.prototype['@@transducer/step'] = function (result, input) {
-    if (this.f(input)) {
-      this.found = true;
-      result = (0, _reduced2.default)(this.xf['@@transducer/step'](result, input));
-    }
-
-    return result;
-  };
-
-  return XFind;
-}();
-
-var _xfind =
-/*#__PURE__*/
-(0, _curry.default)(function _xfind(f, xf) {
-  return new XFind(f, xf);
-});
-
-var _default = _xfind;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduced.js":"../node_modules/ramda/es/internal/_reduced.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/find.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xfind2 = _interopRequireDefault(require("./internal/_xfind.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the first element of the list which matches the predicate, or
@@ -7637,97 +7653,72 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.find(R.propEq('a', 2))(xs); //=> {a: 2}
  *      R.find(R.propEq('a', 4))(xs); //=> undefined
  */
-var find =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['find'], _xfind2.default, function find(fn, list) {
+var find = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['find'], _internal_xfind_js__WEBPACK_IMPORTED_MODULE_2__["default"], function find(fn, list) {
   var idx = 0;
   var len = list.length;
-
   while (idx < len) {
     if (fn(list[idx])) {
       return list[idx];
     }
-
     idx += 1;
   }
 }));
-var _default = find;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xfind.js":"../node_modules/ramda/es/internal/_xfind.js"}],"../node_modules/ramda/es/internal/_xfindIndex.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (find);
+
+/***/ }),
+/* 160 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _reduced2 = _interopRequireDefault(require("./_reduced.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XFindIndex =
-/*#__PURE__*/
-function () {
-  function XFindIndex(f, xf) {
+var XFind = /*#__PURE__*/function () {
+  function XFind(f, xf) {
     this.xf = xf;
     this.f = f;
-    this.idx = -1;
     this.found = false;
   }
-
-  XFindIndex.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XFindIndex.prototype['@@transducer/result'] = function (result) {
+  XFind.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XFind.prototype['@@transducer/result'] = function (result) {
     if (!this.found) {
-      result = this.xf['@@transducer/step'](result, -1);
+      result = this.xf['@@transducer/step'](result, void 0);
     }
-
     return this.xf['@@transducer/result'](result);
   };
-
-  XFindIndex.prototype['@@transducer/step'] = function (result, input) {
-    this.idx += 1;
-
+  XFind.prototype['@@transducer/step'] = function (result, input) {
     if (this.f(input)) {
       this.found = true;
-      result = (0, _reduced2.default)(this.xf['@@transducer/step'](result, this.idx));
+      result = Object(_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"])(this.xf['@@transducer/step'](result, input));
     }
-
     return result;
   };
 
-  return XFindIndex;
+  return XFind;
 }();
 
-var _xfindIndex =
-/*#__PURE__*/
-(0, _curry.default)(function _xfindIndex(f, xf) {
-  return new XFindIndex(f, xf);
+var _xfind = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xfind(f, xf) {
+  return new XFind(f, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xfind);
 
-var _default = _xfindIndex;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduced.js":"../node_modules/ramda/es/internal/_reduced.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/findIndex.js":[function(require,module,exports) {
+/***/ }),
+/* 161 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xfindIndex_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(162);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xfindIndex2 = _interopRequireDefault(require("./internal/_xfindIndex.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the index of the first element of the list which matches the
@@ -7751,88 +7742,75 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.findIndex(R.propEq('a', 2))(xs); //=> 1
  *      R.findIndex(R.propEq('a', 4))(xs); //=> -1
  */
-var findIndex =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xfindIndex2.default, function findIndex(fn, list) {
+var findIndex = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xfindIndex_js__WEBPACK_IMPORTED_MODULE_2__["default"], function findIndex(fn, list) {
   var idx = 0;
   var len = list.length;
-
   while (idx < len) {
     if (fn(list[idx])) {
       return idx;
     }
-
     idx += 1;
   }
-
   return -1;
 }));
-var _default = findIndex;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xfindIndex.js":"../node_modules/ramda/es/internal/_xfindIndex.js"}],"../node_modules/ramda/es/internal/_xfindLast.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (findIndex);
+
+/***/ }),
+/* 162 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XFindLast =
-/*#__PURE__*/
-function () {
-  function XFindLast(f, xf) {
+var XFindIndex = /*#__PURE__*/function () {
+  function XFindIndex(f, xf) {
     this.xf = xf;
     this.f = f;
+    this.idx = -1;
+    this.found = false;
   }
-
-  XFindLast.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XFindLast.prototype['@@transducer/result'] = function (result) {
-    return this.xf['@@transducer/result'](this.xf['@@transducer/step'](result, this.last));
-  };
-
-  XFindLast.prototype['@@transducer/step'] = function (result, input) {
-    if (this.f(input)) {
-      this.last = input;
+  XFindIndex.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XFindIndex.prototype['@@transducer/result'] = function (result) {
+    if (!this.found) {
+      result = this.xf['@@transducer/step'](result, -1);
     }
-
+    return this.xf['@@transducer/result'](result);
+  };
+  XFindIndex.prototype['@@transducer/step'] = function (result, input) {
+    this.idx += 1;
+    if (this.f(input)) {
+      this.found = true;
+      result = Object(_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"])(this.xf['@@transducer/step'](result, this.idx));
+    }
     return result;
   };
 
-  return XFindLast;
+  return XFindIndex;
 }();
 
-var _xfindLast =
-/*#__PURE__*/
-(0, _curry.default)(function _xfindLast(f, xf) {
-  return new XFindLast(f, xf);
+var _xfindIndex = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xfindIndex(f, xf) {
+  return new XFindIndex(f, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xfindIndex);
 
-var _default = _xfindLast;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/findLast.js":[function(require,module,exports) {
+/***/ }),
+/* 163 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xfindLast_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(164);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xfindLast2 = _interopRequireDefault(require("./internal/_xfindLast.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the last element of the list which matches the predicate, or
@@ -7856,89 +7834,64 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.findLast(R.propEq('a', 1))(xs); //=> {a: 1, b: 1}
  *      R.findLast(R.propEq('a', 4))(xs); //=> undefined
  */
-var findLast =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xfindLast2.default, function findLast(fn, list) {
+var findLast = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xfindLast_js__WEBPACK_IMPORTED_MODULE_2__["default"], function findLast(fn, list) {
   var idx = list.length - 1;
-
   while (idx >= 0) {
     if (fn(list[idx])) {
       return list[idx];
     }
-
     idx -= 1;
   }
 }));
-var _default = findLast;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xfindLast.js":"../node_modules/ramda/es/internal/_xfindLast.js"}],"../node_modules/ramda/es/internal/_xfindLastIndex.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (findLast);
+
+/***/ }),
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XFindLastIndex =
-/*#__PURE__*/
-function () {
-  function XFindLastIndex(f, xf) {
+var XFindLast = /*#__PURE__*/function () {
+  function XFindLast(f, xf) {
     this.xf = xf;
     this.f = f;
-    this.idx = -1;
-    this.lastIdx = -1;
   }
-
-  XFindLastIndex.prototype['@@transducer/init'] = _xfBase2.default.init;
-
-  XFindLastIndex.prototype['@@transducer/result'] = function (result) {
-    return this.xf['@@transducer/result'](this.xf['@@transducer/step'](result, this.lastIdx));
+  XFindLast.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XFindLast.prototype['@@transducer/result'] = function (result) {
+    return this.xf['@@transducer/result'](this.xf['@@transducer/step'](result, this.last));
   };
-
-  XFindLastIndex.prototype['@@transducer/step'] = function (result, input) {
-    this.idx += 1;
-
+  XFindLast.prototype['@@transducer/step'] = function (result, input) {
     if (this.f(input)) {
-      this.lastIdx = this.idx;
+      this.last = input;
     }
-
     return result;
   };
 
-  return XFindLastIndex;
+  return XFindLast;
 }();
 
-var _xfindLastIndex =
-/*#__PURE__*/
-(0, _curry.default)(function _xfindLastIndex(f, xf) {
-  return new XFindLastIndex(f, xf);
+var _xfindLast = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xfindLast(f, xf) {
+  return new XFindLast(f, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xfindLast);
 
-var _default = _xfindLastIndex;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/findLastIndex.js":[function(require,module,exports) {
+/***/ }),
+/* 165 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xfindLastIndex_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(166);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xfindLastIndex2 = _interopRequireDefault(require("./internal/_xfindLastIndex.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the index of the last element of the list which matches the
@@ -7962,38 +7915,66 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.findLastIndex(R.propEq('a', 1))(xs); //=> 1
  *      R.findLastIndex(R.propEq('a', 4))(xs); //=> -1
  */
-var findLastIndex =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xfindLastIndex2.default, function findLastIndex(fn, list) {
+var findLastIndex = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xfindLastIndex_js__WEBPACK_IMPORTED_MODULE_2__["default"], function findLastIndex(fn, list) {
   var idx = list.length - 1;
-
   while (idx >= 0) {
     if (fn(list[idx])) {
       return idx;
     }
-
     idx -= 1;
   }
-
   return -1;
 }));
-var _default = findLastIndex;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xfindLastIndex.js":"../node_modules/ramda/es/internal/_xfindLastIndex.js"}],"../node_modules/ramda/es/flatten.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (findLastIndex);
+
+/***/ }),
+/* 166 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+var XFindLastIndex = /*#__PURE__*/function () {
+  function XFindLastIndex(f, xf) {
+    this.xf = xf;
+    this.f = f;
+    this.idx = -1;
+    this.lastIdx = -1;
+  }
+  XFindLastIndex.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XFindLastIndex.prototype['@@transducer/result'] = function (result) {
+    return this.xf['@@transducer/result'](this.xf['@@transducer/step'](result, this.lastIdx));
+  };
+  XFindLastIndex.prototype['@@transducer/step'] = function (result, input) {
+    this.idx += 1;
+    if (this.f(input)) {
+      this.lastIdx = this.idx;
+    }
+    return result;
+  };
+
+  return XFindLastIndex;
+}();
+
+var _xfindLastIndex = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xfindLastIndex(f, xf) {
+  return new XFindLastIndex(f, xf);
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (_xfindLastIndex);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+/***/ }),
+/* 167 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _makeFlat2 = _interopRequireDefault(require("./internal/_makeFlat.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_makeFlat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(68);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Returns a new list by pulling every item out of it (and all its sub-arrays)
@@ -8012,26 +7993,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.flatten([1, 2, [3, 4], 5, [6, [7, 8, [9, [10, 11], 12]]]]);
  *      //=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
  */
-var flatten =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _makeFlat2.default)(true));
-var _default = flatten;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_makeFlat.js":"../node_modules/ramda/es/internal/_makeFlat.js"}],"../node_modules/ramda/es/flip.js":[function(require,module,exports) {
+var flatten = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_makeFlat_js__WEBPACK_IMPORTED_MODULE_1__["default"])(true));
+/* harmony default export */ __webpack_exports__["default"] = (flatten);
+
+/***/ }),
+/* 168 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new function much like the supplied one, except that the first two
@@ -8053,31 +8027,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.flip(mergeThree)(1, 2, 3); //=> [2, 1, 3]
  * @symb R.flip(f)(a, b, c) = f(b, a, c)
  */
-var flip =
-/*#__PURE__*/
-(0, _curry.default)(function flip(fn) {
-  return (0, _curryN.default)(fn.length, function (a, b) {
+var flip = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function flip(fn) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fn.length, function (a, b) {
     var args = Array.prototype.slice.call(arguments, 0);
     args[0] = b;
     args[1] = a;
     return fn.apply(this, args);
   });
 });
-var _default = flip;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/forEach.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (flip);
+
+/***/ }),
+/* 169 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(84);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _checkForMethod2 = _interopRequireDefault(require("./internal/_checkForMethod.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Iterate over an input `list`, calling a provided function `fn` for each
@@ -8113,36 +8082,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // logs 8
  * @symb R.forEach(f, [a, b, c]) = [a, b, c]
  */
-var forEach =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _checkForMethod2.default)('forEach', function forEach(fn, list) {
+var forEach = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__["default"])('forEach', function forEach(fn, list) {
   var len = list.length;
   var idx = 0;
-
   while (idx < len) {
     fn(list[idx]);
     idx += 1;
   }
-
   return list;
 }));
-var _default = forEach;
-exports.default = _default;
-},{"./internal/_checkForMethod.js":"../node_modules/ramda/es/internal/_checkForMethod.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/forEachObjIndexed.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (forEach);
+
+/***/ }),
+/* 170 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Iterate over an input `object`, calling a provided function `fn` for each
@@ -8166,33 +8126,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // logs y:2
  * @symb R.forEachObjIndexed(f, {x: a, y: b}) = {x: a, y: b}
  */
-var forEachObjIndexed =
-/*#__PURE__*/
-(0, _curry.default)(function forEachObjIndexed(fn, obj) {
-  var keyList = (0, _keys.default)(obj);
+var forEachObjIndexed = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function forEachObjIndexed(fn, obj) {
+  var keyList = Object(_keys_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj);
   var idx = 0;
-
   while (idx < keyList.length) {
     var key = keyList[idx];
     fn(obj[key], key, obj);
     idx += 1;
   }
-
   return obj;
 });
-var _default = forEachObjIndexed;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/fromPairs.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (forEachObjIndexed);
+
+/***/ }),
+/* 171 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object from a list key-value pairs. If a key appears in
@@ -8210,36 +8163,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.fromPairs([['a', 1], ['b', 2], ['c', 3]]); //=> {a: 1, b: 2, c: 3}
  */
-var fromPairs =
-/*#__PURE__*/
-(0, _curry.default)(function fromPairs(pairs) {
+var fromPairs = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function fromPairs(pairs) {
   var result = {};
   var idx = 0;
-
   while (idx < pairs.length) {
     result[pairs[idx][0]] = pairs[idx][1];
     idx += 1;
   }
-
   return result;
 });
-var _default = fromPairs;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/groupBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (fromPairs);
+
+/***/ }),
+/* 172 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(84);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _reduceBy_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(122);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _checkForMethod2 = _interopRequireDefault(require("./internal/_checkForMethod.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _reduceBy = _interopRequireDefault(require("./reduceBy.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Splits a list into sub-lists stored in an object, based on the result of
@@ -8281,33 +8227,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      //   'F': [{name: 'Eddy', score: 58}]
  *      // }
  */
-var groupBy =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _checkForMethod2.default)('groupBy',
-/*#__PURE__*/
-(0, _reduceBy.default)(function (acc, item) {
+var groupBy = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__["default"])('groupBy', /*#__PURE__*/Object(_reduceBy_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function (acc, item) {
   if (acc == null) {
     acc = [];
   }
-
   acc.push(item);
   return acc;
 }, null)));
-var _default = groupBy;
-exports.default = _default;
-},{"./internal/_checkForMethod.js":"../node_modules/ramda/es/internal/_checkForMethod.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./reduceBy.js":"../node_modules/ramda/es/reduceBy.js"}],"../node_modules/ramda/es/groupWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (groupBy);
+
+/***/ }),
+/* 173 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a list and returns a list of lists where each sublist's elements are
@@ -8339,39 +8275,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * R.groupWith(R.eqBy(isVowel), 'aestiou')
  * //=> ['ae', 'st', 'iou']
  */
-var groupWith =
-/*#__PURE__*/
-(0, _curry.default)(function (fn, list) {
+var groupWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (fn, list) {
   var res = [];
   var idx = 0;
   var len = list.length;
-
   while (idx < len) {
     var nextidx = idx + 1;
-
     while (nextidx < len && fn(list[nextidx - 1], list[nextidx])) {
       nextidx += 1;
     }
-
     res.push(list.slice(idx, nextidx));
     idx = nextidx;
   }
-
   return res;
 });
-var _default = groupWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/gt.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (groupWith);
+
+/***/ }),
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the first argument is greater than the second; `false`
@@ -8394,24 +8321,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.gt('a', 'z'); //=> false
  *      R.gt('z', 'a'); //=> true
  */
-var gt =
-/*#__PURE__*/
-(0, _curry.default)(function gt(a, b) {
+var gt = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function gt(a, b) {
   return a > b;
 });
-var _default = gt;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/gte.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (gt);
+
+/***/ }),
+/* 175 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the first argument is greater than or equal to the second;
@@ -8434,84 +8356,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.gte('a', 'z'); //=> false
  *      R.gte('z', 'a'); //=> true
  */
-var gte =
-/*#__PURE__*/
-(0, _curry.default)(function gte(a, b) {
+var gte = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function gte(a, b) {
   return a >= b;
 });
-var _default = gte;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/hasPath.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (gte);
+
+/***/ }),
+/* 176 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _hasPath_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(177);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns whether or not a path exists in an object. Only the object's
- * own properties are checked.
- *
- * @func
- * @memberOf R
- * @since v0.26.0
- * @category Object
- * @typedefn Idx = String | Int
- * @sig [Idx] -> {a} -> Boolean
- * @param {Array} path The path to use.
- * @param {Object} obj The object to check the path in.
- * @return {Boolean} Whether the path exists.
- * @see R.has
- * @example
- *
- *      R.hasPath(['a', 'b'], {a: {b: 2}});         // => true
- *      R.hasPath(['a', 'b'], {a: {b: undefined}}); // => true
- *      R.hasPath(['a', 'b'], {a: {c: 2}});         // => false
- *      R.hasPath(['a', 'b'], {});                  // => false
- */
-var hasPath =
-/*#__PURE__*/
-(0, _curry.default)(function hasPath(_path, obj) {
-  if (_path.length === 0) {
-    return false;
-  }
-
-  var val = obj;
-  var idx = 0;
-
-  while (idx < _path.length) {
-    if ((0, _has2.default)(_path[idx], val)) {
-      val = val[_path[idx]];
-      idx += 1;
-    } else {
-      return false;
-    }
-  }
-
-  return true;
-});
-var _default = hasPath;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/has.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _hasPath = _interopRequireDefault(require("./hasPath.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns whether or not an object has an own property with the specified name
@@ -8537,24 +8396,69 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      pointHas('y');  //=> true
  *      pointHas('z');  //=> false
  */
-var has =
-/*#__PURE__*/
-(0, _curry.default)(function has(prop, obj) {
-  return (0, _hasPath.default)([prop], obj);
+var has = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function has(prop, obj) {
+  return Object(_hasPath_js__WEBPACK_IMPORTED_MODULE_1__["default"])([prop], obj);
 });
-var _default = has;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./hasPath.js":"../node_modules/ramda/es/hasPath.js"}],"../node_modules/ramda/es/hasIn.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (has);
+
+/***/ }),
+/* 177 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Returns whether or not a path exists in an object. Only the object's
+ * own properties are checked.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.26.0
+ * @category Object
+ * @typedefn Idx = String | Int
+ * @sig [Idx] -> {a} -> Boolean
+ * @param {Array} path The path to use.
+ * @param {Object} obj The object to check the path in.
+ * @return {Boolean} Whether the path exists.
+ * @see R.has
+ * @example
+ *
+ *      R.hasPath(['a', 'b'], {a: {b: 2}});         // => true
+ *      R.hasPath(['a', 'b'], {a: {b: undefined}}); // => true
+ *      R.hasPath(['a', 'b'], {a: {c: 2}});         // => false
+ *      R.hasPath(['a', 'b'], {});                  // => false
+ */
+var hasPath = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function hasPath(_path, obj) {
+  if (_path.length === 0) {
+    return false;
+  }
+  var val = obj;
+  var idx = 0;
+  while (idx < _path.length) {
+    if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_path[idx], val)) {
+      val = val[_path[idx]];
+      idx += 1;
+    } else {
+      return false;
+    }
+  }
+  return true;
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (hasPath);
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+/***/ }),
+/* 178 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
 
 /**
  * Returns whether or not an object or its prototype chain has a property with
@@ -8582,26 +8486,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.hasIn('width', square);  //=> true
  *      R.hasIn('area', square);  //=> true
  */
-var hasIn =
-/*#__PURE__*/
-(0, _curry.default)(function hasIn(prop, obj) {
+var hasIn = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function hasIn(prop, obj) {
   return prop in obj;
 });
-var _default = hasIn;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/identical.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (hasIn);
+
+/***/ }),
+/* 179 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_objectIs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(107);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _objectIs2 = _interopRequireDefault(require("./internal/_objectIs.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns true if its arguments are identical, false otherwise. Values are
@@ -8628,24 +8527,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.identical(0, -0); //=> false
  *      R.identical(NaN, NaN); //=> true
  */
-var identical =
-/*#__PURE__*/
-(0, _curry.default)(_objectIs2.default);
-var _default = identical;
-exports.default = _default;
-},{"./internal/_objectIs.js":"../node_modules/ramda/es/internal/_objectIs.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/ifElse.js":[function(require,module,exports) {
+var identical = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_internal_objectIs_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (identical);
+
+/***/ }),
+/* 180 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a function that will process either the `onTrue` or the `onFalse`
@@ -8672,26 +8566,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      incCount({});           //=> { count: 1 }
  *      incCount({ count: 1 }); //=> { count: 2 }
  */
-var ifElse =
-/*#__PURE__*/
-(0, _curry.default)(function ifElse(condition, onTrue, onFalse) {
-  return (0, _curryN.default)(Math.max(condition.length, onTrue.length, onFalse.length), function _ifElse() {
+var ifElse = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function ifElse(condition, onTrue, onFalse) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Math.max(condition.length, onTrue.length, onFalse.length), function _ifElse() {
     return condition.apply(this, arguments) ? onTrue.apply(this, arguments) : onFalse.apply(this, arguments);
   });
 });
-var _default = ifElse;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/inc.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (ifElse);
+
+/***/ }),
+/* 181 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _add_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _add = _interopRequireDefault(require("./add.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Increments its argument.
@@ -8708,24 +8597,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.inc(42); //=> 43
  */
-var inc =
-/*#__PURE__*/
-(0, _add.default)(1);
-var _default = inc;
-exports.default = _default;
-},{"./add.js":"../node_modules/ramda/es/add.js"}],"../node_modules/ramda/es/includes.js":[function(require,module,exports) {
+var inc = /*#__PURE__*/Object(_add_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1);
+/* harmony default export */ __webpack_exports__["default"] = (inc);
+
+/***/ }),
+/* 182 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(100);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _includes2 = _interopRequireDefault(require("./internal/_includes.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the specified value is equal, in [`R.equals`](#equals)
@@ -8749,22 +8633,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.includes([42], [[42]]); //=> true
  *      R.includes('ba', 'banana'); //=>true
  */
-var includes =
-/*#__PURE__*/
-(0, _curry.default)(_includes2.default);
-var _default = includes;
-exports.default = _default;
-},{"./internal/_includes.js":"../node_modules/ramda/es/internal/_includes.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/indexBy.js":[function(require,module,exports) {
+var includes = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_internal_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (includes);
+
+/***/ }),
+/* 183 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _reduceBy_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(122);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _reduceBy = _interopRequireDefault(require("./reduceBy.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Given a function that generates a key, turns a list of objects into an
@@ -8788,28 +8667,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.indexBy(R.prop('id'), list);
  *      //=> {abc: {id: 'abc', title: 'B'}, xyz: {id: 'xyz', title: 'A'}}
  */
-var indexBy =
-/*#__PURE__*/
-(0, _reduceBy.default)(function (acc, elem) {
+var indexBy = /*#__PURE__*/Object(_reduceBy_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (acc, elem) {
   return elem;
 }, null);
-var _default = indexBy;
-exports.default = _default;
-},{"./reduceBy.js":"../node_modules/ramda/es/reduceBy.js"}],"../node_modules/ramda/es/indexOf.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (indexBy);
+
+/***/ }),
+/* 184 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_indexOf_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(101);
+/* harmony import */ var _internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _indexOf2 = _interopRequireDefault(require("./internal/_indexOf.js"));
-
-var _isArray2 = _interopRequireDefault(require("./internal/_isArray.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the position of the first occurrence of an item in an array, or -1
@@ -8830,24 +8704,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.indexOf(3, [1,2,3,4]); //=> 2
  *      R.indexOf(10, [1,2,3,4]); //=> -1
  */
-var indexOf =
-/*#__PURE__*/
-(0, _curry.default)(function indexOf(target, xs) {
-  return typeof xs.indexOf === 'function' && !(0, _isArray2.default)(xs) ? xs.indexOf(target) : (0, _indexOf2.default)(xs, target, 0);
+var indexOf = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function indexOf(target, xs) {
+  return typeof xs.indexOf === 'function' && !Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(xs) ? xs.indexOf(target) : Object(_internal_indexOf_js__WEBPACK_IMPORTED_MODULE_1__["default"])(xs, target, 0);
 });
-var _default = indexOf;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_indexOf.js":"../node_modules/ramda/es/internal/_indexOf.js","./internal/_isArray.js":"../node_modules/ramda/es/internal/_isArray.js"}],"../node_modules/ramda/es/init.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (indexOf);
+
+/***/ }),
+/* 185 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns all but the last element of the given list or string.
@@ -8873,26 +8742,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.init('a');    //=> ''
  *      R.init('');     //=> ''
  */
-var init =
-/*#__PURE__*/
-(0, _slice.default)(0, -1);
-var _default = init;
-exports.default = _default;
-},{"./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/innerJoin.js":[function(require,module,exports) {
+var init = /*#__PURE__*/Object(_slice_js__WEBPACK_IMPORTED_MODULE_0__["default"])(0, -1);
+/* harmony default export */ __webpack_exports__["default"] = (init);
+
+/***/ }),
+/* 186 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _internal_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(113);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _includesWith2 = _interopRequireDefault(require("./internal/_includesWith.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _filter2 = _interopRequireDefault(require("./internal/_filter.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a predicate `pred`, a list `xs`, and a list `ys`, and returns a list
@@ -8929,26 +8793,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      );
  *      //=> [{id: 456, name: 'Stephen Stills'}, {id: 177, name: 'Neil Young'}]
  */
-var innerJoin =
-/*#__PURE__*/
-(0, _curry.default)(function innerJoin(pred, xs, ys) {
-  return (0, _filter2.default)(function (x) {
-    return (0, _includesWith2.default)(pred, x, ys);
+var innerJoin = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function innerJoin(pred, xs, ys) {
+  return Object(_internal_filter_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function (x) {
+    return Object(_internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__["default"])(pred, x, ys);
   }, xs);
 });
-var _default = innerJoin;
-exports.default = _default;
-},{"./internal/_includesWith.js":"../node_modules/ramda/es/internal/_includesWith.js","./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./internal/_filter.js":"../node_modules/ramda/es/internal/_filter.js"}],"../node_modules/ramda/es/insert.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (innerJoin);
+
+/***/ }),
+/* 187 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Inserts the supplied element into the list, at the specified `index`. _Note that
@@ -8969,27 +8828,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.insert(2, 'x', [1,2,3,4]); //=> [1,2,'x',3,4]
  */
-var insert =
-/*#__PURE__*/
-(0, _curry.default)(function insert(idx, elt, list) {
+var insert = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function insert(idx, elt, list) {
   idx = idx < list.length && idx >= 0 ? idx : list.length;
   var result = Array.prototype.slice.call(list, 0);
   result.splice(idx, 0, elt);
   return result;
 });
-var _default = insert;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/insertAll.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (insert);
+
+/***/ }),
+/* 188 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Inserts the sub-list into the list, at the specified `index`. _Note that this is not
@@ -9009,27 +8863,100 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.insertAll(2, ['x','y','z'], [1,2,3,4]); //=> [1,2,'x','y','z',3,4]
  */
-var insertAll =
-/*#__PURE__*/
-(0, _curry.default)(function insertAll(idx, elts, list) {
+var insertAll = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function insertAll(idx, elts, list) {
   idx = idx < list.length && idx >= 0 ? idx : list.length;
   return [].concat(Array.prototype.slice.call(list, 0, idx), elts, Array.prototype.slice.call(list, idx));
 });
-var _default = insertAll;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/uniqBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (insertAll);
+
+/***/ }),
+/* 189 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(100);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _internal_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(113);
+/* harmony import */ var _flip_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(168);
+/* harmony import */ var _uniq_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(190);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+
+
+/**
+ * Combines two lists into a set (i.e. no duplicates) composed of those
+ * elements common to both lists.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Relation
+ * @sig [*] -> [*] -> [*]
+ * @param {Array} list1 The first list.
+ * @param {Array} list2 The second list.
+ * @return {Array} The list of elements found in both `list1` and `list2`.
+ * @see R.innerJoin
+ * @example
+ *
+ *      R.intersection([1,2,3,4], [7,6,5,4,3]); //=> [4, 3]
+ */
+var intersection = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function intersection(list1, list2) {
+  var lookupList, filteredList;
+  if (list1.length > list2.length) {
+    lookupList = list1;
+    filteredList = list2;
+  } else {
+    lookupList = list2;
+    filteredList = list1;
+  }
+  return Object(_uniq_js__WEBPACK_IMPORTED_MODULE_4__["default"])(Object(_internal_filter_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_flip_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_internal_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"])(lookupList), filteredList));
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (intersection);
 
-var _Set2 = _interopRequireDefault(require("./internal/_Set.js"));
+/***/ }),
+/* 190 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _identity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(95);
+/* harmony import */ var _uniqBy_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(191);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+
+/**
+ * Returns a new list containing only one copy of each element in the original
+ * list. [`R.equals`](#equals) is used to determine equality.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig [a] -> [a]
+ * @param {Array} list The array to consider.
+ * @return {Array} The list of unique items.
+ * @example
+ *
+ *      R.uniq([1, 1, 2, 1]); //=> [1, 2]
+ *      R.uniq([1, '1']);     //=> [1, '1']
+ *      R.uniq([[42], [42]]); //=> [[42]]
+ */
+var uniq = /*#__PURE__*/Object(_uniqBy_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_identity_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (uniq);
+
+/***/ }),
+/* 191 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_Set_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(128);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+
+
 
 /**
  * Returns a new list containing only one copy of each element in the original
@@ -9049,10 +8976,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.uniqBy(Math.abs, [-1, -5, 2, 10, 1, 2]); //=> [-1, -5, 2, 10]
  */
-var uniqBy =
-/*#__PURE__*/
-(0, _curry.default)(function uniqBy(fn, list) {
-  var set = new _Set2.default();
+var uniqBy = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function uniqBy(fn, list) {
+  var set = new _internal_Set_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
   var result = [];
   var idx = 0;
   var appliedItem, item;
@@ -9060,121 +8985,25 @@ var uniqBy =
   while (idx < list.length) {
     item = list[idx];
     appliedItem = fn(item);
-
     if (set.add(appliedItem)) {
       result.push(item);
     }
-
     idx += 1;
   }
-
   return result;
 });
-var _default = uniqBy;
-exports.default = _default;
-},{"./internal/_Set.js":"../node_modules/ramda/es/internal/_Set.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/uniq.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (uniqBy);
+
+/***/ }),
+/* 192 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(84);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _identity = _interopRequireDefault(require("./identity.js"));
-
-var _uniqBy = _interopRequireDefault(require("./uniqBy.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns a new list containing only one copy of each element in the original
- * list. [`R.equals`](#equals) is used to determine equality.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category List
- * @sig [a] -> [a]
- * @param {Array} list The array to consider.
- * @return {Array} The list of unique items.
- * @example
- *
- *      R.uniq([1, 1, 2, 1]); //=> [1, 2]
- *      R.uniq([1, '1']);     //=> [1, '1']
- *      R.uniq([[42], [42]]); //=> [[42]]
- */
-var uniq =
-/*#__PURE__*/
-(0, _uniqBy.default)(_identity.default);
-var _default = uniq;
-exports.default = _default;
-},{"./identity.js":"../node_modules/ramda/es/identity.js","./uniqBy.js":"../node_modules/ramda/es/uniqBy.js"}],"../node_modules/ramda/es/intersection.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _includes2 = _interopRequireDefault(require("./internal/_includes.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _filter2 = _interopRequireDefault(require("./internal/_filter.js"));
-
-var _flip = _interopRequireDefault(require("./flip.js"));
-
-var _uniq = _interopRequireDefault(require("./uniq.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Combines two lists into a set (i.e. no duplicates) composed of those
- * elements common to both lists.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Relation
- * @sig [*] -> [*] -> [*]
- * @param {Array} list1 The first list.
- * @param {Array} list2 The second list.
- * @return {Array} The list of elements found in both `list1` and `list2`.
- * @see R.innerJoin
- * @example
- *
- *      R.intersection([1,2,3,4], [7,6,5,4,3]); //=> [4, 3]
- */
-var intersection =
-/*#__PURE__*/
-(0, _curry.default)(function intersection(list1, list2) {
-  var lookupList, filteredList;
-
-  if (list1.length > list2.length) {
-    lookupList = list1;
-    filteredList = list2;
-  } else {
-    lookupList = list2;
-    filteredList = list1;
-  }
-
-  return (0, _uniq.default)((0, _filter2.default)((0, _flip.default)(_includes2.default)(lookupList), filteredList));
-});
-var _default = intersection;
-exports.default = _default;
-},{"./internal/_includes.js":"../node_modules/ramda/es/internal/_includes.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_filter.js":"../node_modules/ramda/es/internal/_filter.js","./flip.js":"../node_modules/ramda/es/flip.js","./uniq.js":"../node_modules/ramda/es/uniq.js"}],"../node_modules/ramda/es/intersperse.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _checkForMethod2 = _interopRequireDefault(require("./internal/_checkForMethod.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new list with the separator interposed between elements.
@@ -9193,193 +9022,38 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.intersperse('a', ['b', 'n', 'n', 's']); //=> ['b', 'a', 'n', 'a', 'n', 'a', 's']
  */
-var intersperse =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _checkForMethod2.default)('intersperse', function intersperse(separator, list) {
+var intersperse = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_internal_checkForMethod_js__WEBPACK_IMPORTED_MODULE_0__["default"])('intersperse', function intersperse(separator, list) {
   var out = [];
   var idx = 0;
   var length = list.length;
-
   while (idx < length) {
     if (idx === length - 1) {
       out.push(list[idx]);
     } else {
       out.push(list[idx], separator);
     }
-
     idx += 1;
   }
-
   return out;
 }));
-var _default = intersperse;
-exports.default = _default;
-},{"./internal/_checkForMethod.js":"../node_modules/ramda/es/internal/_checkForMethod.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_objectAssign.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (intersperse);
+
+/***/ }),
+/* 193 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_clone_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(74);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _internal_isTransformer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(19);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28);
+/* harmony import */ var _internal_stepCat_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(194);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _has2 = _interopRequireDefault(require("./_has.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Based on https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
-function _objectAssign(target) {
-  if (target == null) {
-    throw new TypeError('Cannot convert undefined or null to object');
-  }
 
-  var output = Object(target);
-  var idx = 1;
-  var length = arguments.length;
-
-  while (idx < length) {
-    var source = arguments[idx];
-
-    if (source != null) {
-      for (var nextKey in source) {
-        if ((0, _has2.default)(nextKey, source)) {
-          output[nextKey] = source[nextKey];
-        }
-      }
-    }
-
-    idx += 1;
-  }
-
-  return output;
-}
-
-var _default = typeof Object.assign === 'function' ? Object.assign : _objectAssign;
-
-exports.default = _default;
-},{"./_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/objOf.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Creates an object containing a single key:value pair.
- *
- * @func
- * @memberOf R
- * @since v0.18.0
- * @category Object
- * @sig String -> a -> {String:a}
- * @param {String} key
- * @param {*} val
- * @return {Object}
- * @see R.pair
- * @example
- *
- *      const matchPhrases = R.compose(
- *        R.objOf('must'),
- *        R.map(R.objOf('match_phrase'))
- *      );
- *      matchPhrases(['foo', 'bar', 'baz']); //=> {must: [{match_phrase: 'foo'}, {match_phrase: 'bar'}, {match_phrase: 'baz'}]}
- */
-var objOf =
-/*#__PURE__*/
-(0, _curry.default)(function objOf(key, val) {
-  var obj = {};
-  obj[key] = val;
-  return obj;
-});
-var _default = objOf;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_stepCat.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _stepCat;
-
-var _objectAssign2 = _interopRequireDefault(require("./_objectAssign.js"));
-
-var _identity2 = _interopRequireDefault(require("./_identity.js"));
-
-var _isArrayLike2 = _interopRequireDefault(require("./_isArrayLike.js"));
-
-var _isTransformer2 = _interopRequireDefault(require("./_isTransformer.js"));
-
-var _objOf = _interopRequireDefault(require("../objOf.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _stepCatArray = {
-  '@@transducer/init': Array,
-  '@@transducer/step': function (xs, x) {
-    xs.push(x);
-    return xs;
-  },
-  '@@transducer/result': _identity2.default
-};
-var _stepCatString = {
-  '@@transducer/init': String,
-  '@@transducer/step': function (a, b) {
-    return a + b;
-  },
-  '@@transducer/result': _identity2.default
-};
-var _stepCatObject = {
-  '@@transducer/init': Object,
-  '@@transducer/step': function (result, input) {
-    return (0, _objectAssign2.default)(result, (0, _isArrayLike2.default)(input) ? (0, _objOf.default)(input[0], input[1]) : input);
-  },
-  '@@transducer/result': _identity2.default
-};
-
-function _stepCat(obj) {
-  if ((0, _isTransformer2.default)(obj)) {
-    return obj;
-  }
-
-  if ((0, _isArrayLike2.default)(obj)) {
-    return _stepCatArray;
-  }
-
-  if (typeof obj === 'string') {
-    return _stepCatString;
-  }
-
-  if (typeof obj === 'object') {
-    return _stepCatObject;
-  }
-
-  throw new Error('Cannot create transformer for ' + obj);
-}
-},{"./_objectAssign.js":"../node_modules/ramda/es/internal/_objectAssign.js","./_identity.js":"../node_modules/ramda/es/internal/_identity.js","./_isArrayLike.js":"../node_modules/ramda/es/internal/_isArrayLike.js","./_isTransformer.js":"../node_modules/ramda/es/internal/_isTransformer.js","../objOf.js":"../node_modules/ramda/es/objOf.js"}],"../node_modules/ramda/es/into.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _clone2 = _interopRequireDefault(require("./internal/_clone.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _isTransformer2 = _interopRequireDefault(require("./internal/_isTransformer.js"));
-
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _stepCat2 = _interopRequireDefault(require("./internal/_stepCat.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Transforms the items of the list with the transducer and appends the
@@ -9420,28 +9094,150 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const intoArray = R.into([]);
  *      intoArray(transducer, numbers); //=> [2, 3]
  */
-var into =
-/*#__PURE__*/
-(0, _curry.default)(function into(acc, xf, list) {
-  return (0, _isTransformer2.default)(acc) ? (0, _reduce2.default)(xf(acc), acc['@@transducer/init'](), list) : (0, _reduce2.default)(xf((0, _stepCat2.default)(acc)), (0, _clone2.default)(acc, [], [], false), list);
+var into = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function into(acc, xf, list) {
+  return Object(_internal_isTransformer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(acc) ? Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__["default"])(xf(acc), acc['@@transducer/init'](), list) : Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_3__["default"])(xf(Object(_internal_stepCat_js__WEBPACK_IMPORTED_MODULE_4__["default"])(acc)), Object(_internal_clone_js__WEBPACK_IMPORTED_MODULE_0__["default"])(acc, [], [], false), list);
 });
-var _default = into;
-exports.default = _default;
-},{"./internal/_clone.js":"../node_modules/ramda/es/internal/_clone.js","./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./internal/_isTransformer.js":"../node_modules/ramda/es/internal/_isTransformer.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./internal/_stepCat.js":"../node_modules/ramda/es/internal/_stepCat.js"}],"../node_modules/ramda/es/invert.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (into);
+
+/***/ }),
+/* 194 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _stepCat; });
+/* harmony import */ var _objectAssign_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(195);
+/* harmony import */ var _identity_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(96);
+/* harmony import */ var _isArrayLike_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
+/* harmony import */ var _isTransformer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(19);
+/* harmony import */ var _objOf_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(196);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+
+
+
+var _stepCatArray = {
+  '@@transducer/init': Array,
+  '@@transducer/step': function (xs, x) {
+    xs.push(x);
+    return xs;
+  },
+  '@@transducer/result': _identity_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+};
+var _stepCatString = {
+  '@@transducer/init': String,
+  '@@transducer/step': function (a, b) {
+    return a + b;
+  },
+  '@@transducer/result': _identity_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+};
+var _stepCatObject = {
+  '@@transducer/init': Object,
+  '@@transducer/step': function (result, input) {
+    return Object(_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__["default"])(result, Object(_isArrayLike_js__WEBPACK_IMPORTED_MODULE_2__["default"])(input) ? Object(_objOf_js__WEBPACK_IMPORTED_MODULE_4__["default"])(input[0], input[1]) : input);
+  },
+  '@@transducer/result': _identity_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+};
+
+function _stepCat(obj) {
+  if (Object(_isTransformer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(obj)) {
+    return obj;
+  }
+  if (Object(_isArrayLike_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj)) {
+    return _stepCatArray;
+  }
+  if (typeof obj === 'string') {
+    return _stepCatString;
+  }
+  if (typeof obj === 'object') {
+    return _stepCatObject;
+  }
+  throw new Error('Cannot create transformer for ' + obj);
+}
+
+/***/ }),
+/* 195 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _has_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35);
+
+
+// Based on https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+function _objectAssign(target) {
+  if (target == null) {
+    throw new TypeError('Cannot convert undefined or null to object');
+  }
+
+  var output = Object(target);
+  var idx = 1;
+  var length = arguments.length;
+  while (idx < length) {
+    var source = arguments[idx];
+    if (source != null) {
+      for (var nextKey in source) {
+        if (Object(_has_js__WEBPACK_IMPORTED_MODULE_0__["default"])(nextKey, source)) {
+          output[nextKey] = source[nextKey];
+        }
+      }
+    }
+    idx += 1;
+  }
+  return output;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (typeof Object.assign === 'function' ? Object.assign : _objectAssign);
+
+/***/ }),
+/* 196 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
+
+/**
+ * Creates an object containing a single key:value pair.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.18.0
+ * @category Object
+ * @sig String -> a -> {String:a}
+ * @param {String} key
+ * @param {*} val
+ * @return {Object}
+ * @see R.pair
+ * @example
+ *
+ *      const matchPhrases = R.compose(
+ *        R.objOf('must'),
+ *        R.map(R.objOf('match_phrase'))
+ *      );
+ *      matchPhrases(['foo', 'bar', 'baz']); //=> {must: [{match_phrase: 'foo'}, {match_phrase: 'bar'}, {match_phrase: 'baz'}]}
+ */
+var objOf = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function objOf(key, val) {
+  var obj = {};
+  obj[key] = val;
+  return obj;
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (objOf);
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
+/***/ }),
+/* 197 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
 
-var _keys = _interopRequireDefault(require("./keys.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /**
  * Same as [`R.invertObj`](#invertObj), however this accounts for objects with
@@ -9465,10 +9261,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.invert(raceResultsByFirstName);
  *      //=> { 'alice': ['first', 'third'], 'jake':['second'] }
  */
-var invert =
-/*#__PURE__*/
-(0, _curry.default)(function invert(obj) {
-  var props = (0, _keys.default)(obj);
+var invert = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function invert(obj) {
+  var props = Object(_keys_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj);
   var len = props.length;
   var idx = 0;
   var out = {};
@@ -9476,28 +9270,24 @@ var invert =
   while (idx < len) {
     var key = props[idx];
     var val = obj[key];
-    var list = (0, _has2.default)(val, out) ? out[val] : out[val] = [];
+    var list = Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(val, out) ? out[val] : out[val] = [];
     list[list.length] = key;
     idx += 1;
   }
-
   return out;
 });
-var _default = invert;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/invertObj.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (invert);
+
+/***/ }),
+/* 198 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new object with the keys of the given object as values, and the
@@ -9526,10 +9316,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.invertObj(raceResults);
  *      //=> { 'alice': '0', 'jake':'1' }
  */
-var invertObj =
-/*#__PURE__*/
-(0, _curry.default)(function invertObj(obj) {
-  var props = (0, _keys.default)(obj);
+var invertObj = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function invertObj(obj) {
+  var props = Object(_keys_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj);
   var len = props.length;
   var idx = 0;
   var out = {};
@@ -9539,28 +9327,24 @@ var invertObj =
     out[obj[key]] = key;
     idx += 1;
   }
-
   return out;
 });
-var _default = invertObj;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/invoker.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (invertObj);
+
+/***/ }),
+/* 199 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isFunction_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+/* harmony import */ var _toString_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _isFunction2 = _interopRequireDefault(require("./internal/_isFunction.js"));
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _toString = _interopRequireDefault(require("./toString.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Turns a named method with a specified arity into a function that can be
@@ -9589,32 +9373,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.invoker(1, 'method')(a, o) = o['method'](a)
  * @symb R.invoker(2, 'method')(a, b, o) = o['method'](a, b)
  */
-var invoker =
-/*#__PURE__*/
-(0, _curry.default)(function invoker(arity, method) {
-  return (0, _curryN.default)(arity + 1, function () {
+var invoker = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function invoker(arity, method) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arity + 1, function () {
     var target = arguments[arity];
-
-    if (target != null && (0, _isFunction2.default)(target[method])) {
+    if (target != null && Object(_internal_isFunction_js__WEBPACK_IMPORTED_MODULE_1__["default"])(target[method])) {
       return target[method].apply(target, Array.prototype.slice.call(arguments, 0, arity));
     }
-
-    throw new TypeError((0, _toString.default)(target) + ' does not have a method named "' + method + '"');
+    throw new TypeError(Object(_toString_js__WEBPACK_IMPORTED_MODULE_3__["default"])(target) + ' does not have a method named "' + method + '"');
   });
 });
-var _default = invoker;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isFunction.js":"../node_modules/ramda/es/internal/_isFunction.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./toString.js":"../node_modules/ramda/es/toString.js"}],"../node_modules/ramda/es/is.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (invoker);
+
+/***/ }),
+/* 200 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * See if an object (`val`) is an instance of the supplied constructor. This
@@ -9639,28 +9416,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.is(Object, 's'); //=> false
  *      R.is(Number, {}); //=> false
  */
-var is =
-/*#__PURE__*/
-(0, _curry.default)(function is(Ctor, val) {
+var is = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function is(Ctor, val) {
   return val != null && val.constructor === Ctor || val instanceof Ctor;
 });
-var _default = is;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/isEmpty.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (is);
+
+/***/ }),
+/* 201 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _empty_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(153);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(102);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _empty = _interopRequireDefault(require("./empty.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the given value is its type's empty value; `false`
@@ -9683,24 +9455,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.isEmpty({});          //=> true
  *      R.isEmpty({length: 0}); //=> false
  */
-var isEmpty =
-/*#__PURE__*/
-(0, _curry.default)(function isEmpty(x) {
-  return x != null && (0, _equals.default)(x, (0, _empty.default)(x));
+var isEmpty = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function isEmpty(x) {
+  return x != null && Object(_equals_js__WEBPACK_IMPORTED_MODULE_2__["default"])(x, Object(_empty_js__WEBPACK_IMPORTED_MODULE_1__["default"])(x));
 });
-var _default = isEmpty;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./empty.js":"../node_modules/ramda/es/empty.js","./equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/join.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (isEmpty);
+
+/***/ }),
+/* 202 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _invoker_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(199);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _invoker = _interopRequireDefault(require("./invoker.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a string made by inserting the `separator` between each element and
@@ -9721,24 +9488,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      spacer(['a', 2, 3.4]);   //=> 'a 2 3.4'
  *      R.join('|', [1, 2, 3]);    //=> '1|2|3'
  */
-var join =
-/*#__PURE__*/
-(0, _invoker.default)(1, 'join');
-var _default = join;
-exports.default = _default;
-},{"./invoker.js":"../node_modules/ramda/es/invoker.js"}],"../node_modules/ramda/es/juxt.js":[function(require,module,exports) {
+var join = /*#__PURE__*/Object(_invoker_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, 'join');
+/* harmony default export */ __webpack_exports__["default"] = (join);
+
+/***/ }),
+/* 203 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _converge_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(120);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _converge = _interopRequireDefault(require("./converge.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * juxt applies a list of functions to a list of values.
@@ -9757,26 +9519,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      getRange(3, 4, 9, -3); //=> [-3, 9]
  * @symb R.juxt([f, g, h])(a, b) = [f(a, b), g(a, b), h(a, b)]
  */
-var juxt =
-/*#__PURE__*/
-(0, _curry.default)(function juxt(fns) {
-  return (0, _converge.default)(function () {
+var juxt = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function juxt(fns) {
+  return Object(_converge_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function () {
     return Array.prototype.slice.call(arguments, 0);
   }, fns);
 });
-var _default = juxt;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./converge.js":"../node_modules/ramda/es/converge.js"}],"../node_modules/ramda/es/keysIn.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (juxt);
+
+/***/ }),
+/* 204 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a list containing the names of all the properties of the supplied
@@ -9799,35 +9556,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const f = new F();
  *      R.keysIn(f); //=> ['x', 'y']
  */
-var keysIn =
-/*#__PURE__*/
-(0, _curry.default)(function keysIn(obj) {
+var keysIn = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function keysIn(obj) {
   var prop;
   var ks = [];
-
   for (prop in obj) {
     ks[ks.length] = prop;
   }
-
   return ks;
 });
-var _default = keysIn;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/lastIndexOf.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (keysIn);
+
+/***/ }),
+/* 205 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(102);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _isArray2 = _interopRequireDefault(require("./internal/_isArray.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the position of the last occurrence of an item in an array, or -1 if
@@ -9848,51 +9598,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.lastIndexOf(3, [-1,3,3,0,1,2,3,4]); //=> 6
  *      R.lastIndexOf(10, [1,2,3,4]); //=> -1
  */
-var lastIndexOf =
-/*#__PURE__*/
-(0, _curry.default)(function lastIndexOf(target, xs) {
-  if (typeof xs.lastIndexOf === 'function' && !(0, _isArray2.default)(xs)) {
+var lastIndexOf = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lastIndexOf(target, xs) {
+  if (typeof xs.lastIndexOf === 'function' && !Object(_internal_isArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(xs)) {
     return xs.lastIndexOf(target);
   } else {
     var idx = xs.length - 1;
-
     while (idx >= 0) {
-      if ((0, _equals.default)(xs[idx], target)) {
+      if (Object(_equals_js__WEBPACK_IMPORTED_MODULE_2__["default"])(xs[idx], target)) {
         return idx;
       }
-
       idx -= 1;
     }
-
     return -1;
   }
 });
-var _default = lastIndexOf;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isArray.js":"../node_modules/ramda/es/internal/_isArray.js","./equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/internal/_isNumber.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lastIndexOf);
+
+/***/ }),
+/* 206 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_isNumber_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(207);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _isNumber;
 
-function _isNumber(x) {
-  return Object.prototype.toString.call(x) === '[object Number]';
-}
-},{}],"../node_modules/ramda/es/length.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _isNumber2 = _interopRequireDefault(require("./internal/_isNumber.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the number of elements in the array by returning `list.length`.
@@ -9909,26 +9640,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.length([]); //=> 0
  *      R.length([1, 2, 3]); //=> 3
  */
-var length =
-/*#__PURE__*/
-(0, _curry.default)(function length(list) {
-  return list != null && (0, _isNumber2.default)(list.length) ? list.length : NaN;
+var length = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function length(list) {
+  return list != null && Object(_internal_isNumber_js__WEBPACK_IMPORTED_MODULE_1__["default"])(list.length) ? list.length : NaN;
 });
-var _default = length;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_isNumber.js":"../node_modules/ramda/es/internal/_isNumber.js"}],"../node_modules/ramda/es/lens.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (length);
+
+/***/ }),
+/* 207 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isNumber; });
+function _isNumber(x) {
+  return Object.prototype.toString.call(x) === '[object Number]';
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 208 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26);
 
-var _map = _interopRequireDefault(require("./map.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a lens for the given getter and setter functions. The getter "gets"
@@ -9953,36 +9690,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.set(xLens, 4, {x: 1, y: 2});          //=> {x: 4, y: 2}
  *      R.over(xLens, R.negate, {x: 1, y: 2});  //=> {x: -1, y: 2}
  */
-var lens =
-/*#__PURE__*/
-(0, _curry.default)(function lens(getter, setter) {
+var lens = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lens(getter, setter) {
   return function (toFunctorFn) {
     return function (target) {
-      return (0, _map.default)(function (focus) {
+      return Object(_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (focus) {
         return setter(focus, target);
       }, toFunctorFn(getter(target)));
     };
   };
 });
-var _default = lens;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./map.js":"../node_modules/ramda/es/map.js"}],"../node_modules/ramda/es/lensIndex.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lens);
+
+/***/ }),
+/* 209 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _lens_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(208);
+/* harmony import */ var _nth_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94);
+/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _lens = _interopRequireDefault(require("./lens.js"));
 
-var _nth = _interopRequireDefault(require("./nth.js"));
-
-var _update = _interopRequireDefault(require("./update.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a lens whose focus is the specified index.
@@ -10004,30 +9736,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.set(headLens, 'x', ['a', 'b', 'c']);        //=> ['x', 'b', 'c']
  *      R.over(headLens, R.toUpper, ['a', 'b', 'c']); //=> ['A', 'b', 'c']
  */
-var lensIndex =
-/*#__PURE__*/
-(0, _curry.default)(function lensIndex(n) {
-  return (0, _lens.default)((0, _nth.default)(n), (0, _update.default)(n));
+var lensIndex = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lensIndex(n) {
+  return Object(_lens_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_nth_js__WEBPACK_IMPORTED_MODULE_2__["default"])(n), Object(_update_js__WEBPACK_IMPORTED_MODULE_3__["default"])(n));
 });
-var _default = lensIndex;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./lens.js":"../node_modules/ramda/es/lens.js","./nth.js":"../node_modules/ramda/es/nth.js","./update.js":"../node_modules/ramda/es/update.js"}],"../node_modules/ramda/es/lensPath.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lensIndex);
+
+/***/ }),
+/* 210 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _assocPath_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
+/* harmony import */ var _lens_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(208);
+/* harmony import */ var _path_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _assocPath = _interopRequireDefault(require("./assocPath.js"));
 
-var _lens = _interopRequireDefault(require("./lens.js"));
-
-var _path = _interopRequireDefault(require("./path.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a lens whose focus is the specified path.
@@ -10053,30 +9780,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.over(xHeadYLens, R.negate, {x: [{y: 2, z: 3}, {y: 4, z: 5}]});
  *      //=> {x: [{y: -2, z: 3}, {y: 4, z: 5}]}
  */
-var lensPath =
-/*#__PURE__*/
-(0, _curry.default)(function lensPath(p) {
-  return (0, _lens.default)((0, _path.default)(p), (0, _assocPath.default)(p));
+var lensPath = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lensPath(p) {
+  return Object(_lens_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_path_js__WEBPACK_IMPORTED_MODULE_3__["default"])(p), Object(_assocPath_js__WEBPACK_IMPORTED_MODULE_1__["default"])(p));
 });
-var _default = lensPath;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./assocPath.js":"../node_modules/ramda/es/assocPath.js","./lens.js":"../node_modules/ramda/es/lens.js","./path.js":"../node_modules/ramda/es/path.js"}],"../node_modules/ramda/es/lensProp.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lensPath);
+
+/***/ }),
+/* 211 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _assoc_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55);
+/* harmony import */ var _lens_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(208);
+/* harmony import */ var _prop_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _assoc = _interopRequireDefault(require("./assoc.js"));
 
-var _lens = _interopRequireDefault(require("./lens.js"));
-
-var _prop = _interopRequireDefault(require("./prop.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a lens whose focus is the specified property.
@@ -10098,24 +9820,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.set(xLens, 4, {x: 1, y: 2});          //=> {x: 4, y: 2}
  *      R.over(xLens, R.negate, {x: 1, y: 2});  //=> {x: -1, y: 2}
  */
-var lensProp =
-/*#__PURE__*/
-(0, _curry.default)(function lensProp(k) {
-  return (0, _lens.default)((0, _prop.default)(k), (0, _assoc.default)(k));
+var lensProp = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lensProp(k) {
+  return Object(_lens_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_prop_js__WEBPACK_IMPORTED_MODULE_3__["default"])(k), Object(_assoc_js__WEBPACK_IMPORTED_MODULE_1__["default"])(k));
 });
-var _default = lensProp;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./assoc.js":"../node_modules/ramda/es/assoc.js","./lens.js":"../node_modules/ramda/es/lens.js","./prop.js":"../node_modules/ramda/es/prop.js"}],"../node_modules/ramda/es/lt.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lensProp);
+
+/***/ }),
+/* 212 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the first argument is less than the second; `false`
@@ -10138,24 +9855,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.lt('a', 'z'); //=> true
  *      R.lt('z', 'a'); //=> false
  */
-var lt =
-/*#__PURE__*/
-(0, _curry.default)(function lt(a, b) {
+var lt = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lt(a, b) {
   return a < b;
 });
-var _default = lt;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/lte.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lt);
+
+/***/ }),
+/* 213 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the first argument is less than or equal to the second;
@@ -10178,24 +9890,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.lte('a', 'z'); //=> true
  *      R.lte('z', 'a'); //=> false
  */
-var lte =
-/*#__PURE__*/
-(0, _curry.default)(function lte(a, b) {
+var lte = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function lte(a, b) {
   return a <= b;
 });
-var _default = lte;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/mapAccum.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (lte);
+
+/***/ }),
+/* 214 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The `mapAccum` function behaves like a combination of map and reduce; it
@@ -10231,35 +9938,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   ]
  * ]
  */
-var mapAccum =
-/*#__PURE__*/
-(0, _curry.default)(function mapAccum(fn, acc, list) {
+var mapAccum = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mapAccum(fn, acc, list) {
   var idx = 0;
   var len = list.length;
   var result = [];
   var tuple = [acc];
-
   while (idx < len) {
     tuple = fn(tuple[0], list[idx]);
     result[idx] = tuple[1];
     idx += 1;
   }
-
   return [tuple[0], result];
 });
-var _default = mapAccum;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/mapAccumRight.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mapAccum);
+
+/***/ }),
+/* 215 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The `mapAccumRight` function behaves like a combination of map and reduce; it
@@ -10298,38 +9998,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   ]
  * ]
  */
-var mapAccumRight =
-/*#__PURE__*/
-(0, _curry.default)(function mapAccumRight(fn, acc, list) {
+var mapAccumRight = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mapAccumRight(fn, acc, list) {
   var idx = list.length - 1;
   var result = [];
   var tuple = [acc];
-
   while (idx >= 0) {
     tuple = fn(tuple[0], list[idx]);
     result[idx] = tuple[1];
     idx -= 1;
   }
-
   return [tuple[0], result];
 });
-var _default = mapAccumRight;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/mapObjIndexed.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mapAccumRight);
+
+/***/ }),
+/* 216 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _keys_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * An Object-specific version of [`map`](#map). The function is applied to three
@@ -10352,27 +10045,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.mapObjIndexed(prependKeyAndDouble, xyz); //=> { x: 'x2', y: 'y4', z: 'z6' }
  */
-var mapObjIndexed =
-/*#__PURE__*/
-(0, _curry.default)(function mapObjIndexed(fn, obj) {
-  return (0, _reduce2.default)(function (acc, key) {
+var mapObjIndexed = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mapObjIndexed(fn, obj) {
+  return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (acc, key) {
     acc[key] = fn(obj[key], key, obj);
     return acc;
-  }, {}, (0, _keys.default)(obj));
+  }, {}, Object(_keys_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj));
 });
-var _default = mapObjIndexed;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./keys.js":"../node_modules/ramda/es/keys.js"}],"../node_modules/ramda/es/match.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mapObjIndexed);
+
+/***/ }),
+/* 217 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Tests a regular expression against a String. Note that this function will
@@ -10395,26 +10083,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.match(/a/, 'b'); //=> []
  *      R.match(/a/, null); //=> TypeError: null does not have a method named "match"
  */
-var match =
-/*#__PURE__*/
-(0, _curry.default)(function match(rx, str) {
+var match = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function match(rx, str) {
   return str.match(rx) || [];
 });
-var _default = match;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/mathMod.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (match);
+
+/***/ }),
+/* 218 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isInteger_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _isInteger2 = _interopRequireDefault(require("./internal/_isInteger.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * `mathMod` behaves like the modulo operator should mathematically, unlike the
@@ -10449,32 +10132,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      seventeenMod(4);  //=> 1
  *      seventeenMod(10); //=> 7
  */
-var mathMod =
-/*#__PURE__*/
-(0, _curry.default)(function mathMod(m, p) {
-  if (!(0, _isInteger2.default)(m)) {
+var mathMod = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mathMod(m, p) {
+  if (!Object(_internal_isInteger_js__WEBPACK_IMPORTED_MODULE_1__["default"])(m)) {
     return NaN;
   }
-
-  if (!(0, _isInteger2.default)(p) || p < 1) {
+  if (!Object(_internal_isInteger_js__WEBPACK_IMPORTED_MODULE_1__["default"])(p) || p < 1) {
     return NaN;
   }
-
   return (m % p + p) % p;
 });
-var _default = mathMod;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isInteger.js":"../node_modules/ramda/es/internal/_isInteger.js"}],"../node_modules/ramda/es/maxBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mathMod);
+
+/***/ }),
+/* 219 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a function and two values, and returns whichever value produces the
@@ -10500,60 +10176,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.reduce(R.maxBy(square), 0, [3, -5, 4, 1, -2]); //=> -5
  *      R.reduce(R.maxBy(square), 0, []); //=> 0
  */
-var maxBy =
-/*#__PURE__*/
-(0, _curry.default)(function maxBy(f, a, b) {
+var maxBy = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function maxBy(f, a, b) {
   return f(b) > f(a) ? b : a;
 });
-var _default = maxBy;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/sum.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (maxBy);
+
+/***/ }),
+/* 220 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _sum_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(221);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _add = _interopRequireDefault(require("./add.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Adds together all the elements of a list.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Math
- * @sig [Number] -> Number
- * @param {Array} list An array of numbers
- * @return {Number} The sum of all the numbers in the list.
- * @see R.reduce
- * @example
- *
- *      R.sum([2,4,6,8,100,1]); //=> 121
- */
-var sum =
-/*#__PURE__*/
-(0, _reduce.default)(_add.default, 0);
-var _default = sum;
-exports.default = _default;
-},{"./add.js":"../node_modules/ramda/es/add.js","./reduce.js":"../node_modules/ramda/es/reduce.js"}],"../node_modules/ramda/es/mean.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _sum = _interopRequireDefault(require("./sum.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the mean of the given list of numbers.
@@ -10571,26 +10208,50 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.mean([2, 7, 9]); //=> 6
  *      R.mean([]); //=> NaN
  */
-var mean =
-/*#__PURE__*/
-(0, _curry.default)(function mean(list) {
-  return (0, _sum.default)(list) / list.length;
+var mean = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mean(list) {
+  return Object(_sum_js__WEBPACK_IMPORTED_MODULE_1__["default"])(list) / list.length;
 });
-var _default = mean;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./sum.js":"../node_modules/ramda/es/sum.js"}],"../node_modules/ramda/es/median.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mean);
+
+/***/ }),
+/* 221 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _add_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _mean = _interopRequireDefault(require("./mean.js"));
+/**
+ * Adds together all the elements of a list.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Math
+ * @sig [Number] -> Number
+ * @param {Array} list An array of numbers
+ * @return {Number} The sum of all the numbers in the list.
+ * @see R.reduce
+ * @example
+ *
+ *      R.sum([2,4,6,8,100,1]); //=> 121
+ */
+var sum = /*#__PURE__*/Object(_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_add_js__WEBPACK_IMPORTED_MODULE_0__["default"], 0);
+/* harmony default export */ __webpack_exports__["default"] = (sum);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+/***/ }),
+/* 222 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _mean_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(220);
+
+
 
 /**
  * Returns the median of the given list of numbers.
@@ -10609,38 +10270,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.median([7, 2, 10, 9]); //=> 8
  *      R.median([]); //=> NaN
  */
-var median =
-/*#__PURE__*/
-(0, _curry.default)(function median(list) {
+var median = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function median(list) {
   var len = list.length;
-
   if (len === 0) {
     return NaN;
   }
-
   var width = 2 - len % 2;
   var idx = (len - width) / 2;
-  return (0, _mean.default)(Array.prototype.slice.call(list, 0).sort(function (a, b) {
+  return Object(_mean_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Array.prototype.slice.call(list, 0).sort(function (a, b) {
     return a < b ? -1 : a > b ? 1 : 0;
   }).slice(idx, idx + width));
 });
-var _default = median;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./mean.js":"../node_modules/ramda/es/mean.js"}],"../node_modules/ramda/es/memoizeWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (median);
+
+/***/ }),
+/* 223 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new function that, when invoked, caches the result of calling `fn`
@@ -10670,35 +10324,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      factorial(5); //=> 120
  *      count; //=> 1
  */
-var memoizeWith =
-/*#__PURE__*/
-(0, _curry.default)(function memoizeWith(mFn, fn) {
+var memoizeWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function memoizeWith(mFn, fn) {
   var cache = {};
-  return (0, _arity2.default)(fn.length, function () {
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(fn.length, function () {
     var key = mFn.apply(this, arguments);
-
-    if (!(0, _has2.default)(key, cache)) {
+    if (!Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_2__["default"])(key, cache)) {
       cache[key] = fn.apply(this, arguments);
     }
-
     return cache[key];
   });
 });
-var _default = memoizeWith;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/merge.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (memoizeWith);
+
+/***/ }),
+/* 224 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(195);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _objectAssign2 = _interopRequireDefault(require("./internal/_objectAssign.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Create a new object with the own properties of the first object merged with
@@ -10724,26 +10371,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      withDefaults({y: 2}); //=> {x: 0, y: 2}
  * @symb R.merge(a, b) = {...a, ...b}
  */
-var merge =
-/*#__PURE__*/
-(0, _curry.default)(function merge(l, r) {
-  return (0, _objectAssign2.default)({}, l, r);
+var merge = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function merge(l, r) {
+  return Object(_internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__["default"])({}, l, r);
 });
-var _default = merge;
-exports.default = _default;
-},{"./internal/_objectAssign.js":"../node_modules/ramda/es/internal/_objectAssign.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/mergeAll.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (merge);
+
+/***/ }),
+/* 225 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(195);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _objectAssign2 = _interopRequireDefault(require("./internal/_objectAssign.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Merges a list of objects together into one object.
@@ -10762,89 +10404,62 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.mergeAll([{foo:1},{foo:2},{bar:2}]); //=> {foo:2,bar:2}
  * @symb R.mergeAll([{ x: 1 }, { y: 2 }, { z: 3 }]) = { x: 1, y: 2, z: 3 }
  */
-var mergeAll =
-/*#__PURE__*/
-(0, _curry.default)(function mergeAll(list) {
-  return _objectAssign2.default.apply(null, [{}].concat(list));
+var mergeAll = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function mergeAll(list) {
+  return _internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__["default"].apply(null, [{}].concat(list));
 });
-var _default = mergeAll;
-exports.default = _default;
-},{"./internal/_objectAssign.js":"../node_modules/ramda/es/internal/_objectAssign.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/mergeWithKey.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeAll);
+
+/***/ }),
+/* 226 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(227);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Creates a new object with the own properties of the two provided objects. If
- * a key exists in both objects, the provided function is applied to the key
- * and the values associated with the key in each object, with the result being
- * used as the value associated with the key in the returned object.
+ * Creates a new object with the own properties of the first object merged with
+ * the own properties of the second object. If a key exists in both objects:
+ * - and both values are objects, the two values will be recursively merged
+ * - otherwise the value from the first object will be used.
  *
  * @func
  * @memberOf R
- * @since v0.19.0
+ * @since v0.24.0
  * @category Object
- * @sig ((String, a, a) -> a) -> {a} -> {a} -> {a}
- * @param {Function} fn
- * @param {Object} l
- * @param {Object} r
+ * @sig {a} -> {a} -> {a}
+ * @param {Object} lObj
+ * @param {Object} rObj
  * @return {Object}
- * @see R.mergeDeepWithKey, R.merge, R.mergeWith
+ * @see R.merge, R.mergeDeepRight, R.mergeDeepWith, R.mergeDeepWithKey
  * @example
  *
- *      let concatValues = (k, l, r) => k == 'values' ? R.concat(l, r) : r
- *      R.mergeWithKey(concatValues,
- *                     { a: true, thing: 'foo', values: [10, 20] },
- *                     { b: true, thing: 'bar', values: [15, 35] });
- *      //=> { a: true, b: true, thing: 'bar', values: [10, 20, 15, 35] }
- * @symb R.mergeWithKey(f, { x: 1, y: 2 }, { y: 5, z: 3 }) = { x: 1, y: f('y', 2, 5), z: 3 }
+ *      R.mergeDeepLeft({ name: 'fred', age: 10, contact: { email: 'moo@example.com' }},
+ *                      { age: 40, contact: { email: 'baa@example.com' }});
+ *      //=> { name: 'fred', age: 10, contact: { email: 'moo@example.com' }}
  */
-var mergeWithKey =
-/*#__PURE__*/
-(0, _curry.default)(function mergeWithKey(fn, l, r) {
-  var result = {};
-  var k;
-
-  for (k in l) {
-    if ((0, _has2.default)(k, l)) {
-      result[k] = (0, _has2.default)(k, r) ? fn(k, l[k], r[k]) : l[k];
-    }
-  }
-
-  for (k in r) {
-    if ((0, _has2.default)(k, r) && !(0, _has2.default)(k, result)) {
-      result[k] = r[k];
-    }
-  }
-
-  return result;
+var mergeDeepLeft = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mergeDeepLeft(lObj, rObj) {
+  return Object(_mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (k, lVal, rVal) {
+    return lVal;
+  }, lObj, rObj);
 });
-var _default = mergeWithKey;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/mergeDeepWithKey.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeDeepLeft);
+
+/***/ }),
+/* 227 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _internal_isObject_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(114);
+/* harmony import */ var _mergeWithKey_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(228);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _isObject2 = _interopRequireDefault(require("./internal/_isObject.js"));
-
-var _mergeWithKey = _interopRequireDefault(require("./mergeWithKey.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object with the own properties of the two provided objects.
@@ -10874,76 +10489,83 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *                         { b: true, c: { thing: 'bar', values: [15, 35] }});
  *      //=> { a: true, b: true, c: { thing: 'bar', values: [10, 20, 15, 35] }}
  */
-var mergeDeepWithKey =
-/*#__PURE__*/
-(0, _curry.default)(function mergeDeepWithKey(fn, lObj, rObj) {
-  return (0, _mergeWithKey.default)(function (k, lVal, rVal) {
-    if ((0, _isObject2.default)(lVal) && (0, _isObject2.default)(rVal)) {
+var mergeDeepWithKey = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mergeDeepWithKey(fn, lObj, rObj) {
+  return Object(_mergeWithKey_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function (k, lVal, rVal) {
+    if (Object(_internal_isObject_js__WEBPACK_IMPORTED_MODULE_1__["default"])(lVal) && Object(_internal_isObject_js__WEBPACK_IMPORTED_MODULE_1__["default"])(rVal)) {
       return mergeDeepWithKey(fn, lVal, rVal);
     } else {
       return fn(k, lVal, rVal);
     }
   }, lObj, rObj);
 });
-var _default = mergeDeepWithKey;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./internal/_isObject.js":"../node_modules/ramda/es/internal/_isObject.js","./mergeWithKey.js":"../node_modules/ramda/es/mergeWithKey.js"}],"../node_modules/ramda/es/mergeDeepLeft.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeDeepWithKey);
+
+/***/ }),
+/* 228 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _mergeDeepWithKey = _interopRequireDefault(require("./mergeDeepWithKey.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Creates a new object with the own properties of the first object merged with
- * the own properties of the second object. If a key exists in both objects:
- * - and both values are objects, the two values will be recursively merged
- * - otherwise the value from the first object will be used.
+ * Creates a new object with the own properties of the two provided objects. If
+ * a key exists in both objects, the provided function is applied to the key
+ * and the values associated with the key in each object, with the result being
+ * used as the value associated with the key in the returned object.
  *
  * @func
  * @memberOf R
- * @since v0.24.0
+ * @since v0.19.0
  * @category Object
- * @sig {a} -> {a} -> {a}
- * @param {Object} lObj
- * @param {Object} rObj
+ * @sig ((String, a, a) -> a) -> {a} -> {a} -> {a}
+ * @param {Function} fn
+ * @param {Object} l
+ * @param {Object} r
  * @return {Object}
- * @see R.merge, R.mergeDeepRight, R.mergeDeepWith, R.mergeDeepWithKey
+ * @see R.mergeDeepWithKey, R.merge, R.mergeWith
  * @example
  *
- *      R.mergeDeepLeft({ name: 'fred', age: 10, contact: { email: 'moo@example.com' }},
- *                      { age: 40, contact: { email: 'baa@example.com' }});
- *      //=> { name: 'fred', age: 10, contact: { email: 'moo@example.com' }}
+ *      let concatValues = (k, l, r) => k == 'values' ? R.concat(l, r) : r
+ *      R.mergeWithKey(concatValues,
+ *                     { a: true, thing: 'foo', values: [10, 20] },
+ *                     { b: true, thing: 'bar', values: [15, 35] });
+ *      //=> { a: true, b: true, thing: 'bar', values: [10, 20, 15, 35] }
+ * @symb R.mergeWithKey(f, { x: 1, y: 2 }, { y: 5, z: 3 }) = { x: 1, y: f('y', 2, 5), z: 3 }
  */
-var mergeDeepLeft =
-/*#__PURE__*/
-(0, _curry.default)(function mergeDeepLeft(lObj, rObj) {
-  return (0, _mergeDeepWithKey.default)(function (k, lVal, rVal) {
-    return lVal;
-  }, lObj, rObj);
+var mergeWithKey = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mergeWithKey(fn, l, r) {
+  var result = {};
+  var k;
+
+  for (k in l) {
+    if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(k, l)) {
+      result[k] = Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(k, r) ? fn(k, l[k], r[k]) : l[k];
+    }
+  }
+
+  for (k in r) {
+    if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(k, r) && !Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(k, result)) {
+      result[k] = r[k];
+    }
+  }
+
+  return result;
 });
-var _default = mergeDeepLeft;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./mergeDeepWithKey.js":"../node_modules/ramda/es/mergeDeepWithKey.js"}],"../node_modules/ramda/es/mergeDeepRight.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeWithKey);
+
+/***/ }),
+/* 229 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(227);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _mergeDeepWithKey = _interopRequireDefault(require("./mergeDeepWithKey.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object with the own properties of the first object merged with
@@ -10966,28 +10588,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *                       { age: 40, contact: { email: 'baa@example.com' }});
  *      //=> { name: 'fred', age: 40, contact: { email: 'baa@example.com' }}
  */
-var mergeDeepRight =
-/*#__PURE__*/
-(0, _curry.default)(function mergeDeepRight(lObj, rObj) {
-  return (0, _mergeDeepWithKey.default)(function (k, lVal, rVal) {
+var mergeDeepRight = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mergeDeepRight(lObj, rObj) {
+  return Object(_mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (k, lVal, rVal) {
     return rVal;
   }, lObj, rObj);
 });
-var _default = mergeDeepRight;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./mergeDeepWithKey.js":"../node_modules/ramda/es/mergeDeepWithKey.js"}],"../node_modules/ramda/es/mergeDeepWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeDeepRight);
+
+/***/ }),
+/* 230 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(227);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _mergeDeepWithKey = _interopRequireDefault(require("./mergeDeepWithKey.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object with the own properties of the two provided objects.
@@ -11016,28 +10633,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *                      { b: true, c: { values: [15, 35] }});
  *      //=> { a: true, b: true, c: { values: [10, 20, 15, 35] }}
  */
-var mergeDeepWith =
-/*#__PURE__*/
-(0, _curry.default)(function mergeDeepWith(fn, lObj, rObj) {
-  return (0, _mergeDeepWithKey.default)(function (k, lVal, rVal) {
+var mergeDeepWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mergeDeepWith(fn, lObj, rObj) {
+  return Object(_mergeDeepWithKey_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (k, lVal, rVal) {
     return fn(lVal, rVal);
   }, lObj, rObj);
 });
-var _default = mergeDeepWith;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./mergeDeepWithKey.js":"../node_modules/ramda/es/mergeDeepWithKey.js"}],"../node_modules/ramda/es/mergeLeft.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeDeepWith);
+
+/***/ }),
+/* 231 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(195);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _objectAssign2 = _interopRequireDefault(require("./internal/_objectAssign.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Create a new object with the own properties of the first object merged with
@@ -11061,26 +10673,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      resetToDefault({x: 5, y: 2}); //=> {x: 0, y: 2}
  * @symb R.mergeLeft(a, b) = {...b, ...a}
  */
-var mergeLeft =
-/*#__PURE__*/
-(0, _curry.default)(function mergeLeft(l, r) {
-  return (0, _objectAssign2.default)({}, r, l);
+var mergeLeft = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function mergeLeft(l, r) {
+  return Object(_internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__["default"])({}, r, l);
 });
-var _default = mergeLeft;
-exports.default = _default;
-},{"./internal/_objectAssign.js":"../node_modules/ramda/es/internal/_objectAssign.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/mergeRight.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeLeft);
+
+/***/ }),
+/* 232 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(195);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _objectAssign2 = _interopRequireDefault(require("./internal/_objectAssign.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Create a new object with the own properties of the first object merged with
@@ -11104,26 +10711,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      withDefaults({y: 2}); //=> {x: 0, y: 2}
  * @symb R.mergeRight(a, b) = {...a, ...b}
  */
-var mergeRight =
-/*#__PURE__*/
-(0, _curry.default)(function mergeRight(l, r) {
-  return (0, _objectAssign2.default)({}, l, r);
+var mergeRight = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function mergeRight(l, r) {
+  return Object(_internal_objectAssign_js__WEBPACK_IMPORTED_MODULE_0__["default"])({}, l, r);
 });
-var _default = mergeRight;
-exports.default = _default;
-},{"./internal/_objectAssign.js":"../node_modules/ramda/es/internal/_objectAssign.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/mergeWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeRight);
+
+/***/ }),
+/* 233 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _mergeWithKey_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(228);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _mergeWithKey = _interopRequireDefault(require("./mergeWithKey.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object with the own properties of the two provided objects. If
@@ -11148,26 +10750,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *                  { b: true, values: [15, 35] });
  *      //=> { a: true, b: true, values: [10, 20, 15, 35] }
  */
-var mergeWith =
-/*#__PURE__*/
-(0, _curry.default)(function mergeWith(fn, l, r) {
-  return (0, _mergeWithKey.default)(function (_, _l, _r) {
+var mergeWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function mergeWith(fn, l, r) {
+  return Object(_mergeWithKey_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (_, _l, _r) {
     return fn(_l, _r);
   }, l, r);
 });
-var _default = mergeWith;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./mergeWithKey.js":"../node_modules/ramda/es/mergeWithKey.js"}],"../node_modules/ramda/es/min.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (mergeWith);
+
+/***/ }),
+/* 234 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the smaller of its two arguments.
@@ -11186,24 +10783,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.min(789, 123); //=> 123
  *      R.min('a', 'b'); //=> 'a'
  */
-var min =
-/*#__PURE__*/
-(0, _curry.default)(function min(a, b) {
+var min = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function min(a, b) {
   return b < a ? b : a;
 });
-var _default = min;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/minBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (min);
+
+/***/ }),
+/* 235 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a function and two values, and returns whichever value produces the
@@ -11229,24 +10821,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.reduce(R.minBy(square), Infinity, [3, -5, 4, 1, -2]); //=> 1
  *      R.reduce(R.minBy(square), Infinity, []); //=> Infinity
  */
-var minBy =
-/*#__PURE__*/
-(0, _curry.default)(function minBy(f, a, b) {
+var minBy = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function minBy(f, a, b) {
   return f(b) < f(a) ? b : a;
 });
-var _default = minBy;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/modulo.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (minBy);
+
+/***/ }),
+/* 236 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Divides the first parameter by the second and returns the remainder. Note
@@ -11273,24 +10860,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      isOdd(42); //=> 0
  *      isOdd(21); //=> 1
  */
-var modulo =
-/*#__PURE__*/
-(0, _curry.default)(function modulo(a, b) {
+var modulo = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function modulo(a, b) {
   return a % b;
 });
-var _default = modulo;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/move.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (modulo);
+
+/***/ }),
+/* 237 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Move an item, at index `from`, to index `to`, in a list of elements.
@@ -11309,29 +10891,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.move(0, 2, ['a', 'b', 'c', 'd', 'e', 'f']); //=> ['b', 'c', 'a', 'd', 'e', 'f']
  *      R.move(-1, 0, ['a', 'b', 'c', 'd', 'e', 'f']); //=> ['f', 'a', 'b', 'c', 'd', 'e'] list rotation
  */
-var move =
-/*#__PURE__*/
-(0, _curry.default)(function (from, to, list) {
+var move = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (from, to, list) {
   var length = list.length;
   var result = list.slice();
   var positiveFrom = from < 0 ? length + from : from;
   var positiveTo = to < 0 ? length + to : to;
   var item = result.splice(positiveFrom, 1);
+
   return positiveFrom < 0 || positiveFrom >= list.length || positiveTo < 0 || positiveTo >= list.length ? list : [].concat(result.slice(0, positiveTo)).concat(item).concat(result.slice(positiveTo, list.length));
 });
-var _default = move;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/multiply.js":[function(require,module,exports) {
+
+/* harmony default export */ __webpack_exports__["default"] = (move);
+
+/***/ }),
+/* 238 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Multiplies two numbers. Equivalent to `a * b` but curried.
@@ -11353,24 +10932,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      triple(4);       //=> 12
  *      R.multiply(2, 5);  //=> 10
  */
-var multiply =
-/*#__PURE__*/
-(0, _curry.default)(function multiply(a, b) {
+var multiply = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function multiply(a, b) {
   return a * b;
 });
-var _default = multiply;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/negate.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (multiply);
+
+/***/ }),
+/* 239 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Negates its argument.
@@ -11386,28 +10960,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.negate(42); //=> -42
  */
-var negate =
-/*#__PURE__*/
-(0, _curry.default)(function negate(n) {
+var negate = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function negate(n) {
   return -n;
 });
-var _default = negate;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/none.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (negate);
+
+/***/ }),
+/* 240 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_complement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(111);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _all_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _complement2 = _interopRequireDefault(require("./internal/_complement.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _all = _interopRequireDefault(require("./all.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if no elements of the list match the predicate, `false`
@@ -11434,28 +11003,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.none(isEven, [1, 3, 5, 7, 9, 11]); //=> true
  *      R.none(isOdd, [1, 3, 5, 7, 8, 11]); //=> false
  */
-var none =
-/*#__PURE__*/
-(0, _curry.default)(function none(fn, input) {
-  return (0, _all.default)((0, _complement2.default)(fn), input);
+var none = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function none(fn, input) {
+  return Object(_all_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_internal_complement_js__WEBPACK_IMPORTED_MODULE_0__["default"])(fn), input);
 });
-var _default = none;
-exports.default = _default;
-},{"./internal/_complement.js":"../node_modules/ramda/es/internal/_complement.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./all.js":"../node_modules/ramda/es/all.js"}],"../node_modules/ramda/es/nthArg.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (none);
+
+/***/ }),
+/* 241 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var _nth_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _nth = _interopRequireDefault(require("./nth.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a function which returns its nth argument.
@@ -11475,27 +11039,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.nthArg(0)(a, b, c) = a
  * @symb R.nthArg(1)(a, b, c) = b
  */
-var nthArg =
-/*#__PURE__*/
-(0, _curry.default)(function nthArg(n) {
+var nthArg = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function nthArg(n) {
   var arity = n < 0 ? 1 : n + 1;
-  return (0, _curryN.default)(arity, function () {
-    return (0, _nth.default)(n, arguments);
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arity, function () {
+    return Object(_nth_js__WEBPACK_IMPORTED_MODULE_2__["default"])(n, arguments);
   });
 });
-var _default = nthArg;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./nth.js":"../node_modules/ramda/es/nth.js"}],"../node_modules/ramda/es/o.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (nthArg);
+
+/***/ }),
+/* 242 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * `o` is a curried composition function that returns a unary function.
@@ -11524,37 +11083,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @symb R.o(f, g, x) = f(g(x))
  */
-var o =
-/*#__PURE__*/
-(0, _curry.default)(function o(f, g, x) {
+var o = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function o(f, g, x) {
   return f(g(x));
 });
-var _default = o;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/internal/_of.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (o);
+
+/***/ }),
+/* 243 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_of_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(244);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _of;
 
-function _of(x) {
-  return [x];
-}
-},{}],"../node_modules/ramda/es/of.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _of2 = _interopRequireDefault(require("./internal/_of.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a singleton array containing the value provided.
@@ -11574,22 +11117,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.of(null); //=> [null]
  *      R.of([42]); //=> [[42]]
  */
-var of =
-/*#__PURE__*/
-(0, _curry.default)(_of2.default);
-var _default = of;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_of.js":"../node_modules/ramda/es/internal/_of.js"}],"../node_modules/ramda/es/omit.js":[function(require,module,exports) {
+var of = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_internal_of_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (of);
+
+/***/ }),
+/* 244 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _of; });
+function _of(x) {
+  return [x];
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 245 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a partial copy of an object omitting the keys specified.
@@ -11607,9 +11156,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.omit(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=> {b: 2, c: 3}
  */
-var omit =
-/*#__PURE__*/
-(0, _curry.default)(function omit(names, obj) {
+var omit = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function omit(names, obj) {
   var result = {};
   var index = {};
   var idx = 0;
@@ -11625,24 +11172,20 @@ var omit =
       result[prop] = obj[prop];
     }
   }
-
   return result;
 });
-var _default = omit;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/once.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (omit);
+
+/***/ }),
+/* 246 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Accepts a function `fn` and returns a function that guards invocation of
@@ -11663,55 +11206,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      addOneOnce(10); //=> 11
  *      addOneOnce(addOneOnce(50)); //=> 11
  */
-var once =
-/*#__PURE__*/
-(0, _curry.default)(function once(fn) {
+var once = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function once(fn) {
   var called = false;
   var result;
-  return (0, _arity2.default)(fn.length, function () {
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(fn.length, function () {
     if (called) {
       return result;
     }
-
     called = true;
     result = fn.apply(this, arguments);
     return result;
   });
 });
-var _default = once;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/internal/_assertPromise.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (once);
+
+/***/ }),
+/* 247 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_assertPromise_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(248);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _assertPromise;
 
-var _isFunction2 = _interopRequireDefault(require("./_isFunction.js"));
-
-var _toString2 = _interopRequireDefault(require("./_toString.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _assertPromise(name, p) {
-  if (p == null || !(0, _isFunction2.default)(p.then)) {
-    throw new TypeError('`' + name + '` expected a Promise, received ' + (0, _toString2.default)(p, []));
-  }
-}
-},{"./_isFunction.js":"../node_modules/ramda/es/internal/_isFunction.js","./_toString.js":"../node_modules/ramda/es/internal/_toString.js"}],"../node_modules/ramda/es/otherwise.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _assertPromise2 = _interopRequireDefault(require("./internal/_assertPromise.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the result of applying the onFailure function to the value inside
@@ -11740,36 +11258,48 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      );
  *      recoverFromFailure(12345).then(console.log)
  */
-var otherwise =
-/*#__PURE__*/
-(0, _curry.default)(function otherwise(f, p) {
-  (0, _assertPromise2.default)('otherwise', p);
+var otherwise = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function otherwise(f, p) {
+  Object(_internal_assertPromise_js__WEBPACK_IMPORTED_MODULE_1__["default"])('otherwise', p);
+
   return p.then(null, f);
 });
-var _default = otherwise;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_assertPromise.js":"../node_modules/ramda/es/internal/_assertPromise.js"}],"../node_modules/ramda/es/over.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (otherwise);
+
+/***/ }),
+/* 248 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _assertPromise; });
+/* harmony import */ var _isFunction_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(62);
+/* harmony import */ var _toString_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(99);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _assertPromise(name, p) {
+  if (p == null || !Object(_isFunction_js__WEBPACK_IMPORTED_MODULE_0__["default"])(p.then)) {
+    throw new TypeError('`' + name + '` expected a Promise, received ' + Object(_toString_js__WEBPACK_IMPORTED_MODULE_1__["default"])(p, []));
+  }
+}
+
+/***/ }),
+/* 249 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+
 
 // `Identity` is a functor that holds a single value, where `map` simply
 // transforms the held value with the provided function.
 var Identity = function (x) {
-  return {
-    value: x,
-    map: function (f) {
+  return { value: x, map: function (f) {
       return Identity(f(x));
-    }
-  };
+    } };
 };
+
 /**
  * Returns the result of "setting" the portion of the given data structure
  * focused by the given lens to the result of applying the given function to
@@ -11792,11 +11322,7 @@ var Identity = function (x) {
  *
  *      R.over(headLens, R.toUpper, ['foo', 'bar', 'baz']); //=> ['FOO', 'bar', 'baz']
  */
-
-
-var over =
-/*#__PURE__*/
-(0, _curry.default)(function over(lens, f, x) {
+var over = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function over(lens, f, x) {
   // The value returned by the getter function is first transformed with `f`,
   // then set as the value of an `Identity`. This is then mapped over with the
   // setter function of the lens.
@@ -11804,19 +11330,16 @@ var over =
     return Identity(f(y));
   })(x).value;
 });
-var _default = over;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/pair.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (over);
+
+/***/ }),
+/* 250 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes two arguments, `fst` and `snd`, and returns `[fst, snd]`.
@@ -11834,47 +11357,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.pair('foo', 'bar'); //=> ['foo', 'bar']
  */
-var pair =
-/*#__PURE__*/
-(0, _curry.default)(function pair(fst, snd) {
+var pair = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pair(fst, snd) {
   return [fst, snd];
 });
-var _default = pair;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/internal/_createPartialApplicator.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pair);
+
+/***/ }),
+/* 251 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_createPartialApplicator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(252);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _createPartialApplicator;
 
-var _arity2 = _interopRequireDefault(require("./_arity.js"));
-
-var _curry = _interopRequireDefault(require("./_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _createPartialApplicator(concat) {
-  return (0, _curry.default)(function (fn, args) {
-    return (0, _arity2.default)(Math.max(0, fn.length - args.length), function () {
-      return fn.apply(this, concat(args, arguments));
-    });
-  });
-}
-},{"./_arity.js":"../node_modules/ramda/es/internal/_arity.js","./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/partial.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
-
-var _createPartialApplicator2 = _interopRequireDefault(require("./internal/_createPartialApplicator.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a function `f` and a list of arguments, and returns a function `g`.
@@ -11904,26 +11401,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      sayHelloToMs('Jane', 'Jones'); //=> 'Hello, Ms. Jane Jones!'
  * @symb R.partial(f, [a, b])(c, d) = f(a, b, c, d)
  */
-var partial =
-/*#__PURE__*/
-(0, _createPartialApplicator2.default)(_concat2.default);
-var _default = partial;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_createPartialApplicator.js":"../node_modules/ramda/es/internal/_createPartialApplicator.js"}],"../node_modules/ramda/es/partialRight.js":[function(require,module,exports) {
+var partial = /*#__PURE__*/Object(_internal_createPartialApplicator_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (partial);
+
+/***/ }),
+/* 252 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _createPartialApplicator; });
+/* harmony import */ var _arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
 
-var _createPartialApplicator2 = _interopRequireDefault(require("./internal/_createPartialApplicator.js"));
+function _createPartialApplicator(concat) {
+  return Object(_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (fn, args) {
+    return Object(_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Math.max(0, fn.length - args.length), function () {
+      return fn.apply(this, concat(args, arguments));
+    });
+  });
+}
 
-var _flip = _interopRequireDefault(require("./flip.js"));
+/***/ }),
+/* 253 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_createPartialApplicator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(252);
+/* harmony import */ var _flip_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(168);
+
+
+
 
 /**
  * Takes a function `f` and a list of arguments, and returns a function `g`.
@@ -11949,28 +11461,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      greetMsJaneJones('Hello'); //=> 'Hello, Ms. Jane Jones!'
  * @symb R.partialRight(f, [a, b])(c, d) = f(c, d, a, b)
  */
-var partialRight =
-/*#__PURE__*/
-(0, _createPartialApplicator2.default)(
-/*#__PURE__*/
-(0, _flip.default)(_concat2.default));
-var _default = partialRight;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_createPartialApplicator.js":"../node_modules/ramda/es/internal/_createPartialApplicator.js","./flip.js":"../node_modules/ramda/es/flip.js"}],"../node_modules/ramda/es/partition.js":[function(require,module,exports) {
+var partialRight = /*#__PURE__*/Object(_internal_createPartialApplicator_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_flip_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (partialRight);
+
+/***/ }),
+/* 254 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _filter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(112);
+/* harmony import */ var _juxt_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(203);
+/* harmony import */ var _reject_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(110);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _filter = _interopRequireDefault(require("./filter.js"));
 
-var _juxt = _interopRequireDefault(require("./juxt.js"));
-
-var _reject = _interopRequireDefault(require("./reject.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a predicate and a list or other `Filterable` object and returns the
@@ -11996,26 +11501,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.partition(R.includes('s'), { a: 'sss', b: 'ttt', foo: 'bars' });
  *      // => [ { a: 'sss', foo: 'bars' }, { b: 'ttt' }  ]
  */
-var partition =
-/*#__PURE__*/
-(0, _juxt.default)([_filter.default, _reject.default]);
-var _default = partition;
-exports.default = _default;
-},{"./filter.js":"../node_modules/ramda/es/filter.js","./juxt.js":"../node_modules/ramda/es/juxt.js","./reject.js":"../node_modules/ramda/es/reject.js"}],"../node_modules/ramda/es/pathEq.js":[function(require,module,exports) {
+var partition = /*#__PURE__*/Object(_juxt_js__WEBPACK_IMPORTED_MODULE_1__["default"])([_filter_js__WEBPACK_IMPORTED_MODULE_0__["default"], _reject_js__WEBPACK_IMPORTED_MODULE_2__["default"]]);
+/* harmony default export */ __webpack_exports__["default"] = (partition);
+
+/***/ }),
+/* 255 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
+/* harmony import */ var _path_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-var _path2 = _interopRequireDefault(require("./path.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Determines whether a nested path on an object has a specific value, in
@@ -12041,28 +11541,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const isFamous = R.pathEq(['address', 'zipCode'], 90210);
  *      R.filter(isFamous, users); //=> [ user1 ]
  */
-var pathEq =
-/*#__PURE__*/
-(0, _curry.default)(function pathEq(_path, val, obj) {
-  return (0, _equals.default)((0, _path2.default)(_path, obj), val);
+var pathEq = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pathEq(_path, val, obj) {
+  return Object(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_path_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_path, obj), val);
 });
-var _default = pathEq;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./equals.js":"../node_modules/ramda/es/equals.js","./path.js":"../node_modules/ramda/es/path.js"}],"../node_modules/ramda/es/pathOr.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pathEq);
+
+/***/ }),
+/* 256 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _defaultTo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(125);
+/* harmony import */ var _path_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _defaultTo = _interopRequireDefault(require("./defaultTo.js"));
-
-var _path = _interopRequireDefault(require("./path.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * If the given, non-null object has a value at the given path, returns the
@@ -12083,26 +11578,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.pathOr('N/A', ['a', 'b'], {a: {b: 2}}); //=> 2
  *      R.pathOr('N/A', ['a', 'b'], {c: {b: 2}}); //=> "N/A"
  */
-var pathOr =
-/*#__PURE__*/
-(0, _curry.default)(function pathOr(d, p, obj) {
-  return (0, _defaultTo.default)(d, (0, _path.default)(p, obj));
+var pathOr = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pathOr(d, p, obj) {
+  return Object(_defaultTo_js__WEBPACK_IMPORTED_MODULE_1__["default"])(d, Object(_path_js__WEBPACK_IMPORTED_MODULE_2__["default"])(p, obj));
 });
-var _default = pathOr;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./defaultTo.js":"../node_modules/ramda/es/defaultTo.js","./path.js":"../node_modules/ramda/es/path.js"}],"../node_modules/ramda/es/pathSatisfies.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pathOr);
+
+/***/ }),
+/* 257 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _path = _interopRequireDefault(require("./path.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the specified object property at given path satisfies the
@@ -12123,24 +11613,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.pathSatisfies(y => y > 0, ['x', 'y'], {x: {y: 2}}); //=> true
  */
-var pathSatisfies =
-/*#__PURE__*/
-(0, _curry.default)(function pathSatisfies(pred, propPath, obj) {
-  return propPath.length > 0 && pred((0, _path.default)(propPath, obj));
+var pathSatisfies = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pathSatisfies(pred, propPath, obj) {
+  return propPath.length > 0 && pred(Object(_path_js__WEBPACK_IMPORTED_MODULE_1__["default"])(propPath, obj));
 });
-var _default = pathSatisfies;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./path.js":"../node_modules/ramda/es/path.js"}],"../node_modules/ramda/es/pick.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pathSatisfies);
+
+/***/ }),
+/* 258 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a partial copy of an object containing only the keys specified. If
@@ -12160,35 +11645,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.pick(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1, d: 4}
  *      R.pick(['a', 'e', 'f'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1}
  */
-var pick =
-/*#__PURE__*/
-(0, _curry.default)(function pick(names, obj) {
+var pick = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pick(names, obj) {
   var result = {};
   var idx = 0;
-
   while (idx < names.length) {
     if (names[idx] in obj) {
       result[names[idx]] = obj[names[idx]];
     }
-
     idx += 1;
   }
-
   return result;
 });
-var _default = pick;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/pickAll.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pick);
+
+/***/ }),
+/* 259 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Similar to `pick` except that this one includes a `key: undefined` pair for
@@ -12208,34 +11685,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.pickAll(['a', 'd'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1, d: 4}
  *      R.pickAll(['a', 'e', 'f'], {a: 1, b: 2, c: 3, d: 4}); //=> {a: 1, e: undefined, f: undefined}
  */
-var pickAll =
-/*#__PURE__*/
-(0, _curry.default)(function pickAll(names, obj) {
+var pickAll = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pickAll(names, obj) {
   var result = {};
   var idx = 0;
   var len = names.length;
-
   while (idx < len) {
     var name = names[idx];
     result[name] = obj[name];
     idx += 1;
   }
-
   return result;
 });
-var _default = pickAll;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/pickBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pickAll);
+
+/***/ }),
+/* 260 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a partial copy of an object containing only the keys that satisfy
@@ -12257,34 +11727,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const isUpperCase = (val, key) => key.toUpperCase() === key;
  *      R.pickBy(isUpperCase, {a: 1, b: 2, A: 3, B: 4}); //=> {A: 3, B: 4}
  */
-var pickBy =
-/*#__PURE__*/
-(0, _curry.default)(function pickBy(test, obj) {
+var pickBy = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function pickBy(test, obj) {
   var result = {};
-
   for (var prop in obj) {
     if (test(obj[prop], prop, obj)) {
       result[prop] = obj[prop];
     }
   }
-
   return result;
 });
-var _default = pickBy;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/pipeK.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (pickBy);
+
+/***/ }),
+/* 261 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pipeK; });
+/* harmony import */ var _composeK_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87);
+/* harmony import */ var _reverse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = pipeK;
 
-var _composeK = _interopRequireDefault(require("./composeK.js"));
-
-var _reverse = _interopRequireDefault(require("./reverse.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the left-to-right Kleisli composition of the provided functions,
@@ -12325,22 +11789,19 @@ function pipeK() {
   if (arguments.length === 0) {
     throw new Error('pipeK requires at least one argument');
   }
-
-  return _composeK.default.apply(this, (0, _reverse.default)(arguments));
+  return _composeK_js__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, Object(_reverse_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arguments));
 }
-},{"./composeK.js":"../node_modules/ramda/es/composeK.js","./reverse.js":"../node_modules/ramda/es/reverse.js"}],"../node_modules/ramda/es/prepend.js":[function(require,module,exports) {
+
+/***/ }),
+/* 262 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list with the given element at the front, followed by the
@@ -12359,26 +11820,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.prepend('fee', ['fi', 'fo', 'fum']); //=> ['fee', 'fi', 'fo', 'fum']
  */
-var prepend =
-/*#__PURE__*/
-(0, _curry.default)(function prepend(el, list) {
-  return (0, _concat2.default)([el], list);
+var prepend = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function prepend(el, list) {
+  return Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])([el], list);
 });
-var _default = prepend;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/product.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (prepend);
+
+/***/ }),
+/* 263 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _multiply_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(238);
+/* harmony import */ var _reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _multiply = _interopRequireDefault(require("./multiply.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Multiplies together all the elements of a list.
@@ -12395,24 +11851,56 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.product([2,4,6,8,100,1]); //=> 38400
  */
-var product =
-/*#__PURE__*/
-(0, _reduce.default)(_multiply.default, 1);
-var _default = product;
-exports.default = _default;
-},{"./multiply.js":"../node_modules/ramda/es/multiply.js","./reduce.js":"../node_modules/ramda/es/reduce.js"}],"../node_modules/ramda/es/useWith.js":[function(require,module,exports) {
+var product = /*#__PURE__*/Object(_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_multiply_js__WEBPACK_IMPORTED_MODULE_0__["default"], 1);
+/* harmony default export */ __webpack_exports__["default"] = (product);
+
+/***/ }),
+/* 264 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _identity_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(95);
+/* harmony import */ var _pickAll_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(259);
+/* harmony import */ var _useWith_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(265);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Reasonable analog to SQL `select` statement.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @category Relation
+ * @sig [k] -> [{k: v}] -> [{k: v}]
+ * @param {Array} props The property names to project
+ * @param {Array} objs The objects to query
+ * @return {Array} An array of objects with just the `props` properties.
+ * @example
+ *
+ *      const abby = {name: 'Abby', age: 7, hair: 'blond', grade: 2};
+ *      const fred = {name: 'Fred', age: 12, hair: 'brown', grade: 7};
+ *      const kids = [abby, fred];
+ *      R.project(['name', 'grade'], kids); //=> [{name: 'Abby', grade: 2}, {name: 'Fred', grade: 7}]
+ */
+var project = /*#__PURE__*/Object(_useWith_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_internal_map_js__WEBPACK_IMPORTED_MODULE_0__["default"], [_pickAll_js__WEBPACK_IMPORTED_MODULE_2__["default"], _identity_js__WEBPACK_IMPORTED_MODULE_1__["default"]]); // passing `identity` gives correct arity
+/* harmony default export */ __webpack_exports__["default"] = (project);
+
+/***/ }),
+/* 265 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+
+
 
 /**
  * Accepts a function `fn` and a list of transformer functions and returns a
@@ -12443,79 +11931,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.useWith(Math.pow, [R.dec, R.inc])(3)(4); //=> 32
  * @symb R.useWith(f, [g, h])(a, b) = f(g(a), h(b))
  */
-var useWith =
-/*#__PURE__*/
-(0, _curry.default)(function useWith(fn, transformers) {
-  return (0, _curryN.default)(transformers.length, function () {
+var useWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function useWith(fn, transformers) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(transformers.length, function () {
     var args = [];
     var idx = 0;
-
     while (idx < transformers.length) {
       args.push(transformers[idx].call(this, arguments[idx]));
       idx += 1;
     }
-
     return fn.apply(this, args.concat(Array.prototype.slice.call(arguments, transformers.length)));
   });
 });
-var _default = useWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/project.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (useWith);
+
+/***/ }),
+/* 266 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _map2 = _interopRequireDefault(require("./internal/_map.js"));
-
-var _identity = _interopRequireDefault(require("./identity.js"));
-
-var _pickAll = _interopRequireDefault(require("./pickAll.js"));
-
-var _useWith = _interopRequireDefault(require("./useWith.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Reasonable analog to SQL `select` statement.
- *
- * @func
- * @memberOf R
- * @since v0.1.0
- * @category Object
- * @category Relation
- * @sig [k] -> [{k: v}] -> [{k: v}]
- * @param {Array} props The property names to project
- * @param {Array} objs The objects to query
- * @return {Array} An array of objects with just the `props` properties.
- * @example
- *
- *      const abby = {name: 'Abby', age: 7, hair: 'blond', grade: 2};
- *      const fred = {name: 'Fred', age: 12, hair: 'brown', grade: 7};
- *      const kids = [abby, fred];
- *      R.project(['name', 'grade'], kids); //=> [{name: 'Abby', grade: 2}, {name: 'Fred', grade: 7}]
- */
-var project =
-/*#__PURE__*/
-(0, _useWith.default)(_map2.default, [_pickAll.default, _identity.default]); // passing `identity` gives correct arity
-
-var _default = project;
-exports.default = _default;
-},{"./internal/_map.js":"../node_modules/ramda/es/internal/_map.js","./identity.js":"../node_modules/ramda/es/identity.js","./pickAll.js":"../node_modules/ramda/es/pickAll.js","./useWith.js":"../node_modules/ramda/es/useWith.js"}],"../node_modules/ramda/es/propEq.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the specified object property is equal, in
@@ -12542,26 +11980,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const hasBrownHair = R.propEq('hair', 'brown');
  *      R.filter(hasBrownHair, kids); //=> [fred, rusty]
  */
-var propEq =
-/*#__PURE__*/
-(0, _curry.default)(function propEq(name, val, obj) {
-  return (0, _equals.default)(val, obj[name]);
+var propEq = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function propEq(name, val, obj) {
+  return Object(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(val, obj[name]);
 });
-var _default = propEq;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./equals.js":"../node_modules/ramda/es/equals.js"}],"../node_modules/ramda/es/propIs.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (propEq);
+
+/***/ }),
+/* 267 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _is_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(200);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _is = _interopRequireDefault(require("./is.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the specified object property is of the given type;
@@ -12583,26 +12016,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.propIs(Number, 'x', {x: 'foo'});    //=> false
  *      R.propIs(Number, 'x', {});            //=> false
  */
-var propIs =
-/*#__PURE__*/
-(0, _curry.default)(function propIs(type, name, obj) {
-  return (0, _is.default)(type, obj[name]);
+var propIs = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function propIs(type, name, obj) {
+  return Object(_is_js__WEBPACK_IMPORTED_MODULE_1__["default"])(type, obj[name]);
 });
-var _default = propIs;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./is.js":"../node_modules/ramda/es/is.js"}],"../node_modules/ramda/es/propOr.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (propIs);
+
+/***/ }),
+/* 268 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _pathOr_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(256);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _pathOr = _interopRequireDefault(require("./pathOr.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * If the given, non-null object has an own property with the specified name,
@@ -12630,24 +12058,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      favorite(alice);  //=> undefined
  *      favoriteWithDefault(alice);  //=> 'Ramda'
  */
-var propOr =
-/*#__PURE__*/
-(0, _curry.default)(function propOr(val, p, obj) {
-  return (0, _pathOr.default)(val, [p], obj);
+var propOr = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function propOr(val, p, obj) {
+  return Object(_pathOr_js__WEBPACK_IMPORTED_MODULE_1__["default"])(val, [p], obj);
 });
-var _default = propOr;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./pathOr.js":"../node_modules/ramda/es/pathOr.js"}],"../node_modules/ramda/es/propSatisfies.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (propOr);
+
+/***/ }),
+/* 269 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns `true` if the specified object property satisfies the given
@@ -12668,24 +12091,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.propSatisfies(x => x > 0, 'x', {x: 1, y: 2}); //=> true
  */
-var propSatisfies =
-/*#__PURE__*/
-(0, _curry.default)(function propSatisfies(pred, name, obj) {
+var propSatisfies = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function propSatisfies(pred, name, obj) {
   return pred(obj[name]);
 });
-var _default = propSatisfies;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/props.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (propSatisfies);
+
+/***/ }),
+/* 270 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Acts as multiple `prop`: array of keys in, array of values out. Preserves
@@ -12707,9 +12125,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const fullName = R.compose(R.join(' '), R.props(['first', 'last']));
  *      fullName({last: 'Bullet-Tooth', age: 33, first: 'Tony'}); //=> 'Tony Bullet-Tooth'
  */
-var props =
-/*#__PURE__*/
-(0, _curry.default)(function props(ps, obj) {
+var props = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function props(ps, obj) {
   var len = ps.length;
   var out = [];
   var idx = 0;
@@ -12721,21 +12137,18 @@ var props =
 
   return out;
 });
-var _default = props;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/range.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (props);
+
+/***/ }),
+/* 271 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_isNumber_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(207);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _isNumber2 = _interopRequireDefault(require("./internal/_isNumber.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a list of numbers from `from` (inclusive) to `to` (exclusive).
@@ -12753,36 +12166,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.range(1, 5);    //=> [1, 2, 3, 4]
  *      R.range(50, 53);  //=> [50, 51, 52]
  */
-var range =
-/*#__PURE__*/
-(0, _curry.default)(function range(from, to) {
-  if (!((0, _isNumber2.default)(from) && (0, _isNumber2.default)(to))) {
+var range = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function range(from, to) {
+  if (!(Object(_internal_isNumber_js__WEBPACK_IMPORTED_MODULE_1__["default"])(from) && Object(_internal_isNumber_js__WEBPACK_IMPORTED_MODULE_1__["default"])(to))) {
     throw new TypeError('Both arguments to range must be numbers');
   }
-
   var result = [];
   var n = from;
-
   while (n < to) {
     result.push(n);
     n += 1;
   }
-
   return result;
 });
-var _default = range;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isNumber.js":"../node_modules/ramda/es/internal/_isNumber.js"}],"../node_modules/ramda/es/reduceRight.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (range);
+
+/***/ }),
+/* 272 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a single item by iterating through the list, successively calling
@@ -12826,35 +12231,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @symb R.reduceRight(f, a, [b, c, d]) = f(b, f(c, f(d, a)))
  */
-var reduceRight =
-/*#__PURE__*/
-(0, _curry.default)(function reduceRight(fn, acc, list) {
+var reduceRight = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function reduceRight(fn, acc, list) {
   var idx = list.length - 1;
-
   while (idx >= 0) {
     acc = fn(list[idx], acc);
     idx -= 1;
   }
-
   return acc;
 });
-var _default = reduceRight;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/reduceWhile.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (reduceRight);
+
+/***/ }),
+/* 273 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curryN_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var _internal_reduced_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curryN2 = _interopRequireDefault(require("./internal/_curryN.js"));
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
-
-var _reduced2 = _interopRequireDefault(require("./internal/_reduced.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Like [`reduce`](#reduce), `reduceWhile` returns a single item by iterating
@@ -12885,28 +12283,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const ys = [2, 4, 6]
  *      R.reduceWhile(isOdd, R.add, 111, ys); //=> 111
  */
-var reduceWhile =
-/*#__PURE__*/
-(0, _curryN2.default)(4, [], function _reduceWhile(pred, fn, a, list) {
-  return (0, _reduce2.default)(function (acc, x) {
-    return pred(acc, x) ? fn(acc, x) : (0, _reduced2.default)(acc);
+var reduceWhile = /*#__PURE__*/Object(_internal_curryN_js__WEBPACK_IMPORTED_MODULE_0__["default"])(4, [], function _reduceWhile(pred, fn, a, list) {
+  return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (acc, x) {
+    return pred(acc, x) ? fn(acc, x) : Object(_internal_reduced_js__WEBPACK_IMPORTED_MODULE_2__["default"])(acc);
   }, a, list);
 });
-var _default = reduceWhile;
-exports.default = _default;
-},{"./internal/_curryN.js":"../node_modules/ramda/es/internal/_curryN.js","./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./internal/_reduced.js":"../node_modules/ramda/es/internal/_reduced.js"}],"../node_modules/ramda/es/reduced.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (reduceWhile);
+
+/***/ }),
+/* 274 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _reduced2 = _interopRequireDefault(require("./internal/_reduced.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a value wrapped to indicate that it is the final value of the reduce
@@ -12933,83 +12326,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *       [],
  *       [1, 2, 3, 4, 5]) // [1, 2, 3]
  */
-var reduced =
-/*#__PURE__*/
-(0, _curry.default)(_reduced2.default);
-var _default = reduced;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_reduced.js":"../node_modules/ramda/es/internal/_reduced.js"}],"../node_modules/ramda/es/times.js":[function(require,module,exports) {
+var reduced = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_internal_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (reduced);
+
+/***/ }),
+/* 275 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _always_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
+/* harmony import */ var _times_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(276);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Calls an input function `n` times, returning an array containing the results
- * of those function calls.
- *
- * `fn` is passed one argument: The current value of `n`, which begins at `0`
- * and is gradually incremented to `n - 1`.
- *
- * @func
- * @memberOf R
- * @since v0.2.3
- * @category List
- * @sig (Number -> a) -> Number -> [a]
- * @param {Function} fn The function to invoke. Passed one argument, the current value of `n`.
- * @param {Number} n A value between `0` and `n - 1`. Increments after each function call.
- * @return {Array} An array containing the return values of all calls to `fn`.
- * @see R.repeat
- * @example
- *
- *      R.times(R.identity, 5); //=> [0, 1, 2, 3, 4]
- * @symb R.times(f, 0) = []
- * @symb R.times(f, 1) = [f(0)]
- * @symb R.times(f, 2) = [f(0), f(1)]
- */
-var times =
-/*#__PURE__*/
-(0, _curry.default)(function times(fn, n) {
-  var len = Number(n);
-  var idx = 0;
-  var list;
-
-  if (len < 0 || isNaN(len)) {
-    throw new RangeError('n must be a non-negative number');
-  }
-
-  list = new Array(len);
-
-  while (idx < len) {
-    list[idx] = fn(idx);
-    idx += 1;
-  }
-
-  return list;
-});
-var _default = times;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/repeat.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _always = _interopRequireDefault(require("./always.js"));
-
-var _times = _interopRequireDefault(require("./times.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a fixed list of size `n` containing a specified identical value.
@@ -13034,24 +12365,68 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.repeat(a, 1) = [a]
  * @symb R.repeat(a, 2) = [a, a]
  */
-var repeat =
-/*#__PURE__*/
-(0, _curry.default)(function repeat(value, n) {
-  return (0, _times.default)((0, _always.default)(value), n);
+var repeat = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function repeat(value, n) {
+  return Object(_times_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(_always_js__WEBPACK_IMPORTED_MODULE_1__["default"])(value), n);
 });
-var _default = repeat;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./always.js":"../node_modules/ramda/es/always.js","./times.js":"../node_modules/ramda/es/times.js"}],"../node_modules/ramda/es/replace.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (repeat);
+
+/***/ }),
+/* 276 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+/**
+ * Calls an input function `n` times, returning an array containing the results
+ * of those function calls.
+ *
+ * `fn` is passed one argument: The current value of `n`, which begins at `0`
+ * and is gradually incremented to `n - 1`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.2.3
+ * @category List
+ * @sig (Number -> a) -> Number -> [a]
+ * @param {Function} fn The function to invoke. Passed one argument, the current value of `n`.
+ * @param {Number} n A value between `0` and `n - 1`. Increments after each function call.
+ * @return {Array} An array containing the return values of all calls to `fn`.
+ * @see R.repeat
+ * @example
+ *
+ *      R.times(R.identity, 5); //=> [0, 1, 2, 3, 4]
+ * @symb R.times(f, 0) = []
+ * @symb R.times(f, 1) = [f(0)]
+ * @symb R.times(f, 2) = [f(0), f(1)]
+ */
+var times = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function times(fn, n) {
+  var len = Number(n);
+  var idx = 0;
+  var list;
+
+  if (len < 0 || isNaN(len)) {
+    throw new RangeError('n must be a non-negative number');
+  }
+  list = new Array(len);
+  while (idx < len) {
+    list[idx] = fn(idx);
+    idx += 1;
+  }
+  return list;
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (times);
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
+/***/ }),
+/* 277 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+
 
 /**
  * Replace a substring or regex match in a string with a replacement.
@@ -13077,24 +12452,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // Use the "g" (global) flag to replace all occurrences:
  *      R.replace(/foo/g, 'bar', 'foo foo foo'); //=> 'bar bar bar'
  */
-var replace =
-/*#__PURE__*/
-(0, _curry.default)(function replace(regex, replacement, str) {
+var replace = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function replace(regex, replacement, str) {
   return str.replace(regex, replacement);
 });
-var _default = replace;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/scan.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (replace);
+
+/***/ }),
+/* 278 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Scan is similar to [`reduce`](#reduce), but returns a list of successively
@@ -13117,42 +12487,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const factorials = R.scan(R.multiply, 1, numbers); //=> [1, 1, 2, 6, 24]
  * @symb R.scan(f, a, [b, c]) = [a, f(a, b), f(f(a, b), c)]
  */
-var scan =
-/*#__PURE__*/
-(0, _curry.default)(function scan(fn, acc, list) {
+var scan = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function scan(fn, acc, list) {
   var idx = 0;
   var len = list.length;
   var result = [acc];
-
   while (idx < len) {
     acc = fn(acc, list[idx]);
     result[idx + 1] = acc;
     idx += 1;
   }
-
   return result;
 });
-var _default = scan;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/sequence.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (scan);
+
+/***/ }),
+/* 279 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _ap_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
+/* harmony import */ var _prepend_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(262);
+/* harmony import */ var _reduceRight_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(272);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _ap = _interopRequireDefault(require("./ap.js"));
 
-var _map = _interopRequireDefault(require("./map.js"));
 
-var _prepend = _interopRequireDefault(require("./prepend.js"));
-
-var _reduceRight = _interopRequireDefault(require("./reduceRight.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Transforms a [Traversable](https://github.com/fantasyland/fantasy-land#traversable)
@@ -13178,30 +12541,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.sequence(R.of, Just([1, 2, 3])); //=> [Just(1), Just(2), Just(3)]
  *      R.sequence(R.of, Nothing());       //=> [Nothing()]
  */
-var sequence =
-/*#__PURE__*/
-(0, _curry.default)(function sequence(of, traversable) {
-  return typeof traversable.sequence === 'function' ? traversable.sequence(of) : (0, _reduceRight.default)(function (x, acc) {
-    return (0, _ap.default)((0, _map.default)(_prepend.default, x), acc);
+var sequence = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function sequence(of, traversable) {
+  return typeof traversable.sequence === 'function' ? traversable.sequence(of) : Object(_reduceRight_js__WEBPACK_IMPORTED_MODULE_4__["default"])(function (x, acc) {
+    return Object(_ap_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_map_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_prepend_js__WEBPACK_IMPORTED_MODULE_3__["default"], x), acc);
   }, of([]), traversable);
 });
-var _default = sequence;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./ap.js":"../node_modules/ramda/es/ap.js","./map.js":"../node_modules/ramda/es/map.js","./prepend.js":"../node_modules/ramda/es/prepend.js","./reduceRight.js":"../node_modules/ramda/es/reduceRight.js"}],"../node_modules/ramda/es/set.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (sequence);
+
+/***/ }),
+/* 280 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _always_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
+/* harmony import */ var _over_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(249);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _always = _interopRequireDefault(require("./always.js"));
-
-var _over = _interopRequireDefault(require("./over.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the result of "setting" the portion of the given data structure
@@ -13225,24 +12583,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.set(xLens, 4, {x: 1, y: 2});  //=> {x: 4, y: 2}
  *      R.set(xLens, 8, {x: 1, y: 2});  //=> {x: 8, y: 2}
  */
-var set =
-/*#__PURE__*/
-(0, _curry.default)(function set(lens, v, x) {
-  return (0, _over.default)(lens, (0, _always.default)(v), x);
+var set = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function set(lens, v, x) {
+  return Object(_over_js__WEBPACK_IMPORTED_MODULE_2__["default"])(lens, Object(_always_js__WEBPACK_IMPORTED_MODULE_1__["default"])(v), x);
 });
-var _default = set;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./always.js":"../node_modules/ramda/es/always.js","./over.js":"../node_modules/ramda/es/over.js"}],"../node_modules/ramda/es/sort.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (set);
+
+/***/ }),
+/* 281 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a copy of the list, sorted according to the comparator function,
@@ -13264,24 +12617,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const diff = function(a, b) { return a - b; };
  *      R.sort(diff, [4,2,7,5]); //=> [2, 4, 5, 7]
  */
-var sort =
-/*#__PURE__*/
-(0, _curry.default)(function sort(comparator, list) {
+var sort = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function sort(comparator, list) {
   return Array.prototype.slice.call(list, 0).sort(comparator);
 });
-var _default = sort;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/sortBy.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (sort);
+
+/***/ }),
+/* 282 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Sorts the list according to the supplied function.
@@ -13316,28 +12664,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const people = [clara, bob, alice];
  *      sortByNameCaseInsensitive(people); //=> [alice, bob, clara]
  */
-var sortBy =
-/*#__PURE__*/
-(0, _curry.default)(function sortBy(fn, list) {
+var sortBy = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function sortBy(fn, list) {
   return Array.prototype.slice.call(list, 0).sort(function (a, b) {
     var aa = fn(a);
     var bb = fn(b);
     return aa < bb ? -1 : aa > bb ? 1 : 0;
   });
 });
-var _default = sortBy;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/sortWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (sortBy);
+
+/***/ }),
+/* 283 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Sorts a list according to a list of comparators.
@@ -13371,34 +12714,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      ]);
  *      ageNameSort(people); //=> [alice, clara, bob]
  */
-var sortWith =
-/*#__PURE__*/
-(0, _curry.default)(function sortWith(fns, list) {
+var sortWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function sortWith(fns, list) {
   return Array.prototype.slice.call(list, 0).sort(function (a, b) {
     var result = 0;
     var i = 0;
-
     while (result === 0 && i < fns.length) {
       result = fns[i](a, b);
       i += 1;
     }
-
     return result;
   });
 });
-var _default = sortWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/split.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (sortWith);
+
+/***/ }),
+/* 284 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _invoker_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(199);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _invoker = _interopRequireDefault(require("./invoker.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Splits a string into an array of strings based on the given
@@ -13420,26 +12756,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.split('.', 'a.b.c.xyz.d'); //=> ['a', 'b', 'c', 'xyz', 'd']
  */
-var split =
-/*#__PURE__*/
-(0, _invoker.default)(1, 'split');
-var _default = split;
-exports.default = _default;
-},{"./invoker.js":"../node_modules/ramda/es/invoker.js"}],"../node_modules/ramda/es/splitAt.js":[function(require,module,exports) {
+var split = /*#__PURE__*/Object(_invoker_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, 'split');
+/* harmony default export */ __webpack_exports__["default"] = (split);
+
+/***/ }),
+/* 285 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _length_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(206);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _length = _interopRequireDefault(require("./length.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Splits a given list or string at a given index.
@@ -13459,26 +12790,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.splitAt(5, 'hello world');      //=> ['hello', ' world']
  *      R.splitAt(-1, 'foobar');          //=> ['fooba', 'r']
  */
-var splitAt =
-/*#__PURE__*/
-(0, _curry.default)(function splitAt(index, array) {
-  return [(0, _slice.default)(0, index, array), (0, _slice.default)(index, (0, _length.default)(array), array)];
+var splitAt = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function splitAt(index, array) {
+  return [Object(_slice_js__WEBPACK_IMPORTED_MODULE_2__["default"])(0, index, array), Object(_slice_js__WEBPACK_IMPORTED_MODULE_2__["default"])(index, Object(_length_js__WEBPACK_IMPORTED_MODULE_1__["default"])(array), array)];
 });
-var _default = splitAt;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./length.js":"../node_modules/ramda/es/length.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/splitEvery.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (splitAt);
+
+/***/ }),
+/* 286 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Splits a collection into slices of the specified length.
@@ -13497,35 +12823,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.splitEvery(3, [1, 2, 3, 4, 5, 6, 7]); //=> [[1, 2, 3], [4, 5, 6], [7]]
  *      R.splitEvery(3, 'foobarbaz'); //=> ['foo', 'bar', 'baz']
  */
-var splitEvery =
-/*#__PURE__*/
-(0, _curry.default)(function splitEvery(n, list) {
+var splitEvery = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function splitEvery(n, list) {
   if (n <= 0) {
     throw new Error('First argument to splitEvery must be a positive integer');
   }
-
   var result = [];
   var idx = 0;
-
   while (idx < list.length) {
-    result.push((0, _slice.default)(idx, idx += n, list));
+    result.push(Object(_slice_js__WEBPACK_IMPORTED_MODULE_1__["default"])(idx, idx += n, list));
   }
-
   return result;
 });
-var _default = splitEvery;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/splitWhen.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (splitEvery);
+
+/***/ }),
+/* 287 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a list and a predicate and returns a pair of lists with the following properties:
@@ -13546,9 +12864,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.splitWhen(R.equals(2), [1, 2, 3, 1, 2, 3]);   //=> [[1], [2, 3, 1, 2, 3]]
  */
-var splitWhen =
-/*#__PURE__*/
-(0, _curry.default)(function splitWhen(pred, list) {
+var splitWhen = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function splitWhen(pred, list) {
   var idx = 0;
   var len = list.length;
   var prefix = [];
@@ -13560,23 +12876,20 @@ var splitWhen =
 
   return [prefix, Array.prototype.slice.call(list, idx)];
 });
-var _default = splitWhen;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/startsWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (splitWhen);
+
+/***/ }),
+/* 288 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
+/* harmony import */ var _take_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(139);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-var _take = _interopRequireDefault(require("./take.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Checks if a list starts with the provided sublist.
@@ -13600,24 +12913,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.startsWith(['a'], ['a', 'b', 'c'])    //=> true
  *      R.startsWith(['b'], ['a', 'b', 'c'])    //=> false
  */
-var startsWith =
-/*#__PURE__*/
-(0, _curry.default)(function (prefix, list) {
-  return (0, _equals.default)((0, _take.default)(prefix.length, list), prefix);
+var startsWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function (prefix, list) {
+  return Object(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_take_js__WEBPACK_IMPORTED_MODULE_2__["default"])(prefix.length, list), prefix);
 });
-var _default = startsWith;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./equals.js":"../node_modules/ramda/es/equals.js","./take.js":"../node_modules/ramda/es/take.js"}],"../node_modules/ramda/es/subtract.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (startsWith);
+
+/***/ }),
+/* 289 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Subtracts its second argument from its first argument.
@@ -13642,28 +12950,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      complementaryAngle(30); //=> 60
  *      complementaryAngle(72); //=> 18
  */
-var subtract =
-/*#__PURE__*/
-(0, _curry.default)(function subtract(a, b) {
+var subtract = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function subtract(a, b) {
   return Number(a) - Number(b);
 });
-var _default = subtract;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/symmetricDifference.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (subtract);
+
+/***/ }),
+/* 290 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(97);
+/* harmony import */ var _difference_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(127);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _concat = _interopRequireDefault(require("./concat.js"));
-
-var _difference = _interopRequireDefault(require("./difference.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Finds the set (i.e. no duplicates) of all elements contained in the first or
@@ -13683,28 +12986,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.symmetricDifference([1,2,3,4], [7,6,5,4,3]); //=> [1,2,7,6,5]
  *      R.symmetricDifference([7,6,5,4,3], [1,2,3,4]); //=> [7,6,5,1,2]
  */
-var symmetricDifference =
-/*#__PURE__*/
-(0, _curry.default)(function symmetricDifference(list1, list2) {
-  return (0, _concat.default)((0, _difference.default)(list1, list2), (0, _difference.default)(list2, list1));
+var symmetricDifference = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function symmetricDifference(list1, list2) {
+  return Object(_concat_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_difference_js__WEBPACK_IMPORTED_MODULE_2__["default"])(list1, list2), Object(_difference_js__WEBPACK_IMPORTED_MODULE_2__["default"])(list2, list1));
 });
-var _default = symmetricDifference;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./concat.js":"../node_modules/ramda/es/concat.js","./difference.js":"../node_modules/ramda/es/difference.js"}],"../node_modules/ramda/es/symmetricDifferenceWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (symmetricDifference);
+
+/***/ }),
+/* 291 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(97);
+/* harmony import */ var _differenceWith_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(129);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _concat = _interopRequireDefault(require("./concat.js"));
-
-var _differenceWith = _interopRequireDefault(require("./differenceWith.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Finds the set (i.e. no duplicates) of all elements contained in the first or
@@ -13728,26 +13026,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const l2 = [{a: 3}, {a: 4}, {a: 5}, {a: 6}];
  *      R.symmetricDifferenceWith(eqA, l1, l2); //=> [{a: 1}, {a: 2}, {a: 5}, {a: 6}]
  */
-var symmetricDifferenceWith =
-/*#__PURE__*/
-(0, _curry.default)(function symmetricDifferenceWith(pred, list1, list2) {
-  return (0, _concat.default)((0, _differenceWith.default)(pred, list1, list2), (0, _differenceWith.default)(pred, list2, list1));
+var symmetricDifferenceWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function symmetricDifferenceWith(pred, list1, list2) {
+  return Object(_concat_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_differenceWith_js__WEBPACK_IMPORTED_MODULE_2__["default"])(pred, list1, list2), Object(_differenceWith_js__WEBPACK_IMPORTED_MODULE_2__["default"])(pred, list2, list1));
 });
-var _default = symmetricDifferenceWith;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./concat.js":"../node_modules/ramda/es/concat.js","./differenceWith.js":"../node_modules/ramda/es/differenceWith.js"}],"../node_modules/ramda/es/takeLastWhile.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (symmetricDifferenceWith);
+
+/***/ }),
+/* 292 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list containing the last `n` elements of a given list, passing
@@ -13774,78 +13067,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.takeLastWhile(x => x !== 'R' , 'Ramda'); //=> 'amda'
  */
-var takeLastWhile =
-/*#__PURE__*/
-(0, _curry.default)(function takeLastWhile(fn, xs) {
+var takeLastWhile = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function takeLastWhile(fn, xs) {
   var idx = xs.length - 1;
-
   while (idx >= 0 && fn(xs[idx])) {
     idx -= 1;
   }
-
-  return (0, _slice.default)(idx + 1, Infinity, xs);
+  return Object(_slice_js__WEBPACK_IMPORTED_MODULE_1__["default"])(idx + 1, Infinity, xs);
 });
-var _default = takeLastWhile;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/internal/_xtakeWhile.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (takeLastWhile);
+
+/***/ }),
+/* 293 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xtakeWhile_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(294);
+/* harmony import */ var _slice_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(85);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _reduced2 = _interopRequireDefault(require("./_reduced.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XTakeWhile =
-/*#__PURE__*/
-function () {
-  function XTakeWhile(f, xf) {
-    this.xf = xf;
-    this.f = f;
-  }
-
-  XTakeWhile.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XTakeWhile.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XTakeWhile.prototype['@@transducer/step'] = function (result, input) {
-    return this.f(input) ? this.xf['@@transducer/step'](result, input) : (0, _reduced2.default)(result);
-  };
-
-  return XTakeWhile;
-}();
-
-var _xtakeWhile =
-/*#__PURE__*/
-(0, _curry.default)(function _xtakeWhile(f, xf) {
-  return new XTakeWhile(f, xf);
-});
-
-var _default = _xtakeWhile;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_reduced.js":"../node_modules/ramda/es/internal/_reduced.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/takeWhile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xtakeWhile2 = _interopRequireDefault(require("./internal/_xtakeWhile.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list containing the first `n` elements of a given list,
@@ -13876,78 +13120,60 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.takeWhile(x => x !== 'd' , 'Ramda'); //=> 'Ram'
  */
-var takeWhile =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)(['takeWhile'], _xtakeWhile2.default, function takeWhile(fn, xs) {
+var takeWhile = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])(['takeWhile'], _internal_xtakeWhile_js__WEBPACK_IMPORTED_MODULE_2__["default"], function takeWhile(fn, xs) {
   var idx = 0;
   var len = xs.length;
-
   while (idx < len && fn(xs[idx])) {
     idx += 1;
   }
-
-  return (0, _slice.default)(0, idx, xs);
+  return Object(_slice_js__WEBPACK_IMPORTED_MODULE_3__["default"])(0, idx, xs);
 }));
-var _default = takeWhile;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xtakeWhile.js":"../node_modules/ramda/es/internal/_xtakeWhile.js","./slice.js":"../node_modules/ramda/es/slice.js"}],"../node_modules/ramda/es/internal/_xtap.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (takeWhile);
+
+/***/ }),
+/* 294 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _reduced_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./_curry2.js"));
 
-var _xfBase2 = _interopRequireDefault(require("./_xfBase.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var XTap =
-/*#__PURE__*/
-function () {
-  function XTap(f, xf) {
+var XTakeWhile = /*#__PURE__*/function () {
+  function XTakeWhile(f, xf) {
     this.xf = xf;
     this.f = f;
   }
-
-  XTap.prototype['@@transducer/init'] = _xfBase2.default.init;
-  XTap.prototype['@@transducer/result'] = _xfBase2.default.result;
-
-  XTap.prototype['@@transducer/step'] = function (result, input) {
-    this.f(input);
-    return this.xf['@@transducer/step'](result, input);
+  XTakeWhile.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].init;
+  XTakeWhile.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_2__["default"].result;
+  XTakeWhile.prototype['@@transducer/step'] = function (result, input) {
+    return this.f(input) ? this.xf['@@transducer/step'](result, input) : Object(_reduced_js__WEBPACK_IMPORTED_MODULE_1__["default"])(result);
   };
 
-  return XTap;
+  return XTakeWhile;
 }();
 
-var _xtap =
-/*#__PURE__*/
-(0, _curry.default)(function _xtap(f, xf) {
-  return new XTap(f, xf);
+var _xtakeWhile = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xtakeWhile(f, xf) {
+  return new XTakeWhile(f, xf);
 });
+/* harmony default export */ __webpack_exports__["default"] = (_xtakeWhile);
 
-var _default = _xtap;
-exports.default = _default;
-},{"./_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./_xfBase.js":"../node_modules/ramda/es/internal/_xfBase.js"}],"../node_modules/ramda/es/tap.js":[function(require,module,exports) {
+/***/ }),
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _internal_xtap_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(296);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _dispatchable2 = _interopRequireDefault(require("./internal/_dispatchable.js"));
-
-var _xtap2 = _interopRequireDefault(require("./internal/_xtap.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Runs the given function with the supplied object, then returns the object.
@@ -13969,44 +13195,57 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      // logs 'x is 100'
  * @symb R.tap(f, a) = a
  */
-var tap =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _dispatchable2.default)([], _xtap2.default, function tap(fn, x) {
+var tap = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/Object(_internal_dispatchable_js__WEBPACK_IMPORTED_MODULE_1__["default"])([], _internal_xtap_js__WEBPACK_IMPORTED_MODULE_2__["default"], function tap(fn, x) {
   fn(x);
   return x;
 }));
-var _default = tap;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_dispatchable.js":"../node_modules/ramda/es/internal/_dispatchable.js","./internal/_xtap.js":"../node_modules/ramda/es/internal/_xtap.js"}],"../node_modules/ramda/es/internal/_isRegExp.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (tap);
+
+/***/ }),
+/* 296 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _xfBase_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(22);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+var XTap = /*#__PURE__*/function () {
+  function XTap(f, xf) {
+    this.xf = xf;
+    this.f = f;
+  }
+  XTap.prototype['@@transducer/init'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].init;
+  XTap.prototype['@@transducer/result'] = _xfBase_js__WEBPACK_IMPORTED_MODULE_1__["default"].result;
+  XTap.prototype['@@transducer/step'] = function (result, input) {
+    this.f(input);
+    return this.xf['@@transducer/step'](result, input);
+  };
+
+  return XTap;
+}();
+
+var _xtap = /*#__PURE__*/Object(_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function _xtap(f, xf) {
+  return new XTap(f, xf);
 });
-exports.default = _isRegExp;
+/* harmony default export */ __webpack_exports__["default"] = (_xtap);
 
-function _isRegExp(x) {
-  return Object.prototype.toString.call(x) === '[object RegExp]';
-}
-},{}],"../node_modules/ramda/es/test.js":[function(require,module,exports) {
+/***/ }),
+/* 297 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_cloneRegExp_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _internal_isRegExp_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(298);
+/* harmony import */ var _toString_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(98);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _cloneRegExp2 = _interopRequireDefault(require("./internal/_cloneRegExp.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _isRegExp2 = _interopRequireDefault(require("./internal/_isRegExp.js"));
-
-var _toString = _interopRequireDefault(require("./toString.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Determines whether a given string matches a given regular expression.
@@ -14025,30 +13264,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.test(/^x/, 'xyz'); //=> true
  *      R.test(/^y/, 'xyz'); //=> false
  */
-var test =
-/*#__PURE__*/
-(0, _curry.default)(function test(pattern, str) {
-  if (!(0, _isRegExp2.default)(pattern)) {
-    throw new TypeError('‘test’ requires a value of type RegExp as its first argument; received ' + (0, _toString.default)(pattern));
+var test = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function test(pattern, str) {
+  if (!Object(_internal_isRegExp_js__WEBPACK_IMPORTED_MODULE_2__["default"])(pattern)) {
+    throw new TypeError('‘test’ requires a value of type RegExp as its first argument; received ' + Object(_toString_js__WEBPACK_IMPORTED_MODULE_3__["default"])(pattern));
   }
-
-  return (0, _cloneRegExp2.default)(pattern).test(str);
+  return Object(_internal_cloneRegExp_js__WEBPACK_IMPORTED_MODULE_0__["default"])(pattern).test(str);
 });
-var _default = test;
-exports.default = _default;
-},{"./internal/_cloneRegExp.js":"../node_modules/ramda/es/internal/_cloneRegExp.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_isRegExp.js":"../node_modules/ramda/es/internal/_isRegExp.js","./toString.js":"../node_modules/ramda/es/toString.js"}],"../node_modules/ramda/es/then.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (test);
+
+/***/ }),
+/* 298 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _isRegExp; });
+function _isRegExp(x) {
+  return Object.prototype.toString.call(x) === '[object RegExp]';
+}
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+/***/ }),
+/* 299 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_assertPromise_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(248);
 
-var _assertPromise2 = _interopRequireDefault(require("./internal/_assertPromise.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns the result of applying the onSuccess function to the value inside
@@ -14075,25 +13319,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *        R.then(R.pick(['firstName', 'lastName']))
  *      );
  */
-var then =
-/*#__PURE__*/
-(0, _curry.default)(function then(f, p) {
-  (0, _assertPromise2.default)('then', p);
+var then = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function then(f, p) {
+  Object(_internal_assertPromise_js__WEBPACK_IMPORTED_MODULE_1__["default"])('then', p);
+
   return p.then(f);
 });
-var _default = then;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_assertPromise.js":"../node_modules/ramda/es/internal/_assertPromise.js"}],"../node_modules/ramda/es/toLower.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (then);
+
+/***/ }),
+/* 300 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _invoker_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(199);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _invoker = _interopRequireDefault(require("./invoker.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The lower case version of a string.
@@ -14110,24 +13350,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.toLower('XYZ'); //=> 'xyz'
  */
-var toLower =
-/*#__PURE__*/
-(0, _invoker.default)(0, 'toLowerCase');
-var _default = toLower;
-exports.default = _default;
-},{"./invoker.js":"../node_modules/ramda/es/invoker.js"}],"../node_modules/ramda/es/toPairs.js":[function(require,module,exports) {
+var toLower = /*#__PURE__*/Object(_invoker_js__WEBPACK_IMPORTED_MODULE_0__["default"])(0, 'toLowerCase');
+/* harmony default export */ __webpack_exports__["default"] = (toLower);
+
+/***/ }),
+/* 301 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Converts an object into an array of key, value arrays. Only the object's
@@ -14147,32 +13382,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.toPairs({a: 1, b: 2, c: 3}); //=> [['a', 1], ['b', 2], ['c', 3]]
  */
-var toPairs =
-/*#__PURE__*/
-(0, _curry.default)(function toPairs(obj) {
+var toPairs = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function toPairs(obj) {
   var pairs = [];
-
   for (var prop in obj) {
-    if ((0, _has2.default)(prop, obj)) {
+    if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(prop, obj)) {
       pairs[pairs.length] = [prop, obj[prop]];
     }
   }
-
   return pairs;
 });
-var _default = toPairs;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/toPairsIn.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (toPairs);
+
+/***/ }),
+/* 302 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Converts an object into an array of key, value arrays. The object's own
@@ -14195,30 +13423,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const f = new F();
  *      R.toPairsIn(f); //=> [['x','X'], ['y','Y']]
  */
-var toPairsIn =
-/*#__PURE__*/
-(0, _curry.default)(function toPairsIn(obj) {
+var toPairsIn = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function toPairsIn(obj) {
   var pairs = [];
-
   for (var prop in obj) {
     pairs[pairs.length] = [prop, obj[prop]];
   }
-
   return pairs;
 });
-var _default = toPairsIn;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/toUpper.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (toPairsIn);
+
+/***/ }),
+/* 303 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _invoker_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(199);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _invoker = _interopRequireDefault(require("./invoker.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The upper case version of a string.
@@ -14235,26 +13456,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.toUpper('abc'); //=> 'ABC'
  */
-var toUpper =
-/*#__PURE__*/
-(0, _invoker.default)(0, 'toUpperCase');
-var _default = toUpper;
-exports.default = _default;
-},{"./invoker.js":"../node_modules/ramda/es/invoker.js"}],"../node_modules/ramda/es/transduce.js":[function(require,module,exports) {
+var toUpper = /*#__PURE__*/Object(_invoker_js__WEBPACK_IMPORTED_MODULE_0__["default"])(0, 'toUpperCase');
+/* harmony default export */ __webpack_exports__["default"] = (toUpper);
+
+/***/ }),
+/* 304 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_reduce_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/* harmony import */ var _internal_xwrap_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _reduce2 = _interopRequireDefault(require("./internal/_reduce.js"));
 
-var _xwrap2 = _interopRequireDefault(require("./internal/_xwrap.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Initializes a transducer using supplied iterator function. Returns a single
@@ -14303,24 +13519,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const firstOddTransducer = R.compose(R.filter(isOdd), R.take(1));
  *      R.transduce(firstOddTransducer, R.flip(R.append), [], R.range(0, 100)); //=> [1]
  */
-var transduce =
-/*#__PURE__*/
-(0, _curryN.default)(4, function transduce(xf, fn, acc, list) {
-  return (0, _reduce2.default)(xf(typeof fn === 'function' ? (0, _xwrap2.default)(fn) : fn), acc, list);
+var transduce = /*#__PURE__*/Object(_curryN_js__WEBPACK_IMPORTED_MODULE_2__["default"])(4, function transduce(xf, fn, acc, list) {
+  return Object(_internal_reduce_js__WEBPACK_IMPORTED_MODULE_0__["default"])(xf(typeof fn === 'function' ? Object(_internal_xwrap_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fn) : fn), acc, list);
 });
-var _default = transduce;
-exports.default = _default;
-},{"./internal/_reduce.js":"../node_modules/ramda/es/internal/_reduce.js","./internal/_xwrap.js":"../node_modules/ramda/es/internal/_xwrap.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/transpose.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (transduce);
+
+/***/ }),
+/* 305 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Transposes the rows and columns of a 2D list.
@@ -14346,47 +13557,37 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @symb R.transpose([[a, b], [c, d]]) = [[a, c], [b, d]]
  * @symb R.transpose([[a, b], [c]]) = [[a, c], [b]]
  */
-var transpose =
-/*#__PURE__*/
-(0, _curry.default)(function transpose(outerlist) {
+var transpose = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function transpose(outerlist) {
   var i = 0;
   var result = [];
-
   while (i < outerlist.length) {
     var innerlist = outerlist[i];
     var j = 0;
-
     while (j < innerlist.length) {
       if (typeof result[j] === 'undefined') {
         result[j] = [];
       }
-
       result[j].push(innerlist[j]);
       j += 1;
     }
-
     i += 1;
   }
-
   return result;
 });
-var _default = transpose;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/traverse.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (transpose);
+
+/***/ }),
+/* 306 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26);
+/* harmony import */ var _sequence_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(279);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
 
-var _map = _interopRequireDefault(require("./map.js"));
-
-var _sequence = _interopRequireDefault(require("./sequence.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Maps an [Applicative](https://github.com/fantasyland/fantasy-land#applicative)-returning
@@ -14414,24 +13615,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.traverse(Maybe.of, safeDiv(10), [2, 4, 5]); //=> Maybe.Just([5, 2.5, 2])
  *      R.traverse(Maybe.of, safeDiv(10), [2, 0, 5]); //=> Maybe.Nothing
  */
-var traverse =
-/*#__PURE__*/
-(0, _curry.default)(function traverse(of, f, traversable) {
-  return typeof traversable['fantasy-land/traverse'] === 'function' ? traversable['fantasy-land/traverse'](f, of) : (0, _sequence.default)(of, (0, _map.default)(f, traversable));
+var traverse = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function traverse(of, f, traversable) {
+  return typeof traversable['fantasy-land/traverse'] === 'function' ? traversable['fantasy-land/traverse'](f, of) : Object(_sequence_js__WEBPACK_IMPORTED_MODULE_2__["default"])(of, Object(_map_js__WEBPACK_IMPORTED_MODULE_1__["default"])(f, traversable));
 });
-var _default = traverse;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./map.js":"../node_modules/ramda/es/map.js","./sequence.js":"../node_modules/ramda/es/sequence.js"}],"../node_modules/ramda/es/trim.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (traverse);
+
+/***/ }),
+/* 307 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ws = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' + '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' + '\u2029\uFEFF';
 var zeroWidth = '\u200b';
@@ -14451,39 +13647,27 @@ var hasProtoTrim = typeof String.prototype.trim === 'function';
  *      R.trim('   xyz  '); //=> 'xyz'
  *      R.map(R.trim, R.split(',', 'x, y, z')); //=> ['x', 'y', 'z']
  */
-
-var trim = !hasProtoTrim ||
-/*#__PURE__*/
-ws.trim() || !
-/*#__PURE__*/
-zeroWidth.trim() ?
-/*#__PURE__*/
-(0, _curry.default)(function trim(str) {
+var trim = !hasProtoTrim || /*#__PURE__*/ws.trim() || ! /*#__PURE__*/zeroWidth.trim() ? /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function trim(str) {
   var beginRx = new RegExp('^[' + ws + '][' + ws + ']*');
   var endRx = new RegExp('[' + ws + '][' + ws + ']*$');
   return str.replace(beginRx, '').replace(endRx, '');
-}) :
-/*#__PURE__*/
-(0, _curry.default)(function trim(str) {
+}) : /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function trim(str) {
   return str.trim();
 });
-var _default = trim;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/tryCatch.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (trim);
+
+/***/ }),
+/* 308 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_arity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _arity2 = _interopRequireDefault(require("./internal/_arity.js"));
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * `tryCatch` takes two functions, a `tryer` and a `catcher`. The returned
@@ -14507,30 +13691,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.tryCatch(() => { throw 'foo'}, R.always('catched'))('bar') // => 'catched'
  *      R.tryCatch(R.times(R.identity), R.always([]))('s') // => []
  `` */
-var tryCatch =
-/*#__PURE__*/
-(0, _curry.default)(function _tryCatch(tryer, catcher) {
-  return (0, _arity2.default)(tryer.length, function () {
+var tryCatch = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_2__["default"])(function _tryCatch(tryer, catcher) {
+  return Object(_internal_arity_js__WEBPACK_IMPORTED_MODULE_0__["default"])(tryer.length, function () {
     try {
       return tryer.apply(this, arguments);
     } catch (e) {
-      return catcher.apply(this, (0, _concat2.default)([e], arguments));
+      return catcher.apply(this, Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_1__["default"])([e], arguments));
     }
   });
 });
-var _default = tryCatch;
-exports.default = _default;
-},{"./internal/_arity.js":"../node_modules/ramda/es/internal/_arity.js","./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/unapply.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (tryCatch);
+
+/***/ }),
+/* 309 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a function `fn`, which takes a single array argument, and returns a
@@ -14556,28 +13735,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.unapply(JSON.stringify)(1, 2, 3); //=> '[1,2,3]'
  * @symb R.unapply(f)(a, b) = f([a, b])
  */
-var unapply =
-/*#__PURE__*/
-(0, _curry.default)(function unapply(fn) {
+var unapply = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function unapply(fn) {
   return function () {
     return fn(Array.prototype.slice.call(arguments, 0));
   };
 });
-var _default = unapply;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/unary.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (unapply);
+
+/***/ }),
+/* 310 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _nAry_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(60);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-var _nAry = _interopRequireDefault(require("./nAry.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Wraps a function of any arity (including nullary) in a function that accepts
@@ -14607,26 +13781,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      takesOneArg(1, 2); //=> [1, undefined]
  * @symb R.unary(f)(a, b, c) = f(a)
  */
-var unary =
-/*#__PURE__*/
-(0, _curry.default)(function unary(fn) {
-  return (0, _nAry.default)(1, fn);
+var unary = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function unary(fn) {
+  return Object(_nAry_js__WEBPACK_IMPORTED_MODULE_1__["default"])(1, fn);
 });
-var _default = unary;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js","./nAry.js":"../node_modules/ramda/es/nAry.js"}],"../node_modules/ramda/es/uncurryN.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (unary);
+
+/***/ }),
+/* 311 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a function of arity `n` from a (manually) curried function.
@@ -14647,38 +13816,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const uncurriedAddFour = R.uncurryN(4, addFour);
  *      uncurriedAddFour(1, 2, 3, 4); //=> 10
  */
-var uncurryN =
-/*#__PURE__*/
-(0, _curry.default)(function uncurryN(depth, fn) {
-  return (0, _curryN.default)(depth, function () {
+var uncurryN = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function uncurryN(depth, fn) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_1__["default"])(depth, function () {
     var currentDepth = 1;
     var value = fn;
     var idx = 0;
     var endIdx;
-
     while (currentDepth <= depth && typeof value === 'function') {
       endIdx = currentDepth === depth ? arguments.length : idx + value.length;
       value = value.apply(this, Array.prototype.slice.call(arguments, idx, endIdx));
       currentDepth += 1;
       idx = endIdx;
     }
-
     return value;
   });
 });
-var _default = uncurryN;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./curryN.js":"../node_modules/ramda/es/curryN.js"}],"../node_modules/ramda/es/unfold.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (uncurryN);
+
+/***/ }),
+/* 312 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Builds a list from a seed value. Accepts an iterator function, which returns
@@ -14705,38 +13867,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.unfold(f, 10); //=> [-10, -20, -30, -40, -50]
  * @symb R.unfold(f, x) = [f(x)[0], f(f(x)[1])[0], f(f(f(x)[1])[1])[0], ...]
  */
-var unfold =
-/*#__PURE__*/
-(0, _curry.default)(function unfold(fn, seed) {
+var unfold = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function unfold(fn, seed) {
   var pair = fn(seed);
   var result = [];
-
   while (pair && pair.length) {
     result[result.length] = pair[0];
     pair = fn(pair[1]);
   }
-
   return result;
 });
-var _default = unfold;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/union.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (unfold);
+
+/***/ }),
+/* 313 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _compose_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(80);
+/* harmony import */ var _uniq_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(190);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _compose = _interopRequireDefault(require("./compose.js"));
-
-var _uniq = _interopRequireDefault(require("./uniq.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Combines two lists into a set (i.e. no duplicates) composed of the elements
@@ -14755,86 +13910,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.union([1, 2, 3], [2, 3, 4]); //=> [1, 2, 3, 4]
  */
-var union =
-/*#__PURE__*/
-(0, _curry.default)(
-/*#__PURE__*/
-(0, _compose.default)(_uniq.default, _concat2.default));
-var _default = union;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./compose.js":"../node_modules/ramda/es/compose.js","./uniq.js":"../node_modules/ramda/es/uniq.js"}],"../node_modules/ramda/es/uniqWith.js":[function(require,module,exports) {
+var union = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/Object(_compose_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_uniq_js__WEBPACK_IMPORTED_MODULE_3__["default"], _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (union);
+
+/***/ }),
+/* 314 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_concat_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15);
+/* harmony import */ var _uniqWith_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(315);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _includesWith2 = _interopRequireDefault(require("./internal/_includesWith.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Returns a new list containing only one copy of each element in the original
- * list, based upon the value returned by applying the supplied predicate to
- * two list elements. Prefers the first item if two items compare equal based
- * on the predicate.
- *
- * @func
- * @memberOf R
- * @since v0.2.0
- * @category List
- * @sig ((a, a) -> Boolean) -> [a] -> [a]
- * @param {Function} pred A predicate used to test whether two items are equal.
- * @param {Array} list The array to consider.
- * @return {Array} The list of unique items.
- * @example
- *
- *      const strEq = R.eqBy(String);
- *      R.uniqWith(strEq)([1, '1', 2, 1]); //=> [1, 2]
- *      R.uniqWith(strEq)([{}, {}]);       //=> [{}]
- *      R.uniqWith(strEq)([1, '1', 1]);    //=> [1]
- *      R.uniqWith(strEq)(['1', 1, 1]);    //=> ['1']
- */
-var uniqWith =
-/*#__PURE__*/
-(0, _curry.default)(function uniqWith(pred, list) {
-  var idx = 0;
-  var len = list.length;
-  var result = [];
-  var item;
-
-  while (idx < len) {
-    item = list[idx];
-
-    if (!(0, _includesWith2.default)(pred, item, result)) {
-      result[result.length] = item;
-    }
-
-    idx += 1;
-  }
-
-  return result;
-});
-var _default = uniqWith;
-exports.default = _default;
-},{"./internal/_includesWith.js":"../node_modules/ramda/es/internal/_includesWith.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/unionWith.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _concat2 = _interopRequireDefault(require("./internal/_concat.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-var _uniqWith = _interopRequireDefault(require("./uniqWith.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Combines two lists into a set (i.e. no duplicates) composed of the elements
@@ -14858,24 +13948,68 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const l2 = [{a: 1}, {a: 4}];
  *      R.unionWith(R.eqBy(R.prop('a')), l1, l2); //=> [{a: 1}, {a: 2}, {a: 4}]
  */
-var unionWith =
-/*#__PURE__*/
-(0, _curry.default)(function unionWith(pred, list1, list2) {
-  return (0, _uniqWith.default)(pred, (0, _concat2.default)(list1, list2));
+var unionWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function unionWith(pred, list1, list2) {
+  return Object(_uniqWith_js__WEBPACK_IMPORTED_MODULE_2__["default"])(pred, Object(_internal_concat_js__WEBPACK_IMPORTED_MODULE_0__["default"])(list1, list2));
 });
-var _default = unionWith;
-exports.default = _default;
-},{"./internal/_concat.js":"../node_modules/ramda/es/internal/_concat.js","./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js","./uniqWith.js":"../node_modules/ramda/es/uniqWith.js"}],"../node_modules/ramda/es/unless.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (unionWith);
+
+/***/ }),
+/* 315 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+
+
+/**
+ * Returns a new list containing only one copy of each element in the original
+ * list, based upon the value returned by applying the supplied predicate to
+ * two list elements. Prefers the first item if two items compare equal based
+ * on the predicate.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.2.0
+ * @category List
+ * @sig ((a, a) -> Boolean) -> [a] -> [a]
+ * @param {Function} pred A predicate used to test whether two items are equal.
+ * @param {Array} list The array to consider.
+ * @return {Array} The list of unique items.
+ * @example
+ *
+ *      const strEq = R.eqBy(String);
+ *      R.uniqWith(strEq)([1, '1', 2, 1]); //=> [1, 2]
+ *      R.uniqWith(strEq)([{}, {}]);       //=> [{}]
+ *      R.uniqWith(strEq)([1, '1', 1]);    //=> [1]
+ *      R.uniqWith(strEq)(['1', 1, 1]);    //=> ['1']
+ */
+var uniqWith = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function uniqWith(pred, list) {
+  var idx = 0;
+  var len = list.length;
+  var result = [];
+  var item;
+  while (idx < len) {
+    item = list[idx];
+    if (!Object(_internal_includesWith_js__WEBPACK_IMPORTED_MODULE_0__["default"])(pred, item, result)) {
+      result[result.length] = item;
+    }
+    idx += 1;
+  }
+  return result;
 });
-exports.default = void 0;
+/* harmony default export */ __webpack_exports__["default"] = (uniqWith);
 
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
+/***/ }),
+/* 316 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+
 
 /**
  * Tests the final argument by passing it to the given predicate function. If
@@ -14901,26 +14035,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      safeInc(null); //=> null
  *      safeInc(1); //=> 2
  */
-var unless =
-/*#__PURE__*/
-(0, _curry.default)(function unless(pred, whenFalseFn, x) {
+var unless = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function unless(pred, whenFalseFn, x) {
   return pred(x) ? x : whenFalseFn(x);
 });
-var _default = unless;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/unnest.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (unless);
+
+/***/ }),
+/* 317 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_identity_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96);
+/* harmony import */ var _chain_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _identity2 = _interopRequireDefault(require("./internal/_identity.js"));
-
-var _chain = _interopRequireDefault(require("./chain.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Shorthand for `R.chain(R.identity)`, which removes one level of nesting from
@@ -14939,22 +14068,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.unnest([1, [2], [[3]]]); //=> [1, 2, [3]]
  *      R.unnest([[1, 2], [3, 4], [5, 6]]); //=> [1, 2, 3, 4, 5, 6]
  */
-var unnest =
-/*#__PURE__*/
-(0, _chain.default)(_identity2.default);
-var _default = unnest;
-exports.default = _default;
-},{"./internal/_identity.js":"../node_modules/ramda/es/internal/_identity.js","./chain.js":"../node_modules/ramda/es/chain.js"}],"../node_modules/ramda/es/until.js":[function(require,module,exports) {
+var unnest = /*#__PURE__*/Object(_chain_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_internal_identity_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (unnest);
+
+/***/ }),
+/* 318 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a predicate, a transformation function, and an initial value,
@@ -14975,30 +14099,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.until(R.gt(R.__, 100), R.multiply(2))(1) // => 128
  */
-var until =
-/*#__PURE__*/
-(0, _curry.default)(function until(pred, fn, init) {
+var until = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function until(pred, fn, init) {
   var val = init;
-
   while (!pred(val)) {
     val = fn(val);
   }
-
   return val;
 });
-var _default = until;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/valuesIn.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (until);
+
+/***/ }),
+/* 319 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a list of all the properties, including prototype properties, of the
@@ -15021,41 +14138,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      const f = new F();
  *      R.valuesIn(f); //=> ['X', 'Y']
  */
-var valuesIn =
-/*#__PURE__*/
-(0, _curry.default)(function valuesIn(obj) {
+var valuesIn = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function valuesIn(obj) {
   var prop;
   var vs = [];
-
   for (prop in obj) {
     vs[vs.length] = obj[prop];
   }
-
   return vs;
 });
-var _default = valuesIn;
-exports.default = _default;
-},{"./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/view.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (valuesIn);
+
+/***/ }),
+/* 320 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // `Const` is a functor that effectively ignores the function given to `map`.
 var Const = function (x) {
-  return {
-    value: x,
-    'fantasy-land/map': function () {
+  return { value: x, 'fantasy-land/map': function () {
       return this;
-    }
-  };
+    } };
 };
+
 /**
  * Returns a "view" of the given data structure, determined by the given lens.
  * The lens's focus determines which portion of the data structure is visible.
@@ -15077,28 +14185,21 @@ var Const = function (x) {
  *      R.view(xLens, {x: 1, y: 2});  //=> 1
  *      R.view(xLens, {x: 4, y: 2});  //=> 4
  */
-
-
-var view =
-/*#__PURE__*/
-(0, _curry.default)(function view(lens, x) {
+var view = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function view(lens, x) {
   // Using `Const` effectively ignores the setter function of the `lens`,
   // leaving the value returned by the getter function unmodified.
   return lens(Const)(x).value;
 });
-var _default = view;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/when.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (view);
+
+/***/ }),
+/* 321 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Tests the final argument by passing it to the given predicate function. If
@@ -15128,26 +14229,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      truncate('12345');         //=> '12345'
  *      truncate('0123456789ABC'); //=> '0123456789…'
  */
-var when =
-/*#__PURE__*/
-(0, _curry.default)(function when(pred, whenTrueFn, x) {
+var when = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function when(pred, whenTrueFn, x) {
   return pred(x) ? whenTrueFn(x) : x;
 });
-var _default = when;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/where.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (when);
+
+/***/ }),
+/* 322 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _internal_has_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(35);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-var _has2 = _interopRequireDefault(require("./internal/_has.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a spec object and a test object; returns true if the test satisfies
@@ -15184,36 +14280,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      pred({a: 'foo', b: 'xxx', x: 10, y: 19}); //=> false
  *      pred({a: 'foo', b: 'xxx', x: 11, y: 20}); //=> false
  */
-var where =
-/*#__PURE__*/
-(0, _curry.default)(function where(spec, testObj) {
+var where = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function where(spec, testObj) {
   for (var prop in spec) {
-    if ((0, _has2.default)(prop, spec) && !spec[prop](testObj[prop])) {
+    if (Object(_internal_has_js__WEBPACK_IMPORTED_MODULE_1__["default"])(prop, spec) && !spec[prop](testObj[prop])) {
       return false;
     }
   }
-
   return true;
 });
-var _default = where;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./internal/_has.js":"../node_modules/ramda/es/internal/_has.js"}],"../node_modules/ramda/es/whereEq.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (where);
+
+/***/ }),
+/* 323 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _equals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(102);
+/* harmony import */ var _map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26);
+/* harmony import */ var _where_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(322);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _equals = _interopRequireDefault(require("./equals.js"));
 
-var _map = _interopRequireDefault(require("./map.js"));
-
-var _where = _interopRequireDefault(require("./where.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Takes a spec object and a test object; returns true if the test satisfies
@@ -15243,30 +14333,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      pred({a: 1, b: 2, c: 3});  //=> true
  *      pred({a: 1, b: 1});        //=> false
  */
-var whereEq =
-/*#__PURE__*/
-(0, _curry.default)(function whereEq(spec, testObj) {
-  return (0, _where.default)((0, _map.default)(_equals.default, spec), testObj);
+var whereEq = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function whereEq(spec, testObj) {
+  return Object(_where_js__WEBPACK_IMPORTED_MODULE_3__["default"])(Object(_map_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_equals_js__WEBPACK_IMPORTED_MODULE_1__["default"], spec), testObj);
 });
-var _default = whereEq;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./equals.js":"../node_modules/ramda/es/equals.js","./map.js":"../node_modules/ramda/es/map.js","./where.js":"../node_modules/ramda/es/where.js"}],"../node_modules/ramda/es/without.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (whereEq);
+
+/***/ }),
+/* 324 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(100);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _flip_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(168);
+/* harmony import */ var _reject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(110);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _includes2 = _interopRequireDefault(require("./internal/_includes.js"));
 
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
 
-var _flip = _interopRequireDefault(require("./flip.js"));
-
-var _reject = _interopRequireDefault(require("./reject.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Returns a new list without values in the first argument.
@@ -15287,24 +14372,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.without([1, 2], [1, 2, 1, 3, 4]); //=> [3, 4]
  */
-var without =
-/*#__PURE__*/
-(0, _curry.default)(function (xs, list) {
-  return (0, _reject.default)((0, _flip.default)(_includes2.default)(xs), list);
+var without = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function (xs, list) {
+  return Object(_reject_js__WEBPACK_IMPORTED_MODULE_3__["default"])(Object(_flip_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_internal_includes_js__WEBPACK_IMPORTED_MODULE_0__["default"])(xs), list);
 });
-var _default = without;
-exports.default = _default;
-},{"./internal/_includes.js":"../node_modules/ramda/es/internal/_includes.js","./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js","./flip.js":"../node_modules/ramda/es/flip.js","./reject.js":"../node_modules/ramda/es/reject.js"}],"../node_modules/ramda/es/xprod.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (without);
+
+/***/ }),
+/* 325 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new list out of the two supplied by creating each possible pair
@@ -15324,42 +14404,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.xprod([1, 2], ['a', 'b']); //=> [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
  * @symb R.xprod([a, b], [c, d]) = [[a, c], [a, d], [b, c], [b, d]]
  */
-var xprod =
-/*#__PURE__*/
-(0, _curry.default)(function xprod(a, b) {
+var xprod = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function xprod(a, b) {
   // = xprodWith(prepend); (takes about 3 times as long...)
   var idx = 0;
   var ilen = a.length;
   var j;
   var jlen = b.length;
   var result = [];
-
   while (idx < ilen) {
     j = 0;
-
     while (j < jlen) {
       result[result.length] = [a[idx], b[j]];
       j += 1;
     }
-
     idx += 1;
   }
-
   return result;
 });
-var _default = xprod;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/zip.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (xprod);
+
+/***/ }),
+/* 326 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new list out of the two supplied by pairing up equally-positioned
@@ -15380,33 +14451,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.zip([1, 2, 3], ['a', 'b', 'c']); //=> [[1, 'a'], [2, 'b'], [3, 'c']]
  * @symb R.zip([a, b, c], [d, e, f]) = [[a, d], [b, e], [c, f]]
  */
-var zip =
-/*#__PURE__*/
-(0, _curry.default)(function zip(a, b) {
+var zip = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function zip(a, b) {
   var rv = [];
   var idx = 0;
   var len = Math.min(a.length, b.length);
-
   while (idx < len) {
     rv[idx] = [a[idx], b[idx]];
     idx += 1;
   }
-
   return rv;
 });
-var _default = zip;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/zipObj.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (zip);
+
+/***/ }),
+/* 327 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry2.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new object out of a list of keys and a list of values.
@@ -15425,33 +14489,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *      R.zipObj(['a', 'b', 'c'], [1, 2, 3]); //=> {a: 1, b: 2, c: 3}
  */
-var zipObj =
-/*#__PURE__*/
-(0, _curry.default)(function zipObj(keys, values) {
+var zipObj = /*#__PURE__*/Object(_internal_curry2_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function zipObj(keys, values) {
   var idx = 0;
   var len = Math.min(keys.length, values.length);
   var out = {};
-
   while (idx < len) {
     out[keys[idx]] = values[idx];
     idx += 1;
   }
-
   return out;
 });
-var _default = zipObj;
-exports.default = _default;
-},{"./internal/_curry2.js":"../node_modules/ramda/es/internal/_curry2.js"}],"../node_modules/ramda/es/zipWith.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (zipObj);
+
+/***/ }),
+/* 328 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _curry = _interopRequireDefault(require("./internal/_curry3.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a new list out of the two supplied by applying the function to each
@@ -15477,35 +14534,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      //=> [f(1, 'a'), f(2, 'b'), f(3, 'c')]
  * @symb R.zipWith(fn, [a, b, c], [d, e, f]) = [fn(a, d), fn(b, e), fn(c, f)]
  */
-var zipWith =
-/*#__PURE__*/
-(0, _curry.default)(function zipWith(fn, a, b) {
+var zipWith = /*#__PURE__*/Object(_internal_curry3_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function zipWith(fn, a, b) {
   var rv = [];
   var idx = 0;
   var len = Math.min(a.length, b.length);
-
   while (idx < len) {
     rv[idx] = fn(a[idx], b[idx]);
     idx += 1;
   }
-
   return rv;
 });
-var _default = zipWith;
-exports.default = _default;
-},{"./internal/_curry3.js":"../node_modules/ramda/es/internal/_curry3.js"}],"../node_modules/ramda/es/thunkify.js":[function(require,module,exports) {
+/* harmony default export */ __webpack_exports__["default"] = (zipWith);
+
+/***/ }),
+/* 329 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _curryN_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
 
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _curry = _interopRequireDefault(require("./internal/_curry1.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Creates a thunk out of a function. A thunk delays a calculation until
@@ -15524,2285 +14574,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *      R.thunkify(R.identity)(42)(); //=> 42
  *      R.thunkify((a, b) => a + b)(25, 17)(); //=> 42
  */
-var thunkify =
-/*#__PURE__*/
-(0, _curry.default)(function thunkify(fn) {
-  return (0, _curryN.default)(fn.length, function createThunk() {
+var thunkify = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_1__["default"])(function thunkify(fn) {
+  return Object(_curryN_js__WEBPACK_IMPORTED_MODULE_0__["default"])(fn.length, function createThunk() {
     var fnArgs = arguments;
     return function invokeThunk() {
       return fn.apply(this, fnArgs);
     };
   });
 });
-var _default = thunkify;
-exports.default = _default;
-},{"./curryN.js":"../node_modules/ramda/es/curryN.js","./internal/_curry1.js":"../node_modules/ramda/es/internal/_curry1.js"}],"../node_modules/ramda/es/index.js":[function(require,module,exports) {
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "F", {
-  enumerable: true,
-  get: function () {
-    return _F.default;
-  }
-});
-Object.defineProperty(exports, "T", {
-  enumerable: true,
-  get: function () {
-    return _T.default;
-  }
-});
-Object.defineProperty(exports, "__", {
-  enumerable: true,
-  get: function () {
-    return _.default;
-  }
-});
-Object.defineProperty(exports, "add", {
-  enumerable: true,
-  get: function () {
-    return _add.default;
-  }
-});
-Object.defineProperty(exports, "addIndex", {
-  enumerable: true,
-  get: function () {
-    return _addIndex.default;
-  }
-});
-Object.defineProperty(exports, "adjust", {
-  enumerable: true,
-  get: function () {
-    return _adjust.default;
-  }
-});
-Object.defineProperty(exports, "all", {
-  enumerable: true,
-  get: function () {
-    return _all.default;
-  }
-});
-Object.defineProperty(exports, "allPass", {
-  enumerable: true,
-  get: function () {
-    return _allPass.default;
-  }
-});
-Object.defineProperty(exports, "always", {
-  enumerable: true,
-  get: function () {
-    return _always.default;
-  }
-});
-Object.defineProperty(exports, "and", {
-  enumerable: true,
-  get: function () {
-    return _and.default;
-  }
-});
-Object.defineProperty(exports, "any", {
-  enumerable: true,
-  get: function () {
-    return _any.default;
-  }
-});
-Object.defineProperty(exports, "anyPass", {
-  enumerable: true,
-  get: function () {
-    return _anyPass.default;
-  }
-});
-Object.defineProperty(exports, "ap", {
-  enumerable: true,
-  get: function () {
-    return _ap.default;
-  }
-});
-Object.defineProperty(exports, "aperture", {
-  enumerable: true,
-  get: function () {
-    return _aperture.default;
-  }
-});
-Object.defineProperty(exports, "append", {
-  enumerable: true,
-  get: function () {
-    return _append.default;
-  }
-});
-Object.defineProperty(exports, "apply", {
-  enumerable: true,
-  get: function () {
-    return _apply.default;
-  }
-});
-Object.defineProperty(exports, "applySpec", {
-  enumerable: true,
-  get: function () {
-    return _applySpec.default;
-  }
-});
-Object.defineProperty(exports, "applyTo", {
-  enumerable: true,
-  get: function () {
-    return _applyTo.default;
-  }
-});
-Object.defineProperty(exports, "ascend", {
-  enumerable: true,
-  get: function () {
-    return _ascend.default;
-  }
-});
-Object.defineProperty(exports, "assoc", {
-  enumerable: true,
-  get: function () {
-    return _assoc.default;
-  }
-});
-Object.defineProperty(exports, "assocPath", {
-  enumerable: true,
-  get: function () {
-    return _assocPath.default;
-  }
-});
-Object.defineProperty(exports, "binary", {
-  enumerable: true,
-  get: function () {
-    return _binary.default;
-  }
-});
-Object.defineProperty(exports, "bind", {
-  enumerable: true,
-  get: function () {
-    return _bind.default;
-  }
-});
-Object.defineProperty(exports, "both", {
-  enumerable: true,
-  get: function () {
-    return _both.default;
-  }
-});
-Object.defineProperty(exports, "call", {
-  enumerable: true,
-  get: function () {
-    return _call.default;
-  }
-});
-Object.defineProperty(exports, "chain", {
-  enumerable: true,
-  get: function () {
-    return _chain.default;
-  }
-});
-Object.defineProperty(exports, "clamp", {
-  enumerable: true,
-  get: function () {
-    return _clamp.default;
-  }
-});
-Object.defineProperty(exports, "clone", {
-  enumerable: true,
-  get: function () {
-    return _clone.default;
-  }
-});
-Object.defineProperty(exports, "comparator", {
-  enumerable: true,
-  get: function () {
-    return _comparator.default;
-  }
-});
-Object.defineProperty(exports, "complement", {
-  enumerable: true,
-  get: function () {
-    return _complement.default;
-  }
-});
-Object.defineProperty(exports, "compose", {
-  enumerable: true,
-  get: function () {
-    return _compose.default;
-  }
-});
-Object.defineProperty(exports, "composeK", {
-  enumerable: true,
-  get: function () {
-    return _composeK.default;
-  }
-});
-Object.defineProperty(exports, "composeP", {
-  enumerable: true,
-  get: function () {
-    return _composeP.default;
-  }
-});
-Object.defineProperty(exports, "composeWith", {
-  enumerable: true,
-  get: function () {
-    return _composeWith.default;
-  }
-});
-Object.defineProperty(exports, "concat", {
-  enumerable: true,
-  get: function () {
-    return _concat.default;
-  }
-});
-Object.defineProperty(exports, "cond", {
-  enumerable: true,
-  get: function () {
-    return _cond.default;
-  }
-});
-Object.defineProperty(exports, "construct", {
-  enumerable: true,
-  get: function () {
-    return _construct.default;
-  }
-});
-Object.defineProperty(exports, "constructN", {
-  enumerable: true,
-  get: function () {
-    return _constructN.default;
-  }
-});
-Object.defineProperty(exports, "contains", {
-  enumerable: true,
-  get: function () {
-    return _contains.default;
-  }
-});
-Object.defineProperty(exports, "converge", {
-  enumerable: true,
-  get: function () {
-    return _converge.default;
-  }
-});
-Object.defineProperty(exports, "countBy", {
-  enumerable: true,
-  get: function () {
-    return _countBy.default;
-  }
-});
-Object.defineProperty(exports, "curry", {
-  enumerable: true,
-  get: function () {
-    return _curry.default;
-  }
-});
-Object.defineProperty(exports, "curryN", {
-  enumerable: true,
-  get: function () {
-    return _curryN.default;
-  }
-});
-Object.defineProperty(exports, "dec", {
-  enumerable: true,
-  get: function () {
-    return _dec.default;
-  }
-});
-Object.defineProperty(exports, "defaultTo", {
-  enumerable: true,
-  get: function () {
-    return _defaultTo.default;
-  }
-});
-Object.defineProperty(exports, "descend", {
-  enumerable: true,
-  get: function () {
-    return _descend.default;
-  }
-});
-Object.defineProperty(exports, "difference", {
-  enumerable: true,
-  get: function () {
-    return _difference.default;
-  }
-});
-Object.defineProperty(exports, "differenceWith", {
-  enumerable: true,
-  get: function () {
-    return _differenceWith.default;
-  }
-});
-Object.defineProperty(exports, "dissoc", {
-  enumerable: true,
-  get: function () {
-    return _dissoc.default;
-  }
-});
-Object.defineProperty(exports, "dissocPath", {
-  enumerable: true,
-  get: function () {
-    return _dissocPath.default;
-  }
-});
-Object.defineProperty(exports, "divide", {
-  enumerable: true,
-  get: function () {
-    return _divide.default;
-  }
-});
-Object.defineProperty(exports, "drop", {
-  enumerable: true,
-  get: function () {
-    return _drop.default;
-  }
-});
-Object.defineProperty(exports, "dropLast", {
-  enumerable: true,
-  get: function () {
-    return _dropLast.default;
-  }
-});
-Object.defineProperty(exports, "dropLastWhile", {
-  enumerable: true,
-  get: function () {
-    return _dropLastWhile.default;
-  }
-});
-Object.defineProperty(exports, "dropRepeats", {
-  enumerable: true,
-  get: function () {
-    return _dropRepeats.default;
-  }
-});
-Object.defineProperty(exports, "dropRepeatsWith", {
-  enumerable: true,
-  get: function () {
-    return _dropRepeatsWith.default;
-  }
-});
-Object.defineProperty(exports, "dropWhile", {
-  enumerable: true,
-  get: function () {
-    return _dropWhile.default;
-  }
-});
-Object.defineProperty(exports, "either", {
-  enumerable: true,
-  get: function () {
-    return _either.default;
-  }
-});
-Object.defineProperty(exports, "empty", {
-  enumerable: true,
-  get: function () {
-    return _empty.default;
-  }
-});
-Object.defineProperty(exports, "endsWith", {
-  enumerable: true,
-  get: function () {
-    return _endsWith.default;
-  }
-});
-Object.defineProperty(exports, "eqBy", {
-  enumerable: true,
-  get: function () {
-    return _eqBy.default;
-  }
-});
-Object.defineProperty(exports, "eqProps", {
-  enumerable: true,
-  get: function () {
-    return _eqProps.default;
-  }
-});
-Object.defineProperty(exports, "equals", {
-  enumerable: true,
-  get: function () {
-    return _equals.default;
-  }
-});
-Object.defineProperty(exports, "evolve", {
-  enumerable: true,
-  get: function () {
-    return _evolve.default;
-  }
-});
-Object.defineProperty(exports, "filter", {
-  enumerable: true,
-  get: function () {
-    return _filter.default;
-  }
-});
-Object.defineProperty(exports, "find", {
-  enumerable: true,
-  get: function () {
-    return _find.default;
-  }
-});
-Object.defineProperty(exports, "findIndex", {
-  enumerable: true,
-  get: function () {
-    return _findIndex.default;
-  }
-});
-Object.defineProperty(exports, "findLast", {
-  enumerable: true,
-  get: function () {
-    return _findLast.default;
-  }
-});
-Object.defineProperty(exports, "findLastIndex", {
-  enumerable: true,
-  get: function () {
-    return _findLastIndex.default;
-  }
-});
-Object.defineProperty(exports, "flatten", {
-  enumerable: true,
-  get: function () {
-    return _flatten.default;
-  }
-});
-Object.defineProperty(exports, "flip", {
-  enumerable: true,
-  get: function () {
-    return _flip.default;
-  }
-});
-Object.defineProperty(exports, "forEach", {
-  enumerable: true,
-  get: function () {
-    return _forEach.default;
-  }
-});
-Object.defineProperty(exports, "forEachObjIndexed", {
-  enumerable: true,
-  get: function () {
-    return _forEachObjIndexed.default;
-  }
-});
-Object.defineProperty(exports, "fromPairs", {
-  enumerable: true,
-  get: function () {
-    return _fromPairs.default;
-  }
-});
-Object.defineProperty(exports, "groupBy", {
-  enumerable: true,
-  get: function () {
-    return _groupBy.default;
-  }
-});
-Object.defineProperty(exports, "groupWith", {
-  enumerable: true,
-  get: function () {
-    return _groupWith.default;
-  }
-});
-Object.defineProperty(exports, "gt", {
-  enumerable: true,
-  get: function () {
-    return _gt.default;
-  }
-});
-Object.defineProperty(exports, "gte", {
-  enumerable: true,
-  get: function () {
-    return _gte.default;
-  }
-});
-Object.defineProperty(exports, "has", {
-  enumerable: true,
-  get: function () {
-    return _has.default;
-  }
-});
-Object.defineProperty(exports, "hasIn", {
-  enumerable: true,
-  get: function () {
-    return _hasIn.default;
-  }
-});
-Object.defineProperty(exports, "hasPath", {
-  enumerable: true,
-  get: function () {
-    return _hasPath.default;
-  }
-});
-Object.defineProperty(exports, "head", {
-  enumerable: true,
-  get: function () {
-    return _head.default;
-  }
-});
-Object.defineProperty(exports, "identical", {
-  enumerable: true,
-  get: function () {
-    return _identical.default;
-  }
-});
-Object.defineProperty(exports, "identity", {
-  enumerable: true,
-  get: function () {
-    return _identity.default;
-  }
-});
-Object.defineProperty(exports, "ifElse", {
-  enumerable: true,
-  get: function () {
-    return _ifElse.default;
-  }
-});
-Object.defineProperty(exports, "inc", {
-  enumerable: true,
-  get: function () {
-    return _inc.default;
-  }
-});
-Object.defineProperty(exports, "includes", {
-  enumerable: true,
-  get: function () {
-    return _includes.default;
-  }
-});
-Object.defineProperty(exports, "indexBy", {
-  enumerable: true,
-  get: function () {
-    return _indexBy.default;
-  }
-});
-Object.defineProperty(exports, "indexOf", {
-  enumerable: true,
-  get: function () {
-    return _indexOf.default;
-  }
-});
-Object.defineProperty(exports, "init", {
-  enumerable: true,
-  get: function () {
-    return _init.default;
-  }
-});
-Object.defineProperty(exports, "innerJoin", {
-  enumerable: true,
-  get: function () {
-    return _innerJoin.default;
-  }
-});
-Object.defineProperty(exports, "insert", {
-  enumerable: true,
-  get: function () {
-    return _insert.default;
-  }
-});
-Object.defineProperty(exports, "insertAll", {
-  enumerable: true,
-  get: function () {
-    return _insertAll.default;
-  }
-});
-Object.defineProperty(exports, "intersection", {
-  enumerable: true,
-  get: function () {
-    return _intersection.default;
-  }
-});
-Object.defineProperty(exports, "intersperse", {
-  enumerable: true,
-  get: function () {
-    return _intersperse.default;
-  }
-});
-Object.defineProperty(exports, "into", {
-  enumerable: true,
-  get: function () {
-    return _into.default;
-  }
-});
-Object.defineProperty(exports, "invert", {
-  enumerable: true,
-  get: function () {
-    return _invert.default;
-  }
-});
-Object.defineProperty(exports, "invertObj", {
-  enumerable: true,
-  get: function () {
-    return _invertObj.default;
-  }
-});
-Object.defineProperty(exports, "invoker", {
-  enumerable: true,
-  get: function () {
-    return _invoker.default;
-  }
-});
-Object.defineProperty(exports, "is", {
-  enumerable: true,
-  get: function () {
-    return _is.default;
-  }
-});
-Object.defineProperty(exports, "isEmpty", {
-  enumerable: true,
-  get: function () {
-    return _isEmpty.default;
-  }
-});
-Object.defineProperty(exports, "isNil", {
-  enumerable: true,
-  get: function () {
-    return _isNil.default;
-  }
-});
-Object.defineProperty(exports, "join", {
-  enumerable: true,
-  get: function () {
-    return _join.default;
-  }
-});
-Object.defineProperty(exports, "juxt", {
-  enumerable: true,
-  get: function () {
-    return _juxt.default;
-  }
-});
-Object.defineProperty(exports, "keys", {
-  enumerable: true,
-  get: function () {
-    return _keys.default;
-  }
-});
-Object.defineProperty(exports, "keysIn", {
-  enumerable: true,
-  get: function () {
-    return _keysIn.default;
-  }
-});
-Object.defineProperty(exports, "last", {
-  enumerable: true,
-  get: function () {
-    return _last.default;
-  }
-});
-Object.defineProperty(exports, "lastIndexOf", {
-  enumerable: true,
-  get: function () {
-    return _lastIndexOf.default;
-  }
-});
-Object.defineProperty(exports, "length", {
-  enumerable: true,
-  get: function () {
-    return _length.default;
-  }
-});
-Object.defineProperty(exports, "lens", {
-  enumerable: true,
-  get: function () {
-    return _lens.default;
-  }
-});
-Object.defineProperty(exports, "lensIndex", {
-  enumerable: true,
-  get: function () {
-    return _lensIndex.default;
-  }
-});
-Object.defineProperty(exports, "lensPath", {
-  enumerable: true,
-  get: function () {
-    return _lensPath.default;
-  }
-});
-Object.defineProperty(exports, "lensProp", {
-  enumerable: true,
-  get: function () {
-    return _lensProp.default;
-  }
-});
-Object.defineProperty(exports, "lift", {
-  enumerable: true,
-  get: function () {
-    return _lift.default;
-  }
-});
-Object.defineProperty(exports, "liftN", {
-  enumerable: true,
-  get: function () {
-    return _liftN.default;
-  }
-});
-Object.defineProperty(exports, "lt", {
-  enumerable: true,
-  get: function () {
-    return _lt.default;
-  }
-});
-Object.defineProperty(exports, "lte", {
-  enumerable: true,
-  get: function () {
-    return _lte.default;
-  }
-});
-Object.defineProperty(exports, "map", {
-  enumerable: true,
-  get: function () {
-    return _map.default;
-  }
-});
-Object.defineProperty(exports, "mapAccum", {
-  enumerable: true,
-  get: function () {
-    return _mapAccum.default;
-  }
-});
-Object.defineProperty(exports, "mapAccumRight", {
-  enumerable: true,
-  get: function () {
-    return _mapAccumRight.default;
-  }
-});
-Object.defineProperty(exports, "mapObjIndexed", {
-  enumerable: true,
-  get: function () {
-    return _mapObjIndexed.default;
-  }
-});
-Object.defineProperty(exports, "match", {
-  enumerable: true,
-  get: function () {
-    return _match.default;
-  }
-});
-Object.defineProperty(exports, "mathMod", {
-  enumerable: true,
-  get: function () {
-    return _mathMod.default;
-  }
-});
-Object.defineProperty(exports, "max", {
-  enumerable: true,
-  get: function () {
-    return _max.default;
-  }
-});
-Object.defineProperty(exports, "maxBy", {
-  enumerable: true,
-  get: function () {
-    return _maxBy.default;
-  }
-});
-Object.defineProperty(exports, "mean", {
-  enumerable: true,
-  get: function () {
-    return _mean.default;
-  }
-});
-Object.defineProperty(exports, "median", {
-  enumerable: true,
-  get: function () {
-    return _median.default;
-  }
-});
-Object.defineProperty(exports, "memoizeWith", {
-  enumerable: true,
-  get: function () {
-    return _memoizeWith.default;
-  }
-});
-Object.defineProperty(exports, "merge", {
-  enumerable: true,
-  get: function () {
-    return _merge.default;
-  }
-});
-Object.defineProperty(exports, "mergeAll", {
-  enumerable: true,
-  get: function () {
-    return _mergeAll.default;
-  }
-});
-Object.defineProperty(exports, "mergeDeepLeft", {
-  enumerable: true,
-  get: function () {
-    return _mergeDeepLeft.default;
-  }
-});
-Object.defineProperty(exports, "mergeDeepRight", {
-  enumerable: true,
-  get: function () {
-    return _mergeDeepRight.default;
-  }
-});
-Object.defineProperty(exports, "mergeDeepWith", {
-  enumerable: true,
-  get: function () {
-    return _mergeDeepWith.default;
-  }
-});
-Object.defineProperty(exports, "mergeDeepWithKey", {
-  enumerable: true,
-  get: function () {
-    return _mergeDeepWithKey.default;
-  }
-});
-Object.defineProperty(exports, "mergeLeft", {
-  enumerable: true,
-  get: function () {
-    return _mergeLeft.default;
-  }
-});
-Object.defineProperty(exports, "mergeRight", {
-  enumerable: true,
-  get: function () {
-    return _mergeRight.default;
-  }
-});
-Object.defineProperty(exports, "mergeWith", {
-  enumerable: true,
-  get: function () {
-    return _mergeWith.default;
-  }
-});
-Object.defineProperty(exports, "mergeWithKey", {
-  enumerable: true,
-  get: function () {
-    return _mergeWithKey.default;
-  }
-});
-Object.defineProperty(exports, "min", {
-  enumerable: true,
-  get: function () {
-    return _min.default;
-  }
-});
-Object.defineProperty(exports, "minBy", {
-  enumerable: true,
-  get: function () {
-    return _minBy.default;
-  }
-});
-Object.defineProperty(exports, "modulo", {
-  enumerable: true,
-  get: function () {
-    return _modulo.default;
-  }
-});
-Object.defineProperty(exports, "move", {
-  enumerable: true,
-  get: function () {
-    return _move.default;
-  }
-});
-Object.defineProperty(exports, "multiply", {
-  enumerable: true,
-  get: function () {
-    return _multiply.default;
-  }
-});
-Object.defineProperty(exports, "nAry", {
-  enumerable: true,
-  get: function () {
-    return _nAry.default;
-  }
-});
-Object.defineProperty(exports, "negate", {
-  enumerable: true,
-  get: function () {
-    return _negate.default;
-  }
-});
-Object.defineProperty(exports, "none", {
-  enumerable: true,
-  get: function () {
-    return _none.default;
-  }
-});
-Object.defineProperty(exports, "not", {
-  enumerable: true,
-  get: function () {
-    return _not.default;
-  }
-});
-Object.defineProperty(exports, "nth", {
-  enumerable: true,
-  get: function () {
-    return _nth.default;
-  }
-});
-Object.defineProperty(exports, "nthArg", {
-  enumerable: true,
-  get: function () {
-    return _nthArg.default;
-  }
-});
-Object.defineProperty(exports, "o", {
-  enumerable: true,
-  get: function () {
-    return _o.default;
-  }
-});
-Object.defineProperty(exports, "objOf", {
-  enumerable: true,
-  get: function () {
-    return _objOf.default;
-  }
-});
-Object.defineProperty(exports, "of", {
-  enumerable: true,
-  get: function () {
-    return _of.default;
-  }
-});
-Object.defineProperty(exports, "omit", {
-  enumerable: true,
-  get: function () {
-    return _omit.default;
-  }
-});
-Object.defineProperty(exports, "once", {
-  enumerable: true,
-  get: function () {
-    return _once.default;
-  }
-});
-Object.defineProperty(exports, "or", {
-  enumerable: true,
-  get: function () {
-    return _or.default;
-  }
-});
-Object.defineProperty(exports, "otherwise", {
-  enumerable: true,
-  get: function () {
-    return _otherwise.default;
-  }
-});
-Object.defineProperty(exports, "over", {
-  enumerable: true,
-  get: function () {
-    return _over.default;
-  }
-});
-Object.defineProperty(exports, "pair", {
-  enumerable: true,
-  get: function () {
-    return _pair.default;
-  }
-});
-Object.defineProperty(exports, "partial", {
-  enumerable: true,
-  get: function () {
-    return _partial.default;
-  }
-});
-Object.defineProperty(exports, "partialRight", {
-  enumerable: true,
-  get: function () {
-    return _partialRight.default;
-  }
-});
-Object.defineProperty(exports, "partition", {
-  enumerable: true,
-  get: function () {
-    return _partition.default;
-  }
-});
-Object.defineProperty(exports, "path", {
-  enumerable: true,
-  get: function () {
-    return _path.default;
-  }
-});
-Object.defineProperty(exports, "pathEq", {
-  enumerable: true,
-  get: function () {
-    return _pathEq.default;
-  }
-});
-Object.defineProperty(exports, "pathOr", {
-  enumerable: true,
-  get: function () {
-    return _pathOr.default;
-  }
-});
-Object.defineProperty(exports, "pathSatisfies", {
-  enumerable: true,
-  get: function () {
-    return _pathSatisfies.default;
-  }
-});
-Object.defineProperty(exports, "pick", {
-  enumerable: true,
-  get: function () {
-    return _pick.default;
-  }
-});
-Object.defineProperty(exports, "pickAll", {
-  enumerable: true,
-  get: function () {
-    return _pickAll.default;
-  }
-});
-Object.defineProperty(exports, "pickBy", {
-  enumerable: true,
-  get: function () {
-    return _pickBy.default;
-  }
-});
-Object.defineProperty(exports, "pipe", {
-  enumerable: true,
-  get: function () {
-    return _pipe.default;
-  }
-});
-Object.defineProperty(exports, "pipeK", {
-  enumerable: true,
-  get: function () {
-    return _pipeK.default;
-  }
-});
-Object.defineProperty(exports, "pipeP", {
-  enumerable: true,
-  get: function () {
-    return _pipeP.default;
-  }
-});
-Object.defineProperty(exports, "pipeWith", {
-  enumerable: true,
-  get: function () {
-    return _pipeWith.default;
-  }
-});
-Object.defineProperty(exports, "pluck", {
-  enumerable: true,
-  get: function () {
-    return _pluck.default;
-  }
-});
-Object.defineProperty(exports, "prepend", {
-  enumerable: true,
-  get: function () {
-    return _prepend.default;
-  }
-});
-Object.defineProperty(exports, "product", {
-  enumerable: true,
-  get: function () {
-    return _product.default;
-  }
-});
-Object.defineProperty(exports, "project", {
-  enumerable: true,
-  get: function () {
-    return _project.default;
-  }
-});
-Object.defineProperty(exports, "prop", {
-  enumerable: true,
-  get: function () {
-    return _prop.default;
-  }
-});
-Object.defineProperty(exports, "propEq", {
-  enumerable: true,
-  get: function () {
-    return _propEq.default;
-  }
-});
-Object.defineProperty(exports, "propIs", {
-  enumerable: true,
-  get: function () {
-    return _propIs.default;
-  }
-});
-Object.defineProperty(exports, "propOr", {
-  enumerable: true,
-  get: function () {
-    return _propOr.default;
-  }
-});
-Object.defineProperty(exports, "propSatisfies", {
-  enumerable: true,
-  get: function () {
-    return _propSatisfies.default;
-  }
-});
-Object.defineProperty(exports, "props", {
-  enumerable: true,
-  get: function () {
-    return _props.default;
-  }
-});
-Object.defineProperty(exports, "range", {
-  enumerable: true,
-  get: function () {
-    return _range.default;
-  }
-});
-Object.defineProperty(exports, "reduce", {
-  enumerable: true,
-  get: function () {
-    return _reduce.default;
-  }
-});
-Object.defineProperty(exports, "reduceBy", {
-  enumerable: true,
-  get: function () {
-    return _reduceBy.default;
-  }
-});
-Object.defineProperty(exports, "reduceRight", {
-  enumerable: true,
-  get: function () {
-    return _reduceRight.default;
-  }
-});
-Object.defineProperty(exports, "reduceWhile", {
-  enumerable: true,
-  get: function () {
-    return _reduceWhile.default;
-  }
-});
-Object.defineProperty(exports, "reduced", {
-  enumerable: true,
-  get: function () {
-    return _reduced.default;
-  }
-});
-Object.defineProperty(exports, "reject", {
-  enumerable: true,
-  get: function () {
-    return _reject.default;
-  }
-});
-Object.defineProperty(exports, "remove", {
-  enumerable: true,
-  get: function () {
-    return _remove.default;
-  }
-});
-Object.defineProperty(exports, "repeat", {
-  enumerable: true,
-  get: function () {
-    return _repeat.default;
-  }
-});
-Object.defineProperty(exports, "replace", {
-  enumerable: true,
-  get: function () {
-    return _replace.default;
-  }
-});
-Object.defineProperty(exports, "reverse", {
-  enumerable: true,
-  get: function () {
-    return _reverse.default;
-  }
-});
-Object.defineProperty(exports, "scan", {
-  enumerable: true,
-  get: function () {
-    return _scan.default;
-  }
-});
-Object.defineProperty(exports, "sequence", {
-  enumerable: true,
-  get: function () {
-    return _sequence.default;
-  }
-});
-Object.defineProperty(exports, "set", {
-  enumerable: true,
-  get: function () {
-    return _set.default;
-  }
-});
-Object.defineProperty(exports, "slice", {
-  enumerable: true,
-  get: function () {
-    return _slice.default;
-  }
-});
-Object.defineProperty(exports, "sort", {
-  enumerable: true,
-  get: function () {
-    return _sort.default;
-  }
-});
-Object.defineProperty(exports, "sortBy", {
-  enumerable: true,
-  get: function () {
-    return _sortBy.default;
-  }
-});
-Object.defineProperty(exports, "sortWith", {
-  enumerable: true,
-  get: function () {
-    return _sortWith.default;
-  }
-});
-Object.defineProperty(exports, "split", {
-  enumerable: true,
-  get: function () {
-    return _split.default;
-  }
-});
-Object.defineProperty(exports, "splitAt", {
-  enumerable: true,
-  get: function () {
-    return _splitAt.default;
-  }
-});
-Object.defineProperty(exports, "splitEvery", {
-  enumerable: true,
-  get: function () {
-    return _splitEvery.default;
-  }
-});
-Object.defineProperty(exports, "splitWhen", {
-  enumerable: true,
-  get: function () {
-    return _splitWhen.default;
-  }
-});
-Object.defineProperty(exports, "startsWith", {
-  enumerable: true,
-  get: function () {
-    return _startsWith.default;
-  }
-});
-Object.defineProperty(exports, "subtract", {
-  enumerable: true,
-  get: function () {
-    return _subtract.default;
-  }
-});
-Object.defineProperty(exports, "sum", {
-  enumerable: true,
-  get: function () {
-    return _sum.default;
-  }
-});
-Object.defineProperty(exports, "symmetricDifference", {
-  enumerable: true,
-  get: function () {
-    return _symmetricDifference.default;
-  }
-});
-Object.defineProperty(exports, "symmetricDifferenceWith", {
-  enumerable: true,
-  get: function () {
-    return _symmetricDifferenceWith.default;
-  }
-});
-Object.defineProperty(exports, "tail", {
-  enumerable: true,
-  get: function () {
-    return _tail.default;
-  }
-});
-Object.defineProperty(exports, "take", {
-  enumerable: true,
-  get: function () {
-    return _take.default;
-  }
-});
-Object.defineProperty(exports, "takeLast", {
-  enumerable: true,
-  get: function () {
-    return _takeLast.default;
-  }
-});
-Object.defineProperty(exports, "takeLastWhile", {
-  enumerable: true,
-  get: function () {
-    return _takeLastWhile.default;
-  }
-});
-Object.defineProperty(exports, "takeWhile", {
-  enumerable: true,
-  get: function () {
-    return _takeWhile.default;
-  }
-});
-Object.defineProperty(exports, "tap", {
-  enumerable: true,
-  get: function () {
-    return _tap.default;
-  }
-});
-Object.defineProperty(exports, "test", {
-  enumerable: true,
-  get: function () {
-    return _test.default;
-  }
-});
-Object.defineProperty(exports, "then", {
-  enumerable: true,
-  get: function () {
-    return _then.default;
-  }
-});
-Object.defineProperty(exports, "times", {
-  enumerable: true,
-  get: function () {
-    return _times.default;
-  }
-});
-Object.defineProperty(exports, "toLower", {
-  enumerable: true,
-  get: function () {
-    return _toLower.default;
-  }
-});
-Object.defineProperty(exports, "toPairs", {
-  enumerable: true,
-  get: function () {
-    return _toPairs.default;
-  }
-});
-Object.defineProperty(exports, "toPairsIn", {
-  enumerable: true,
-  get: function () {
-    return _toPairsIn.default;
-  }
-});
-Object.defineProperty(exports, "toString", {
-  enumerable: true,
-  get: function () {
-    return _toString.default;
-  }
-});
-Object.defineProperty(exports, "toUpper", {
-  enumerable: true,
-  get: function () {
-    return _toUpper.default;
-  }
-});
-Object.defineProperty(exports, "transduce", {
-  enumerable: true,
-  get: function () {
-    return _transduce.default;
-  }
-});
-Object.defineProperty(exports, "transpose", {
-  enumerable: true,
-  get: function () {
-    return _transpose.default;
-  }
-});
-Object.defineProperty(exports, "traverse", {
-  enumerable: true,
-  get: function () {
-    return _traverse.default;
-  }
-});
-Object.defineProperty(exports, "trim", {
-  enumerable: true,
-  get: function () {
-    return _trim.default;
-  }
-});
-Object.defineProperty(exports, "tryCatch", {
-  enumerable: true,
-  get: function () {
-    return _tryCatch.default;
-  }
-});
-Object.defineProperty(exports, "type", {
-  enumerable: true,
-  get: function () {
-    return _type.default;
-  }
-});
-Object.defineProperty(exports, "unapply", {
-  enumerable: true,
-  get: function () {
-    return _unapply.default;
-  }
-});
-Object.defineProperty(exports, "unary", {
-  enumerable: true,
-  get: function () {
-    return _unary.default;
-  }
-});
-Object.defineProperty(exports, "uncurryN", {
-  enumerable: true,
-  get: function () {
-    return _uncurryN.default;
-  }
-});
-Object.defineProperty(exports, "unfold", {
-  enumerable: true,
-  get: function () {
-    return _unfold.default;
-  }
-});
-Object.defineProperty(exports, "union", {
-  enumerable: true,
-  get: function () {
-    return _union.default;
-  }
-});
-Object.defineProperty(exports, "unionWith", {
-  enumerable: true,
-  get: function () {
-    return _unionWith.default;
-  }
-});
-Object.defineProperty(exports, "uniq", {
-  enumerable: true,
-  get: function () {
-    return _uniq.default;
-  }
-});
-Object.defineProperty(exports, "uniqBy", {
-  enumerable: true,
-  get: function () {
-    return _uniqBy.default;
-  }
-});
-Object.defineProperty(exports, "uniqWith", {
-  enumerable: true,
-  get: function () {
-    return _uniqWith.default;
-  }
-});
-Object.defineProperty(exports, "unless", {
-  enumerable: true,
-  get: function () {
-    return _unless.default;
-  }
-});
-Object.defineProperty(exports, "unnest", {
-  enumerable: true,
-  get: function () {
-    return _unnest.default;
-  }
-});
-Object.defineProperty(exports, "until", {
-  enumerable: true,
-  get: function () {
-    return _until.default;
-  }
-});
-Object.defineProperty(exports, "update", {
-  enumerable: true,
-  get: function () {
-    return _update.default;
-  }
-});
-Object.defineProperty(exports, "useWith", {
-  enumerable: true,
-  get: function () {
-    return _useWith.default;
-  }
-});
-Object.defineProperty(exports, "values", {
-  enumerable: true,
-  get: function () {
-    return _values.default;
-  }
-});
-Object.defineProperty(exports, "valuesIn", {
-  enumerable: true,
-  get: function () {
-    return _valuesIn.default;
-  }
-});
-Object.defineProperty(exports, "view", {
-  enumerable: true,
-  get: function () {
-    return _view.default;
-  }
-});
-Object.defineProperty(exports, "when", {
-  enumerable: true,
-  get: function () {
-    return _when.default;
-  }
-});
-Object.defineProperty(exports, "where", {
-  enumerable: true,
-  get: function () {
-    return _where.default;
-  }
-});
-Object.defineProperty(exports, "whereEq", {
-  enumerable: true,
-  get: function () {
-    return _whereEq.default;
-  }
-});
-Object.defineProperty(exports, "without", {
-  enumerable: true,
-  get: function () {
-    return _without.default;
-  }
-});
-Object.defineProperty(exports, "xprod", {
-  enumerable: true,
-  get: function () {
-    return _xprod.default;
-  }
-});
-Object.defineProperty(exports, "zip", {
-  enumerable: true,
-  get: function () {
-    return _zip.default;
-  }
-});
-Object.defineProperty(exports, "zipObj", {
-  enumerable: true,
-  get: function () {
-    return _zipObj.default;
-  }
-});
-Object.defineProperty(exports, "zipWith", {
-  enumerable: true,
-  get: function () {
-    return _zipWith.default;
-  }
-});
-Object.defineProperty(exports, "thunkify", {
-  enumerable: true,
-  get: function () {
-    return _thunkify.default;
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = (thunkify);
 
-var _F = _interopRequireDefault(require("./F.js"));
-
-var _T = _interopRequireDefault(require("./T.js"));
-
-var _ = _interopRequireDefault(require("./__.js"));
-
-var _add = _interopRequireDefault(require("./add.js"));
-
-var _addIndex = _interopRequireDefault(require("./addIndex.js"));
-
-var _adjust = _interopRequireDefault(require("./adjust.js"));
-
-var _all = _interopRequireDefault(require("./all.js"));
-
-var _allPass = _interopRequireDefault(require("./allPass.js"));
-
-var _always = _interopRequireDefault(require("./always.js"));
-
-var _and = _interopRequireDefault(require("./and.js"));
-
-var _any = _interopRequireDefault(require("./any.js"));
-
-var _anyPass = _interopRequireDefault(require("./anyPass.js"));
-
-var _ap = _interopRequireDefault(require("./ap.js"));
-
-var _aperture = _interopRequireDefault(require("./aperture.js"));
-
-var _append = _interopRequireDefault(require("./append.js"));
-
-var _apply = _interopRequireDefault(require("./apply.js"));
-
-var _applySpec = _interopRequireDefault(require("./applySpec.js"));
-
-var _applyTo = _interopRequireDefault(require("./applyTo.js"));
-
-var _ascend = _interopRequireDefault(require("./ascend.js"));
-
-var _assoc = _interopRequireDefault(require("./assoc.js"));
-
-var _assocPath = _interopRequireDefault(require("./assocPath.js"));
-
-var _binary = _interopRequireDefault(require("./binary.js"));
-
-var _bind = _interopRequireDefault(require("./bind.js"));
-
-var _both = _interopRequireDefault(require("./both.js"));
-
-var _call = _interopRequireDefault(require("./call.js"));
-
-var _chain = _interopRequireDefault(require("./chain.js"));
-
-var _clamp = _interopRequireDefault(require("./clamp.js"));
-
-var _clone = _interopRequireDefault(require("./clone.js"));
-
-var _comparator = _interopRequireDefault(require("./comparator.js"));
-
-var _complement = _interopRequireDefault(require("./complement.js"));
-
-var _compose = _interopRequireDefault(require("./compose.js"));
-
-var _composeK = _interopRequireDefault(require("./composeK.js"));
-
-var _composeP = _interopRequireDefault(require("./composeP.js"));
-
-var _composeWith = _interopRequireDefault(require("./composeWith.js"));
-
-var _concat = _interopRequireDefault(require("./concat.js"));
-
-var _cond = _interopRequireDefault(require("./cond.js"));
-
-var _construct = _interopRequireDefault(require("./construct.js"));
-
-var _constructN = _interopRequireDefault(require("./constructN.js"));
-
-var _contains = _interopRequireDefault(require("./contains.js"));
-
-var _converge = _interopRequireDefault(require("./converge.js"));
-
-var _countBy = _interopRequireDefault(require("./countBy.js"));
-
-var _curry = _interopRequireDefault(require("./curry.js"));
-
-var _curryN = _interopRequireDefault(require("./curryN.js"));
-
-var _dec = _interopRequireDefault(require("./dec.js"));
-
-var _defaultTo = _interopRequireDefault(require("./defaultTo.js"));
-
-var _descend = _interopRequireDefault(require("./descend.js"));
-
-var _difference = _interopRequireDefault(require("./difference.js"));
-
-var _differenceWith = _interopRequireDefault(require("./differenceWith.js"));
-
-var _dissoc = _interopRequireDefault(require("./dissoc.js"));
-
-var _dissocPath = _interopRequireDefault(require("./dissocPath.js"));
-
-var _divide = _interopRequireDefault(require("./divide.js"));
-
-var _drop = _interopRequireDefault(require("./drop.js"));
-
-var _dropLast = _interopRequireDefault(require("./dropLast.js"));
-
-var _dropLastWhile = _interopRequireDefault(require("./dropLastWhile.js"));
-
-var _dropRepeats = _interopRequireDefault(require("./dropRepeats.js"));
-
-var _dropRepeatsWith = _interopRequireDefault(require("./dropRepeatsWith.js"));
-
-var _dropWhile = _interopRequireDefault(require("./dropWhile.js"));
-
-var _either = _interopRequireDefault(require("./either.js"));
-
-var _empty = _interopRequireDefault(require("./empty.js"));
-
-var _endsWith = _interopRequireDefault(require("./endsWith.js"));
-
-var _eqBy = _interopRequireDefault(require("./eqBy.js"));
-
-var _eqProps = _interopRequireDefault(require("./eqProps.js"));
-
-var _equals = _interopRequireDefault(require("./equals.js"));
-
-var _evolve = _interopRequireDefault(require("./evolve.js"));
-
-var _filter = _interopRequireDefault(require("./filter.js"));
-
-var _find = _interopRequireDefault(require("./find.js"));
-
-var _findIndex = _interopRequireDefault(require("./findIndex.js"));
-
-var _findLast = _interopRequireDefault(require("./findLast.js"));
-
-var _findLastIndex = _interopRequireDefault(require("./findLastIndex.js"));
-
-var _flatten = _interopRequireDefault(require("./flatten.js"));
-
-var _flip = _interopRequireDefault(require("./flip.js"));
-
-var _forEach = _interopRequireDefault(require("./forEach.js"));
-
-var _forEachObjIndexed = _interopRequireDefault(require("./forEachObjIndexed.js"));
-
-var _fromPairs = _interopRequireDefault(require("./fromPairs.js"));
-
-var _groupBy = _interopRequireDefault(require("./groupBy.js"));
-
-var _groupWith = _interopRequireDefault(require("./groupWith.js"));
-
-var _gt = _interopRequireDefault(require("./gt.js"));
-
-var _gte = _interopRequireDefault(require("./gte.js"));
-
-var _has = _interopRequireDefault(require("./has.js"));
-
-var _hasIn = _interopRequireDefault(require("./hasIn.js"));
-
-var _hasPath = _interopRequireDefault(require("./hasPath.js"));
-
-var _head = _interopRequireDefault(require("./head.js"));
-
-var _identical = _interopRequireDefault(require("./identical.js"));
-
-var _identity = _interopRequireDefault(require("./identity.js"));
-
-var _ifElse = _interopRequireDefault(require("./ifElse.js"));
-
-var _inc = _interopRequireDefault(require("./inc.js"));
-
-var _includes = _interopRequireDefault(require("./includes.js"));
-
-var _indexBy = _interopRequireDefault(require("./indexBy.js"));
-
-var _indexOf = _interopRequireDefault(require("./indexOf.js"));
-
-var _init = _interopRequireDefault(require("./init.js"));
-
-var _innerJoin = _interopRequireDefault(require("./innerJoin.js"));
-
-var _insert = _interopRequireDefault(require("./insert.js"));
-
-var _insertAll = _interopRequireDefault(require("./insertAll.js"));
-
-var _intersection = _interopRequireDefault(require("./intersection.js"));
-
-var _intersperse = _interopRequireDefault(require("./intersperse.js"));
-
-var _into = _interopRequireDefault(require("./into.js"));
-
-var _invert = _interopRequireDefault(require("./invert.js"));
-
-var _invertObj = _interopRequireDefault(require("./invertObj.js"));
-
-var _invoker = _interopRequireDefault(require("./invoker.js"));
-
-var _is = _interopRequireDefault(require("./is.js"));
-
-var _isEmpty = _interopRequireDefault(require("./isEmpty.js"));
-
-var _isNil = _interopRequireDefault(require("./isNil.js"));
-
-var _join = _interopRequireDefault(require("./join.js"));
-
-var _juxt = _interopRequireDefault(require("./juxt.js"));
-
-var _keys = _interopRequireDefault(require("./keys.js"));
-
-var _keysIn = _interopRequireDefault(require("./keysIn.js"));
-
-var _last = _interopRequireDefault(require("./last.js"));
-
-var _lastIndexOf = _interopRequireDefault(require("./lastIndexOf.js"));
-
-var _length = _interopRequireDefault(require("./length.js"));
-
-var _lens = _interopRequireDefault(require("./lens.js"));
-
-var _lensIndex = _interopRequireDefault(require("./lensIndex.js"));
-
-var _lensPath = _interopRequireDefault(require("./lensPath.js"));
-
-var _lensProp = _interopRequireDefault(require("./lensProp.js"));
-
-var _lift = _interopRequireDefault(require("./lift.js"));
-
-var _liftN = _interopRequireDefault(require("./liftN.js"));
-
-var _lt = _interopRequireDefault(require("./lt.js"));
-
-var _lte = _interopRequireDefault(require("./lte.js"));
-
-var _map = _interopRequireDefault(require("./map.js"));
-
-var _mapAccum = _interopRequireDefault(require("./mapAccum.js"));
-
-var _mapAccumRight = _interopRequireDefault(require("./mapAccumRight.js"));
-
-var _mapObjIndexed = _interopRequireDefault(require("./mapObjIndexed.js"));
-
-var _match = _interopRequireDefault(require("./match.js"));
-
-var _mathMod = _interopRequireDefault(require("./mathMod.js"));
-
-var _max = _interopRequireDefault(require("./max.js"));
-
-var _maxBy = _interopRequireDefault(require("./maxBy.js"));
-
-var _mean = _interopRequireDefault(require("./mean.js"));
-
-var _median = _interopRequireDefault(require("./median.js"));
-
-var _memoizeWith = _interopRequireDefault(require("./memoizeWith.js"));
-
-var _merge = _interopRequireDefault(require("./merge.js"));
-
-var _mergeAll = _interopRequireDefault(require("./mergeAll.js"));
-
-var _mergeDeepLeft = _interopRequireDefault(require("./mergeDeepLeft.js"));
-
-var _mergeDeepRight = _interopRequireDefault(require("./mergeDeepRight.js"));
-
-var _mergeDeepWith = _interopRequireDefault(require("./mergeDeepWith.js"));
-
-var _mergeDeepWithKey = _interopRequireDefault(require("./mergeDeepWithKey.js"));
-
-var _mergeLeft = _interopRequireDefault(require("./mergeLeft.js"));
-
-var _mergeRight = _interopRequireDefault(require("./mergeRight.js"));
-
-var _mergeWith = _interopRequireDefault(require("./mergeWith.js"));
-
-var _mergeWithKey = _interopRequireDefault(require("./mergeWithKey.js"));
-
-var _min = _interopRequireDefault(require("./min.js"));
-
-var _minBy = _interopRequireDefault(require("./minBy.js"));
-
-var _modulo = _interopRequireDefault(require("./modulo.js"));
-
-var _move = _interopRequireDefault(require("./move.js"));
-
-var _multiply = _interopRequireDefault(require("./multiply.js"));
-
-var _nAry = _interopRequireDefault(require("./nAry.js"));
-
-var _negate = _interopRequireDefault(require("./negate.js"));
-
-var _none = _interopRequireDefault(require("./none.js"));
-
-var _not = _interopRequireDefault(require("./not.js"));
-
-var _nth = _interopRequireDefault(require("./nth.js"));
-
-var _nthArg = _interopRequireDefault(require("./nthArg.js"));
-
-var _o = _interopRequireDefault(require("./o.js"));
-
-var _objOf = _interopRequireDefault(require("./objOf.js"));
-
-var _of = _interopRequireDefault(require("./of.js"));
-
-var _omit = _interopRequireDefault(require("./omit.js"));
-
-var _once = _interopRequireDefault(require("./once.js"));
-
-var _or = _interopRequireDefault(require("./or.js"));
-
-var _otherwise = _interopRequireDefault(require("./otherwise.js"));
-
-var _over = _interopRequireDefault(require("./over.js"));
-
-var _pair = _interopRequireDefault(require("./pair.js"));
-
-var _partial = _interopRequireDefault(require("./partial.js"));
-
-var _partialRight = _interopRequireDefault(require("./partialRight.js"));
-
-var _partition = _interopRequireDefault(require("./partition.js"));
-
-var _path = _interopRequireDefault(require("./path.js"));
-
-var _pathEq = _interopRequireDefault(require("./pathEq.js"));
-
-var _pathOr = _interopRequireDefault(require("./pathOr.js"));
-
-var _pathSatisfies = _interopRequireDefault(require("./pathSatisfies.js"));
-
-var _pick = _interopRequireDefault(require("./pick.js"));
-
-var _pickAll = _interopRequireDefault(require("./pickAll.js"));
-
-var _pickBy = _interopRequireDefault(require("./pickBy.js"));
-
-var _pipe = _interopRequireDefault(require("./pipe.js"));
-
-var _pipeK = _interopRequireDefault(require("./pipeK.js"));
-
-var _pipeP = _interopRequireDefault(require("./pipeP.js"));
-
-var _pipeWith = _interopRequireDefault(require("./pipeWith.js"));
-
-var _pluck = _interopRequireDefault(require("./pluck.js"));
-
-var _prepend = _interopRequireDefault(require("./prepend.js"));
-
-var _product = _interopRequireDefault(require("./product.js"));
-
-var _project = _interopRequireDefault(require("./project.js"));
-
-var _prop = _interopRequireDefault(require("./prop.js"));
-
-var _propEq = _interopRequireDefault(require("./propEq.js"));
-
-var _propIs = _interopRequireDefault(require("./propIs.js"));
-
-var _propOr = _interopRequireDefault(require("./propOr.js"));
-
-var _propSatisfies = _interopRequireDefault(require("./propSatisfies.js"));
-
-var _props = _interopRequireDefault(require("./props.js"));
-
-var _range = _interopRequireDefault(require("./range.js"));
-
-var _reduce = _interopRequireDefault(require("./reduce.js"));
-
-var _reduceBy = _interopRequireDefault(require("./reduceBy.js"));
-
-var _reduceRight = _interopRequireDefault(require("./reduceRight.js"));
-
-var _reduceWhile = _interopRequireDefault(require("./reduceWhile.js"));
-
-var _reduced = _interopRequireDefault(require("./reduced.js"));
-
-var _reject = _interopRequireDefault(require("./reject.js"));
-
-var _remove = _interopRequireDefault(require("./remove.js"));
-
-var _repeat = _interopRequireDefault(require("./repeat.js"));
-
-var _replace = _interopRequireDefault(require("./replace.js"));
-
-var _reverse = _interopRequireDefault(require("./reverse.js"));
-
-var _scan = _interopRequireDefault(require("./scan.js"));
-
-var _sequence = _interopRequireDefault(require("./sequence.js"));
-
-var _set = _interopRequireDefault(require("./set.js"));
-
-var _slice = _interopRequireDefault(require("./slice.js"));
-
-var _sort = _interopRequireDefault(require("./sort.js"));
-
-var _sortBy = _interopRequireDefault(require("./sortBy.js"));
-
-var _sortWith = _interopRequireDefault(require("./sortWith.js"));
-
-var _split = _interopRequireDefault(require("./split.js"));
-
-var _splitAt = _interopRequireDefault(require("./splitAt.js"));
-
-var _splitEvery = _interopRequireDefault(require("./splitEvery.js"));
-
-var _splitWhen = _interopRequireDefault(require("./splitWhen.js"));
-
-var _startsWith = _interopRequireDefault(require("./startsWith.js"));
-
-var _subtract = _interopRequireDefault(require("./subtract.js"));
-
-var _sum = _interopRequireDefault(require("./sum.js"));
-
-var _symmetricDifference = _interopRequireDefault(require("./symmetricDifference.js"));
-
-var _symmetricDifferenceWith = _interopRequireDefault(require("./symmetricDifferenceWith.js"));
-
-var _tail = _interopRequireDefault(require("./tail.js"));
-
-var _take = _interopRequireDefault(require("./take.js"));
-
-var _takeLast = _interopRequireDefault(require("./takeLast.js"));
-
-var _takeLastWhile = _interopRequireDefault(require("./takeLastWhile.js"));
-
-var _takeWhile = _interopRequireDefault(require("./takeWhile.js"));
-
-var _tap = _interopRequireDefault(require("./tap.js"));
-
-var _test = _interopRequireDefault(require("./test.js"));
-
-var _then = _interopRequireDefault(require("./then.js"));
-
-var _times = _interopRequireDefault(require("./times.js"));
-
-var _toLower = _interopRequireDefault(require("./toLower.js"));
-
-var _toPairs = _interopRequireDefault(require("./toPairs.js"));
-
-var _toPairsIn = _interopRequireDefault(require("./toPairsIn.js"));
-
-var _toString = _interopRequireDefault(require("./toString.js"));
-
-var _toUpper = _interopRequireDefault(require("./toUpper.js"));
-
-var _transduce = _interopRequireDefault(require("./transduce.js"));
-
-var _transpose = _interopRequireDefault(require("./transpose.js"));
-
-var _traverse = _interopRequireDefault(require("./traverse.js"));
-
-var _trim = _interopRequireDefault(require("./trim.js"));
-
-var _tryCatch = _interopRequireDefault(require("./tryCatch.js"));
-
-var _type = _interopRequireDefault(require("./type.js"));
-
-var _unapply = _interopRequireDefault(require("./unapply.js"));
-
-var _unary = _interopRequireDefault(require("./unary.js"));
-
-var _uncurryN = _interopRequireDefault(require("./uncurryN.js"));
-
-var _unfold = _interopRequireDefault(require("./unfold.js"));
-
-var _union = _interopRequireDefault(require("./union.js"));
-
-var _unionWith = _interopRequireDefault(require("./unionWith.js"));
-
-var _uniq = _interopRequireDefault(require("./uniq.js"));
-
-var _uniqBy = _interopRequireDefault(require("./uniqBy.js"));
-
-var _uniqWith = _interopRequireDefault(require("./uniqWith.js"));
-
-var _unless = _interopRequireDefault(require("./unless.js"));
-
-var _unnest = _interopRequireDefault(require("./unnest.js"));
-
-var _until = _interopRequireDefault(require("./until.js"));
-
-var _update = _interopRequireDefault(require("./update.js"));
-
-var _useWith = _interopRequireDefault(require("./useWith.js"));
-
-var _values = _interopRequireDefault(require("./values.js"));
-
-var _valuesIn = _interopRequireDefault(require("./valuesIn.js"));
-
-var _view = _interopRequireDefault(require("./view.js"));
-
-var _when = _interopRequireDefault(require("./when.js"));
-
-var _where = _interopRequireDefault(require("./where.js"));
-
-var _whereEq = _interopRequireDefault(require("./whereEq.js"));
-
-var _without = _interopRequireDefault(require("./without.js"));
-
-var _xprod = _interopRequireDefault(require("./xprod.js"));
-
-var _zip = _interopRequireDefault(require("./zip.js"));
-
-var _zipObj = _interopRequireDefault(require("./zipObj.js"));
-
-var _zipWith = _interopRequireDefault(require("./zipWith.js"));
-
-var _thunkify = _interopRequireDefault(require("./thunkify.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./F.js":"../node_modules/ramda/es/F.js","./T.js":"../node_modules/ramda/es/T.js","./__.js":"../node_modules/ramda/es/__.js","./add.js":"../node_modules/ramda/es/add.js","./addIndex.js":"../node_modules/ramda/es/addIndex.js","./adjust.js":"../node_modules/ramda/es/adjust.js","./all.js":"../node_modules/ramda/es/all.js","./allPass.js":"../node_modules/ramda/es/allPass.js","./always.js":"../node_modules/ramda/es/always.js","./and.js":"../node_modules/ramda/es/and.js","./any.js":"../node_modules/ramda/es/any.js","./anyPass.js":"../node_modules/ramda/es/anyPass.js","./ap.js":"../node_modules/ramda/es/ap.js","./aperture.js":"../node_modules/ramda/es/aperture.js","./append.js":"../node_modules/ramda/es/append.js","./apply.js":"../node_modules/ramda/es/apply.js","./applySpec.js":"../node_modules/ramda/es/applySpec.js","./applyTo.js":"../node_modules/ramda/es/applyTo.js","./ascend.js":"../node_modules/ramda/es/ascend.js","./assoc.js":"../node_modules/ramda/es/assoc.js","./assocPath.js":"../node_modules/ramda/es/assocPath.js","./binary.js":"../node_modules/ramda/es/binary.js","./bind.js":"../node_modules/ramda/es/bind.js","./both.js":"../node_modules/ramda/es/both.js","./call.js":"../node_modules/ramda/es/call.js","./chain.js":"../node_modules/ramda/es/chain.js","./clamp.js":"../node_modules/ramda/es/clamp.js","./clone.js":"../node_modules/ramda/es/clone.js","./comparator.js":"../node_modules/ramda/es/comparator.js","./complement.js":"../node_modules/ramda/es/complement.js","./compose.js":"../node_modules/ramda/es/compose.js","./composeK.js":"../node_modules/ramda/es/composeK.js","./composeP.js":"../node_modules/ramda/es/composeP.js","./composeWith.js":"../node_modules/ramda/es/composeWith.js","./concat.js":"../node_modules/ramda/es/concat.js","./cond.js":"../node_modules/ramda/es/cond.js","./construct.js":"../node_modules/ramda/es/construct.js","./constructN.js":"../node_modules/ramda/es/constructN.js","./contains.js":"../node_modules/ramda/es/contains.js","./converge.js":"../node_modules/ramda/es/converge.js","./countBy.js":"../node_modules/ramda/es/countBy.js","./curry.js":"../node_modules/ramda/es/curry.js","./curryN.js":"../node_modules/ramda/es/curryN.js","./dec.js":"../node_modules/ramda/es/dec.js","./defaultTo.js":"../node_modules/ramda/es/defaultTo.js","./descend.js":"../node_modules/ramda/es/descend.js","./difference.js":"../node_modules/ramda/es/difference.js","./differenceWith.js":"../node_modules/ramda/es/differenceWith.js","./dissoc.js":"../node_modules/ramda/es/dissoc.js","./dissocPath.js":"../node_modules/ramda/es/dissocPath.js","./divide.js":"../node_modules/ramda/es/divide.js","./drop.js":"../node_modules/ramda/es/drop.js","./dropLast.js":"../node_modules/ramda/es/dropLast.js","./dropLastWhile.js":"../node_modules/ramda/es/dropLastWhile.js","./dropRepeats.js":"../node_modules/ramda/es/dropRepeats.js","./dropRepeatsWith.js":"../node_modules/ramda/es/dropRepeatsWith.js","./dropWhile.js":"../node_modules/ramda/es/dropWhile.js","./either.js":"../node_modules/ramda/es/either.js","./empty.js":"../node_modules/ramda/es/empty.js","./endsWith.js":"../node_modules/ramda/es/endsWith.js","./eqBy.js":"../node_modules/ramda/es/eqBy.js","./eqProps.js":"../node_modules/ramda/es/eqProps.js","./equals.js":"../node_modules/ramda/es/equals.js","./evolve.js":"../node_modules/ramda/es/evolve.js","./filter.js":"../node_modules/ramda/es/filter.js","./find.js":"../node_modules/ramda/es/find.js","./findIndex.js":"../node_modules/ramda/es/findIndex.js","./findLast.js":"../node_modules/ramda/es/findLast.js","./findLastIndex.js":"../node_modules/ramda/es/findLastIndex.js","./flatten.js":"../node_modules/ramda/es/flatten.js","./flip.js":"../node_modules/ramda/es/flip.js","./forEach.js":"../node_modules/ramda/es/forEach.js","./forEachObjIndexed.js":"../node_modules/ramda/es/forEachObjIndexed.js","./fromPairs.js":"../node_modules/ramda/es/fromPairs.js","./groupBy.js":"../node_modules/ramda/es/groupBy.js","./groupWith.js":"../node_modules/ramda/es/groupWith.js","./gt.js":"../node_modules/ramda/es/gt.js","./gte.js":"../node_modules/ramda/es/gte.js","./has.js":"../node_modules/ramda/es/has.js","./hasIn.js":"../node_modules/ramda/es/hasIn.js","./hasPath.js":"../node_modules/ramda/es/hasPath.js","./head.js":"../node_modules/ramda/es/head.js","./identical.js":"../node_modules/ramda/es/identical.js","./identity.js":"../node_modules/ramda/es/identity.js","./ifElse.js":"../node_modules/ramda/es/ifElse.js","./inc.js":"../node_modules/ramda/es/inc.js","./includes.js":"../node_modules/ramda/es/includes.js","./indexBy.js":"../node_modules/ramda/es/indexBy.js","./indexOf.js":"../node_modules/ramda/es/indexOf.js","./init.js":"../node_modules/ramda/es/init.js","./innerJoin.js":"../node_modules/ramda/es/innerJoin.js","./insert.js":"../node_modules/ramda/es/insert.js","./insertAll.js":"../node_modules/ramda/es/insertAll.js","./intersection.js":"../node_modules/ramda/es/intersection.js","./intersperse.js":"../node_modules/ramda/es/intersperse.js","./into.js":"../node_modules/ramda/es/into.js","./invert.js":"../node_modules/ramda/es/invert.js","./invertObj.js":"../node_modules/ramda/es/invertObj.js","./invoker.js":"../node_modules/ramda/es/invoker.js","./is.js":"../node_modules/ramda/es/is.js","./isEmpty.js":"../node_modules/ramda/es/isEmpty.js","./isNil.js":"../node_modules/ramda/es/isNil.js","./join.js":"../node_modules/ramda/es/join.js","./juxt.js":"../node_modules/ramda/es/juxt.js","./keys.js":"../node_modules/ramda/es/keys.js","./keysIn.js":"../node_modules/ramda/es/keysIn.js","./last.js":"../node_modules/ramda/es/last.js","./lastIndexOf.js":"../node_modules/ramda/es/lastIndexOf.js","./length.js":"../node_modules/ramda/es/length.js","./lens.js":"../node_modules/ramda/es/lens.js","./lensIndex.js":"../node_modules/ramda/es/lensIndex.js","./lensPath.js":"../node_modules/ramda/es/lensPath.js","./lensProp.js":"../node_modules/ramda/es/lensProp.js","./lift.js":"../node_modules/ramda/es/lift.js","./liftN.js":"../node_modules/ramda/es/liftN.js","./lt.js":"../node_modules/ramda/es/lt.js","./lte.js":"../node_modules/ramda/es/lte.js","./map.js":"../node_modules/ramda/es/map.js","./mapAccum.js":"../node_modules/ramda/es/mapAccum.js","./mapAccumRight.js":"../node_modules/ramda/es/mapAccumRight.js","./mapObjIndexed.js":"../node_modules/ramda/es/mapObjIndexed.js","./match.js":"../node_modules/ramda/es/match.js","./mathMod.js":"../node_modules/ramda/es/mathMod.js","./max.js":"../node_modules/ramda/es/max.js","./maxBy.js":"../node_modules/ramda/es/maxBy.js","./mean.js":"../node_modules/ramda/es/mean.js","./median.js":"../node_modules/ramda/es/median.js","./memoizeWith.js":"../node_modules/ramda/es/memoizeWith.js","./merge.js":"../node_modules/ramda/es/merge.js","./mergeAll.js":"../node_modules/ramda/es/mergeAll.js","./mergeDeepLeft.js":"../node_modules/ramda/es/mergeDeepLeft.js","./mergeDeepRight.js":"../node_modules/ramda/es/mergeDeepRight.js","./mergeDeepWith.js":"../node_modules/ramda/es/mergeDeepWith.js","./mergeDeepWithKey.js":"../node_modules/ramda/es/mergeDeepWithKey.js","./mergeLeft.js":"../node_modules/ramda/es/mergeLeft.js","./mergeRight.js":"../node_modules/ramda/es/mergeRight.js","./mergeWith.js":"../node_modules/ramda/es/mergeWith.js","./mergeWithKey.js":"../node_modules/ramda/es/mergeWithKey.js","./min.js":"../node_modules/ramda/es/min.js","./minBy.js":"../node_modules/ramda/es/minBy.js","./modulo.js":"../node_modules/ramda/es/modulo.js","./move.js":"../node_modules/ramda/es/move.js","./multiply.js":"../node_modules/ramda/es/multiply.js","./nAry.js":"../node_modules/ramda/es/nAry.js","./negate.js":"../node_modules/ramda/es/negate.js","./none.js":"../node_modules/ramda/es/none.js","./not.js":"../node_modules/ramda/es/not.js","./nth.js":"../node_modules/ramda/es/nth.js","./nthArg.js":"../node_modules/ramda/es/nthArg.js","./o.js":"../node_modules/ramda/es/o.js","./objOf.js":"../node_modules/ramda/es/objOf.js","./of.js":"../node_modules/ramda/es/of.js","./omit.js":"../node_modules/ramda/es/omit.js","./once.js":"../node_modules/ramda/es/once.js","./or.js":"../node_modules/ramda/es/or.js","./otherwise.js":"../node_modules/ramda/es/otherwise.js","./over.js":"../node_modules/ramda/es/over.js","./pair.js":"../node_modules/ramda/es/pair.js","./partial.js":"../node_modules/ramda/es/partial.js","./partialRight.js":"../node_modules/ramda/es/partialRight.js","./partition.js":"../node_modules/ramda/es/partition.js","./path.js":"../node_modules/ramda/es/path.js","./pathEq.js":"../node_modules/ramda/es/pathEq.js","./pathOr.js":"../node_modules/ramda/es/pathOr.js","./pathSatisfies.js":"../node_modules/ramda/es/pathSatisfies.js","./pick.js":"../node_modules/ramda/es/pick.js","./pickAll.js":"../node_modules/ramda/es/pickAll.js","./pickBy.js":"../node_modules/ramda/es/pickBy.js","./pipe.js":"../node_modules/ramda/es/pipe.js","./pipeK.js":"../node_modules/ramda/es/pipeK.js","./pipeP.js":"../node_modules/ramda/es/pipeP.js","./pipeWith.js":"../node_modules/ramda/es/pipeWith.js","./pluck.js":"../node_modules/ramda/es/pluck.js","./prepend.js":"../node_modules/ramda/es/prepend.js","./product.js":"../node_modules/ramda/es/product.js","./project.js":"../node_modules/ramda/es/project.js","./prop.js":"../node_modules/ramda/es/prop.js","./propEq.js":"../node_modules/ramda/es/propEq.js","./propIs.js":"../node_modules/ramda/es/propIs.js","./propOr.js":"../node_modules/ramda/es/propOr.js","./propSatisfies.js":"../node_modules/ramda/es/propSatisfies.js","./props.js":"../node_modules/ramda/es/props.js","./range.js":"../node_modules/ramda/es/range.js","./reduce.js":"../node_modules/ramda/es/reduce.js","./reduceBy.js":"../node_modules/ramda/es/reduceBy.js","./reduceRight.js":"../node_modules/ramda/es/reduceRight.js","./reduceWhile.js":"../node_modules/ramda/es/reduceWhile.js","./reduced.js":"../node_modules/ramda/es/reduced.js","./reject.js":"../node_modules/ramda/es/reject.js","./remove.js":"../node_modules/ramda/es/remove.js","./repeat.js":"../node_modules/ramda/es/repeat.js","./replace.js":"../node_modules/ramda/es/replace.js","./reverse.js":"../node_modules/ramda/es/reverse.js","./scan.js":"../node_modules/ramda/es/scan.js","./sequence.js":"../node_modules/ramda/es/sequence.js","./set.js":"../node_modules/ramda/es/set.js","./slice.js":"../node_modules/ramda/es/slice.js","./sort.js":"../node_modules/ramda/es/sort.js","./sortBy.js":"../node_modules/ramda/es/sortBy.js","./sortWith.js":"../node_modules/ramda/es/sortWith.js","./split.js":"../node_modules/ramda/es/split.js","./splitAt.js":"../node_modules/ramda/es/splitAt.js","./splitEvery.js":"../node_modules/ramda/es/splitEvery.js","./splitWhen.js":"../node_modules/ramda/es/splitWhen.js","./startsWith.js":"../node_modules/ramda/es/startsWith.js","./subtract.js":"../node_modules/ramda/es/subtract.js","./sum.js":"../node_modules/ramda/es/sum.js","./symmetricDifference.js":"../node_modules/ramda/es/symmetricDifference.js","./symmetricDifferenceWith.js":"../node_modules/ramda/es/symmetricDifferenceWith.js","./tail.js":"../node_modules/ramda/es/tail.js","./take.js":"../node_modules/ramda/es/take.js","./takeLast.js":"../node_modules/ramda/es/takeLast.js","./takeLastWhile.js":"../node_modules/ramda/es/takeLastWhile.js","./takeWhile.js":"../node_modules/ramda/es/takeWhile.js","./tap.js":"../node_modules/ramda/es/tap.js","./test.js":"../node_modules/ramda/es/test.js","./then.js":"../node_modules/ramda/es/then.js","./times.js":"../node_modules/ramda/es/times.js","./toLower.js":"../node_modules/ramda/es/toLower.js","./toPairs.js":"../node_modules/ramda/es/toPairs.js","./toPairsIn.js":"../node_modules/ramda/es/toPairsIn.js","./toString.js":"../node_modules/ramda/es/toString.js","./toUpper.js":"../node_modules/ramda/es/toUpper.js","./transduce.js":"../node_modules/ramda/es/transduce.js","./transpose.js":"../node_modules/ramda/es/transpose.js","./traverse.js":"../node_modules/ramda/es/traverse.js","./trim.js":"../node_modules/ramda/es/trim.js","./tryCatch.js":"../node_modules/ramda/es/tryCatch.js","./type.js":"../node_modules/ramda/es/type.js","./unapply.js":"../node_modules/ramda/es/unapply.js","./unary.js":"../node_modules/ramda/es/unary.js","./uncurryN.js":"../node_modules/ramda/es/uncurryN.js","./unfold.js":"../node_modules/ramda/es/unfold.js","./union.js":"../node_modules/ramda/es/union.js","./unionWith.js":"../node_modules/ramda/es/unionWith.js","./uniq.js":"../node_modules/ramda/es/uniq.js","./uniqBy.js":"../node_modules/ramda/es/uniqBy.js","./uniqWith.js":"../node_modules/ramda/es/uniqWith.js","./unless.js":"../node_modules/ramda/es/unless.js","./unnest.js":"../node_modules/ramda/es/unnest.js","./until.js":"../node_modules/ramda/es/until.js","./update.js":"../node_modules/ramda/es/update.js","./useWith.js":"../node_modules/ramda/es/useWith.js","./values.js":"../node_modules/ramda/es/values.js","./valuesIn.js":"../node_modules/ramda/es/valuesIn.js","./view.js":"../node_modules/ramda/es/view.js","./when.js":"../node_modules/ramda/es/when.js","./where.js":"../node_modules/ramda/es/where.js","./whereEq.js":"../node_modules/ramda/es/whereEq.js","./without.js":"../node_modules/ramda/es/without.js","./xprod.js":"../node_modules/ramda/es/xprod.js","./zip.js":"../node_modules/ramda/es/zip.js","./zipObj.js":"../node_modules/ramda/es/zipObj.js","./zipWith.js":"../node_modules/ramda/es/zipWith.js","./thunkify.js":"../node_modules/ramda/es/thunkify.js"}],"main.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var ramda_1 = require("ramda");
-
-var creeps = Game.creeps;
-
-module.exports.loop = function () {
-  ramda_1.mapObjIndexed(function (x) {
-    return console.log(x, 1);
-  }, creeps);
-};
-},{"ramda":"../node_modules/ramda/es/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
-var global = arguments[3];
-var OVERLAY_ID = '__parcel__error__overlay__';
-var OldModule = module.bundle.Module;
-
-function Module(moduleName) {
-  OldModule.call(this, moduleName);
-  this.hot = {
-    data: module.bundle.hotData,
-    _acceptCallbacks: [],
-    _disposeCallbacks: [],
-    accept: function (fn) {
-      this._acceptCallbacks.push(fn || function () {});
-    },
-    dispose: function (fn) {
-      this._disposeCallbacks.push(fn);
-    }
-  };
-  module.bundle.hotData = null;
-}
-
-module.bundle.Module = Module;
-var checkedAssets, assetsToAccept;
-var parent = module.bundle.parent;
-
-if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = "" || location.hostname;
-  var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57251" + '/');
-
-  ws.onmessage = function (event) {
-    checkedAssets = {};
-    assetsToAccept = [];
-    var data = JSON.parse(event.data);
-
-    if (data.type === 'update') {
-      var handled = false;
-      data.assets.forEach(function (asset) {
-        if (!asset.isNew) {
-          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
-
-          if (didAccept) {
-            handled = true;
-          }
-        }
-      }); // Enable HMR for CSS by default.
-
-      handled = handled || data.assets.every(function (asset) {
-        return asset.type === 'css' && asset.generated.js;
-      });
-
-      if (handled) {
-        console.clear();
-        data.assets.forEach(function (asset) {
-          hmrApply(global.parcelRequire, asset);
-        });
-        assetsToAccept.forEach(function (v) {
-          hmrAcceptRun(v[0], v[1]);
-        });
-      } else if (location.reload) {
-        // `location` global exists in a web worker context but lacks `.reload()` function.
-        location.reload();
-      }
-    }
-
-    if (data.type === 'reload') {
-      ws.close();
-
-      ws.onclose = function () {
-        location.reload();
-      };
-    }
-
-    if (data.type === 'error-resolved') {
-      console.log('[parcel] ✨ Error resolved');
-      removeErrorOverlay();
-    }
-
-    if (data.type === 'error') {
-      console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
-      removeErrorOverlay();
-      var overlay = createErrorOverlay(data);
-      document.body.appendChild(overlay);
-    }
-  };
-}
-
-function removeErrorOverlay() {
-  var overlay = document.getElementById(OVERLAY_ID);
-
-  if (overlay) {
-    overlay.remove();
-  }
-}
-
-function createErrorOverlay(data) {
-  var overlay = document.createElement('div');
-  overlay.id = OVERLAY_ID; // html encode message and stack trace
-
-  var message = document.createElement('div');
-  var stackTrace = document.createElement('pre');
-  message.innerText = data.error.message;
-  stackTrace.innerText = data.error.stack;
-  overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
-  return overlay;
-}
-
-function getParents(bundle, id) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return [];
-  }
-
-  var parents = [];
-  var k, d, dep;
-
-  for (k in modules) {
-    for (d in modules[k][1]) {
-      dep = modules[k][1][d];
-
-      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
-        parents.push(k);
-      }
-    }
-  }
-
-  if (bundle.parent) {
-    parents = parents.concat(getParents(bundle.parent, id));
-  }
-
-  return parents;
-}
-
-function hmrApply(bundle, asset) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return;
-  }
-
-  if (modules[asset.id] || !bundle.parent) {
-    var fn = new Function('require', 'module', 'exports', asset.generated.js);
-    asset.isNew = !modules[asset.id];
-    modules[asset.id] = [fn, asset.deps];
-  } else if (bundle.parent) {
-    hmrApply(bundle.parent, asset);
-  }
-}
-
-function hmrAcceptCheck(bundle, id) {
-  var modules = bundle.modules;
-
-  if (!modules) {
-    return;
-  }
-
-  if (!modules[id] && bundle.parent) {
-    return hmrAcceptCheck(bundle.parent, id);
-  }
-
-  if (checkedAssets[id]) {
-    return;
-  }
-
-  checkedAssets[id] = true;
-  var cached = bundle.cache[id];
-  assetsToAccept.push([bundle, id]);
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    return true;
-  }
-
-  return getParents(global.parcelRequire, id).some(function (id) {
-    return hmrAcceptCheck(global.parcelRequire, id);
-  });
-}
-
-function hmrAcceptRun(bundle, id) {
-  var cached = bundle.cache[id];
-  bundle.hotData = {};
-
-  if (cached) {
-    cached.hot.data = bundle.hotData;
-  }
-
-  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
-    cached.hot._disposeCallbacks.forEach(function (cb) {
-      cb(bundle.hotData);
-    });
-  }
-
-  delete bundle.cache[id];
-  bundle(id);
-  cached = bundle.cache[id];
-
-  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
-    cached.hot._acceptCallbacks.forEach(function (cb) {
-      cb();
-    });
-
-    return true;
-  }
-}
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.ts"], null)
-//# sourceMappingURL=/main.js.map
+/***/ })
+/******/ ])));
+//# sourceMappingURL=main.js.map
