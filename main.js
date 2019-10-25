@@ -94,11 +94,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ramda_1 = __webpack_require__(1);
 exports.loop = function () {
     var creeps = Game.creeps;
-    console.log(1331);
+    // console.log(Game.rooms['E25N37'].createConstructionSite(24, 19, STRUCTURE_CONTAINER))
     ramda_1.mapObjIndexed(function (creep) {
         var sources = creep.room.find(FIND_SOURCES);
-        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[0], { visualizePathStyle: { stroke: '#ffaa00' } });
+        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE && creep.carryCapacity < creep.carry.energy) {
+            creep.say('harvest');
+            return creep.moveTo(sources[0], { visualizePathStyle: { stroke: '#ffaa00' } });
+        }
+        if (creep.carryCapacity > creep.carry.energy)
+            return;
+        creep.say('transfer');
+        var targets = creep.room.find(FIND_STRUCTURES, {
+            filter: function (structure) {
+                return (structure.structureType == STRUCTURE_EXTENSION ||
+                    structure.structureType == STRUCTURE_SPAWN ||
+                    structure.structureType == STRUCTURE_TOWER);
+            }
+        });
+        if (targets.length > 0) {
+            if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.say('transfering');
+                creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
+            }
         }
     }, creeps);
 };
