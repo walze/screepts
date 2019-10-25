@@ -1,0 +1,31 @@
+{
+  "name": "screepts",
+  "version": "1.0.0",
+  "description": "screeps script",
+  "main": "main.js",
+  "scripts": {
+    "start": "parcel src/main.ts --out-dir . --no-cache --target=browser"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walze/screepts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/walze/screepts/issues"
+  },
+  "homepage": "https://github.com/walze/screepts#readme",
+  "dependencies": {
+    "@types/node": "^12.11.7",
+    "@types/ramda": "^0.26.33",
+    "@types/screeps": "^2.5.5",
+    "parcel-bundler": "^1.12.4",
+    "ramda": "^0.26.1",
+    "tslint": "^5.20.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "typescript": "^3.6.4"
+  }
+}
