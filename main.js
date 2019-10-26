@@ -96,24 +96,20 @@ var creep_1 = __webpack_require__(330);
 var utils_1 = __webpack_require__(332);
 exports.loop = function () {
     var creeps = Game.creeps, rooms = Game.rooms;
-    for (var name in Memory.creeps)
-        if (!Game.creeps[name]) {
-            delete Memory.creeps[name];
-            console.log('Clearing non-existing creep memory:', name);
-        }
-    // console.log(Game.rooms['E25N37'].createConstructionSite(24, 19, STRUCTURE_CONTAINER))
     ramda_1.mapObjIndexed(function (room) {
         var spawns = room.find(FIND_STRUCTURES, {
             filter: function (structure) { return structure.structureType == STRUCTURE_SPAWN; }
         });
-        // console.log(spawnCreep(spawn))
         var builders = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.BUILDER);
         var harvesters = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.HARVESTER);
+        var upgraders = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.UPGRADER);
         ramda_1.map(function (spawn) {
             if (builders.length < 2)
                 creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER, builders.length + 1);
             if (harvesters.length < 2)
                 creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER, harvesters.length + 1);
+            if (upgraders.length < 5)
+                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.UPGRADER, upgraders.length + 1);
         }, spawns);
     }, rooms);
     ramda_1.mapObjIndexed(function (creep) {
@@ -14616,19 +14612,24 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 var harvester_1 = __webpack_require__(331);
 var builder_1 = __webpack_require__(333);
+var upgrader_1 = __webpack_require__(334);
 var CREEP_TYPES;
 (function (CREEP_TYPES) {
     CREEP_TYPES["HARVESTER"] = "HARVESTER";
     CREEP_TYPES["BUILDER"] = "BUILDER";
+    CREEP_TYPES["UPGRADER"] = "UPGRADER";
 })(CREEP_TYPES = exports.CREEP_TYPES || (exports.CREEP_TYPES = {}));
 exports.runCreep = (_a = {},
     _a[CREEP_TYPES.HARVESTER] = harvester_1.harvesterCreep,
     _a[CREEP_TYPES.BUILDER] = builder_1.builderCreep,
+    _a[CREEP_TYPES.UPGRADER] = upgrader_1.upgraderCreep,
     _a);
 exports.spawnCreep = function (spawn) { return function (type, id) {
-    return spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], type + "_" + id, {
-        memory: { type: type, id: id }
+    var name = type + "_" + id;
+    var code = spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], name, {
+        memory: { type: type }
     });
+    return code;
 }; };
 
 
@@ -14648,7 +14649,6 @@ exports.harvesterCreep = function (creep) {
         creep.room.memory.busySources = {};
     var creepDoOrMove = utils_1.doOrMove(creep);
     var creepTransferEnergy = transferEnergy(creep);
-    console.log(creep.room.memory.busySources['5bbcae259099fc012e638772'], Date.now());
     var source = creep.pos.findClosestByPath(FIND_SOURCES, {
         filter: function (s) { return !s.room.memory.busySources[s.id] || s.room.memory.busySources[s.id] === creep.id; }
     });
@@ -14659,12 +14659,12 @@ exports.harvesterCreep = function (creep) {
     var memoryBusySource = utils_1.findInObjByValue(creep.room.memory.busySources, creep.id);
     if (memoryBusySource)
         delete creep.room.memory.busySources[memoryBusySource[0]];
-    var powerStruct = creep.room.find(FIND_STRUCTURES, {
+    var powerStruct = creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: function (structure) { return (structure.structureType == STRUCTURE_EXTENSION
             || structure.structureType == STRUCTURE_SPAWN
             || structure.structureType == STRUCTURE_TOWER)
             && structure.energy < structure.energyCapacity; }
-    })[0];
+    });
     if (!powerStruct) {
         var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: function (structure) { return structure.structureType == STRUCTURE_CONTAINER
@@ -14689,6 +14689,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var find_1 = __importDefault(__webpack_require__(159));
+var harvester_1 = __webpack_require__(331);
 exports.doOrMove = function (creep) {
     return function (action) {
         return function (moveTo) {
@@ -14698,7 +14699,7 @@ exports.doOrMove = function (creep) {
                     name && creep.say(name);
                     return creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
-                creep.say(action.toString());
+                action && creep.say(action.toString());
                 return action;
             };
         };
@@ -14711,6 +14712,20 @@ exports.findInObjByValue = function (obj, value) { return find_1.default(functio
     var v = _a[1];
     return v === value;
 }, exports.ObjectEntries(obj)); };
+exports.ensureCreepHasEnergy = function (creep) {
+    var run = function () {
+        var creepDoOrMove = exports.doOrMove(creep);
+        var container = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: function (CS) { return CS.structureType === STRUCTURE_CONTAINER; } });
+        if (container.store.energy < 50)
+            return harvester_1.harvesterCreep(creep);
+        if (creep.carry.energy < 1) {
+            return creepDoOrMove(creep.withdraw(container, RESOURCE_ENERGY))(container)('getting energy');
+        }
+    };
+    var code = run();
+    // [if_has_energy, run_code]
+    return [code === undefined, code];
+};
 
 
 /***/ }),
@@ -14726,14 +14741,26 @@ exports.builderCreep = function (creep) {
     var site = creep.room.find(FIND_CONSTRUCTION_SITES)[0];
     if (!site)
         return harvester_1.harvesterCreep(creep);
-    var creepDoOrMove = utils_1.doOrMove(creep);
-    var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
-    if (spawn.energy < 50)
-        return harvester_1.harvesterCreep(creep);
-    if (creep.carry.energy < 1) {
-        return creepDoOrMove(creep.withdraw(spawn, RESOURCE_ENERGY))(spawn)('getting energy');
-    }
-    return creepDoOrMove(creep.build(site))(site)('build');
+    var _a = utils_1.ensureCreepHasEnergy(creep), hasEnergy = _a[0], code = _a[1];
+    if (!hasEnergy)
+        return code;
+    return utils_1.doOrMove(creep)(creep.build(site))(site)('build');
+};
+
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = __webpack_require__(332);
+exports.upgraderCreep = function (creep) {
+    var _a = utils_1.ensureCreepHasEnergy(creep), hasEnergy = _a[0], code = _a[1];
+    if (!hasEnergy)
+        return code;
+    utils_1.doOrMove(creep)(creep.upgradeController(creep.room.controller))(creep.room.controller)('upgrading');
 };
 
 

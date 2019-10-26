@@ -8,8 +8,6 @@ export const harvesterCreep: creepAction = (creep: Creep) => {
   const creepDoOrMove = doOrMove(creep)
   const creepTransferEnergy = transferEnergy(creep)
 
-  console.log(creep.room.memory.busySources['5bbcae259099fc012e638772'], Date.now())
-
   const source = creep.pos.findClosestByPath(FIND_SOURCES, {
     filter: s => !s.room.memory.busySources[s.id] || s.room.memory.busySources[s.id] === creep.id
   })
@@ -23,7 +21,7 @@ export const harvesterCreep: creepAction = (creep: Creep) => {
   const memoryBusySource = findInObjByValue(creep.room.memory.busySources, creep.id)
   if (memoryBusySource) delete creep.room.memory.busySources[memoryBusySource[0]]
 
-  const [powerStruct] = creep.room.find(FIND_STRUCTURES, {
+  const powerStruct = creep.pos.findClosestByRange(FIND_STRUCTURES, {
     filter: structure => (structure.structureType == STRUCTURE_EXTENSION
       || structure.structureType == STRUCTURE_SPAWN
       || structure.structureType == STRUCTURE_TOWER)
