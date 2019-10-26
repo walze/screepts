@@ -8,7 +8,7 @@ export const builderCreep: creepAction = (creep: Creep) => {
   const creepDoOrMove = doOrMove(creep)
 
   
-  if (creep.carry.energy < creep.carryCapacity) {
+  if (creep.carry.energy < 1) {
     const [spawn] = creep.room.find(FIND_MY_SPAWNS)
 
     return creepDoOrMove(creep.withdraw(spawn, RESOURCE_ENERGY))(spawn)('getting energy')

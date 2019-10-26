@@ -3,10 +3,19 @@ import { doOrMove, creepAction } from "../utils"
 export const harvesterCreep: creepAction = (creep: Creep) => {
   const creepDoOrMove = doOrMove(creep)
 
-  const [source] = creep.room.find(FIND_SOURCES)
+  if (creep.memory.mineIndex === undefined) creep.memory.mineIndex = 0
+
+  const sources = creep.room.find(FIND_SOURCES)
 
   if (creep.carryCapacity > creep.carry.energy) {
-    return creepDoOrMove(creep.harvest(source))(source)('harvest')
+    if (!sources[creep.memory.mineIndex]) creep.memory.mineIndex = 0
+
+    const source = sources[creep.memory.mineIndex]
+
+    const code = creepDoOrMove(creep.harvest(source))(source)('harvest')
+    if (code === -2) creep.memory.mineIndex++
+
+    return
   }
 
   const [target] = creep.room.find(FIND_STRUCTURES, {

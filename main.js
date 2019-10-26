@@ -112,7 +112,7 @@ exports.loop = function () {
         ramda_1.map(function (spawn) {
             if (builders.length < 2)
                 creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER, builders.length + 1);
-            if (harvesters.length < 1)
+            if (harvesters.length < 2)
                 creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER, harvesters.length + 1);
         }, spawns);
     }, rooms);
@@ -14626,7 +14626,7 @@ exports.runCreep = (_a = {},
     _a[CREEP_TYPES.BUILDER] = builder_1.builderCreep,
     _a);
 exports.spawnCreep = function (spawn) { return function (type, id) {
-    return spawn.spawnCreep([WORK, CARRY, MOVE], type + "_" + id, {
+    return spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], type + "_" + id, {
         memory: { type: type, id: id }
     });
 }; };
@@ -14642,9 +14642,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = __webpack_require__(332);
 exports.harvesterCreep = function (creep) {
     var creepDoOrMove = utils_1.doOrMove(creep);
-    var source = creep.room.find(FIND_SOURCES)[0];
+    if (creep.memory.mineIndex === undefined)
+        creep.memory.mineIndex = 0;
+    var sources = creep.room.find(FIND_SOURCES);
     if (creep.carryCapacity > creep.carry.energy) {
-        return creepDoOrMove(creep.harvest(source))(source)('harvest');
+        if (!sources[creep.memory.mineIndex])
+            creep.memory.mineIndex = 0;
+        var source = sources[creep.memory.mineIndex];
+        var code = creepDoOrMove(creep.harvest(source))(source)('harvest');
+        if (code === -2)
+            creep.memory.mineIndex++;
+        return;
     }
     var target = creep.room.find(FIND_STRUCTURES, {
         filter: function (structure) { return (structure.structureType == STRUCTURE_EXTENSION
@@ -14697,7 +14705,7 @@ exports.builderCreep = function (creep) {
     if (!site)
         return harvester_1.harvesterCreep(creep);
     var creepDoOrMove = utils_1.doOrMove(creep);
-    if (creep.carry.energy < creep.carryCapacity) {
+    if (creep.carry.energy < 1) {
         var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
         return creepDoOrMove(creep.withdraw(spawn, RESOURCE_ENERGY))(spawn)('getting energy');
     }

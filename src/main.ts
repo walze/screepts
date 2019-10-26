@@ -29,7 +29,7 @@ export const loop = () => {
       if (builders.length < 2)
         spawnCreep(spawn)(CREEP_TYPES.BUILDER, builders.length + 1)
 
-      if (harvesters.length < 1)
+      if (harvesters.length < 2)
         spawnCreep(spawn)(CREEP_TYPES.HARVESTER, harvesters.length + 1)
     }, spawns)
 

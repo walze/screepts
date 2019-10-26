@@ -17,7 +17,7 @@ export const runCreep: runCreep = {
 
 export const spawnCreep = (spawn: StructureSpawn) => (type: string, id: number) =>
   spawn.spawnCreep(
-    [WORK, CARRY, MOVE],
+    [WORK, CARRY, MOVE, MOVE],
     `${type}_${id}`,
     {
       memory: { type, id }
