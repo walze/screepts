@@ -1,6 +1,31 @@
-const env = process.env.NODE_ENV
+const path = require('path')
 
-module.exports = env => {
-  console.log(`🛠️  running ${env} Mode using ./webpack/webpack.${env}.js 🛠️`);
-  return require(`./webpack/webpack.${env}.js`);
+module.exports = {
+  target: 'node',
+  entry: {
+    main: path.resolve(__dirname, 'src/main.ts')
+  },
+  resolve: {
+    extensions: ['.ts', '.js']
+  },
+  output: {
+    path: path.resolve(__dirname),
+    filename: 'main.js',
+    libraryTarget: 'commonjs',
+  },
+  devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: /\.ts?$/,
+        use: 'ts-loader',
+        // exclude: /node_modules/
+      }
+    ]
+  },
+  // optimization: {
+    // runtimeChunk: true,
+  // },
+  plugins: [
+  ]
 };
