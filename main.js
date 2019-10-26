@@ -92,25 +92,12 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var ramda_1 = __webpack_require__(1);
-var doOrMove = function (creep) {
-    return function (action) {
-        return function (moveTo) {
-            return function (name) {
-                if (action == ERR_NOT_IN_RANGE) {
-                    name && creep.say(name);
-                    return creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
-                }
-                creep.say(action.toString());
-                return action;
-            };
-        };
-    };
-};
+var utils_1 = __webpack_require__(330);
 exports.loop = function () {
     var creeps = Game.creeps;
     // console.log(Game.rooms['E25N37'].createConstructionSite(24, 19, STRUCTURE_CONTAINER))
     ramda_1.mapObjIndexed(function (creep) {
-        var creepDoOrMove = doOrMove(creep);
+        var creepDoOrMove = utils_1.doOrMove(creep);
         var source = creep.room.find(FIND_SOURCES)[0];
         if (creep.carryCapacity > creep.carry.energy) {
             creepDoOrMove(creep.harvest(source))(source)('harvest');
@@ -14609,6 +14596,29 @@ var thunkify = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (thunkify);
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.doOrMove = function (creep) {
+    return function (action) {
+        return function (moveTo) {
+            return function (name) {
+                if (action == ERR_NOT_IN_RANGE) {
+                    name && creep.say(name);
+                    return creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+                creep.say(action.toString());
+                return action;
+            };
+        };
+    };
+};
+
 
 /***/ })
 /******/ ])));
