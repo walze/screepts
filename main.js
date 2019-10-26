@@ -14640,29 +14640,41 @@ exports.spawnCreep = function (spawn) { return function (type, id) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = __webpack_require__(332);
+var transferEnergy = function (creep) {
+    return function (structure) { return utils_1.doOrMove(creep)(creep.transfer(structure, RESOURCE_ENERGY))(structure)('transfering'); };
+};
 exports.harvesterCreep = function (creep) {
+    if (!creep.room.memory.busySources)
+        creep.room.memory.busySources = {};
     var creepDoOrMove = utils_1.doOrMove(creep);
-    if (creep.memory.mineIndex === undefined)
-        creep.memory.mineIndex = 0;
-    var sources = creep.room.find(FIND_SOURCES);
-    if (creep.carryCapacity > creep.carry.energy) {
-        if (!sources[creep.memory.mineIndex])
-            creep.memory.mineIndex = 0;
-        var source = sources[creep.memory.mineIndex];
-        var code = creepDoOrMove(creep.harvest(source))(source)('harvest');
-        if (code === -2)
-            creep.memory.mineIndex++;
-        return;
+    var creepTransferEnergy = transferEnergy(creep);
+    console.log(creep.room.memory.busySources['5bbcae259099fc012e638772'], Date.now());
+    var source = creep.pos.findClosestByPath(FIND_SOURCES, {
+        filter: function (s) { return !s.room.memory.busySources[s.id] || s.room.memory.busySources[s.id] === creep.id; }
+    });
+    if (source && creep.carryCapacity > creep.carry.energy) {
+        creep.room.memory.busySources[source.id] = creep.id;
+        return creepDoOrMove(creep.harvest(source))(source)('harvest');
     }
-    var target = creep.room.find(FIND_STRUCTURES, {
+    var memoryBusySource = utils_1.findInObjByValue(creep.room.memory.busySources, creep.id);
+    if (memoryBusySource)
+        delete creep.room.memory.busySources[memoryBusySource[0]];
+    var powerStruct = creep.room.find(FIND_STRUCTURES, {
         filter: function (structure) { return (structure.structureType == STRUCTURE_EXTENSION
             || structure.structureType == STRUCTURE_SPAWN
             || structure.structureType == STRUCTURE_TOWER)
             && structure.energy < structure.energyCapacity; }
     })[0];
-    if (!target)
-        return creep.say('no struc');
-    return creepDoOrMove(creep.transfer(target, RESOURCE_ENERGY))(target)('transfering');
+    if (!powerStruct) {
+        var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+            filter: function (structure) { return structure.structureType == STRUCTURE_CONTAINER
+                && structure.store.energy < structure.storeCapacity; }
+        });
+        if (!container)
+            return creep.say('no struc');
+        return creepTransferEnergy(container);
+    }
+    return creepTransferEnergy(powerStruct);
 };
 
 
@@ -14672,11 +14684,16 @@ exports.harvesterCreep = function (creep) {
 
 "use strict";
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var find_1 = __importDefault(__webpack_require__(159));
 exports.doOrMove = function (creep) {
     return function (action) {
         return function (moveTo) {
             return function (name) {
+                creep.memory.state = name;
                 if (action == ERR_NOT_IN_RANGE) {
                     name && creep.say(name);
                     return creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -14689,6 +14706,11 @@ exports.doOrMove = function (creep) {
 };
 exports.findCreepsByType = function (room) { return function (type) { return room
     .find(FIND_MY_CREEPS, { filter: function (creep) { return creep.memory.type === type; } }); }; };
+exports.ObjectEntries = function (obj) { return Object.entries(obj); };
+exports.findInObjByValue = function (obj, value) { return find_1.default(function (_a) {
+    var v = _a[1];
+    return v === value;
+}, exports.ObjectEntries(obj)); };
 
 
 /***/ }),
@@ -14705,8 +14727,10 @@ exports.builderCreep = function (creep) {
     if (!site)
         return harvester_1.harvesterCreep(creep);
     var creepDoOrMove = utils_1.doOrMove(creep);
+    var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
+    if (spawn.energy < 50)
+        return harvester_1.harvesterCreep(creep);
     if (creep.carry.energy < 1) {
-        var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
         return creepDoOrMove(creep.withdraw(spawn, RESOURCE_ENERGY))(spawn)('getting energy');
     }
     return creepDoOrMove(creep.build(site))(site)('build');
