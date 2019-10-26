@@ -20,13 +20,14 @@ export const loop = () => {
 
     map(spawn => {
       if (builders.length < 2)
-        spawnCreep(spawn)(CREEP_TYPES.BUILDER, builders.length + 1)
+        spawnCreep(spawn)(CREEP_TYPES.BUILDER)
 
       if (harvesters.length < 2)
-        spawnCreep(spawn)(CREEP_TYPES.HARVESTER, harvesters.length + 1)
+        spawnCreep(spawn)(CREEP_TYPES.HARVESTER)
 
-      if (upgraders.length < 5)
-        spawnCreep(spawn)(CREEP_TYPES.UPGRADER, upgraders.length + 1)
+      if (upgraders.length < 5) {
+        spawnCreep(spawn)(CREEP_TYPES.UPGRADER)
+      }
     }, spawns)
 
 
@@ -37,7 +38,6 @@ export const loop = () => {
     creep.memory.id = creep.id
 
     const type = creep.memory.type as CREEP_TYPES
-
     const runCode = runCreep[type](creep)
 
     if (runCode) creep.say(runCode.toString())

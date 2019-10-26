@@ -106,11 +106,12 @@ exports.loop = function () {
         var upgraders = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.UPGRADER);
         ramda_1.map(function (spawn) {
             if (builders.length < 2)
-                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER, builders.length + 1);
+                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER);
             if (harvesters.length < 2)
-                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER, harvesters.length + 1);
-            if (upgraders.length < 5)
-                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.UPGRADER, upgraders.length + 1);
+                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER);
+            if (upgraders.length < 5) {
+                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.UPGRADER);
+            }
         }, spawns);
     }, rooms);
     ramda_1.mapObjIndexed(function (creep) {
@@ -14626,8 +14627,8 @@ exports.runCreep = (_a = {},
     _a[CREEP_TYPES.BUILDER] = builder_1.builderCreep,
     _a[CREEP_TYPES.UPGRADER] = upgrader_1.upgraderCreep,
     _a);
-exports.spawnCreep = function (spawn) { return function (type, id) {
-    var name = type + "_" + id;
+exports.spawnCreep = function (spawn) { return function (type) {
+    var name = type + "_" + Date.now();
     var code = spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], name, {
         memory: { type: type }
     });
