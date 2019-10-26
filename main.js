@@ -101,6 +101,7 @@ var doOrMove = function (creep) {
                     return creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
                 creep.say(action.toString());
+                return action;
             };
         };
     };
@@ -110,19 +111,16 @@ exports.loop = function () {
     // console.log(Game.rooms['E25N37'].createConstructionSite(24, 19, STRUCTURE_CONTAINER))
     ramda_1.mapObjIndexed(function (creep) {
         var creepDoOrMove = doOrMove(creep);
-        var sources = creep.room.find(FIND_SOURCES);
-        console.log(creep.carryCapacity <= creep.carry.energy, creep.carryCapacity, creep.carry.energy);
-        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE && creep.carryCapacity > creep.carry.energy) {
-            creep.say('harvest');
-            creep.moveTo(sources[0], { visualizePathStyle: { stroke: '#ffaa00' } });
+        var source = creep.room.find(FIND_SOURCES)[0];
+        if (creep.carryCapacity > creep.carry.energy) {
+            creepDoOrMove(creep.harvest(source))(source)('harvest');
             return;
         }
         var target = creep.room.find(FIND_STRUCTURES, {
-            filter: function (structure) {
-                return (structure.structureType == STRUCTURE_EXTENSION ||
-                    structure.structureType == STRUCTURE_SPAWN ||
-                    structure.structureType == STRUCTURE_TOWER);
-            }
+            filter: function (structure) { return (structure.structureType == STRUCTURE_EXTENSION
+                || structure.structureType == STRUCTURE_SPAWN
+                || structure.structureType == STRUCTURE_TOWER)
+                && structure.energy < structure.energyCapacity; }
         })[0];
         if (target) {
             creepDoOrMove(creep.transfer(target, RESOURCE_ENERGY))(target)('transfering');
