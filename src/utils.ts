@@ -1,4 +1,6 @@
 
+export type creepAction = (creep: Creep) => ScreepsReturnCode | undefined
+
 export const doOrMove =
   (creep: Creep) =>
     (action: ScreepsReturnCode) =>
@@ -12,3 +14,10 @@ export const doOrMove =
           creep.say(action.toString())
           return action
         }
+
+
+export const findCreepsByType = (room: Room) => (type: string) => room
+  .find(
+    FIND_MY_CREEPS,
+    { filter: creep => creep.memory.type === type }
+  )

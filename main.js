@@ -92,26 +92,35 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var ramda_1 = __webpack_require__(1);
-var utils_1 = __webpack_require__(330);
+var creep_1 = __webpack_require__(330);
+var utils_1 = __webpack_require__(332);
 exports.loop = function () {
-    var creeps = Game.creeps;
+    var creeps = Game.creeps, rooms = Game.rooms;
+    for (var name in Memory.creeps)
+        if (!Game.creeps[name]) {
+            delete Memory.creeps[name];
+            console.log('Clearing non-existing creep memory:', name);
+        }
     // console.log(Game.rooms['E25N37'].createConstructionSite(24, 19, STRUCTURE_CONTAINER))
+    ramda_1.mapObjIndexed(function (room) {
+        var spawns = room.find(FIND_STRUCTURES, {
+            filter: function (structure) { return structure.structureType == STRUCTURE_SPAWN; }
+        });
+        // console.log(spawnCreep(spawn))
+        var builders = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.BUILDER);
+        var harvesters = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.HARVESTER);
+        ramda_1.map(function (spawn) {
+            if (builders.length < 2)
+                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER, builders.length + 1);
+            if (harvesters.length < 1)
+                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER, harvesters.length + 1);
+        }, spawns);
+    }, rooms);
     ramda_1.mapObjIndexed(function (creep) {
-        var creepDoOrMove = utils_1.doOrMove(creep);
-        var source = creep.room.find(FIND_SOURCES)[0];
-        if (creep.carryCapacity > creep.carry.energy) {
-            creepDoOrMove(creep.harvest(source))(source)('harvest');
-            return;
-        }
-        var target = creep.room.find(FIND_STRUCTURES, {
-            filter: function (structure) { return (structure.structureType == STRUCTURE_EXTENSION
-                || structure.structureType == STRUCTURE_SPAWN
-                || structure.structureType == STRUCTURE_TOWER)
-                && structure.energy < structure.energyCapacity; }
-        })[0];
-        if (target) {
-            creepDoOrMove(creep.transfer(target, RESOURCE_ENERGY))(target)('transfering');
-        }
+        var type = creep.memory.type;
+        var runCode = creep_1.runCreep[type](creep);
+        if (runCode)
+            creep.say(runCode.toString());
     }, creeps);
 };
 module.exports = { loop: exports.loop };
@@ -14603,6 +14612,58 @@ var thunkify = /*#__PURE__*/Object(_internal_curry1_js__WEBPACK_IMPORTED_MODULE_
 
 "use strict";
 
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+var harvester_1 = __webpack_require__(331);
+var builder_1 = __webpack_require__(333);
+var CREEP_TYPES;
+(function (CREEP_TYPES) {
+    CREEP_TYPES["HARVESTER"] = "HARVESTER";
+    CREEP_TYPES["BUILDER"] = "BUILDER";
+})(CREEP_TYPES = exports.CREEP_TYPES || (exports.CREEP_TYPES = {}));
+exports.runCreep = (_a = {},
+    _a[CREEP_TYPES.HARVESTER] = harvester_1.harvesterCreep,
+    _a[CREEP_TYPES.BUILDER] = builder_1.builderCreep,
+    _a);
+exports.spawnCreep = function (spawn) { return function (type, id) {
+    return spawn.spawnCreep([WORK, CARRY, MOVE], type + "_" + id, {
+        memory: { type: type, id: id }
+    });
+}; };
+
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = __webpack_require__(332);
+exports.harvesterCreep = function (creep) {
+    var creepDoOrMove = utils_1.doOrMove(creep);
+    var source = creep.room.find(FIND_SOURCES)[0];
+    if (creep.carryCapacity > creep.carry.energy) {
+        return creepDoOrMove(creep.harvest(source))(source)('harvest');
+    }
+    var target = creep.room.find(FIND_STRUCTURES, {
+        filter: function (structure) { return (structure.structureType == STRUCTURE_EXTENSION
+            || structure.structureType == STRUCTURE_SPAWN
+            || structure.structureType == STRUCTURE_TOWER)
+            && structure.energy < structure.energyCapacity; }
+    })[0];
+    if (!target)
+        return creep.say('no struc');
+    return creepDoOrMove(creep.transfer(target, RESOURCE_ENERGY))(target)('transfering');
+};
+
+
+/***/ }),
+/* 332 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.doOrMove = function (creep) {
     return function (action) {
@@ -14617,6 +14678,30 @@ exports.doOrMove = function (creep) {
             };
         };
     };
+};
+exports.findCreepsByType = function (room) { return function (type) { return room
+    .find(FIND_MY_CREEPS, { filter: function (creep) { return creep.memory.type === type; } }); }; };
+
+
+/***/ }),
+/* 333 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = __webpack_require__(332);
+var harvester_1 = __webpack_require__(331);
+exports.builderCreep = function (creep) {
+    var site = creep.room.find(FIND_CONSTRUCTION_SITES)[0];
+    if (!site)
+        return harvester_1.harvesterCreep(creep);
+    var creepDoOrMove = utils_1.doOrMove(creep);
+    if (creep.carry.energy < creep.carryCapacity) {
+        var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
+        return creepDoOrMove(creep.withdraw(spawn, RESOURCE_ENERGY))(spawn)('getting energy');
+    }
+    return creepDoOrMove(creep.build(site))(site)('build');
 };
 
 
