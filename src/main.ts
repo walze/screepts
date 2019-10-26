@@ -6,6 +6,7 @@ import { findCreepsByType, findInObjByValue } from './utils'
 export const loop = () => {
   const { creeps, rooms } = Game
 
+  // fix memory creeps leak
 
   mapObj(room => {
     const spawns = room.find(FIND_STRUCTURES, {
@@ -33,6 +34,8 @@ export const loop = () => {
 
 
   mapObj(creep => {
+    creep.memory.id = creep.id
+
     const type = creep.memory.type as CREEP_TYPES
 
     const runCode = runCreep[type](creep)

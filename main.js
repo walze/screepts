@@ -96,6 +96,7 @@ var creep_1 = __webpack_require__(330);
 var utils_1 = __webpack_require__(332);
 exports.loop = function () {
     var creeps = Game.creeps, rooms = Game.rooms;
+    // fix memory creeps leak
     ramda_1.mapObjIndexed(function (room) {
         var spawns = room.find(FIND_STRUCTURES, {
             filter: function (structure) { return structure.structureType == STRUCTURE_SPAWN; }
@@ -113,6 +114,7 @@ exports.loop = function () {
         }, spawns);
     }, rooms);
     ramda_1.mapObjIndexed(function (creep) {
+        creep.memory.id = creep.id;
         var type = creep.memory.type;
         var runCode = creep_1.runCreep[type](creep);
         if (runCode)
