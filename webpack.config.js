@@ -13,7 +13,6 @@ module.exports = {
     filename: 'main.js',
     libraryTarget: 'commonjs',
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {

@@ -6,7 +6,7 @@ declare global {
     state?: string
     type: CREEP_TYPES,
     actionIndex: number,
-    actions: Array<[creepAction, ACTION_DONE?]>
+    actions: Array<[CREEP_TYPES, ACTION_DONE?, ACTION_DONE?]>
   }
 
   interface FlagMemory { }

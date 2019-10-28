@@ -16,17 +16,33 @@ export enum CREEP_TYPES {
   UPGRADER,
 }
 
-export const runCreep = (creep: Creep) => {
-  const { actions, actionIndex } = creep.memory
-  const [action, whenDone] = actions[actionIndex]
+export const creepActions: { [key in CREEP_TYPES]: creepAction } = {
+  [CREEP_TYPES.HARVESTER]: harvesterCreep,
+  [CREEP_TYPES.BUILDER]: builderCreep,
+  [CREEP_TYPES.UPGRADER]: upgraderCreep,
+}
 
-  const [succ, actionCode] = action(creep)
+export const runCreep = (creep: Creep) => {
+  const { actions } = creep.memory
+  if (!actions[creep.memory.actionIndex]) creep.memory.actionIndex = 0
+
+  const [action, whenDone, whenError] = actions[creep.memory.actionIndex]
+  const [succ, actionCode] = creepActions[action](creep)
 
   if (actionCode === 0) {
+    // default = start
     if (!whenDone) return creep.memory.actionIndex = 0
     if (whenDone === ACTION_DONE.START) return creep.memory.actionIndex = 0
     if (whenDone === ACTION_DONE.PREVIOUS) return creep.memory.actionIndex--
     if (whenDone === ACTION_DONE.NEXT) return creep.memory.actionIndex++
+  } else {
+    if (!succ) creep.say(actionCode.toString())
+
+    // default = next
+    if (!whenError) return creep.memory.actionIndex++
+    if (whenError === ACTION_DONE.START) return creep.memory.actionIndex = 0
+    if (whenError === ACTION_DONE.PREVIOUS) return creep.memory.actionIndex--
+    if (whenError === ACTION_DONE.NEXT) return creep.memory.actionIndex++
   }
 
   if (!succ) creep.say(actionCode.toString())
@@ -35,7 +51,7 @@ export const runCreep = (creep: Creep) => {
 
 export const spawnCreep = (spawn: StructureSpawn) =>
   (type: CREEP_TYPES, body: BodyPartConstant[] = [WORK, CARRY, MOVE, MOVE]) =>
-    (actions: CreepMemory['actions']) => {
+    (...actions: CreepMemory['actions']) => {
       const name = `${CREEP_TYPES[type]}_${Date.now()}`
 
       const code = spawn.spawnCreep(
@@ -52,27 +68,27 @@ export const spawnHarvester = (spawn: StructureSpawn) =>
   spawnCreep
     (spawn)
     (CREEP_TYPES.HARVESTER)
-    ([
-      [harvesterCreep],
-    ])
+    (
+      [CREEP_TYPES.HARVESTER],
+    )
 
 
 export const spawnBuilder = (spawn: StructureSpawn) =>
   spawnCreep
     (spawn)
     (CREEP_TYPES.BUILDER)
-    ([
-      [builderCreep, ACTION_DONE.START],
-      [harvesterCreep],
-    ])
+    (
+      [CREEP_TYPES.BUILDER],
+      [CREEP_TYPES.HARVESTER],
+    )
 
 
 export const spawnUpgrader = (spawn: StructureSpawn) =>
   spawnCreep
     (spawn)
     (CREEP_TYPES.UPGRADER)
-    ([
-      [upgraderCreep, ACTION_DONE.START],
-      [harvesterCreep],
-    ])
+    (
+      [CREEP_TYPES.UPGRADER],
+      [CREEP_TYPES.HARVESTER],
+    )
 
