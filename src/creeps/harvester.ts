@@ -1,4 +1,5 @@
-import { doOrMove, creepAction, findInObjByValue } from "../utils"
+import { doOrMove, creepAction, findInObjByValue, eitherFunction } from "../utils/utils"
+import { findClosestPowerUsingStructure, findClosestStructure } from "../utils/find"
 
 const transferEnergy = (creep: Creep) =>
   (structure: AnyStructure) => doOrMove(creep)(creep.transfer(structure, RESOURCE_ENERGY))(structure)('transfering')
@@ -21,23 +22,20 @@ export const harvesterCreep: creepAction = (creep: Creep) => {
   const memoryBusySource = findInObjByValue(creep.room.memory.busySources, creep.id)
   if (memoryBusySource) delete creep.room.memory.busySources[memoryBusySource[0]]
 
-  const powerStruct = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-    filter: (structure) => (structure.structureType === STRUCTURE_EXTENSION
-      || structure.structureType === STRUCTURE_SPAWN
-      || structure.structureType === STRUCTURE_TOWER)
-      && structure.energy < structure.energyCapacity,
-  });
 
-  if (!powerStruct) {
-    const container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-      filter: (structure) => structure.structureType === STRUCTURE_CONTAINER
-        && structure.store.energy < structure.storeCapacity,
-    });
+  // transfer logic
+  const powerStructure = () => findClosestPowerUsingStructure(
+    creep,
+    (structure) => structure.energy < structure.energyCapacity,
+  )
 
-    if (!container) return creep.say('no struc')
+  const containerStructure = () => findClosestStructure(creep.pos)(
+    STRUCTURE_CONTAINER,
+    (structure) => structure.store.energy < structure.storeCapacity,
+  );
 
-    return creepTransferEnergy(container)
-  }
+  const strucuture = eitherFunction(powerStructure, containerStructure)()
+  if (!strucuture) return 'NO_STRUCT'
 
-  return creepTransferEnergy(powerStruct)
+  return creepTransferEnergy(strucuture)
 }

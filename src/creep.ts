@@ -1,6 +1,6 @@
 import { harvesterCreep } from "./creeps/harvester"
 import { builderCreep } from "./creeps/builder"
-import { creepAction } from "./utils"
+import { creepAction } from "./utils/utils"
 import { upgraderCreep } from "./creeps/upgrader"
 
 export type runCreep = { [key in CREEP_TYPES]: creepAction }

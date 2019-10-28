@@ -1,6 +1,6 @@
 import { mapObjIndexed as mapObj, map } from 'ramda'
 import { spawnCreep, CREEP_TYPES, runCreep } from './creep'
-import { findCreepsByType, findInObjByValue } from './utils'
+import { findCreepsByType, findInObjByValue } from './utils/utils'
 
 
 export const loop = () => {

@@ -1,4 +1,4 @@
-import { creepAction, doOrMove, ensureCreepHasEnergy } from "../utils"
+import { creepAction, doOrMove, ensureCreepHasEnergy } from "../utils/utils"
 import { harvesterCreep } from "./harvester"
 
 export const upgraderCreep: creepAction = creep => {
