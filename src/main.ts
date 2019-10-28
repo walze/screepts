@@ -15,9 +15,10 @@ export const loop = () => {
     }) as StructureSpawn[]
 
 
-    const builders = findCreepsByType(room)(CREEP_TYPES.BUILDER)
-    const harvesters = findCreepsByType(room)(CREEP_TYPES.HARVESTER)
-    const upgraders = findCreepsByType(room)(CREEP_TYPES.UPGRADER)
+    const findCreep = findCreepsByType(room)
+    const builders = findCreep(CREEP_TYPES.BUILDER)
+    const harvesters = findCreep(CREEP_TYPES.HARVESTER)
+    const upgraders = findCreep(CREEP_TYPES.UPGRADER)
 
     map((spawn) => {
       if (harvesters.length < 2)
@@ -45,7 +46,7 @@ export const loop = () => {
       creep.suicide()
     }
 
-    const type = creep.memory.type as CREEP_TYPES
+    const type = creep.memory.type
     const runCode = runCreep[type](creep)
 
     if (runCode) creep.say(runCode.toString())

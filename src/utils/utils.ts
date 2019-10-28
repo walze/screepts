@@ -11,7 +11,7 @@ export const eitherFunction = <F1 extends AnyFunction, F2 extends AnyFunction>(f
   (...args: Parameters<F1 | F2>) => {
     const f1result = f1(...args)
 
-    return (f1result !== (false || null) ? f1result : f2(...args)) as ReturnType<F1 | F2>
+    return (f1result !== (false && null) ? f1result : f2(...args)) as ReturnType<F1 | F2>
   }
 
 
@@ -63,6 +63,7 @@ export const withdrawFromSpawner = (creep: Creep) => {
   if (spawn.energy < 50) return harvesterCreep(creep)
 
   if (creep.carry.energy < 1) {
+
     return doOrMove
       (creep)
       (creep.withdraw(spawn, RESOURCE_ENERGY))
@@ -84,6 +85,4 @@ export const ensureCreepHasEnergy = (creep: Creep) => {
 const transferEnergySpawner = (creep: Creep) => {
   const spawn = findClosestStructure(creep.pos)(STRUCTURE_SPAWN)
   if (!spawn) return false
-
-
 }
