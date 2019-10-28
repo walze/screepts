@@ -58,7 +58,7 @@ export const withdrawFromSpawner = (creep: Creep) => {
   const spawn = findClosestStructure(creep.pos)(STRUCTURE_SPAWN)
   if (!spawn) return false
 
-  if (spawn.energy <= 300) return false
+  if (spawn.energy <= 250) return false
 
   return doOrMove
     (creep)
