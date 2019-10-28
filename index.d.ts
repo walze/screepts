@@ -1,9 +1,12 @@
 import { CREEP_TYPES } from "./src/creep"
+import { creepAction, ACTION_DONE } from "./src/utils/utils"
 
 declare global {
   interface CreepMemory {
     state?: string
-    type: CREEP_TYPES
+    type: CREEP_TYPES,
+    actionIndex: number,
+    actions: Array<[creepAction, ACTION_DONE?]>
   }
 
   interface FlagMemory { }

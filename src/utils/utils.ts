@@ -3,8 +3,14 @@ import { harvesterCreep } from "../creeps/harvester";
 import { findClosestStructure } from "./find";
 
 
+export enum ACTION_DONE {
+  NEXT,
+  PREVIOUS,
+  START,
+}
+
 export type AnyFunction = (...a: any[]) => any
-export type creepAction = (creep: Creep) => ScreepsReturnCode | string | undefined
+export type creepAction = (creep: Creep) => ScreepsReturnCode | string
 
 
 export const eitherFunction = <F1 extends AnyFunction, F2 extends AnyFunction>(f1: F1, f2: F2) =>
@@ -19,17 +25,19 @@ export const doOrMove =
   (creep: Creep) =>
     (action: ScreepsReturnCode) =>
       (moveTo: RoomPosition | { pos: RoomPosition }) =>
-        (name?: string) => {
+        (name?: string): [boolean, ScreepsReturnCode] => {
           creep.memory.state = name
 
           if (action === ERR_NOT_IN_RANGE) {
             if (name) creep.say(name)
-            return creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
+            const moveCode = creep.moveTo(moveTo, { visualizePathStyle: { stroke: '#ffffff' } });
+            return [false, moveCode]
           }
 
 
           if (action) creep.say(action.toString())
-          return action
+          // [if_did, code]
+          return [true, action]
         }
 
 

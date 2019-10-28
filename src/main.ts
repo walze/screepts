@@ -1,8 +1,7 @@
 import { mapObjIndexed as mapObj, map } from 'ramda'
-import { spawnCreep, CREEP_TYPES, runCreep } from './creep'
+import { CREEP_TYPES, runCreep, spawnHarvester, spawnBuilder } from './creep'
 import { findInObjByValue } from './utils/utils'
 import { findCreepsByType } from './utils/find'
-
 
 export const loop = () => {
   const { creeps, rooms } = Game
@@ -22,13 +21,13 @@ export const loop = () => {
 
     map((spawn) => {
       if (harvesters.length < 2)
-        return spawnCreep(spawn)(CREEP_TYPES.HARVESTER)
+        return spawnHarvester(spawn)
 
       if (builders.length < 2)
-        return spawnCreep(spawn)(CREEP_TYPES.BUILDER)
+        return spawnBuilder(spawn)
 
       // if (upgraders.length < 2) {
-      //   return spawnCreep(spawn)(CREEP_TYPES.UPGRADER)
+      //   return spawnUpgrader(spawn)
       // }
     }, spawns)
 
@@ -46,8 +45,7 @@ export const loop = () => {
       creep.suicide()
     }
 
-    const type = creep.memory.type
-    const runCode = runCreep[type](creep)
+    const runCode = runCreep(creep)
 
     if (runCode) creep.say(runCode.toString())
   }, creeps)
