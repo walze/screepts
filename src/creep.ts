@@ -18,15 +18,15 @@ export const runCreep: runCreep = {
   [CREEP_TYPES.UPGRADER]: upgraderCreep,
 }
 
-export const spawnCreep = (spawn: StructureSpawn) => (type: string, body: BodyPartConstant[] = [WORK, CARRY, MOVE, MOVE]) => {
-  const name = `${type}_${Date.now()}`
-  const code = spawn.spawnCreep(
-    body,
-    name,
-    {
-      memory: { type }
-    }
-  )
+export const spawnCreep =
+  (spawn: StructureSpawn) =>
+    (type: CREEP_TYPES, body: BodyPartConstant[] = [WORK, CARRY, MOVE, MOVE]) => {
+      const name = `${type}_${Date.now()}`
+      const code = spawn.spawnCreep(
+        body,
+        name,
+        { memory: { type } },
+      )
 
-  return code
-}
+      return code
+    }

@@ -1,6 +1,7 @@
 import { mapObjIndexed as mapObj, map } from 'ramda'
 import { spawnCreep, CREEP_TYPES, runCreep } from './creep'
-import { findCreepsByType, findInObjByValue } from './utils/utils'
+import { findInObjByValue } from './utils/utils'
+import { findCreepsByType } from './utils/find'
 
 
 export const loop = () => {
@@ -8,9 +9,9 @@ export const loop = () => {
 
   // fix memory creeps leak
 
-  mapObj(room => {
+  mapObj((room) => {
     const spawns = room.find(FIND_STRUCTURES, {
-      filter: structure => structure.structureType == STRUCTURE_SPAWN
+      filter: (structure) => structure.structureType === STRUCTURE_SPAWN,
     }) as StructureSpawn[]
 
 
@@ -18,7 +19,7 @@ export const loop = () => {
     const harvesters = findCreepsByType(room)(CREEP_TYPES.HARVESTER)
     const upgraders = findCreepsByType(room)(CREEP_TYPES.UPGRADER)
 
-    map(spawn => {
+    map((spawn) => {
       if (harvesters.length < 2)
         return spawnCreep(spawn)(CREEP_TYPES.HARVESTER)
 
@@ -34,17 +35,15 @@ export const loop = () => {
   }, rooms)
 
 
-  mapObj(creep => {
+  mapObj((creep) => {
     if (creep.ticksToLive && creep.ticksToLive < 2) {
       delete Memory.creeps[creep.name]
 
-      const id = findInObjByValue(Memory.rooms.busySources, creep.id) as unknown as string
-      delete Memory.rooms.busySources[id]
+      const id = findInObjByValue(Memory.rooms[creep.room.name].busySources, creep.id) as unknown as string
+      delete Memory.rooms[creep.room.name].busySources[id]
 
       creep.suicide()
     }
-
-    creep.memory.id = creep.id
 
     const type = creep.memory.type as CREEP_TYPES
     const runCode = runCreep[type](creep)
