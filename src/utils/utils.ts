@@ -10,7 +10,7 @@ export enum ACTION_DONE {
 }
 
 export type AnyFunction = (...a: any[]) => any
-export type creepAction = (creep: Creep) => ScreepsReturnCode | string
+export type creepAction = (creep: Creep) => [boolean, ScreepsReturnCode | string]
 
 
 export const eitherFunction = <F1 extends AnyFunction, F2 extends AnyFunction>(f1: F1, f2: F2) =>
@@ -77,11 +77,12 @@ export const withdrawFromSpawner = (creep: Creep) => {
 
 export const withdrawEnergy = eitherFunction(withdrawFromContainer, withdrawFromSpawner)
 
-export const ensureCreepHasEnergy = (creep: Creep) => {
+export const ensureCreepHasEnergy = (creep: Creep): [boolean, ScreepsReturnCode?] => {
   const code = withdrawEnergy(creep)
+  if (!code) return [code]
 
   // [if_has_energy, run_code]
-  return [code !== false, code] as [boolean, ScreepsReturnCode]
+  return code
 }
 
 

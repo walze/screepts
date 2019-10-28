@@ -45,9 +45,7 @@ export const loop = () => {
       creep.suicide()
     }
 
-    const runCode = runCreep(creep)
-
-    if (runCode) creep.say(runCode.toString())
+    runCreep(creep)
   }, creeps)
 }
 

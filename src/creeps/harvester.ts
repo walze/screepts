@@ -10,7 +10,8 @@ export const harvesterCreep: creepAction = (creep: Creep) => {
   const creepTransferEnergy = transferEnergy(creep)
 
   const source = creep.pos.findClosestByPath(FIND_SOURCES, {
-    filter: s => !s.room.memory.busySources[s.id] || s.room.memory.busySources[s.id] === creep.id,
+    filter: (struct) => !struct.room.memory.busySources[struct.id]
+      || struct.room.memory.busySources[struct.id] === creep.id,
   })
 
   if (source && creep.carryCapacity > creep.carry.energy) {
@@ -35,7 +36,7 @@ export const harvesterCreep: creepAction = (creep: Creep) => {
   );
 
   const strucuture = eitherFunction(powerStructure, containerStructure)()
-  if (!strucuture) return 'NO_STRUCT'
+  if (!strucuture) return [false, 'NO_STRUCT']
 
   return creepTransferEnergy(strucuture)
 }

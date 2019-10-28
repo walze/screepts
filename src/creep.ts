@@ -20,7 +20,7 @@ export const runCreep = (creep: Creep) => {
   const { actions, actionIndex } = creep.memory
   const [action, whenDone] = actions[actionIndex]
 
-  const actionCode = action(creep)
+  const [succ, actionCode] = action(creep)
 
   if (actionCode === 0) {
     if (!whenDone) return creep.memory.actionIndex = 0
@@ -28,6 +28,8 @@ export const runCreep = (creep: Creep) => {
     if (whenDone === ACTION_DONE.PREVIOUS) return creep.memory.actionIndex--
     if (whenDone === ACTION_DONE.NEXT) return creep.memory.actionIndex++
   }
+
+  if (!succ) creep.say(actionCode.toString())
 }
 
 
