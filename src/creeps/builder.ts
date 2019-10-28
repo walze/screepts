@@ -6,8 +6,8 @@ export const builderCreep: creepAction = (creep: Creep) => {
   if (!site) return harvesterCreep(creep)
 
 
-  const [hasEnergy, code] = ensureCreepHasEnergy(creep)
-  if (!hasEnergy) return code
+  const [hasEnergy] = ensureCreepHasEnergy(creep)
+  if (!hasEnergy) return harvesterCreep(creep)
 
   return doOrMove(creep)(creep.build(site))(site)('build')
 }

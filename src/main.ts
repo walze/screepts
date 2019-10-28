@@ -27,9 +27,9 @@ export const loop = () => {
       if (builders.length < 2)
         return spawnCreep(spawn)(CREEP_TYPES.BUILDER)
 
-      if (upgraders.length < 2) {
-        return spawnCreep(spawn)(CREEP_TYPES.UPGRADER)
-      }
+      // if (upgraders.length < 2) {
+      //   return spawnCreep(spawn)(CREEP_TYPES.UPGRADER)
+      // }
     }, spawns)
 
 

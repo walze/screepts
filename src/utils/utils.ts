@@ -44,15 +44,13 @@ export const withdrawFromContainer = (creep: Creep) => {
   const container = findClosestStructure(creep.pos)(STRUCTURE_CONTAINER)
   if (!container) return false
 
-  if (container.store.energy < 50) return harvesterCreep(creep)
+  if (container.store.energy <= 300) return false
 
-  if (creep.carry.energy < 1) {
-    return doOrMove
-      (creep)
-      (creep.withdraw(container, RESOURCE_ENERGY))
-      (container)
-      ('getting energy')
-  }
+  return doOrMove
+    (creep)
+    (creep.withdraw(container, RESOURCE_ENERGY))
+    (container)
+    ('getting energy')
 }
 
 
@@ -60,16 +58,13 @@ export const withdrawFromSpawner = (creep: Creep) => {
   const spawn = findClosestStructure(creep.pos)(STRUCTURE_SPAWN)
   if (!spawn) return false
 
-  if (spawn.energy < 50) return harvesterCreep(creep)
+  if (spawn.energy <= 300) return false
 
-  if (creep.carry.energy < 1) {
-
-    return doOrMove
-      (creep)
-      (creep.withdraw(spawn, RESOURCE_ENERGY))
-      (spawn)
-      ('getting energy')
-  }
+  return doOrMove
+    (creep)
+    (creep.withdraw(spawn, RESOURCE_ENERGY))
+    (spawn)
+    ('getting energy')
 }
 
 export const withdrawEnergy = eitherFunction(withdrawFromContainer, withdrawFromSpawner)
@@ -78,7 +73,7 @@ export const ensureCreepHasEnergy = (creep: Creep) => {
   const code = withdrawEnergy(creep)
 
   // [if_has_energy, run_code]
-  return [code === undefined, code] as [boolean, ScreepsReturnCode]
+  return [code !== false, code] as [boolean, ScreepsReturnCode]
 }
 
 
