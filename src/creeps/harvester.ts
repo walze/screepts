@@ -22,16 +22,16 @@ export const harvesterCreep: creepAction = (creep: Creep) => {
   if (memoryBusySource) delete creep.room.memory.busySources[memoryBusySource[0]]
 
   const powerStruct = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-    filter: structure => (structure.structureType == STRUCTURE_EXTENSION
-      || structure.structureType == STRUCTURE_SPAWN
-      || structure.structureType == STRUCTURE_TOWER)
-      && structure.energy < structure.energyCapacity
+    filter: (structure) => (structure.structureType === STRUCTURE_EXTENSION
+      || structure.structureType === STRUCTURE_SPAWN
+      || structure.structureType === STRUCTURE_TOWER)
+      && structure.energy < structure.energyCapacity,
   });
 
   if (!powerStruct) {
     const container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-      filter: structure => structure.structureType == STRUCTURE_CONTAINER
-        && structure.store.energy < structure.storeCapacity
+      filter: (structure) => structure.structureType === STRUCTURE_CONTAINER
+        && structure.store.energy < structure.storeCapacity,
     });
 
     if (!container) return creep.say('no struc')

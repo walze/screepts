@@ -1,8 +1,9 @@
 import { creepAction, doOrMove, ensureCreepHasEnergy } from "../utils"
+import { harvesterCreep } from "./harvester"
 
 export const upgraderCreep: creepAction = creep => {
-  const [hasEnergy, code] = ensureCreepHasEnergy(creep)
-  if (!hasEnergy) return code
+  const [hasEnergy] = ensureCreepHasEnergy(creep)
+  if (!hasEnergy) return harvesterCreep(creep)
 
   doOrMove
     (creep)

@@ -1,5 +1,4 @@
-import mapObjIndexed from "ramda/es/mapObjIndexed";
-import find from "ramda/es/find";
+import { mapObjIndexed, find, either } from "ramda";
 import { harvesterCreep } from "./creeps/harvester";
 
 export type creepAction = (creep: Creep) => ScreepsReturnCode | undefined
@@ -36,20 +35,62 @@ export const findInObjByValue = <T>(
 ) => find(([, v]) => v === value, ObjectEntries(obj))
 
 
+export const findClosestContainer = (pos: RoomPosition) => pos.findClosestByRange(
+  FIND_STRUCTURES,
+  { filter: (CS) => CS.structureType === STRUCTURE_CONTAINER },
+) as StructureContainer | null
+
+
+export const findClosestSpawn = (pos: RoomPosition) => pos.findClosestByRange(
+  FIND_STRUCTURES,
+  { filter: (struct) => struct.structureType === STRUCTURE_SPAWN },
+) as StructureSpawn | null
+
+
+export const findClosestStructure = <T extends StructureConstant>(pos: RoomPosition, structure: T) =>
+  pos.findClosestByRange(
+    FIND_STRUCTURES,
+    { filter: (struct) => struct.structureType === structure },
+  )
+
+const a: Structures<STRUCTURE_CONTAINER>
+
+
+export const withdrawFromContainer = (creep: Creep) => {
+  const creepDoOrMove = doOrMove(creep)
+
+  const a = findClosestStructure(creep.pos, STRUCTURE_SPAWN)
+
+
+  const container = findClosestContainer(creep.pos)
+  if (!container) return 'no container'
+
+  if (container.store.energy < 50) return harvesterCreep(creep)
+
+  if (creep.carry.energy < 1) {
+    return creepDoOrMove(creep.withdraw(container, RESOURCE_ENERGY))(container)('getting energy')
+  }
+}
+
+
+export const withdrawFromSpawner = (creep: Creep) => {
+  const creepDoOrMove = doOrMove(creep)
+
+  const spawn = findClosestSpawn(creep.pos)
+  if (!spawn) return 'no spawn'
+
+  if (spawn.energy < 50) return harvesterCreep(creep)
+
+  if (creep.carry.energy < 1) {
+    return creepDoOrMove(creep.withdraw(spawn, RESOURCE_ENERGY))(spawn)('getting energy')
+  }
+}
+
+
 export const ensureCreepHasEnergy = (creep: Creep) => {
   const run = () => {
-    const creepDoOrMove = doOrMove(creep)
 
-    const container = creep.pos.findClosestByRange(
-      FIND_STRUCTURES,
-      { filter: CS => CS.structureType === STRUCTURE_CONTAINER }
-    ) as StructureContainer
-
-    if (container.store.energy < 50) return harvesterCreep(creep)
-
-    if (creep.carry.energy < 1) {
-      return creepDoOrMove(creep.withdraw(container, RESOURCE_ENERGY))(container)('getting energy')
-    }
+    return withdrawFromContainer(creep)
   }
 
   const code = run()

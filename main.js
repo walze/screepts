@@ -105,16 +105,22 @@ exports.loop = function () {
         var harvesters = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.HARVESTER);
         var upgraders = utils_1.findCreepsByType(room)(creep_1.CREEP_TYPES.UPGRADER);
         ramda_1.map(function (spawn) {
-            if (builders.length < 2)
-                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER);
             if (harvesters.length < 2)
-                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER);
-            if (upgraders.length < 5) {
-                creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.UPGRADER);
+                return creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.HARVESTER);
+            if (builders.length < 2)
+                return creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.BUILDER);
+            if (upgraders.length < 2) {
+                return creep_1.spawnCreep(spawn)(creep_1.CREEP_TYPES.UPGRADER);
             }
         }, spawns);
     }, rooms);
     ramda_1.mapObjIndexed(function (creep) {
+        if (creep.ticksToLive && creep.ticksToLive < 2) {
+            delete Memory.creeps[creep.name];
+            var id = utils_1.findInObjByValue(Memory.rooms.busySources, creep.id);
+            delete Memory.rooms.busySources[id];
+            creep.suicide();
+        }
         creep.memory.id = creep.id;
         var type = creep.memory.type;
         var runCode = creep_1.runCreep[type](creep);
@@ -14627,9 +14633,10 @@ exports.runCreep = (_a = {},
     _a[CREEP_TYPES.BUILDER] = builder_1.builderCreep,
     _a[CREEP_TYPES.UPGRADER] = upgrader_1.upgraderCreep,
     _a);
-exports.spawnCreep = function (spawn) { return function (type) {
+exports.spawnCreep = function (spawn) { return function (type, body) {
+    if (body === void 0) { body = [WORK, CARRY, MOVE, MOVE]; }
     var name = type + "_" + Date.now();
-    var code = spawn.spawnCreep([WORK, CARRY, MOVE, MOVE], name, {
+    var code = spawn.spawnCreep(body, name, {
         memory: { type: type }
     });
     return code;
@@ -14687,11 +14694,8 @@ exports.harvesterCreep = function (creep) {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var find_1 = __importDefault(__webpack_require__(159));
+var ramda_1 = __webpack_require__(1);
 var harvester_1 = __webpack_require__(331);
 exports.doOrMove = function (creep) {
     return function (action) {
@@ -14711,19 +14715,25 @@ exports.doOrMove = function (creep) {
 exports.findCreepsByType = function (room) { return function (type) { return room
     .find(FIND_MY_CREEPS, { filter: function (creep) { return creep.memory.type === type; } }); }; };
 exports.ObjectEntries = function (obj) { return Object.entries(obj); };
-exports.findInObjByValue = function (obj, value) { return find_1.default(function (_a) {
+exports.findInObjByValue = function (obj, value) { return ramda_1.find(function (_a) {
     var v = _a[1];
     return v === value;
 }, exports.ObjectEntries(obj)); };
+exports.findClosestContainer = function (pos) { return pos.findClosestByRange(FIND_STRUCTURES, { filter: function (CS) { return CS.structureType === STRUCTURE_CONTAINER; } }); };
+exports.withdrawFromContainer = function (creep) {
+    var creepDoOrMove = exports.doOrMove(creep);
+    var container = exports.findClosestContainer(creep.pos);
+    if (!container)
+        return 'no container';
+    if (container.store.energy < 50)
+        return harvester_1.harvesterCreep(creep);
+    if (creep.carry.energy < 1) {
+        return creepDoOrMove(creep.withdraw(container, RESOURCE_ENERGY))(container)('getting energy');
+    }
+};
 exports.ensureCreepHasEnergy = function (creep) {
     var run = function () {
-        var creepDoOrMove = exports.doOrMove(creep);
-        var container = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: function (CS) { return CS.structureType === STRUCTURE_CONTAINER; } });
-        if (container.store.energy < 50)
-            return harvester_1.harvesterCreep(creep);
-        if (creep.carry.energy < 1) {
-            return creepDoOrMove(creep.withdraw(container, RESOURCE_ENERGY))(container)('getting energy');
-        }
+        return exports.withdrawFromContainer(creep);
     };
     var code = run();
     // [if_has_energy, run_code]
@@ -14759,10 +14769,11 @@ exports.builderCreep = function (creep) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = __webpack_require__(332);
+var harvester_1 = __webpack_require__(331);
 exports.upgraderCreep = function (creep) {
-    var _a = utils_1.ensureCreepHasEnergy(creep), hasEnergy = _a[0], code = _a[1];
+    var hasEnergy = utils_1.ensureCreepHasEnergy(creep)[0];
     if (!hasEnergy)
-        return code;
+        return harvester_1.harvesterCreep(creep);
     utils_1.doOrMove(creep)(creep.upgradeController(creep.room.controller))(creep.room.controller)('upgrading');
 };
 

@@ -19,14 +19,14 @@ export const loop = () => {
     const upgraders = findCreepsByType(room)(CREEP_TYPES.UPGRADER)
 
     map(spawn => {
-      if (builders.length < 2)
-        spawnCreep(spawn)(CREEP_TYPES.BUILDER)
-
       if (harvesters.length < 2)
-        spawnCreep(spawn)(CREEP_TYPES.HARVESTER)
+        return spawnCreep(spawn)(CREEP_TYPES.HARVESTER)
 
-      if (upgraders.length < 5) {
-        spawnCreep(spawn)(CREEP_TYPES.UPGRADER)
+      if (builders.length < 2)
+        return spawnCreep(spawn)(CREEP_TYPES.BUILDER)
+
+      if (upgraders.length < 2) {
+        return spawnCreep(spawn)(CREEP_TYPES.UPGRADER)
       }
     }, spawns)
 
@@ -35,6 +35,15 @@ export const loop = () => {
 
 
   mapObj(creep => {
+    if (creep.ticksToLive && creep.ticksToLive < 2) {
+      delete Memory.creeps[creep.name]
+
+      const id = findInObjByValue(Memory.rooms.busySources, creep.id) as unknown as string
+      delete Memory.rooms.busySources[id]
+
+      creep.suicide()
+    }
+
     creep.memory.id = creep.id
 
     const type = creep.memory.type as CREEP_TYPES
