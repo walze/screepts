@@ -2,7 +2,7 @@ import { Structures } from "../..";
 import { CREEP_TYPES } from "../creep";
 
 export const findClosestStructure = (pos: RoomPosition) =>
-  <T extends StructureConstant>(
+  <T extends keyof Structures>(
     structure: T,
     filter = (s: Structures[T]) => true,
   ) =>

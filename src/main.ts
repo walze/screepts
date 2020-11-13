@@ -39,7 +39,10 @@ export const loop = () => {
     if (creep.ticksToLive && creep.ticksToLive < 2) {
       delete Memory.creeps[creep.name]
 
-      const id = findInObjByValue(Memory.rooms[creep.room.name].busySources, creep.id) as unknown as string
+      const id = findInObjByValue(
+        Memory.rooms[creep.room.name].busySources, 
+        creep.id
+      ) as unknown as string
       delete Memory.rooms[creep.room.name].busySources[id]
 
       creep.suicide()

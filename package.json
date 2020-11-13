@@ -17,18 +17,18 @@
   },
   "homepage": "https://github.com/walze/screepts#readme",
   "dependencies": {
-    "@types/node": "^12.11.7",
-    "@types/ramda": "^0.26.33",
-    "@types/screeps": "^2.5.5",
-    "ramda": "^0.26.1",
-    "ts-loader": "^6.2.1",
-    "tslint": "^5.20.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "@types/node": "^14.14.7",
+    "@types/ramda": "^0.27.32",
+    "@types/screeps": "^3.2.1",
+    "ramda": "^0.27.1",
+    "ts-loader": "^8.0.11",
+    "tslint": "^5.20.1",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "typescript": "^3.6.4"
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "typescript": "^4.0.5"
   }
 }

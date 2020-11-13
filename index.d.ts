@@ -18,7 +18,6 @@ declare global {
   interface SpawnMemory { }
 }
 
-
 type Structures = {
   [STRUCTURE_CONTAINER]: StructureContainer
   [STRUCTURE_CONTROLLER]: StructureController
