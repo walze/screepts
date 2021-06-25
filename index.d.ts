@@ -1,18 +1,20 @@
-import { CREEP_TYPES } from "./src/creep"
-import { creepAction, ACTION_DONE } from "./src/utils/utils"
+
+export enum ROLES {
+  BUILDER = 'BUILDER',
+  HAVESTER = 'HAVESTER',
+  UPGRADER = 'UPGRADER',
+}
+
+type ROLE = keyof typeof ROLES
 
 declare global {
   interface CreepMemory {
-    state?: string
-    type: CREEP_TYPES,
-    actionIndex: number,
-    actions: Array<[CREEP_TYPES, ACTION_DONE?, ACTION_DONE?]>
+    role: ROLE
   }
 
   interface FlagMemory { }
   interface PowerCreepMemory { }
   interface RoomMemory {
-    busySources: { [key: string]: string }
   }
 
   interface SpawnMemory { }
