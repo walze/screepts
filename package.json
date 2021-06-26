@@ -4,9 +4,9 @@
   "description": "screeps script",
   "main": "main.js",
   "scripts": {
-    "start": "webpack --mode development --watch",
-    "build": "webpack --mode production",
-    "publish": "grunt screeps"
+    "start": "env-cmd webpack --mode development --watch",
+    "build": "env-cmd webpack --mode production",
+    "publish": "env-cmd grunt screeps"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
     "@types/node": "^15.12.4",
     "@types/ramda": "^0.27.41",
     "@types/screeps": "^3.2.2",
+    "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "grunt": "^1.4.1",
     "grunt-screeps": "^1.5.0",
     "ramda": "^0.27.1",

@@ -1,11 +1,14 @@
+console.log(process.env.EMAIL);
+console.log(process.env.TOKEN);
+
 module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-screeps');
 
 	grunt.initConfig({
 		screeps: {
 			options: {
-				email: 'catufuzgu@gmail.com',
-				token: '5f6e4ab0-f3cc-4224-81e2-4dc183a81822',
+				email: process.env.EMAIL,
+				token: process.env.TOKEN,
 				branch: 'screepts',
 				// Server: 'season'
 			},
