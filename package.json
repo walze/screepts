@@ -4,7 +4,9 @@
   "description": "screeps script",
   "main": "main.js",
   "scripts": {
-    "start": "webpack --env dev --mode none --watch"
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production",
+    "publish": "grunt screeps"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,8 @@
     "@types/node": "^15.12.4",
     "@types/ramda": "^0.27.41",
     "@types/screeps": "^3.2.2",
+    "grunt": "^1.4.1",
+    "grunt-screeps": "^1.5.0",
     "ramda": "^0.27.1",
     "rxjs": "^7.1.0",
     "ts-loader": "^9.2.3",
@@ -30,6 +34,10 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0",
+    "eslint-config-xo": "^0.37.0",
     "typescript": "^4.3.4"
   }
 }

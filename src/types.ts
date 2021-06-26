@@ -5,8 +5,9 @@ export enum ROLES {
   UPGRADER = 'UPGRADER',
 }
 
-type ROLE = keyof typeof ROLES
+export type ROLE = keyof typeof ROLES
 
+export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
   interface CreepMemory {
     role: ROLE
@@ -14,13 +15,12 @@ declare global {
 
   interface FlagMemory { }
   interface PowerCreepMemory { }
-  interface RoomMemory {
-  }
+  interface RoomMemory { }
 
   interface SpawnMemory { }
 }
 
-type Structures = {
+export type Structures = {
   [STRUCTURE_CONTAINER]: StructureContainer
   [STRUCTURE_CONTROLLER]: StructureController
   [STRUCTURE_EXTENSION]: StructureExtension
