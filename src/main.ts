@@ -9,13 +9,22 @@ export const loop = () => {
 
 	mapObjIndexed(r => {
 		const rCreeps = r.find(FIND_MY_CREEPS);
-		const {HAVESTER = []} = getCreeps(rCreeps);
+		const {HAVESTER = [], BUILDER = []} = getCreeps(rCreeps);
 
 		map(run(r), HAVESTER);
+		map(run(r), BUILDER);
 
-		return HAVESTER?.length < 1 && r
-			.find(FIND_MY_SPAWNS)
-			.map(makeCreep(ROLES.HAVESTER));
+		console.log(BUILDER);
+
+		if (HAVESTER?.length < 0) {
+			r.find(FIND_MY_SPAWNS)
+				.map(makeCreep(ROLES.HAVESTER));
+		}
+
+		if (BUILDER?.length < 2) {
+			r.find(FIND_MY_SPAWNS)
+				.map(makeCreep(ROLES.BUILDER));
+		}
 	}, rooms);
 };
 
