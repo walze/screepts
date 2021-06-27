@@ -11,6 +11,8 @@ export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
   interface CreepMemory {
     role: ROLE
+    jobCode: ScreepsReturnCode
+    moving: boolean
   }
 
   interface FlagMemory { }
