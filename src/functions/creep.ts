@@ -1,8 +1,8 @@
 
-import {filter, pipe, reduce, T} from 'ramda';
+import {filter, pipe, reduce} from 'ramda';
 import {iff} from '../helpers';
 import {ROLE} from '../types';
-import {CreepJob, doJob} from './doJob';
+import {CreepTask, doTask} from './doTask';
 
 export const makeCreep
 	= (r: ROLE) =>
@@ -29,10 +29,10 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
 	{} as filteredCreeps,
 );
 
-const harvestSource = doJob((s: Source, c) => c.harvest(s))('HAVESTER');
-const transferSource = doJob((s: Parameters<Creep['transfer']>[0], c) => c.transfer(s, RESOURCE_ENERGY))('HAVESTER');
+const harvestSource = doTask((s: Source, c) => c.harvest(s))('HAVESTER');
+const transferSource = doTask((s: Parameters<Creep['transfer']>[0], c) => c.transfer(s, RESOURCE_ENERGY))('HAVESTER');
 
-export const run = (r: Room): CreepJob => pipe(
+export const run = (r: Room): CreepTask => pipe(
 	iff(
 		(c: Creep) => c.store.getFreeCapacity() < 1,
 		harvestSource(r.find(FIND_SOURCES)[0]!),

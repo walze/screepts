@@ -2,11 +2,11 @@
 import {ROLE} from '../types';
 
 export type Position = RoomPosition | { pos: RoomPosition }
-export type CreepJob = (c: Creep) => Creep
+export type CreepTask = (c: Creep) => Creep
 
-export const doJob = <T extends Position>(doFn: (p: T, c: Creep) => ScreepsReturnCode) =>
+export const doTask = <T extends Position>(doFn: (p: T, c: Creep) => ScreepsReturnCode) =>
 	(role: ROLE) =>
-		(position: T): CreepJob =>
+		(position: T): CreepTask =>
 			(creep: Creep): Creep => {
 				const doCode = doFn(position, creep);
 				const done = doCode === OK;
