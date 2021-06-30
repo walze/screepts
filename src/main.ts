@@ -14,14 +14,12 @@ export const loop = () => {
 		map(run(r), HAVESTER);
 		map(run(r), BUILDER);
 
-		console.log(BUILDER);
-
-		if (HAVESTER?.length < 0) {
+		if (HAVESTER?.length < 1) {
 			r.find(FIND_MY_SPAWNS)
 				.map(makeCreep(ROLES.HAVESTER));
 		}
 
-		if (BUILDER?.length < 2) {
+		if (BUILDER?.length < 3) {
 			r.find(FIND_MY_SPAWNS)
 				.map(makeCreep(ROLES.BUILDER));
 		}

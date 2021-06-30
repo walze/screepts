@@ -1,7 +1,7 @@
 
 import {filter, pipe, pipeWith, reduce} from 'ramda';
 import {iff} from '../helpers';
-import {ROLE} from '../types';
+import {ROLE, ROLES} from '../types';
 import {CreepTask, doTask} from './doTask';
 
 export const makeCreep
@@ -29,58 +29,58 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
 	{} as filteredCreeps,
 );
 
-const harvestTask = doTask(
-	(s: Parameters<Creep['harvest']>[0], c) => c.harvest(s),
-	'harvest',
-);
+const harvestTask = doTask('harvest',	(c, ...s) => c.harvest(...s));
+const transferTask = doTask('transfer',	(c, ...s) => c.transfer(...s));
+const buildTask = doTask('build',	(c, ...s) => c.build(...s));
+const withdrawTask = doTask('withdraw',	(c, ...s) => c.withdraw(...s));
 
-const transferTask = doTask(
-	(s: Parameters<Creep['transfer']>[0], c) => c.transfer(s, RESOURCE_ENERGY),
-	'transfer',
-);
-
-const buildTask = doTask(
-	(s: Parameters<Creep['build']>[0], c) => c.build(s),
-	'build',
-);
-
-const withdrawTask = doTask(
-	(s: Parameters<Creep['withdraw']>[0], c) => c.withdraw(s, RESOURCE_ENERGY),
-	'withdraw',
-);
-
-const runHavester = (r: Room): CreepTask => pipe(
-	iff(
-		(c: Creep) => c.store.getFreeCapacity() > 0,
-		harvestTask(r.find(FIND_SOURCES)[0]!),
-		transferTask(r.find(FIND_MY_SPAWNS)[0]!),
-	),
-);
-
-const niceP = pipeWith((f: CreepTask, res: Creep) => {
-	console.log(f, res);
-
-	return res.memory.jobCode === OK ? res : f(res);
-});
-const runBuilder = (r: Room): CreepTask => niceP([
-	withdrawTask(r.find(FIND_MY_SPAWNS)[0]!),
-	buildTask(r.find(FIND_CONSTRUCTION_SITES)[0]!),
-	runHavester(r),
+const runHavester = (so: Parameters<Creep['harvest']>[0], store: Parameters<Creep['transfer']>[0]): CreepTask => taskPipe([
+	harvestTask([so], c => c.store.getFreeCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
+	transferTask([store, RESOURCE_ENERGY]),
 ]);
 
-const runUpgrader = (r: Room): CreepTask => pipe(
-	iff(
-		(c: Creep) => c.store.getFreeCapacity() > 0,
-		harvestTask(r.find(FIND_SOURCES)[0]!),
-		transferTask(r.find(FIND_MY_SPAWNS)[0]!),
-	),
-);
+const taskPipe = pipeWith((f: CreepTask, c: Creep) => c.memory.jobCode === OK ? c : f(c));
 
-const mappings: {[key in ROLE]: (r: Room) => CreepTask} = {
+const runBuilder = (sp: StructureSpawn, cs: Parameters<Creep['build']>[0]) => taskPipe([
+	withdrawTask(
+		[sp, RESOURCE_ENERGY],
+		([c, s]) => cs && c.store.getUsedCapacity() < 1 && s?.store?.energy >= 50 ? OK : ERR_FULL,
+	),
+	buildTask([cs], ([c]) => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
+]);
+
+const runUpgrader = (store: Parameters<Creep['transfer']>[0], so: Parameters<Creep['harvest']>[0]): CreepTask => taskPipe([
+	harvestTask([so], c => c.store.getFreeCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
+	transferTask([store, RESOURCE_ENERGY]),
+]);
+
+const runners = {
 	HAVESTER: runHavester,
 	BUILDER: runBuilder,
 	UPGRADER: runUpgrader,
 };
 
 export const run: (r: Room) => CreepTask
-  = r => c => mappings[c.memory.role](r)(c);
+	= r => c => {
+		const {role} = c.memory;
+
+		const sources = (r.find(FIND_SOURCES));
+		const spawns = (r.find(FIND_MY_SPAWNS));
+		const constructions = (r.find(FIND_CONSTRUCTION_SITES));
+
+		console.log(constructions[0]!);
+
+		switch (role) {
+			case ROLES.HAVESTER:
+				return runners[role](sources[0]!, spawns[0]!)(c);
+
+			case ROLES.BUILDER:
+				return taskPipe([
+					runners[role](spawns[0]!, constructions[0]!),
+					runners[ROLES.HAVESTER](sources[0]!, spawns[0]!),
+				])(c);
+
+			default:
+				throw new Error('unhandled role');
+		}
+	};
