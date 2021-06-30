@@ -1,6 +1,5 @@
 
-import {filter, pipe, pipeWith, reduce} from 'ramda';
-import {iff} from '../helpers';
+import {filter, pipeWith, reduce} from 'ramda';
 import {ROLE, ROLES} from '../types';
 import {CreepTask, doTask} from './doTask';
 
@@ -9,7 +8,7 @@ export const makeCreep
 		(s: StructureSpawn) =>
 			s.spawnCreep(
 				[WORK, CARRY, MOVE],
-				`${r}_${Date.now()}`,
+				`${r}_${Date.now()}__${Math.random()}`,
 				{memory: {
 					role: r,
 					jobCode: 0,
@@ -32,26 +31,25 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
 const harvestTask = doTask('harvest',	(c, ...s) => c.harvest(...s));
 const transferTask = doTask('transfer',	(c, ...s) => c.transfer(...s));
 const buildTask = doTask('build',	(c, ...s) => c.build(...s));
-const withdrawTask = doTask('withdraw',	(c, ...s) => c.withdraw(...s));
+const withdrawTask = doTask('withdraw',	(c, target, ...s) => c.withdraw(target, ...s));
 
 const runHavester = (so: Parameters<Creep['harvest']>[0], store: Parameters<Creep['transfer']>[0]): CreepTask => taskPipe([
-	harvestTask([so], c => c.store.getFreeCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
-	transferTask([store, RESOURCE_ENERGY]),
+	harvestTask(so)(c => c.store.getFreeCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
+	transferTask(store, RESOURCE_ENERGY)(),
 ]);
 
 const taskPipe = pipeWith((f: CreepTask, c: Creep) => c.memory.jobCode === OK ? c : f(c));
 
-const runBuilder = (sp: StructureSpawn, cs: Parameters<Creep['build']>[0]) => taskPipe([
+const runBuilder = (storable: AnyStoreStructure, cs: Parameters<Creep['build']>[0]) => taskPipe([
 	withdrawTask(
-		[sp, RESOURCE_ENERGY],
-		([c, s]) => cs && c.store.getUsedCapacity() < 1 && s?.store?.energy >= 50 ? OK : ERR_FULL,
-	),
-	buildTask([cs], ([c]) => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
+		storable, RESOURCE_ENERGY,
+	)(c => cs && c.store.getUsedCapacity() < 1 && storable.store.energy >= 50 ? OK : ERR_FULL),
+	buildTask(cs)(c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
 ]);
 
 const runUpgrader = (store: Parameters<Creep['transfer']>[0], so: Parameters<Creep['harvest']>[0]): CreepTask => taskPipe([
-	harvestTask([so], c => c.store.getFreeCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
-	transferTask([store, RESOURCE_ENERGY]),
+	harvestTask(so)(c => c.store.getFreeCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY),
+	transferTask(store, RESOURCE_ENERGY)(),
 ]);
 
 const runners = {
