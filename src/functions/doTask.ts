@@ -1,51 +1,40 @@
-import {applyTo, lt} from 'ramda';
+import {applyTo, gt, pair, pipeWith, PipeWithFns} from 'ramda';
 
 export type Position = RoomPosition | { pos: RoomPosition }
-export type CreepTask = (c: Creep) => Creep
+export type CreepTask = (c: CreepTaskResult) => CreepTaskResult
 
 type KeysOfType<C, T> = {
   [K in keyof C]: C[K] extends T ? K : never
 }[keyof C]
 
 type K = KeysOfType<Creep, (...args: any) => any>
+export type CreepTaskResult = [Creep, number[]]
 
-export const doTask = <P extends K>(
-	description: P,
-	doFn: (c: Creep, ...p: Parameters<Creep[P]>) => ReturnType<Creep[P]>,
-) =>
-		(...params: Parameters<Creep[P]>) =>
-			(...conditions: Array<(c: Creep) => ScreepsReturnCode>): CreepTask =>
-				(creep: Creep): Creep => {
-					const c = conditions
-						.map(applyTo(creep))
-						.find(lt(0)) || OK;
+export const taskBind = (...fns: CreepTask[]) => pipeWith(
+  (f: CreepTask, [c, [n, ...r]]: CreepTaskResult) => n === OK
+    ? pair(c, [n, ...r])
+    : f(pair(c, [n!, ...r])),
+)(fns as PipeWithFns<CreepTaskResult, CreepTaskResult>);
 
-					if (c !== OK) {
-						creep.memory.jobCode = c;
-						creep.say(`${description} ${c}`);
+export const doTask
+  = <P extends K>(name: P, doTask: (c: Creep) => ScreepsReturnCode) =>
+    (...conditions: Array<(c: Creep) => ScreepsReturnCode>): CreepTask =>
+      ([creep, n]) => {
+        console.log(name, doTask, conditions, creep, n);
 
-						return creep;
-					}
+        const testConditions = () => conditions
+          .map(applyTo(creep))
+          .find(gt(0));
 
-					const doCode = doFn(creep, ...params);
-					const done = doCode === OK;
+        const code = testConditions() || doTask(creep);
 
-					const p1 = params[0] as Extract<(typeof params[0]), { pos: number, x: number }>;
-					const notDoneCode = p1?.pos || p1?.x
-						? creep.moveTo(
-              params[0] as Extract<(typeof params[0]), { x: number }>,
-              (params[1] as MoveToOpts) || {},
-						)
-						: doCode;
+        console.log('creep task ->', name, code);
+        creep.say(`${name} -> ${code}`);
 
-					const returnCode = done ? doCode : notDoneCode;
+        // Side-effects
+        creep.memory.task = name;
+        creep.memory.taskCode = code;
 
-					creep.say(`${description} ${doCode}`);
-
-					// Side-effects
-					creep.memory.jobCode = returnCode;
-					creep.memory.moving = !done;
-
-					return creep;
-				};
+        return [creep, [code, ...n]];
+      };
 
