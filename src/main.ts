@@ -1,12 +1,12 @@
 import {applyTo, map, mapObjIndexed, pipe} from 'ramda';
-import {getCreeps, makeCreep, run} from './functions/creep';
+import {getCreeps, makeCreep, runCreep} from './functions/creep';
 import {first, of} from './functions/BiFunctor';
 import {ROLES} from './types';
 
 const runner = (r: Room) => pipe(
   map((c: Creep) => of(c)),
   map(applyTo([])),
-  map(first(run(r))),
+  map(first(runCreep(r))),
 );
 
 export const loop = () => {
