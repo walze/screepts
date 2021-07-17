@@ -1,6 +1,13 @@
-import {map, mapObjIndexed} from 'ramda';
+import {applyTo, map, mapObjIndexed, pipe} from 'ramda';
 import {getCreeps, makeCreep, run} from './functions/creep';
+import {first, of} from './functions/BiFunctor';
 import {ROLES} from './types';
+
+const runner = (r: Room) => pipe(
+  map((c: Creep) => of(c)),
+  map(applyTo([])),
+  map(first(run(r))),
+);
 
 export const loop = () => {
   const {creeps, rooms} = Game;
@@ -12,9 +19,8 @@ export const loop = () => {
     const cps = getCreeps(rCreeps);
     const {HAVESTER = [], BUILDER = []} = cps;
 
-    const m = map(run(r), HAVESTER);
-
-    console.log('m', m, cps);
+    runner(r)(HAVESTER);
+    runner(r)(BUILDER);
 
     if (HAVESTER?.length < 0) {
       r.find(FIND_MY_SPAWNS)
@@ -26,6 +32,8 @@ export const loop = () => {
         .map(makeCreep(ROLES.BUILDER));
     }
   }, rooms);
+
+  console.log('------------------------');
 };
 
 module.exports = {loop};

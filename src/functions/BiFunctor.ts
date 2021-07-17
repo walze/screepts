@@ -1,5 +1,8 @@
 import {pair} from 'ramda';
 
+export const of: <F>(f: F) => <S>(s: S) => [F, S]
+  = f => s => [f, s];
+
 export const first: <A, B, C>(f: (a: A) => B) => (pac: [A, C]) => [B, C]
   = f => ([a, b]) => pair(f(a), b);
 

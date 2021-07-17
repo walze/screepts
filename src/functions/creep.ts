@@ -1,6 +1,6 @@
 
-import {filter, pair, reduce} from 'ramda';
-import {ifOK} from '../helpers';
+import {filter, reduce} from 'ramda';
+import {movable} from '../helpers';
 import {ROLE, ROLES} from '../types';
 import {CreepTaskResult, doTask, taskBind} from './doTask';
 
@@ -29,10 +29,6 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
   {} as filteredCreeps,
 );
 
-const movable
-  = (f: (c: Creep) => ScreepsReturnCode, ...p: Parameters<Creep['moveTo']>) =>
-    (c: Creep) => ifOK(f(c)) || c.moveTo(...p);
-
 const runHavester = (so: Parameters<Creep['harvest']>[0], storable: AnyCreep | AnyStoreStructure) => taskBind(
   doTask(
     'harvest',
@@ -47,34 +43,35 @@ const runHavester = (so: Parameters<Creep['harvest']>[0], storable: AnyCreep | A
 );
 
 const runBuilder = (storable: AnyStoreStructure, cst: Parameters<Creep['build']>[0]) => taskBind(
-  doTask('build', c => c.withdraw(storable, RESOURCE_ENERGY))(
+  doTask(
+    'withdraw',
+    movable(c => c.withdraw(storable, RESOURCE_ENERGY), storable))(
     c => cst && c.store.getUsedCapacity() < 1 && storable.store.energy >= 200 ? OK : ERR_FULL,
   ),
-  doTask('withdraw', c => c.build(cst))(
+
+  doTask(
+    'build',
+    movable(c => c.build(cst), cst))(
     c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY,
     _ => cst ? OK : ERR_INVALID_TARGET,
   ),
 );
 
-export const run: (r: Room) => (c: Creep) => CreepTaskResult
+export const run: (r: Room) => (c: Creep) => (t: CreepTaskResult) => CreepTaskResult
   = r => c => {
-    const task = pair(c, []);
-
     const sources = (r.find(FIND_SOURCES));
     const spawns = (r.find(FIND_MY_SPAWNS));
     const constructions = (r.find(FIND_CONSTRUCTION_SITES));
 
-    console.log(runHavester);
-
     switch (c.memory.role) {
-    case ROLES.BUILDER:
-      return runHavester(sources[0]!, spawns[0]!)(task);
-
     case ROLES.HAVESTER:
+      return runHavester(sources[0]!, spawns[0]!);
+
+    case ROLES.BUILDER:
       return taskBind(
         runBuilder(spawns[0]!, constructions[0]!),
         runHavester(sources[0]!, spawns[0]!),
-      )(task);
+      );
 
     default:
       throw new Error('unhandled role');

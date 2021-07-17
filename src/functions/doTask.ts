@@ -20,20 +20,20 @@ export const doTask
   = <P extends K>(name: P, doTask: (c: Creep) => ScreepsReturnCode) =>
     (...conditions: Array<(c: Creep) => ScreepsReturnCode>): CreepTask =>
       ([creep, n]) => {
-        console.log(name, doTask, conditions, creep, n);
-
         const testConditions = () => conditions
           .map(applyTo(creep))
           .find(gt(0));
 
         const code = testConditions() || doTask(creep);
 
-        console.log('creep task ->', name, code);
-        creep.say(`${name} -> ${code}`);
+        if (code === OK) {
+          creep.say(`${name}`);
+        }
 
         // Side-effects
         creep.memory.task = name;
         creep.memory.taskCode = code;
+        console.log(`creep task -> ${name}|${code}`);
 
         return [creep, [code, ...n]];
       };
