@@ -1,4 +1,5 @@
 .map
+.env
 
 # Logs
 logs

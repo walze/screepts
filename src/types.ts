@@ -1,24 +1,42 @@
-import { CREEP_TYPES } from "./src/creep"
-import { creepAction, ACTION_DONE } from "./src/utils/utils"
+import { ReturnCode } from './consts';
 
+export enum ROLES {
+  BUILDER = 'BUILDER',
+  HAVESTER = 'HAVESTER',
+  UPGRADER = 'UPGRADER',
+}
+
+export type ROLE = keyof typeof ROLES
+
+export type CreepTaskResult = {creep: Creep, code: ReturnCode, name: Tasks}
+export type CreepTask = (c: Creep) => CreepTaskResult
+
+export type Tasks = KeysOfType<Creep, (...args: any) => any> | ''
+
+export type KeysOfType<C, T> = {
+  [K in keyof C]: C[K] extends T ? K : never
+}[keyof C]
+
+export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
+
   interface CreepMemory {
-    state?: string
-    type: CREEP_TYPES,
-    actionIndex: number,
-    actions: Array<[CREEP_TYPES, ACTION_DONE?, ACTION_DONE?]>
+    role: ROLE
+    task: {
+      name: Tasks
+      id: number
+      code: number
+    }
   }
 
   interface FlagMemory { }
   interface PowerCreepMemory { }
-  interface RoomMemory {
-    busySources: { [key: string]: string }
-  }
+  interface RoomMemory { }
 
   interface SpawnMemory { }
 }
 
-type Structures = {
+export type Structures = {
   [STRUCTURE_CONTAINER]: StructureContainer
   [STRUCTURE_CONTROLLER]: StructureController
   [STRUCTURE_EXTENSION]: StructureExtension

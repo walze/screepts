@@ -1,12 +1,12 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   target: 'node',
   entry: {
-    main: path.resolve(__dirname, 'src/main.ts')
+    main: path.resolve(__dirname, 'src/main.ts'),
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
   output: {
     path: path.resolve(__dirname),
@@ -18,13 +18,8 @@ module.exports = {
       {
         test: /\.ts?$/,
         use: 'ts-loader',
-        // exclude: /node_modules/
-      }
-    ]
+        // Exclude: /node_modules/
+      },
+    ],
   },
-  // optimization: {
-    // runtimeChunk: true,
-  // },
-  plugins: [
-  ]
 };
