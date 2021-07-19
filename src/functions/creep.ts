@@ -31,7 +31,7 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
   {} as filteredCreeps,
 );
 
-const a: (...l: [name: Tasks, f: CreepTask][]) => (c: Creep) => ScreepsReturnCode
+const runTasks: (...l: [name: Tasks, f: CreepTask][]) => (c: Creep) => ScreepsReturnCode
   = (...ts) => c => {
     const {memory: {task}} = c;
     const [, t0] = ts[task.index]!;
@@ -47,7 +47,7 @@ const a: (...l: [name: Tasks, f: CreepTask][]) => (c: Creep) => ScreepsReturnCod
     const index = (task.index + 1) % ts.length;
     c.memory.task.index = index;
 
-    return a(...ts)(c);
+    return runTasks(...ts)(c);
   };
 
 export const runCreep: (r: Room) => (c: Creep) => ScreepsReturnCode
@@ -68,17 +68,16 @@ export const runCreep: (r: Room) => (c: Creep) => ScreepsReturnCode
 
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
-      return a(
+      return runTasks(
         ['harvest', harvest(sources[0]!)],
         ['transfer', transfer(spawns[0]!)],
       )(creep);
 
     case ROLES.BUILDER:
-      return a(
+      return runTasks(
         ['withdraw', withdraw(spawns[0]!, constructions[0]!)],
         ['build', build(constructions[0]!)],
         ['harvest', harvest(sources[0]!)],
-        ['transfer', transfer(spawns[0]!)],
       )(creep);
 
     default:
