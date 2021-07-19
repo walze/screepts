@@ -12,8 +12,8 @@ export const loop = () => {
     const cps = getCreeps(rCreeps);
     const { HAVESTER = [], BUILDER = [] } = cps;
 
-    map(runCreep(r))(HAVESTER);
-    map(runCreep(r))(BUILDER);
+    HAVESTER.map(runCreep(r));
+    BUILDER.map(runCreep(r));
 
     if (HAVESTER?.length < 0)
       r.find(FIND_MY_SPAWNS)

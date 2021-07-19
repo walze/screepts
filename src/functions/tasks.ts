@@ -1,7 +1,37 @@
 
+import { ERR_NO_TASK, ReturnCode } from '../consts';
 import { movable } from '../helpers';
 import { CreepTask, Tasks } from '../types';
 import { makeTask } from './makeTask';
+
+export const _runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
+  = ts => c => {
+    const { memory: { task: { id } } } = c;
+
+    const ct = ts[id];
+    if (!ct) return ERR_NO_TASK;
+
+    const { code } = ct(c);
+
+    if (code === OK) return code;
+
+    return runTasks(ts)(c);
+  };
+
+export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
+  = ts => c => {
+    const [ct] = ts;
+    if (!ct) return ERR_NO_TASK;
+
+    const { memory: { task: { id } } } = c;
+    const { code } = ct(c);
+
+    if (code === OK) return code;
+
+    return runTasks(
+      ts.filter((_, _id) => _id !== id),
+    )(c);
+  };
 
 export const harvest = (so: Parameters<Creep['harvest']>[0]) => makeTask(
   'harvest',
