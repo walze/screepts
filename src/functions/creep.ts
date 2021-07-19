@@ -1,6 +1,7 @@
 
 import {filter, reduce} from 'ramda';
-import {CreepTask, ROLE, ROLES, Tasks} from '../types';
+import {ERR_NO_TASK, ReturnCode} from '../consts';
+import {CreepTask, ROLE, ROLES} from '../types';
 import {build, harvest, transfer, withdraw} from './tasks';
 
 export const makeCreep
@@ -14,7 +15,7 @@ export const makeCreep
           task: {
             code: OK,
             name: '',
-            index: 0,
+            id: 0,
           },
         }},
       );
@@ -31,26 +32,25 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
   {} as filteredCreeps,
 );
 
-const runTasks: (...l: [name: Tasks, f: CreepTask][]) => (c: Creep) => ScreepsReturnCode
+const runTasks: (...ts: CreepTask[]) => (c: Creep) => ReturnCode
   = (...ts) => c => {
     const {memory: {task}} = c;
-    const [, t0] = ts[task.index]!;
 
-    const {code} = t0(c);
+    const ct = ts[task.id];
+    if (!ct || ts.length < 1) return ERR_NO_TASK;
 
-    if (code === OK) {
-      c.memory.task.index = 0;
+    c.memory.task.id = 0;
 
-      return code;
-    }
+    const {code} = ct(c);
 
-    const index = (task.index + 1) % ts.length;
-    c.memory.task.index = index;
+    if (code === OK) return code;
 
-    return runTasks(...ts)(c);
+    const newTasks = ts.filter((_, id) => id !== task.id);
+
+    return runTasks(...newTasks)(c);
   };
 
-export const runCreep: (r: Room) => (c: Creep) => ScreepsReturnCode
+export const runCreep: (r: Room) => (c: Creep) => ReturnCode
   = r => creep => {
     const sources = r.find(FIND_SOURCES);
     const spawns = r.find(FIND_MY_SPAWNS);
@@ -69,15 +69,15 @@ export const runCreep: (r: Room) => (c: Creep) => ScreepsReturnCode
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
       return runTasks(
-        ['harvest', harvest(sources[0]!)],
-        ['transfer', transfer(spawns[0]!)],
+        harvest(sources[0]!),
+        transfer(spawns[0]!),
       )(creep);
 
     case ROLES.BUILDER:
       return runTasks(
-        ['withdraw', withdraw(spawns[0]!, constructions[0]!)],
-        ['build', build(constructions[0]!)],
-        ['harvest', harvest(sources[0]!)],
+        withdraw(spawns[0]!, constructions[0]!),
+        build(constructions[0]!),
+        harvest(sources[0]!),
       )(creep);
 
     default:

@@ -18,7 +18,8 @@
   "rules": {
     "no-undef": "off",
     "no-unused-vars": "off",
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "curly": ["error", "multi"]
     // "@typescript-eslintno-undef": "error",
     // "@typescript-eslintno-unused-vars": "error"
   }

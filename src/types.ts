@@ -1,3 +1,4 @@
+import {ReturnCode} from './consts';
 
 export enum ROLES {
   BUILDER = 'BUILDER',
@@ -7,7 +8,7 @@ export enum ROLES {
 
 export type ROLE = keyof typeof ROLES
 
-export type CreepTaskResult = {creep: Creep, code: ScreepsReturnCode, name: Tasks}
+export type CreepTaskResult = {creep: Creep, code: ReturnCode, name: Tasks}
 export type CreepTask = (c: Creep) => CreepTaskResult
 
 export type Tasks = KeysOfType<Creep, (...args: any) => any> | ''
@@ -18,11 +19,12 @@ export type KeysOfType<C, T> = {
 
 export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
+
   interface CreepMemory {
     role: ROLE
     task: {
       name: Tasks
-      index: number
+      id: number
       code: number
     }
   }

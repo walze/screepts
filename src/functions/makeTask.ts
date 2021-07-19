@@ -1,4 +1,5 @@
 import {applyTo, gt, pipeWith, PipeWithFns} from 'ramda';
+import {ReturnCode} from '../consts';
 import {CreepTask, CreepTaskResult, Tasks} from '../types';
 
 export const taskBind = (...fns: CreepTask[]) => pipeWith(
@@ -8,8 +9,8 @@ export const taskBind = (...fns: CreepTask[]) => pipeWith(
 )(fns as PipeWithFns<CreepTaskResult, CreepTaskResult>);
 
 export const makeTask
-  = <T extends Tasks>(name: T, doTask: (c: Creep) => ScreepsReturnCode) =>
-    (...conditions: Array<(c: Creep) => ScreepsReturnCode>) =>
+  = <T extends Tasks>(name: T, doTask: (c: Creep) => ReturnCode) =>
+    (...conditions: Array<(c: Creep) => ReturnCode>) =>
       (creep: Creep): CreepTaskResult => {
         const testConditions = () => conditions
           .map(applyTo(creep))
