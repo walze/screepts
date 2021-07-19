@@ -9,5 +9,8 @@ export const first: <A, B, C>(f: (a: A) => B) => (pac: [A, C]) => [B, C]
 export const second: <A, B, C>(f: (a: B) => C) => (pac: [A, B]) => [A, C]
   = f => ([a, b]) => pair(a, f(b));
 
-export const bimap: <A, B, C, D>(fab: (a: A) => B) => (fcd: (a: C) => D) => (pac: [A, C]) => [B, D]
+export const bimap: <A, B>(fab: (a: A) => B) => <C, D>(fcd: (a: C) => D) => (pac: [A, C]) => [B, D]
   = fab => fcd => ([a, b]) => pair(fab(a), fcd(b));
+
+export const bimapf: <A, C>(pac: [A, C]) => <B>(fab: (a: A) => B) => <D>(fcd: (a: C) => D) => [B, D]
+  = ([a, b]) => fab => fcd => pair(fab(a), fcd(b));

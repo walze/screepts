@@ -7,12 +7,24 @@ export enum ROLES {
 
 export type ROLE = keyof typeof ROLES
 
+export type CreepTaskResult = {creep: Creep, code: ScreepsReturnCode, name: Tasks}
+export type CreepTask = (c: Creep) => CreepTaskResult
+
+export type Tasks = KeysOfType<Creep, (...args: any) => any> | ''
+
+export type KeysOfType<C, T> = {
+  [K in keyof C]: C[K] extends T ? K : never
+}[keyof C]
+
 export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
   interface CreepMemory {
     role: ROLE
-    task: string
-    taskCode: number
+    task: {
+      name: Tasks
+      index: number
+      code: number
+    }
   }
 
   interface FlagMemory { }
