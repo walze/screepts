@@ -1,8 +1,8 @@
 
 import { filter, reduce } from 'ramda';
-import { ERR_NO_TASK, ReturnCode } from '../consts';
-import { CreepTask, ROLE, ROLES } from '../types';
-import { build, harvest, transfer, withdraw } from './tasks';
+import { ReturnCode } from '../consts';
+import { ROLE, ROLES } from '../types';
+import { build, harvest, runTasks, transfer, withdraw } from './tasks';
 
 export const makeCreep
   = (role: ROLE) =>
@@ -20,8 +20,7 @@ export const makeCreep
         } },
       );
 
-export const creepsByRole = (role: ROLE) =>
-  filter((c: Creep) => c.memory.role === role);
+export const creepsByRole = (role: ROLE) => filter((c: Creep) => c.memory.role === role);
 
 type filteredCreeps = { [key in ROLE]: Creep[] }
 export const getCreeps = reduce<Creep, filteredCreeps>(
@@ -31,23 +30,6 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
   }),
   {} as filteredCreeps,
 );
-
-export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
-  = ts => c => {
-    const { memory: { task: { id } } } = c;
-
-    const ct = ts[id];
-    c.memory.task.id = 0;
-
-    if (!ct || ts.length < 1) return ERR_NO_TASK;
-
-    const { code } = ct(c);
-    if (code === OK) return code;
-
-    return runTasks(
-      ts.filter((_, _id) => _id !== id),
-    )(c);
-  };
 
 export const runCreep: (r: Room) => (c: Creep) => ReturnCode
   = r => creep => {
@@ -67,6 +49,7 @@ export const runCreep: (r: Room) => (c: Creep) => ReturnCode
         withdraw(spawns[0]!, constructions[0]!),
         build(constructions[0]!),
         harvest(sources[0]!),
+        transfer(spawns[0]!),
       ])(creep);
 
     default:
