@@ -1,6 +1,6 @@
-import {identity} from 'ramda';
+import { identity } from 'ramda';
 import * as _ from 'ts-toolbelt';
-import {ReturnCode} from './consts';
+import { ReturnCode } from './consts';
 
 export const iff = <T, A extends (...any: any[]) => any, B extends (...any: any[]) => any>(
   predicate: (t: T) => boolean,

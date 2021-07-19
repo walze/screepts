@@ -1,7 +1,7 @@
 
-import {movable} from '../helpers';
-import {CreepTask, Tasks} from '../types';
-import {makeTask} from './makeTask';
+import { movable } from '../helpers';
+import { CreepTask, Tasks } from '../types';
+import { makeTask } from './makeTask';
 
 export const harvest = (so: Parameters<Creep['harvest']>[0]) => makeTask(
   'harvest',

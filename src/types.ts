@@ -1,4 +1,4 @@
-import {ReturnCode} from './consts';
+import { ReturnCode } from './consts';
 
 export enum ROLES {
   BUILDER = 'BUILDER',

@@ -19,7 +19,8 @@
     "no-undef": "off",
     "no-unused-vars": "off",
     "indent": ["error", 2],
-    "curly": ["error", "multi"]
+    "curly": ["error", "multi"],
+    "object-curly-spacing": ["error", "always"]
     // "@typescript-eslintno-undef": "error",
     // "@typescript-eslintno-unused-vars": "error"
   }

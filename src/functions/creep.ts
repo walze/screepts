@@ -1,8 +1,8 @@
 
-import {filter, reduce} from 'ramda';
-import {ERR_NO_TASK, ReturnCode} from '../consts';
-import {CreepTask, ROLE, ROLES} from '../types';
-import {build, harvest, transfer, withdraw} from './tasks';
+import { filter, reduce } from 'ramda';
+import { ERR_NO_TASK, ReturnCode } from '../consts';
+import { CreepTask, ROLE, ROLES } from '../types';
+import { build, harvest, transfer, withdraw } from './tasks';
 
 export const makeCreep
   = (role: ROLE) =>
@@ -10,14 +10,14 @@ export const makeCreep
       s.spawnCreep(
         [WORK, CARRY, MOVE, MOVE],
         `${role}_${Date.now()}__${Math.random()}`,
-        {memory: {
+        { memory: {
           role,
           task: {
             code: OK,
             name: '',
             id: 0,
           },
-        }},
+        } },
       );
 
 export const creepsByRole = (role: ROLE) =>
@@ -32,22 +32,21 @@ export const getCreeps = reduce<Creep, filteredCreeps>(
   {} as filteredCreeps,
 );
 
-const runTasks: (...ts: CreepTask[]) => (c: Creep) => ReturnCode
-  = (...ts) => c => {
-    const {memory: {task}} = c;
+export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
+  = ts => c => {
+    const { memory: { task: { id } } } = c;
 
-    const ct = ts[task.id];
-    if (!ct || ts.length < 1) return ERR_NO_TASK;
-
+    const ct = ts[id];
     c.memory.task.id = 0;
 
-    const {code} = ct(c);
+    if (!ct || ts.length < 1) return ERR_NO_TASK;
 
+    const { code } = ct(c);
     if (code === OK) return code;
 
-    const newTasks = ts.filter((_, id) => id !== task.id);
-
-    return runTasks(...newTasks)(c);
+    return runTasks(
+      ts.filter((_, _id) => _id !== id),
+    )(c);
   };
 
 export const runCreep: (r: Room) => (c: Creep) => ReturnCode
@@ -56,29 +55,19 @@ export const runCreep: (r: Room) => (c: Creep) => ReturnCode
     const spawns = r.find(FIND_MY_SPAWNS);
     const constructions = r.find(FIND_CONSTRUCTION_SITES);
 
-    // If creep has task assigned,
-    // do task
-    // if no task is assigned
-    // assign one from list order
-
-    // if assigned task returns 0
-    // repeat
-    // if not 0
-    // go to next task
-
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
-      return runTasks(
+      return runTasks([
         harvest(sources[0]!),
         transfer(spawns[0]!),
-      )(creep);
+      ])(creep);
 
     case ROLES.BUILDER:
-      return runTasks(
+      return runTasks([
         withdraw(spawns[0]!, constructions[0]!),
         build(constructions[0]!),
         harvest(sources[0]!),
-      )(creep);
+      ])(creep);
 
     default:
       throw new Error('unhandled role');
