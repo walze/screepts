@@ -15,11 +15,11 @@ export const loop = () => {
     HAVESTER.map(runCreep(r));
     BUILDER.map(runCreep(r));
 
-    if (HAVESTER?.length < 0)
+    if (HAVESTER?.length < 2)
       r.find(FIND_MY_SPAWNS)
         .map(makeCreep(ROLES.HAVESTER));
 
-    if (BUILDER?.length < 1)
+    if (BUILDER?.length < 2)
       r.find(FIND_MY_SPAWNS)
         .map(makeCreep(ROLES.BUILDER));
   }, rooms);

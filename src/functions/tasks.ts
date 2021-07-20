@@ -4,28 +4,12 @@ import { movable } from '../helpers';
 import { CreepTask, Tasks } from '../types';
 import { makeTask } from './makeTask';
 
-export const _runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
-  = ts => c => {
-    const { memory: { task: { id } } } = c;
-
-    const ct = ts[id];
-    if (!ct) return ERR_NO_TASK;
-
-    const { code } = ct(c);
-    if (code === OK)
-      return code;
-
-    c.memory.task.id = (id + 1) % ts.length;
-
-    return runTasks(ts)(c);
-  };
-
 export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
   = ts => c => {
     const [ct] = ts;
     if (!ct) return ERR_NO_TASK;
 
-    const { memory: { task: { id } } } = c;
+    const { id } = c.memory.task;
     const { code } = ct(c);
 
     if (code === OK) return code;
