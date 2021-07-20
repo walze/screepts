@@ -1,4 +1,4 @@
-import { map, mapObjIndexed } from 'ramda';
+import { mapObjIndexed } from 'ramda';
 import { getCreeps, makeCreep, runCreep } from './functions/creep';
 import { ROLES } from './types';
 

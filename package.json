@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/walze/screepts#readme",
   "dependencies": {
-    "@types/node": "^15.12.4",
-    "@types/ramda": "^0.27.41",
-    "@types/screeps": "^3.2.2",
+    "@types/node": "^16.3.3",
+    "@types/ramda": "^0.27.44",
+    "@types/screeps": "^3.2.3",
     "concurrently": "^6.2.0",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
@@ -31,20 +31,20 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-screeps": "^1.5.0",
     "ramda": "^0.27.1",
-    "rxjs": "^7.1.0",
+    "rxjs": "^7.2.0",
     "ts-loader": "^9.2.3",
-    "ts-toolbelt": "^6.15.5",
+    "ts-toolbelt": "^9.6.0",
     "tslint": "^5.20.1",
-    "webpack": "^5.40.0",
+    "webpack": "^5.45.1",
     "webpack-cli": "^4.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
-    "eslint": "^7.29.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
     "eslint-config-xo": "^0.37.0",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   }
 }

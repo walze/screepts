@@ -12,8 +12,10 @@ export const _runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
     if (!ct) return ERR_NO_TASK;
 
     const { code } = ct(c);
+    if (code === OK)
+      return code;
 
-    if (code === OK) return code;
+    c.memory.task.id = (id + 1) % ts.length;
 
     return runTasks(ts)(c);
   };

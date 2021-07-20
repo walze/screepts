@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   target: 'node',
+  devtool: 'source-map',
   entry: {
     main: path.resolve(__dirname, 'src/main.ts'),
   },
@@ -9,9 +10,12 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve(__dirname + '/dist'),
     filename: 'main.js',
-    libraryTarget: 'commonjs',
+    libraryTarget: 'commonjs2',
+  },
+  externals: {
+    'main.js.map': 'main.js.map',
   },
   module: {
     rules: [
