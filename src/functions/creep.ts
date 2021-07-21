@@ -5,8 +5,8 @@ import { ROLE, ROLES } from '../types';
 import { build, harvest, transfer, withdraw, runTasks, upgradeController } from './tasks';
 
 export const makeCreep
-  = (role: ROLE) =>
-    (s: StructureSpawn) =>
+  = (s: StructureSpawn) =>
+    (role: ROLE) =>
       s.spawnCreep(
         [WORK, CARRY, MOVE, MOVE],
         `${role}_${Date.now()}__${Math.random()}`,
@@ -23,13 +23,13 @@ export const makeCreep
 
 export const creepsByRole = (role: ROLE) => filter((c: Creep) => c.memory.role === role);
 
-type filteredCreeps = { [key in ROLE]: Creep[] }
-export const getCreeps = reduce<Creep, filteredCreeps>(
+export type CreepsByRole = { [key in ROLE]: Creep[] }
+export const getCreeps = reduce<Creep, CreepsByRole>(
   (o, c) => ({
     ...o,
     [c.memory.role]: [...(o[c.memory.role] || []), c],
   }),
-  {} as filteredCreeps,
+  {} as CreepsByRole,
 );
 
 export const runCreep: (r: Room) => (c: Creep) => ReturnCode
