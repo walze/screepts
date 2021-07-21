@@ -18,7 +18,7 @@ export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
       return code;
     }
 
-    c.memory.task.id = repeating ? 0 : (id + 1) % ts.length;
+    c.memory.task.id = repeating ? 0 : id + 1;
     c.memory.task.repeating = false;
 
     return runTasks(ts)(c);
@@ -64,6 +64,14 @@ export const build = (cst: Parameters<Creep['build']>[0]) =>
     movable(c => c.build(cst), cst))(
     c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY,
     _ => cst ? OK : ERR_INVALID_TARGET,
+  );
+
+export const upgradeController = (ctrl?: Parameters<Creep['upgradeController']>[0]) =>
+  makeTask(
+    'upgradeController',
+    movable(c => c.upgradeController(ctrl!), ctrl!))(
+    _ => ctrl ? OK : ERR_INVALID_TARGET,
+    c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY,
   );
 
 export const tasks: { [key in Tasks]?: (...any: any[]) => CreepTask }

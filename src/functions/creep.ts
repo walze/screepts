@@ -2,7 +2,7 @@
 import { filter, reduce } from 'ramda';
 import { ERR_NO_TASK, ReturnCode } from '../consts';
 import { ROLE, ROLES } from '../types';
-import { build, harvest, transfer, withdraw, runTasks } from './tasks';
+import { build, harvest, transfer, withdraw, runTasks, upgradeController } from './tasks';
 
 export const makeCreep
   = (role: ROLE) =>
@@ -50,6 +50,14 @@ export const runCreep: (r: Room) => (c: Creep) => ReturnCode
         withdraw(spawns[0]!, constructions[0]!),
         harvest(sources[0]!),
         build(constructions[0]!),
+        transfer(spawns[0]!),
+      ])(creep);
+
+    case ROLES.UPGRADER:
+      return runTasks([
+        withdraw(spawns[0]!, constructions[0]!),
+        harvest(sources[0]!),
+        upgradeController(r.controller),
         transfer(spawns[0]!),
       ])(creep);
 

@@ -33,7 +33,6 @@ declare global {
   interface FlagMemory { }
   interface PowerCreepMemory { }
   interface RoomMemory { }
-
   interface SpawnMemory { }
 }
 

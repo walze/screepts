@@ -10,16 +10,25 @@ export const loop = () => {
   mapObjIndexed(r => {
     const rCreeps = r.find(FIND_MY_CREEPS);
     const cps = getCreeps(rCreeps);
-    const { HAVESTER = [], BUILDER = [] } = cps;
+    const {
+      HAVESTER = [],
+      BUILDER = [],
+      UPGRADER = [],
+    } = cps;
 
     HAVESTER.map(runCreep(r));
     BUILDER.map(runCreep(r));
+    UPGRADER.map(runCreep(r));
 
-    if (HAVESTER?.length < 2)
+    if (HAVESTER.length < 3)
       r.find(FIND_MY_SPAWNS)
         .map(makeCreep(ROLES.HAVESTER));
 
-    if (BUILDER?.length < 2)
+    if (UPGRADER.length < 2)
+      r.find(FIND_MY_SPAWNS)
+        .map(makeCreep(ROLES.UPGRADER));
+
+    if (BUILDER.length < 1)
       r.find(FIND_MY_SPAWNS)
         .map(makeCreep(ROLES.BUILDER));
   }, rooms);
