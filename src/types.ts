@@ -24,6 +24,7 @@ declare global {
     role: ROLE
     task: {
       name: Tasks
+      repeating: boolean
       id: number
       code: number
     }
