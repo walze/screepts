@@ -32,11 +32,13 @@ export const getCreeps = reduce<Creep, CreepsByRole>(
   {} as CreepsByRole,
 );
 
-export const runCreep: (r: Room) => (c: Creep) => ReturnCode
-  = r => creep => {
-    const sources = r.find(FIND_SOURCES);
-    const spawns = r.find(FIND_MY_SPAWNS);
-    const constructions = r.find(FIND_CONSTRUCTION_SITES);
+export const runCreep: (c: Creep) => ReturnCode
+  = creep => {
+    const { room } = creep;
+
+    const sources = room.find(FIND_SOURCES);
+    const spawns = room.find(FIND_MY_SPAWNS);
+    const constructions = room.find(FIND_CONSTRUCTION_SITES);
 
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
@@ -57,7 +59,7 @@ export const runCreep: (r: Room) => (c: Creep) => ReturnCode
       return runTasks([
         withdraw(spawns[0]!, constructions[0]!),
         harvest(sources[0]!),
-        upgradeController(r.controller),
+        upgradeController(room.controller),
         transfer(spawns[0]!),
       ])(creep);
 

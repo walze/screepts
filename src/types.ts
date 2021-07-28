@@ -1,9 +1,9 @@
 import { ReturnCode } from './consts';
 
 export enum ROLES {
+  UPGRADER = 'UPGRADER',
   BUILDER = 'BUILDER',
   HAVESTER = 'HAVESTER',
-  UPGRADER = 'UPGRADER',
 }
 
 export type ROLE = keyof typeof ROLES
@@ -16,6 +16,10 @@ export type Tasks = KeysOfType<Creep, (...args: any) => any> | ''
 export type KeysOfType<C, T> = {
   [K in keyof C]: C[K] extends T ? K : never
 }[keyof C]
+
+type RoomCreeps = {
+  [key in ROLE]: number;
+}
 
 export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
@@ -32,7 +36,9 @@ declare global {
 
   interface FlagMemory { }
   interface PowerCreepMemory { }
-  interface RoomMemory { }
+  interface RoomMemory extends RoomCreeps {
+
+  }
   interface SpawnMemory { }
 }
 

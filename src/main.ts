@@ -1,25 +1,32 @@
-import { chain, keys, map, mapObjIndexed, pipe, tap } from 'ramda';
-import { CreepsByRole, getCreeps, makeCreep, runCreep } from './functions/creep';
+import { keys } from 'ramda';
+import { makeCreep, runCreep } from './functions/creep';
 import { ROLES } from './types';
 
-const runRoom = (r: Room) => (obj: CreepsByRole) => pipe(
-  () => keys(ROLES),
-  // Hard coded spawn
-  tap(map(makeCreep(r.find(FIND_MY_SPAWNS)[0]!))),
-  chain(role => obj[role]),
-  map(runCreep(r)),
-);
+const amountCreeps = {
+  [ROLES.HAVESTER]: 2,
+  [ROLES.BUILDER]: 0,
+  [ROLES.UPGRADER]: 0,
+};
 
 export const loop = () => {
-  const { creeps, rooms } = Game;
+  const { creeps: creepsObj, rooms: roomsObj } = Game;
+  const creeps = Object.values(creepsObj);
+  const rooms = Object.values(roomsObj);
 
-  mapObjIndexed(c => c, creeps);
+  creeps.map(runCreep);
 
-  mapObjIndexed(r => pipe(
-    () => r.find(FIND_MY_CREEPS),
-    getCreeps,
-    runRoom(r),
-  ), rooms);
+  rooms.map(room => {
+    keys(ROLES).map(role => {
+      room.memory[role] = creeps.filter(c => c.memory.role === role).length;
+
+      if (room.memory[role] < amountCreeps[role])
+        makeCreep(room.find(FIND_MY_SPAWNS)[0]!)(role);
+
+      return 0;
+    });
+
+    return 0;
+  });
 
   console.log('------------------------');
 };

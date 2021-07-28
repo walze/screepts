@@ -1,7 +1,7 @@
 
 import { ERR_NO_TASK, ReturnCode } from '../consts';
 import { movable } from '../helpers';
-import { CreepTask, Tasks } from '../types';
+import { CreepTask } from '../types';
 import { makeTask } from './makeTask';
 
 export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
@@ -9,7 +9,10 @@ export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
     const { repeating, id } = c.memory.task;
 
     const ct = ts[id];
-    if (!ct) return ERR_NO_TASK;
+    if (!ct) {
+      c.memory.task.id = 0;
+      return ERR_NO_TASK;
+    }
 
     const { code } = ct(c);
     if (code === OK) {
@@ -73,11 +76,3 @@ export const upgradeController = (ctrl?: Parameters<Creep['upgradeController']>[
     _ => ctrl ? OK : ERR_INVALID_TARGET,
     c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY,
   );
-
-export const tasks: { [key in Tasks]?: (...any: any[]) => CreepTask }
-      = {
-        harvest,
-        transfer,
-        withdraw,
-        build,
-      };
