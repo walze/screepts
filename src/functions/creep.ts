@@ -6,20 +6,19 @@ import { build, harvest, transfer, withdraw, runTasks, upgradeController } from 
 
 export const makeCreep
   = (s: StructureSpawn) =>
-    (role: ROLE) =>
-      s.spawnCreep(
-        [WORK, CARRY, MOVE, MOVE],
-        `${role}_${Date.now()}__${Math.random()}`,
-        { memory: {
-          role,
-          task: {
-            code: ERR_NO_TASK,
-            name: '',
-            id: 0,
-            repeating: false,
-          },
-        } },
-      );
+    (role: ROLE) => s.spawnCreep(
+      [WORK, CARRY, MOVE, MOVE],
+      `${role}_${Date.now()}__${Math.random()}`,
+      { memory: {
+        role,
+        task: {
+          code: ERR_NO_TASK,
+          name: '',
+          id: 0,
+          repeating: false,
+        },
+      } },
+    );
 
 export const creepsByRole = (role: ROLE) => filter((c: Creep) => c.memory.role === role);
 
