@@ -24,7 +24,7 @@ export const makeTask
         // Side-effects
         creep.memory.task.name = name;
         creep.memory.task.code = code;
-        console.log(`${creep.name} task -> ${name} | ${code}`);
+        // Console.log(`${creep.name} task -> ${name} | ${code}`);
 
         return { creep, code, name };
       };

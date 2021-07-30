@@ -1,6 +1,7 @@
 
 import { filter, reduce } from 'ramda';
 import { ERR_NO_TASK, ReturnCode } from '../consts';
+import { countHarvestable } from '../helpers';
 import { ROLE, ROLES } from '../types';
 import { build, harvest, transfer, withdraw, runTasks, upgradeController } from './tasks';
 
@@ -35,7 +36,7 @@ export const runCreep: (c: Creep) => ReturnCode
   = creep => {
     const { room } = creep;
 
-    const sources = room.find(FIND_SOURCES);
+    const sources = room.find(FIND_SOURCES, { filter: countHarvestable });
     const spawns = room.find(FIND_MY_SPAWNS);
     const constructions = room.find(FIND_CONSTRUCTION_SITES);
 

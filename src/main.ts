@@ -1,7 +1,7 @@
-import { keys, map, pipe, tap } from 'ramda';
-import { makeCreep, runCreep } from './functions/creep';
+import { keys, map, pair, pipe, tap } from 'ramda';
+import { getCreeps, makeCreep, runCreep } from './functions/creep';
 import { assertThrow, iff } from './helpers';
-import { ROLES } from './types';
+import { ROLE, ROLES } from './types';
 
 const amountCreeps = {
   [ROLES.HAVESTER]: 2,
@@ -9,21 +9,26 @@ const amountCreeps = {
   [ROLES.UPGRADER]: 1,
 };
 
-const findSpawn = (room: Room) => room.find(FIND_MY_SPAWNS)[0];
+const findSpawn = (room: Room) => room.find(FIND_MY_SPAWNS, { filter: { spawning: null } })[0];
 
-const roomRunner
-  = (cs: Creep[]) =>
-    (room: Room) =>
-      pipe(
-        () => keys(ROLES),
-        tap(map(role => {
-          room.memory[role] = cs.filter(c => c.memory.role === role).length;
-        })),
-        tap(map(iff(
-          role => (room.memory[role] || 0) < amountCreeps[role],
-          makeCreep(assertThrow(findSpawn(room))),
-        ))),
-      )();
+const setRoomCreeps
+= (cs: Creep[]) =>
+  (room: Room) => pipe(
+    getCreeps,
+    Object.entries,
+    map(([s, css]) => pair(s as ROLE, css.length)),
+    map(([r, l]) => { room.memory[r] = l; }),
+  )(cs);
+
+const roomSpawner
+  = (room: Room) =>
+    pipe(
+      () => keys(ROLES),
+      tap(map(iff(
+        role => (room.memory[role] || 0) < amountCreeps[role],
+        makeCreep(assertThrow(findSpawn(room))),
+      ))),
+    )();
 
 export const loop = () => {
   const { creeps: creepsObj, rooms: roomsObj } = Game;
@@ -32,10 +37,12 @@ export const loop = () => {
 
   creeps.map(runCreep);
 
-  rooms.map(roomRunner(creeps));
+  rooms.map(roomSpawner);
+  rooms.map(setRoomCreeps(creeps));
 
   console.log(
     '------------------------',
+    rooms[0]!.find(FIND_MY_SPAWNS, { filter: { spawning: null } }),
   );
 };
 
