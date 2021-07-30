@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/walze/screepts#readme",
   "dependencies": {
-    "@types/node": "^16.4.6",
+    "@types/node": "^16.4.7",
     "@types/ramda": "^0.27.44",
     "@types/screeps": "^3.2.3",
     "concurrently": "^6.2.0",
@@ -35,7 +35,7 @@
     "ts-loader": "^9.2.4",
     "ts-toolbelt": "^9.6.0",
     "tslint": "^5.20.1",
-    "webpack": "^5.47.0",
+    "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2"
   },
   "devDependencies": {

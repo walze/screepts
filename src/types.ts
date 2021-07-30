@@ -37,7 +37,13 @@ declare global {
   interface FlagMemory { }
   interface PowerCreepMemory { }
   interface RoomMemory extends RoomCreeps {
-
+    sources: {
+      [k: string]: {
+        current: () => number
+        creeps: { [k: string]: Creep }
+        total: number
+      }
+    }
   }
   interface SpawnMemory { }
 }
