@@ -21,6 +21,7 @@ type RoomCreeps = {
   [key in ROLE]: number;
 }
 
+export type IndexedObject<T> = { [k: string]: T }
 export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
 
@@ -34,13 +35,15 @@ declare global {
     }
   }
 
+  interface Memory {
+    bootFns: () => void
+  }
   interface FlagMemory { }
   interface PowerCreepMemory { }
   interface RoomMemory extends RoomCreeps {
     sources: {
       [k: string]: {
-        current: () => number
-        creeps: { [k: string]: Creep }
+        creeps: IndexedObject<Creep>
         total: number
       }
     }

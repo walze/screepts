@@ -1,6 +1,13 @@
 import { ap } from 'ramda';
+import { setSourcesSimultaneous } from './boot/source';
 import { runCreep } from './functions/creep';
 import { a, roomCreepSpawner, setRoomCreeps } from './functions/room';
+
+Memory.bootFns = () => {
+  setSourcesSimultaneous();
+};
+
+Memory.bootFns();
 
 export const loop = () => {
   const { creeps: creepsObj, rooms: roomsObj } = Game;

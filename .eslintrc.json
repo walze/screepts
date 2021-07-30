@@ -21,7 +21,8 @@
     "indent": ["error", 2],
     "curly": ["error", "multi"],
     "object-curly-spacing": ["error", "always"],
-    "brace-style": ["error", "1tbs", { "allowSingleLine": true }]
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "no-return-assign": "off"
     // "@typescript-eslintno-undef": "error",
     // "@typescript-eslintno-unused-vars": "error"
   }

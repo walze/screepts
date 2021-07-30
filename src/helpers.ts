@@ -1,6 +1,7 @@
 import { filter, flatten, length, map, pipe } from 'ramda';
 
 import { ReturnCode } from './consts';
+import { IndexedObject } from './types';
 
 export const iff = <T, A>(
   predicate: (t: T) => boolean,
@@ -31,6 +32,8 @@ export const movable
 
       return code === ERR_NOT_IN_RANGE ? c.moveTo(...moveP) : code;
     };
+
+export const countObjectEntries = (o: IndexedObject<any>) => Object.keys(o).length;
 
 export const countHarvestable = pipe(
   ({ pos: { x, y }, room }: Source) => room.lookAtArea(y - 1, x - 1, y + 1, x + 1),
