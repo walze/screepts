@@ -1,6 +1,6 @@
 import { countHarvestable } from '../helpers';
 
-export const setSourcesSimultaneous = () => {
+export const setMaxCreep2Source = () => {
   // Refactor this
   for (const key in Game.rooms) if (Object.prototype.hasOwnProperty.call(Game.rooms, key)) {
     const room = Game.rooms[key] as Room;

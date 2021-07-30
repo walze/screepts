@@ -1,10 +1,10 @@
 import { ap } from 'ramda';
-import { setSourcesSimultaneous } from './boot/source';
+import { setMaxCreep2Source } from './boot/source';
 import { runCreep } from './functions/creep';
 import { a, roomCreepSpawner, setRoomCreeps } from './functions/room';
 
 Memory.bootFns = () => {
-  setSourcesSimultaneous();
+  setMaxCreep2Source();
 };
 
 Memory.bootFns();
