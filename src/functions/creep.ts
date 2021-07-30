@@ -1,7 +1,7 @@
 
 import { filter, reduce } from 'ramda';
 import { countCreepsUsingSource, maxCreepsPerSource } from '../boot/source';
-import { ERR_NO_TASK, ReturnCode } from '../consts';
+import { ERR_NO_TASK, ReturnCode, STORE_STRUCTURES } from '../consts';
 import { ROLE, ROLES } from '../types';
 import { build, harvest, transfer, withdraw, runTasks, upgradeController } from './tasks';
 
@@ -40,30 +40,33 @@ export const runCreep: (c: Creep) => ReturnCode
       filter: s => countCreepsUsingSource(s) < maxCreepsPerSource(s),
     });
 
-    const spawns = room.find(FIND_MY_SPAWNS);
-    const constructions = room.find(FIND_CONSTRUCTION_SITES);
+    const [storable] = room.find(FIND_MY_STRUCTURES, {
+      filter: s => STORE_STRUCTURES.some(ss => s.structureType === ss),
+    }) as AnyStoreStructure[];
+
+    const [construction] = room.find(FIND_CONSTRUCTION_SITES);
 
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
       return runTasks([
         harvest(source!),
-        transfer(spawns[0]!),
+        transfer(storable!),
       ])(creep);
 
     case ROLES.BUILDER:
       return runTasks([
-        withdraw(spawns[0]!, constructions[0]!),
+        withdraw(storable!, construction!),
         harvest(source!),
-        build(constructions[0]!),
-        transfer(spawns[0]!),
+        build(construction!),
+        transfer(storable!),
       ])(creep);
 
     case ROLES.UPGRADER:
       return runTasks([
-        withdraw(spawns[0]!, constructions[0]!),
+        withdraw(storable!, construction!),
         harvest(source!),
         upgradeController(room.controller),
-        transfer(spawns[0]!),
+        transfer(storable!),
       ])(creep);
 
     default:
