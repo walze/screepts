@@ -1,4 +1,5 @@
 
+import { addCreep2Source, removeCreep2Source } from '../boot/source';
 import { ERR_NO_TASK, ReturnCode } from '../consts';
 import { movable } from '../helpers';
 import { CreepTask } from '../types';
@@ -42,7 +43,13 @@ export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
 
 export const harvest = (so: Parameters<Creep['harvest']>[0]) => makeTask(
   'harvest',
-  movable(c => c.harvest(so), so))(
+  movable(c => {
+    addCreep2Source(so)(c);
+
+    return c.harvest(so);
+  }, so),
+  removeCreep2Source(so),
+)(
   c => c.store.getFreeCapacity() > 0 ? OK : ERR_FULL,
 );
 

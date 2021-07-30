@@ -32,8 +32,3 @@ export const roomCreepSpawner
       makeCreep(assertThrow(findSpawn(room))),
     ))),
   )();
-
-export const a = (r: Room) => pipe(
-  () => r.find(FIND_SOURCES),
-  map(s => s),
-);

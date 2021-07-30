@@ -1,10 +1,10 @@
 import { ap } from 'ramda';
-import { setMaxCreep2Source } from './boot/source';
+import { setMaxCreepPerSource } from './boot/source';
 import { runCreep } from './functions/creep';
-import { a, roomCreepSpawner, setRoomCreeps } from './functions/room';
+import { roomCreepSpawner, setRoomCreeps } from './functions/room';
 
 Memory.bootFns = () => {
-  setMaxCreep2Source();
+  setMaxCreepPerSource();
 };
 
 Memory.bootFns();
@@ -19,12 +19,10 @@ export const loop = () => {
   ap([
     roomCreepSpawner,
     setRoomCreeps(creeps),
-    a,
   ], rooms);
 
   console.log(
     '------------------------',
-
   );
 };
 
