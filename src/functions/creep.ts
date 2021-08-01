@@ -1,24 +1,32 @@
 
-import { filter, reduce } from 'ramda';
+import { filter, flatten, lt, reduce, repeat } from 'ramda';
 import { countCreepsUsingSource, maxCreepsPerSource } from '../boot/source';
 import { ERR_NO_TASK, ReturnCode, STORE_STRUCTURES } from '../consts';
 import { ROLE, ROLES } from '../types';
 import { build, harvest, transfer, withdraw, runTasks, upgradeController } from './tasks';
 
+export const roleBodyPartMap: { [key in ROLE]: BodyPartConstant[] } = {
+  HAVESTER: [WORK, CARRY, MOVE, MOVE],
+  BUILDER: [WORK, CARRY, MOVE, MOVE],
+  UPGRADER: [WORK, CARRY, MOVE, MOVE],
+};
+
 export const makeCreep
   = (s: StructureSpawn) =>
-    (role: ROLE) => s.spawnCreep(
-      [WORK, CARRY, MOVE, MOVE],
+    (role: ROLE, multiply = 1) => s.spawnCreep(
+      flatten(repeat(roleBodyPartMap[role], multiply)),
       `${role}_${Date.now()}__${Math.random()}`,
-      { memory: {
-        role,
-        task: {
-          code: ERR_NO_TASK,
-          name: '',
-          id: 0,
-          repeating: false,
+      {
+        memory: {
+          role,
+          task: {
+            code: ERR_NO_TASK,
+            name: '',
+            id: 0,
+            repeating: false,
+          },
         },
-      } },
+      },
     );
 
 export const creepsByRole = (role: ROLE) => filter((c: Creep) => c.memory.role === role);
@@ -37,7 +45,7 @@ export const runCreep: (c: Creep) => ReturnCode
     const { room } = creep;
 
     const [source] = room.find(FIND_SOURCES, {
-      filter: s => countCreepsUsingSource(s) < maxCreepsPerSource(s),
+      filter: s => lt(countCreepsUsingSource(s))(maxCreepsPerSource(s)),
     });
 
     const [storable] = room.find(FIND_MY_STRUCTURES, {

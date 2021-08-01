@@ -1,9 +1,9 @@
 import { ReturnCode } from './consts';
 
 export enum ROLES {
-  UPGRADER = 'UPGRADER',
-  BUILDER = 'BUILDER',
   HAVESTER = 'HAVESTER',
+  BUILDER = 'BUILDER',
+  UPGRADER = 'UPGRADER',
 }
 
 export type ROLE = keyof typeof ROLES

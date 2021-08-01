@@ -6,14 +6,14 @@ export const ERR_NO_TASK = -999;
 export const STORE_STRUCTURES: AnyStoreStructure['structureType'][]
  = [
    'container',
+   'storage',
    'extension',
+   'powerSpawn',
    'factory',
    'lab',
    'link',
    'nuker',
-   'powerSpawn',
-   'spawn',
-   'storage',
    'tower',
    'terminal',
+   'spawn',
  ];
