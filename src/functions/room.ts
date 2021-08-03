@@ -3,11 +3,14 @@ import { getCreeps, makeCreep } from './creep';
 import { assertThrow } from '../helpers';
 import { ROLE, ROLES } from '../types';
 
-const amountCreeps = {
-  [ROLES.HAVESTER]: 3,
-  [ROLES.BUILDER]: 2,
-  [ROLES.UPGRADER]: 1,
-};
+const amountCreeps: { [key in ROLES]: number }
+  = {
+    [ROLES.HAVESTER]: 6,
+    [ROLES.BUILDER]: 4,
+    [ROLES.UPGRADER]: 1,
+    [ROLES.HEALER]: 0,
+    [ROLES.FIGHTER]: 0,
+  };
 
 export const findSpawn = (room: Room) =>
   room.find(FIND_MY_SPAWNS, { filter: { spawning: null } })[0];
@@ -33,4 +36,4 @@ export const roomCreepSpawner
       makeCreep(assertThrow(findSpawn(room))),
     ),
     console.log,
-  );
+  )();

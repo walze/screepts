@@ -9,6 +9,8 @@ export const roleBodyPartMap: { [key in ROLE]: BodyPartConstant[] } = {
   HAVESTER: [WORK, CARRY, MOVE, MOVE],
   BUILDER: [WORK, CARRY, MOVE, MOVE],
   UPGRADER: [WORK, CARRY, MOVE, MOVE],
+  HEALER: [HEAL, HEAL, MOVE, MOVE],
+  FIGHTER: [ATTACK, ATTACK, MOVE, MOVE],
 };
 
 export const makeCreep
@@ -42,6 +44,8 @@ export const getCreeps = reduce<Creep, CreepsByRole>(
 
 export const runCreep: (c: Creep) => ReturnCode
   = creep => {
+    if (creep.spawning) return ERR_NO_TASK;
+
     const { room } = creep;
 
     const [source] = room.find(FIND_SOURCES, {

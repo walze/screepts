@@ -41,14 +41,17 @@ export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
     return runTasks(ts.filter((_, _id) => _id !== id))(c);
   };
 
-export const harvest = (so: Parameters<Creep['harvest']>[0]) => makeTask(
+export const harvest = (so: Harvestable) => makeTask(
   'harvest',
   movable(c => {
-    addCreep2Source(so)(c);
+    if (c.memory.task.name !== 'harvest') {
+      console.log(Memory);
+      addCreep2Source(so)(c);
+    }
 
     return c.harvest(so);
   }, so),
-  removeCreep2Source(so),
+  removeCreep2Source(),
 )(
   c => c.store.getFreeCapacity() > 0 ? OK : ERR_FULL,
 );

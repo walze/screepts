@@ -4,6 +4,8 @@ export enum ROLES {
   HAVESTER = 'HAVESTER',
   BUILDER = 'BUILDER',
   UPGRADER = 'UPGRADER',
+  HEALER = 'HEALER',
+  FIGHTER = 'FIGHTER',
 }
 
 export type ROLE = keyof typeof ROLES
@@ -24,6 +26,7 @@ type RoomCreeps = {
 export type IndexedObject<T> = { [k: string]: T }
 export type NonEmptyArray<T> = [T, ...T[]];
 declare global {
+  type Harvestable = Parameters<Creep['harvest']>[0]
 
   interface CreepMemory {
     role: ROLE

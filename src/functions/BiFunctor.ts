@@ -1,4 +1,4 @@
-import {pair} from 'ramda';
+import { pair } from 'ramda';
 
 export const of: <F>(f: F) => <S>(s: S) => [F, S]
   = f => s => [f, s];
