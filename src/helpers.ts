@@ -17,7 +17,7 @@ export const ifElse = <T, A, B>(
 
 export const flip = <T extends (...args: any) => any>(f: T) => (b: Parameters<ReturnType<T>>[0]) => (a: Parameters<T>[0]): ReturnType<ReturnType<T>> => f(a)(b);
 
-export const assertThrow = <T>(t: T, message = '') => {
+export const assertThrow = (message = '') => <T>(t: T) => {
   if (t) return t as NonNullable<T>;
   throw new Error(message);
 };

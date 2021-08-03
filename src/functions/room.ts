@@ -20,8 +20,8 @@ export const setRoomCreeps
   (room: Room) => pipe(
     getCreeps,
     Object.entries,
-    map(([s, css]) => {
-      room.memory[s as ROLE] = css.length;
+    map(([s, _cs]) => {
+      room.memory[s as ROLE] = _cs.length;
     }),
     () => {},
   )(cs);
@@ -30,6 +30,6 @@ export const roomCreepSpawner
 = (room: Room) => pipe(
   () => keys(ROLES),
   find(role => (room.memory[role] || 0) < amountCreeps[role]),
-  assertThrow,
-  makeCreep(assertThrow(findSpawn(room))),
+  assertThrow('no role'),
+  makeCreep(assertThrow('no spawn')(findSpawn(room))),
 )();
