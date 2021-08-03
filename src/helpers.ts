@@ -2,16 +2,18 @@ import { filter, flatten, keys, length, map, pipe } from 'ramda';
 
 import { ReturnCode } from './consts';
 
+export const isTrue = <T>(a: T) => Boolean(a) === true;
+
 export const iff = <T, A>(
   predicate: (t: T) => boolean,
-  a: (t: T) => A,
-) => (t: T): A | null => predicate(t) ? a(t) : (() => null)();
+  a: (t: NonNullable<T>) => A,
+) => (t: T): A | null => predicate(t) ? a(t as NonNullable<T>) : null;
 
 export const ifElse = <T, A, B>(
   predicate: (t: T) => boolean,
-  a: (t: T) => A,
+  a: (t: NonNullable<T>) => A,
   b: (t: T) => B,
-) => (t: T): A | B => predicate(t) ? a(t) : b(t);
+) => (t: T): A | B => predicate(t) ? a(t as NonNullable<T>) : b(t);
 
 export const flip = <T extends (...args: any) => any>(f: T) => (b: Parameters<ReturnType<T>>[0]) => (a: Parameters<T>[0]): ReturnType<ReturnType<T>> => f(a)(b);
 
@@ -33,6 +35,7 @@ export const movable
     };
 
 export const countObjectEntries = pipe(keys, length);
+export const countObjectProps = pipe(Object.entries, countObjectEntries);
 
 export const countHarvestable = pipe(
   ({ pos: { x, y }, room }: Source) => room.lookAtArea(y - 1, x - 1, y + 1, x + 1),

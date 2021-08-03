@@ -1,4 +1,4 @@
-import { find, keys, map, pipe, tryCatch } from 'ramda';
+import { find, keys, map, pipe } from 'ramda';
 import { getCreeps, makeCreep } from './creep';
 import { assertThrow } from '../helpers';
 import { ROLE, ROLES } from '../types';
@@ -27,13 +27,9 @@ export const setRoomCreeps
   )(cs);
 
 export const roomCreepSpawner
-= (room: Room) =>
-  tryCatch(
-    pipe(
-      () => keys(ROLES),
-      find(role => (room.memory[role] || 0) < amountCreeps[role]),
-      assertThrow,
-      makeCreep(assertThrow(findSpawn(room))),
-    ),
-    console.log,
-  )();
+= (room: Room) => pipe(
+  () => keys(ROLES),
+  find(role => (room.memory[role] || 0) < amountCreeps[role]),
+  assertThrow,
+  makeCreep(assertThrow(findSpawn(room))),
+)();

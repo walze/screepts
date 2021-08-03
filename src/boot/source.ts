@@ -1,7 +1,7 @@
 import { countHarvestable, countObjectEntries } from '../helpers';
 
 export const setMaxCreepPerSource = () => {
-  // Refactor this
+  // Refactor this ?
   for (const key in Game.rooms) if (Object.prototype.hasOwnProperty.call(Game.rooms, key)) {
     const room = Game.rooms[key] as Room;
     if (room.memory.sources) return;

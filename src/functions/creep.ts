@@ -1,5 +1,5 @@
 
-import { filter, flatten, lt, reduce, repeat } from 'ramda';
+import { filter, flatten, reduce, repeat } from 'ramda';
 import { countCreepsUsingSource, maxCreepsPerSource } from '../boot/source';
 import { ERR_NO_TASK, ReturnCode, STORE_STRUCTURES } from '../consts';
 import { ROLE, ROLES } from '../types';
@@ -49,8 +49,10 @@ export const runCreep: (c: Creep) => ReturnCode
     const { room } = creep;
 
     const [source] = room.find(FIND_SOURCES, {
-      filter: s => lt(countCreepsUsingSource(s))(maxCreepsPerSource(s)),
+      filter: s => countCreepsUsingSource(s) < maxCreepsPerSource(s),
     });
+
+    console.log(creep.id, source?.id);
 
     const [storable] = room.find(FIND_MY_STRUCTURES, {
       filter: s => STORE_STRUCTURES.some(ss => s.structureType === ss),

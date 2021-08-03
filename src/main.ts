@@ -1,4 +1,4 @@
-import { ap } from 'ramda';
+import { ap, tryCatch } from 'ramda';
 import { setMaxCreepPerSource } from './boot/source';
 import { runCreep } from './functions/creep';
 import { roomCreepSpawner, setRoomCreeps } from './functions/room';
@@ -22,11 +22,13 @@ export const loop = () => {
   ], rooms);
 
   console.log(
-    '------------------------',
+    '------------------------z',
   );
 };
 
-module.exports = { loop };
+module.exports = {
+  loop: tryCatch(loop, e => console.log('Loop error:', e)),
+};
 
 // Harvest if
 // current < total
