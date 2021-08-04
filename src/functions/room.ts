@@ -5,8 +5,8 @@ import { ROLE, ROLES } from '../types';
 
 const amountCreeps: { [key in ROLES]: number }
   = {
-    [ROLES.HAVESTER]: 6,
-    [ROLES.BUILDER]: 4,
+    [ROLES.HAVESTER]: 4,
+    [ROLES.BUILDER]: 3,
     [ROLES.UPGRADER]: 1,
     [ROLES.HEALER]: 0,
     [ROLES.FIGHTER]: 0,

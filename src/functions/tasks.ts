@@ -49,14 +49,17 @@ export const harvest = (s: Harvestable) => makeTask(
 
     return c.harvest(s);
   }, s),
-  removeCreep2Source(),
 )(
   c => c.store.getFreeCapacity() > 0 ? OK : ERR_FULL,
 );
 
 export const transfer = (storable: AnyCreep | AnyStoreStructure) => makeTask(
   'transfer',
-  movable(c => c.transfer(storable, RESOURCE_ENERGY), storable))(
+  movable(c => {
+    removeCreep2Source(c);
+
+    return c.transfer(storable, RESOURCE_ENERGY);
+  }, storable))(
   c => c.store.getUsedCapacity() > 0 || (storable.store.getFreeCapacity() || 0) > 0 ? OK : ERR_FULL,
 );
 

@@ -46,3 +46,12 @@ export const countHarvestable = pipe(
   length,
 );
 
+export const findLast = <T>(predicate: (value: T, index: number, obj: T[]) => boolean) => (array: T[]) => {
+  let l = array.length;
+
+  while (l--)
+    if (predicate(array[l]!, l, array))
+      return array[l];
+
+  return null;
+};

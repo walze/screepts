@@ -48,11 +48,9 @@ export const runCreep: (c: Creep) => ReturnCode
 
     const { room } = creep;
 
-    const [source] = room.find(FIND_SOURCES, {
-      filter: s => countCreepsUsingSource(s) < maxCreepsPerSource(s),
-    });
-
-    console.log(creep.id, source?.id);
+    const sources = room.find(FIND_SOURCES);
+    const source = sources.find(s => room.memory.sources[s.id]?.creeps[creep.id])
+      || sources.find(s => countCreepsUsingSource(s) < maxCreepsPerSource(s));
 
     const [storable] = room.find(FIND_MY_STRUCTURES, {
       filter: s => STORE_STRUCTURES.some(ss => s.structureType === ss),

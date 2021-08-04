@@ -25,7 +25,7 @@ export const makeTask
           const doCode = testConditions() || task(creep);
           const code = doCode === OK ? doCode : (tasknt(creep, doCode) || doCode);
 
-          if (code === OK)
+          if (code === OK && (Game.time % 3 === 0))
             creep.say(`${name}`);
 
           // Side-effects
