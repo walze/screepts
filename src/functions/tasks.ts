@@ -44,8 +44,7 @@ export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
 export const harvest = (s: Harvestable) => makeTask(
   'harvest',
   movable(c => {
-    if (c.memory.task.name !== 'harvest')
-      addCreep2Source(s)(c);
+    addCreep2Source(s)(c);
 
     return c.harvest(s);
   }, s),

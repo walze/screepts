@@ -58,6 +58,12 @@ export const runCreep: (c: Creep) => ReturnCode
 
     const [construction] = room.find(FIND_CONSTRUCTION_SITES);
 
+    // Fix this
+    if (!source) {
+      console.log('no source');
+      return ERR_NO_TASK;
+    }
+
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
       return runTasks([
