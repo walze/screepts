@@ -13,7 +13,7 @@ export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
 
     if (!ct) {
       c.memory.task.id = 0;
-      console.log('can not run task', c.memory.task.id, id);
+      console.log('can not run task', c.name);
       return ERR_NO_TASK;
     }
 

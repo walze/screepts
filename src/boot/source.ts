@@ -1,3 +1,4 @@
+import { add } from 'ramda';
 import { countHarvestable, countObjectEntries } from '../helpers';
 
 export const setMaxCreepPerSource = () => {
@@ -7,12 +8,16 @@ export const setMaxCreepPerSource = () => {
     if (room.memory.sources) return;
 
     const sources = room?.find(FIND_SOURCES);
+    const maxCreepsPerSource = sources.map(countHarvestable);
 
-    room.memory.sources = {};
-    sources.map(s => (
+    room.memory.sources = {} as typeof room.memory.sources;
+
+    room.memory.sources.maxCreeps = maxCreepsPerSource.reduce(add, 0);
+
+    sources.map((s, i) => (
       room.memory.sources[s.id] = {
         creeps: {},
-        total: countHarvestable(s),
+        total: maxCreepsPerSource[i]!,
       }
     ));
   }

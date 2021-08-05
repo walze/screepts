@@ -19,7 +19,7 @@ export const loop = () => {
   );
 
   ap([
-    tryCatch(roomCreepSpawner, console.log),
+    roomCreepSpawner,
     setRoomCreeps(creeps),
   ], rooms);
 
@@ -32,6 +32,3 @@ export const loop = () => {
 module.exports = {
   loop: tryCatch(loop, (e: Error) => console.log(`${e.stack}\n`, `${e}`)),
 };
-
-// Harvest if
-// current < total

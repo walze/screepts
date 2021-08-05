@@ -47,6 +47,8 @@ declare global {
         creeps: IndexedObject<Creep>
         total: number
       }
+    } & {
+      maxCreeps: number,
     }
   }
   interface SpawnMemory { }

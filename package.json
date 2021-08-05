@@ -32,6 +32,7 @@
     "grunt-screeps": "^1.5.0",
     "ramda": "^0.27.1",
     "rxjs": "^7.3.0",
+    "source-map": "^0.6.1",
     "ts-loader": "^9.2.5",
     "ts-toolbelt": "^9.6.0",
     "tslint": "^5.20.1",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
+    "@types/lodash": "^4.14.172",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
     "eslint": "^7.32.0",

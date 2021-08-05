@@ -3,10 +3,10 @@ import { getCreeps, makeCreep } from './creep';
 import { assertThrow } from '../helpers';
 import { ROLE, ROLES } from '../types';
 
-const amountCreeps: { [key in ROLES]: number }
-  = {
+const amountCreeps: (r: Room) => { [key in ROLES]: number }
+  = r => ({
     // Sum of all max creeps per source of all sources!
-    [ROLES.HAVESTER]: 4,
+    [ROLES.HAVESTER]: r.memory.sources.maxCreeps,
 
     // One per source?
     [ROLES.BUILDER]: 3,
@@ -17,7 +17,7 @@ const amountCreeps: { [key in ROLES]: number }
     // One or two per squad
     [ROLES.HEALER]: 0,
     [ROLES.FIGHTER]: 0,
-  };
+  });
 
 export const findSpawn = (room: Room) =>
   room.find(FIND_MY_SPAWNS, { filter: { spawning: null } })[0];
@@ -36,7 +36,7 @@ export const setRoomCreeps
 export const roomCreepSpawner
 = (room: Room) => pipe(
   () => keys(ROLES),
-  find(role => (room.memory[role] || 0) < amountCreeps[role]),
+  find(role => (room.memory[role] || 0) < amountCreeps(room)[role]),
   assertThrow('no role'),
   makeCreep(assertThrow('no spawn')(findSpawn(room))),
 )();
