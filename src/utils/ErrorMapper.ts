@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { SourceMapConsumer } from "source-map";
 
 export class ErrorMapper {
@@ -27,10 +29,9 @@ export class ErrorMapper {
   public static sourceMappedStackTrace(error: Error | string): string {
     const stack: string = error instanceof Error ? (error.stack as string) : error;
     if (Object.prototype.hasOwnProperty.call(this.cache, stack)) {
-      return this.cache[stack];
+      return this.cache[stack]!;
     }
 
-    // eslint-disable-next-line no-useless-escape
     const re = /^\s+at\s+(.+?\s+)?\(?([0-z._\-\\\/]+):(\d+):(\d+)\)?$/gm;
     let match: RegExpExecArray | null;
     let outStack = error.toString();
@@ -38,8 +39,8 @@ export class ErrorMapper {
     while ((match = re.exec(stack))) {
       if (match[2] === "main") {
         const pos = this.consumer.originalPositionFor({
-          column: parseInt(match[4], 10),
-          line: parseInt(match[3], 10)
+          column: parseInt(match[4]!, 10),
+          line: parseInt(match[3]!, 10)
         });
 
         if (pos.line != null) {
@@ -76,9 +77,9 @@ export class ErrorMapper {
         if (e instanceof Error) {
           if ("sim" in Game.rooms) {
             const message = `Source maps don't work in the simulator - displaying original error`;
-            console.log(`<span style='color:red'>${message}<br>${_.escape(e.stack)}</span>`);
+            console.log(`<span style='color:red'>${message}<br>${escape(e.stack!)}</span>`);
           } else {
-            console.log(`<span style='color:red'>${_.escape(this.sourceMappedStackTrace(e))}</span>`);
+            console.log(`<span style='color:red'>${escape(this.sourceMappedStackTrace(e))}</span>`);
           }
         } else {
           // can't handle it
