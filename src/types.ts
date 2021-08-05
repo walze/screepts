@@ -42,13 +42,12 @@ declare global {
   interface FlagMemory { }
   interface PowerCreepMemory { }
   interface RoomMemory extends RoomCreeps {
+    maxCreepsHarvesting: number
     sources: {
       [k: string]: {
         creeps: IndexedObject<Creep>
         total: number
       }
-    } & {
-      maxCreeps: number,
     }
   }
   interface SpawnMemory { }

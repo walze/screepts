@@ -37,6 +37,7 @@
     "grunt": "^1.4.1",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-screeps": "^1.5.0",
+    "lodash": "^4.17.21",
     "ramda": "^0.27.1",
     "rollup": "^2.56.0",
     "rxjs": "^7.3.0",

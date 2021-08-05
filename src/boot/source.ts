@@ -12,7 +12,7 @@ export const setMaxCreepPerSource = () => {
 
     room.memory.sources = {} as typeof room.memory.sources;
 
-    room.memory.sources.maxCreeps = maxCreepsPerSource.reduce(add, 0);
+    room.memory.maxCreepsHarvesting = maxCreepsPerSource.reduce(add, 0);
 
     sources.map((s, i) => (
       room.memory.sources[s.id] = {
@@ -29,8 +29,9 @@ export const addCreep2Source
 // Hacky?
 export const removeCreep2Source
     = (c: Creep) => {
-      for (const key in c.room.memory.sources) if (Object.prototype.hasOwnProperty.call(c.room.memory.sources, key))
-        delete c.room.memory.sources[key]?.creeps[c.id];
+      for (const key in c.room.memory.sources)
+        if (Object.prototype.hasOwnProperty.call(c.room.memory.sources, key))
+          delete c.room.memory.sources[key]?.creeps[c.id];
     };
 
 export const countCreepsUsingSource
