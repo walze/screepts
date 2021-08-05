@@ -1,6 +1,12 @@
-export type ReturnCode = ScreepsReturnCode
-  | typeof ERR_NO_TASK
+declare global {
 
+  type ReturnCode = ScreepsReturnCode
+    | typeof ERR_NO_TASK
+    | typeof ERR_NEW_BORN
+
+  }
+
+export const ERR_NEW_BORN = -998;
 export const ERR_NO_TASK = -999;
 
 export const STORE_STRUCTURES: AnyStoreStructure['structureType'][]

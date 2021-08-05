@@ -1,5 +1,3 @@
-import { ReturnCode } from './consts';
-
 export enum ROLES {
   HAVESTER = 'HAVESTER',
   BUILDER = 'BUILDER',

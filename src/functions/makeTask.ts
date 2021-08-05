@@ -1,5 +1,4 @@
 import { applyTo, gt, pipeWith, PipeWithFns } from 'ramda';
-import { ReturnCode } from '../consts';
 import { CreepTask, CreepTaskResult, Tasks } from '../types';
 
 export const taskBind = (...fns: CreepTask[]) => pipeWith(
@@ -16,14 +15,14 @@ export const makeTask
     task: (c: Creep) => ReturnCode,
     tasknt: (c: Creep, r: ReturnCode) => ReturnCode | void = defaultDontTask,
   ) =>
-      (...conditions: Array<(c: Creep) => ReturnCode>) =>
+      (...conditions: ((c: Creep) => ReturnCode)[]) =>
         (creep: Creep): CreepTaskResult => {
           const testConditions = () => conditions
             .map(applyTo(creep))
             .find(gt(0));
 
-          const doCode = testConditions() || task(creep);
-          const code = doCode === OK ? doCode : (tasknt(creep, doCode) || doCode);
+          const taskCode = testConditions() || task(creep);
+          const code = taskCode === OK ? taskCode : (tasknt(creep, taskCode) || taskCode);
 
           if (code === OK && (Game.time % 3 === 0))
             creep.say(`${name}`);

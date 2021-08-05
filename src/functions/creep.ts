@@ -1,7 +1,7 @@
 
 import { filter, flatten, reduce, repeat } from 'ramda';
 import { countCreepsUsingSource, maxCreepsPerSource } from '../boot/source';
-import { ERR_NO_TASK, ReturnCode, STORE_STRUCTURES } from '../consts';
+import { ERR_NEW_BORN, ERR_NO_TASK, STORE_STRUCTURES } from '../consts';
 import { ROLE, ROLES } from '../types';
 import { build, harvest, transfer, withdraw, runTasks, upgradeController } from './tasks';
 
@@ -22,7 +22,7 @@ export const makeCreep
         memory: {
           role,
           task: {
-            code: ERR_NO_TASK,
+            code: ERR_NEW_BORN,
             name: '',
             id: 0,
             repeating: false,

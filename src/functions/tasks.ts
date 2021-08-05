@@ -1,6 +1,6 @@
 
 import { addCreep2Source, removeCreep2Source } from '../boot/source';
-import { ERR_NO_TASK, ReturnCode } from '../consts';
+import { ERR_NO_TASK } from '../consts';
 import { movable } from '../helpers';
 import { CreepTask } from '../types';
 import { makeTask } from './makeTask';
@@ -10,8 +10,10 @@ export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
     const { repeating, id } = c.memory.task;
 
     const ct = ts[id];
+
     if (!ct) {
       c.memory.task.id = 0;
+      console.log('can not run task', c.memory.task.id, id);
       return ERR_NO_TASK;
     }
 

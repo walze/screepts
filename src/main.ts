@@ -1,4 +1,4 @@
-import { ap, identity, tryCatch } from 'ramda';
+import { ap, tryCatch } from 'ramda';
 import { setMaxCreepPerSource } from './boot/source';
 import { runCreep } from './functions/creep';
 import { roomCreepSpawner, setRoomCreeps } from './functions/room';
@@ -14,16 +14,19 @@ export const loop = () => {
   const creeps = Object.values(creepsObj);
   const rooms = Object.values(roomsObj);
 
-  creeps.map(runCreep);
+  console.log(
+    creeps.map(runCreep),
+  );
 
   ap([
-    tryCatch(roomCreepSpawner, identity),
+    tryCatch(roomCreepSpawner, console.log),
     setRoomCreeps(creeps),
   ], rooms);
 
   console.log(
     '---------------------------------------',
   );
+  console.log();
 };
 
 module.exports = {

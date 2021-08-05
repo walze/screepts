@@ -5,9 +5,16 @@ import { ROLE, ROLES } from '../types';
 
 const amountCreeps: { [key in ROLES]: number }
   = {
+    // Sum of all max creeps per source of all sources!
     [ROLES.HAVESTER]: 4,
+
+    // One per source?
     [ROLES.BUILDER]: 3,
+
+    // Start with one and go up exponentially?
     [ROLES.UPGRADER]: 1,
+
+    // One or two per squad
     [ROLES.HEALER]: 0,
     [ROLES.FIGHTER]: 0,
   };

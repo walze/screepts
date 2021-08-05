@@ -1,7 +1,5 @@
 import { filter, flatten, keys, length, map, pipe } from 'ramda';
 
-import { ReturnCode } from './consts';
-
 export const isTrue = <T>(a: T) => Boolean(a) === true;
 
 export const iff = <T, A>(
