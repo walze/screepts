@@ -5,8 +5,8 @@ import { movable } from '../helpers';
 import { CreepTask } from '../types';
 import { makeTask } from './makeTask';
 
-export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
-  = ts => c => {
+export const runTasks: (...ts: CreepTask[]) => (c: Creep) => ReturnCode
+  = (...ts) => c => {
     const { repeating, id } = c.memory.task;
 
     const ct = ts[id];
@@ -27,7 +27,7 @@ export const runTasks: (ts: CreepTask[]) => (c: Creep) => ReturnCode
     c.memory.task.id = repeating ? 0 : id + 1;
     c.memory.task.repeating = false;
 
-    return runTasks(ts)(c);
+    return runTasks(...ts)(c);
   };
 
 export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
@@ -40,7 +40,7 @@ export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
 
     if (code === OK) return code;
 
-    return runTasks(ts.filter((_, _id) => _id !== id))(c);
+    return runTasksFast(ts.filter((_, _id) => _id !== id))(c);
   };
 
 export const harvest = (s: Harvestable) => makeTask(

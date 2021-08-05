@@ -31,3 +31,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
   console.log();
 });
 
+// Creeps say errors on bobble
+
+// HARFVESTERS SCALING //
+// harvesters start with 7 or 8, max slots around spawner
+// after container is build, make more harvesters

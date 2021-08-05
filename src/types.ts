@@ -4,6 +4,7 @@ export enum ROLES {
   UPGRADER = 'UPGRADER',
   HEALER = 'HEALER',
   FIGHTER = 'FIGHTER',
+  RANGER = 'RANGER',
 }
 
 export type ROLE = keyof typeof ROLES

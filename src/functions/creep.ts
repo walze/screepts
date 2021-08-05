@@ -11,6 +11,7 @@ export const roleBodyPartMap: { [key in ROLE]: BodyPartConstant[] } = {
   UPGRADER: [WORK, CARRY, MOVE, MOVE],
   HEALER: [HEAL, HEAL, MOVE, MOVE],
   FIGHTER: [ATTACK, ATTACK, MOVE, MOVE],
+  RANGER: [RANGED_ATTACK, RANGED_ATTACK, MOVE, MOVE],
 };
 
 export const makeCreep
@@ -44,7 +45,7 @@ export const getCreeps = reduce<Creep, CreepsByRole>(
 
 export const runCreep: (c: Creep) => ReturnCode
   = creep => {
-    if (creep.spawning) return ERR_NO_TASK;
+    if (creep.spawning) return ERR_NEW_BORN;
 
     const { room } = creep;
 
@@ -66,26 +67,26 @@ export const runCreep: (c: Creep) => ReturnCode
 
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
-      return runTasks([
+      return runTasks(
         harvest(source!),
         transfer(storable!),
-      ])(creep);
+      )(creep);
 
     case ROLES.BUILDER:
-      return runTasks([
+      return runTasks(
         withdraw(storable!, construction!),
         harvest(source!),
         build(construction!),
         transfer(storable!),
-      ])(creep);
+      )(creep);
 
     case ROLES.UPGRADER:
-      return runTasks([
+      return runTasks(
         withdraw(storable!, construction!),
         harvest(source!),
         upgradeController(room.controller),
         transfer(storable!),
-      ])(creep);
+      )(creep);
 
     default:
       throw new Error('unhandled role');
