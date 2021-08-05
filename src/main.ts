@@ -5,11 +5,13 @@ import { setMaxCreepPerSource } from './boot/source';
 import { runCreep } from './functions/creep';
 import { roomCreepSpawner, setRoomCreeps } from './functions/room';
 
+
 Memory.bootFns = () => {
   setMaxCreepPerSource();
+
 };
 
-Memory.bootFns();
+Memory.bootFns()
 
 
 export const loop = ErrorMapper.wrapLoop(() => {
