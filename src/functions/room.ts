@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-redeclare
 import { find, keys, map, pipe } from 'ramda';
 import { getCreeps, makeCreep } from './creep';
 import { assertThrow } from '../helpers';
@@ -6,10 +7,10 @@ import { ROLE, ROLES } from '../types';
 const amountCreeps: (r: Room) => { [key in ROLES]: number }
   = r => ({
     // Sum of all max creeps per source of all sources!
-    [ROLES.HAVESTER]: r.memory.sources.maxCreeps,
+    [ROLES.HAVESTER]: r.memory.maxCreepsHarvesting,
 
-    // One per source?
-    [ROLES.BUILDER]: 3,
+    // One/2 per source?
+    [ROLES.BUILDER]: 4,
 
     // Start with one and go up exponentially?
     [ROLES.UPGRADER]: 1,

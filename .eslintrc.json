@@ -1,6 +1,7 @@
 {
   "env": {
     "es2021": true,
+    "browser": true,
     "node": true
   },
   "extends": [
@@ -9,21 +10,46 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 12,
+    "ecmaVersion": "latest",
+    "project": "tsconfig.json",
     "sourceType": "module"
   },
   "plugins": [
     "@typescript-eslint"
   ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "rules": {
     "no-undef": "off",
     "no-unused-vars": "off",
-    "indent": ["error", 2],
-    "curly": ["error", "multi"],
-    "object-curly-spacing": ["error", "always"],
-    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "indent": [
+      "error",
+      2
+    ],
+    "curly": [
+      "error",
+      "multi"
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
     "no-return-assign": "off"
-    // "@typescript-eslintno-undef": "error",
-    // "@typescript-eslintno-unused-vars": "error"
   }
 }
