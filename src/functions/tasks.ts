@@ -1,21 +1,26 @@
 
+import { Falsy } from 'rxjs';
 import { addCreep2Source, removeCreep2Source } from '../boot/source';
 import { ERR_NO_TASK } from '../consts';
 import { movable } from '../helpers';
 import { CreepTask } from '../types';
 import { makeTask } from './makeTask';
 
-export const runTasks: (...ts: CreepTask[]) => (c: Creep) => ReturnCode
+//
+export const runTasks: (...ts: (CreepTask | Falsy)[]) => (c: Creep) => ReturnCode
   = (...ts) => c => {
     const { repeating, id } = c.memory.task;
 
     const ct = ts[id];
 
-    if (!ct) {
+    if (id > ts.length) {
       c.memory.task.id = 0;
       console.log('can not run task', c.name);
       return ERR_NO_TASK;
     }
+
+    if (!ct)
+      return ERR_NO_TASK;
 
     const { code } = ct(c);
     if (code === OK) {
@@ -30,6 +35,7 @@ export const runTasks: (...ts: CreepTask[]) => (c: Creep) => ReturnCode
     return runTasks(...ts)(c);
   };
 
+//
 export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
   = ts => c => {
     const [ct] = ts;
@@ -43,27 +49,32 @@ export const runTasksFast: (ts: CreepTask[]) => (c: Creep) => ReturnCode
     return runTasksFast(ts.filter((_, _id) => _id !== id))(c);
   };
 
-export const harvest = (s: Harvestable) => makeTask(
-  'harvest',
-  movable(c => {
-    addCreep2Source(s)(c);
+//
+export const harvest = (s: Harvestable) =>
+  makeTask(
+    'harvest',
+    movable(c => {
+      addCreep2Source(s)(c);
 
-    return c.harvest(s);
-  }, s),
-)(
-  c => c.store.getFreeCapacity() > 0 ? OK : ERR_FULL,
-);
+      return c.harvest(s);
+    }, s),
+  )(
+    c => c.store.getFreeCapacity() > 0 ? OK : ERR_FULL,
+  );
 
-export const transfer = (storable: AnyCreep | AnyStoreStructure) => makeTask(
-  'transfer',
-  movable(c => {
-    removeCreep2Source(c);
+//
+export const transfer = (storable: AnyCreep | AnyStoreStructure) =>
+  makeTask(
+    'transfer',
+    movable(c => {
+      removeCreep2Source(c);
 
-    return c.transfer(storable, RESOURCE_ENERGY);
-  }, storable))(
-  c => c.store.getUsedCapacity() > 0 || (storable.store.getFreeCapacity() || 0) > 0 ? OK : ERR_FULL,
-);
+      return c.transfer(storable, RESOURCE_ENERGY);
+    }, storable))(
+    c => c.store.getUsedCapacity() > 0 || (storable.store.getFreeCapacity() || 0) > 0 ? OK : ERR_FULL,
+  );
 
+//
 export const withdraw = (storable: AnyStoreStructure, cst: Parameters<Creep['build']>[0]) =>
   makeTask(
     'withdraw',
@@ -73,6 +84,7 @@ export const withdraw = (storable: AnyStoreStructure, cst: Parameters<Creep['bui
     _ => storable.store.energy >= storable.store.getCapacity(RESOURCE_ENERGY) ? OK : ERR_NOT_ENOUGH_RESOURCES,
   );
 
+//
 export const build = (cst: Parameters<Creep['build']>[0]) =>
   makeTask(
     'build',
@@ -81,10 +93,10 @@ export const build = (cst: Parameters<Creep['build']>[0]) =>
     _ => cst ? OK : ERR_INVALID_TARGET,
   );
 
-export const upgradeController = (ctrl?: Parameters<Creep['upgradeController']>[0]) =>
+//
+export const upgradeController = (ctrl: Parameters<Creep['upgradeController']>[0]) =>
   makeTask(
     'upgradeController',
-    movable(c => c.upgradeController(ctrl!), ctrl!))(
-    _ => ctrl ? OK : ERR_INVALID_TARGET,
+    movable(c => c.upgradeController(ctrl), ctrl))(
     c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY,
   );
