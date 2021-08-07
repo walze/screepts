@@ -1,7 +1,7 @@
 
 import { Falsy } from 'rxjs';
 import { addCreep2Source, removeCreep2Source } from '../boot/source';
-import { ERR_NO_TASK } from '../consts';
+import { ERR_FINISHED_TASKS, ERR_NO_TASK } from '../consts';
 import { movable } from '../helpers';
 import { CreepTask, CreepTaskResult } from '../types';
 import { makeTask } from './makeTask';
@@ -13,14 +13,15 @@ export const runTasks: (...ts: (CreepTask | Falsy)[]) => (c: Creep) => ReturnCod
 
     const ct = ts[id];
 
-    if (id > ts.length) {
+    if (id >= ts.length) {
       c.memory.task.id = 0;
-      console.log('can not run task', c.name);
-      return ERR_NO_TASK;
+      return ERR_FINISHED_TASKS;
     }
 
-    if (!ct)
+    if (!ct) {
+      console.log('can not run task', c.name, ct, id);
       return ERR_NO_TASK;
+    }
 
     const { code } = ct(c);
     if (code === OK) {
