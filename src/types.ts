@@ -9,7 +9,7 @@ export enum ROLES {
 
 export type ROLE = keyof typeof ROLES
 
-export type CreepTaskResult = {creep: Creep, code: ReturnCode, name: Tasks}
+export type CreepTaskResult = {creep: Creep, code: ReturnCode, name: Tasks, error?: any}
 export type CreepTask = (c: Creep) => CreepTaskResult
 
 export type Tasks = KeysOfType<Creep, (...args: any) => any> | ''

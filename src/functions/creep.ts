@@ -47,7 +47,8 @@ export const runCreep: (c: Creep) => ReturnCode
   = creep => {
     if (creep.spawning) return ERR_NEW_BORN;
 
-    const { room: { controller, ...room } } = creep;
+    const { room } = creep;
+    const { controller } = room;
 
     const sources = room.find(FIND_SOURCES);
     const source = sources.find(s => room.memory.sources[s.id]?.creeps[creep.id])

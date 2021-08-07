@@ -19,4 +19,3 @@ export const runUpgrader = (storable?: AnyStoreStructure, construction?: Constru
   upgradeController(controller),
   transfer(storable),
 );
-
