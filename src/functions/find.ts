@@ -17,4 +17,7 @@ export const findStorable = pipe(
   nth(0),
 );
 
-export const findConstruction = (r: Room) => r.find(FIND_CONSTRUCTION_SITES);
+export const findConstruction = pipe(
+  (r: Room) => r.find(FIND_CONSTRUCTION_SITES),
+  nth(0),
+);

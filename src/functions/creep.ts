@@ -1,7 +1,6 @@
 
 import { filter, flatten, reduce, repeat } from 'ramda';
-import { countCreepsUsingSource, maxCreepsPerSource } from '../boot/source';
-import { ERR_NEW_BORN, STORE_STRUCTURES } from '../consts';
+import { ERR_NEW_BORN } from '../consts';
 import { ROLE, ROLES } from '../types';
 import { runBuilder, runHarvester, runUpgrader } from './role';
 
@@ -47,40 +46,15 @@ export const runCreep: (c: Creep) => ReturnCode
   = creep => {
     if (creep.spawning) return ERR_NEW_BORN;
 
-    const { room } = creep;
-    const { controller } = room;
-
-    const sources = room.find(FIND_SOURCES);
-    const source = sources.find(s => room.memory.sources[s.id]?.creeps[creep.id])
-      || sources.find(s => countCreepsUsingSource(s) < maxCreepsPerSource(s));
-
-    const [storable] = room.find(FIND_MY_STRUCTURES, {
-      filter: s => STORE_STRUCTURES.some(ss => s.structureType === ss),
-    }) as AnyStoreStructure[];
-
-    const [construction] = room.find(FIND_CONSTRUCTION_SITES);
-
     switch (creep.memory.role) {
     case ROLES.HAVESTER:
-      return runHarvester(
-        source,
-        storable,
-      )(creep);
+      return runHarvester(creep);
 
     case ROLES.BUILDER:
-      return runBuilder(
-        storable,
-        construction,
-        source,
-      )(creep);
+      return runBuilder(creep);
 
     case ROLES.UPGRADER:
-      return runUpgrader(
-        storable,
-        construction,
-        source,
-        controller,
-      )(creep);
+      return runUpgrader(creep);
 
     default:
       throw new Error('unhandled role');
