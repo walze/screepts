@@ -14,8 +14,9 @@ export const roleBodyPartMap: { [key in ROLE]: BodyPartConstant[] } = {
 };
 
 export const makeCreep
-  = (s: StructureSpawn) =>
-    (role: ROLE, multiply = 1) => s.spawnCreep(
+= (role: ROLE, multiply = 1) =>
+  (s: StructureSpawn) =>
+    s.spawnCreep(
       flatten(repeat(roleBodyPartMap[role], multiply)),
       `${role}_${Date.now()}__${Math.random()}`,
       {
