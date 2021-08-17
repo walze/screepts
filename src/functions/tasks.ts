@@ -83,7 +83,7 @@ export const transfer = validate((storable: AnyCreep | AnyStoreStructure) =>
   ));
 
 //
-export const withdraw = validate((storable:AnyStoreStructure, cst: Parameters<Creep['build']>[0]) => makeTask(
+export const withdraw = validate((storable: AnyStoreStructure, cst: Parameters<Creep['build']>[0]) => makeTask(
   'withdraw',
   movable(c => c.withdraw(storable, RESOURCE_ENERGY), storable))(
   _ => cst ? OK : ERR_INVALID_TARGET,
