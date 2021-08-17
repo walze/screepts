@@ -12,20 +12,17 @@ Memory.bootFns = () => {
 Memory.bootFns();
 
 export const loop = ErrorMapper.wrapLoop(() => {
-  console.log(1);
-
   const { creeps: creepsObj, rooms: roomsObj } = Game;
   const creeps = Object.values(creepsObj);
   const rooms = Object.values(roomsObj);
 
   console.log(
     creeps.map(runCreep),
+    ap([
+      roomCreepSpawner,
+      setRoomCreeps(creeps),
+    ], rooms),
   );
-
-  ap([
-    roomCreepSpawner,
-    setRoomCreeps(creeps),
-  ], rooms);
 
   console.log(
     '---------------------------------------',

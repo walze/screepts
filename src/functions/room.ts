@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-redeclare
 import { find, keys, map, pipe } from 'ramda';
 import { getCreeps, makeCreep } from './creep';
-import { assertThrow, pipeCircuit } from '../helpers';
+import { assertThrow } from '../helpers';
 import { ROLE, ROLES } from '../types';
 
 const amountCreeps: (r: Room) => { [key in ROLES]: number }
@@ -40,12 +40,12 @@ export const setRoomCreeps
   )(cs);
 
 export const roomCreepSpawner
-= (room: Room) => pipeCircuit(console.log)(
+= (room: Room) => pipe(
   find((role: ROLE) => (room.memory[role] || 0) < amountCreeps(room)[role]),
-  assertThrow(),
+  assertThrow('no role to spawn'),
   r => pipe(
     findSpawn,
-    assertThrow(),
+    assertThrow('no spawn available'),
     makeCreep(r),
   )(room),
 )(keys(ROLES));

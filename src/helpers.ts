@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-redeclare
-import { filter, flatten, keys, length, map, pipe, tryCatch } from 'ramda';
+import { filter, flatten, keys, length, map, pipe } from 'ramda';
 
 export const isTrue = <T>(a: T) => Boolean(a) === true;
 
@@ -20,9 +20,6 @@ export const assertThrow = (message = '') => <T>(t: T) => {
   if (t) return t as NonNullable<T>;
   throw new Error(message);
 };
-
-export const pipeCircuit: <C>(catcher: (e: Error) => C) => typeof pipe
-= catcher => flip(tryCatch)(catcher as any);
 
 export const ifCODE = (err: ReturnCode) => (r: ReturnCode) => r === err ? r : undefined;
 export const ifOK = ifCODE(OK);
