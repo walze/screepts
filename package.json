@@ -41,7 +41,7 @@
     "ramda": "^0.27.1",
     "rollup": "^2.56.2",
     "rxjs": "^7.3.0",
-    "source-map": "0.6.1",
+    "source-map": "0.7.3",
     "ts-loader": "^9.2.5",
     "ts-toolbelt": "^9.6.0",
     "tslint": "^5.20.1",

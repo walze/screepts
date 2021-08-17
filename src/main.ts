@@ -1,5 +1,6 @@
 
 import { ap } from 'ramda';
+import { ErrorMapper } from 'utils/ErrorMapper';
 import { setMaxCreepPerSource } from './boot/source';
 import { runCreep } from './functions/creep';
 import { roomCreepSpawner, setRoomCreeps } from './functions/room';
@@ -10,7 +11,7 @@ Memory.bootFns = () => {
 
 Memory.bootFns();
 
-export const loop = (() => {
+export const loop = ErrorMapper.wrapLoop(() => {
   console.log(1);
 
   const { creeps: creepsObj, rooms: roomsObj } = Game;
