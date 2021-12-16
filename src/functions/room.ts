@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-redeclare
 import { find, keys, map, pipe } from 'ramda';
 import { getCreeps, makeCreep } from './creep';
 import { assertThrow } from '../helpers';
@@ -36,7 +35,7 @@ export const setRoomCreeps
     map(([s, _cs]) => {
       room.memory[s as ROLE] = _cs.length;
     }),
-    () => {},
+    () => undefined,
   )(cs);
 
 export const roomCreepSpawner

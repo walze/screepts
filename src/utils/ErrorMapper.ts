@@ -7,12 +7,9 @@ export class ErrorMapper {
   // Cache consumer
   private static _consumer?: SourceMapConsumer;
 
-  public static get consumer(): SourceMapConsumer {
-    if (this._consumer == null) {
-      this._consumer = new SourceMapConsumer(require("main.js.map"));
-    }
-
-    return this._consumer;
+  public static get consumer(): Promise<SourceMapConsumer> {
+    return Promise.resolve()
+    .then(() => ErrorMapper._consumer || new SourceMapConsumer(require("main.js.map")))
   }
 
   // Cache previously mapped traces to improve performance
@@ -27,7 +24,7 @@ export class ErrorMapper {
    * @param {Error | string} error The error or original stack trace
    * @returns {string} The source-mapped stack trace
    */
-  public static sourceMappedStackTrace(error: Error | string): string {
+  public static async sourceMappedStackTrace(error: Error | string): Promise<string> {
     const stack: string = error instanceof Error ? (error.stack as string) : error;
     if (Object.prototype.hasOwnProperty.call(this.cache, stack)) {
       return this.cache[stack]!;
@@ -36,10 +33,11 @@ export class ErrorMapper {
     const re = /^\s+at\s+(.+?\s+)?\(?([0-z._\-\\\/]+):(\d+):(\d+)\)?$/gm;
     let match: RegExpExecArray | null;
     let outStack = error.toString();
+    const consumer = await this.consumer
 
     while ((match = re.exec(stack))) {
       if (match[2] === "main") {
-        const pos = this.consumer.originalPositionFor({
+        const pos = consumer.originalPositionFor({
           column: parseInt(match[4]!, 10),
           line: parseInt(match[3]!, 10)
         });
@@ -80,7 +78,9 @@ export class ErrorMapper {
             const message = `Source maps don't work in the simulator - displaying original error`;
             console.log(`<span style='color: tomato'>\n${message}<br>\n\n${escape(e.stack!)}\n</span>`);
           } else {
-            console.log(`<span style='color: tomato'>\n<br>${escape(this.sourceMappedStackTrace(e))}\n</span>`);
+            this.sourceMappedStackTrace(e).then(s => {
+              console.log(`<span style='color: tomato'>\n<br>${escape(s)}\n</span>`);
+            })
           }
         } else {
           // can't handle it

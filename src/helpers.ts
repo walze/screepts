@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-redeclare
 import { filter, flatten, keys, length, map, pipe } from 'ramda';
 
 export const isTrue = <T>(a: T) => Boolean(a) === true;

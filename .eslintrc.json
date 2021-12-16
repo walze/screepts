@@ -4,25 +4,17 @@
     "browser": true,
     "node": true
   },
-  "extends": [
-    "eslint:recommended",
-    "xo"
-  ],
+  "extends": ["eslint:recommended", "xo"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint"],
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
       "typescript": {}
@@ -31,18 +23,9 @@
   "rules": {
     "no-undef": "off",
     "no-unused-vars": "off",
-    "indent": [
-      "error",
-      2
-    ],
-    "curly": [
-      "error",
-      "multi"
-    ],
-    "object-curly-spacing": [
-      "error",
-      "always"
-    ],
+    "indent": ["error", 2],
+    "curly": ["error", "multi"],
+    "object-curly-spacing": ["error", "always"],
     "brace-style": [
       "error",
       "1tbs",
