@@ -4,10 +4,10 @@ import { nth, pipe } from 'ramda';
 
 export const findSource = (creepId: string) => (r: Room) => {
   const sources = r.find(FIND_SOURCES);
-  const source = sources.find(s => r.memory.sources[s.id]?.creeps[creepId])
-  || sources.find(s => countCreepsUsingSource(s) < maxCreepsPerSource(s));
 
-  return source;
+  return sources
+    .find(s => r.memory.sources[s.id]?.creeps[creepId])
+      || sources.find(s => countCreepsUsingSource(s) < maxCreepsPerSource(s));
 };
 
 export const findStorable = pipe(

@@ -1,11 +1,11 @@
-import { applyTo, gt, pipeWith, PipeWithFns } from 'ramda';
+import { applyTo, AtLeastOneFunctionsFlow, gt, pipeWith } from 'ramda';
 import { CreepTask, CreepTaskResult, Tasks } from '../types';
 
 export const taskBind = (...fns: CreepTask[]) => pipeWith(
   (f: CreepTask, { code, creep, name }: CreepTaskResult) => code === OK
     ? { code, creep, name }
     : f(creep),
-)(fns as PipeWithFns<CreepTaskResult, CreepTaskResult>);
+)(fns as AtLeastOneFunctionsFlow<[Creep], CreepTaskResult>);
 
 const defaultDontTask = (_: Creep, r: ReturnCode) => r;
 
@@ -30,8 +30,7 @@ export const makeTask
           // Side-effects
           creep.memory.task.name = name;
           creep.memory.task.code = code;
-          // Console.log(`${creep.name} task -> ${name} | ${code}`);
+          // ${creep.name} task -> ${name} | ${code}
 
           return { creep, code, name };
         };
-

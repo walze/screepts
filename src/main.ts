@@ -1,17 +1,16 @@
 
+import { forEachValue } from 'helpers';
 import { ap } from 'ramda';
-import { ErrorMapper } from 'utils/ErrorMapper';
 import { setMaxCreepPerSource } from './boot/source';
 import { runCreep } from './functions/creep';
 import { roomCreepSpawner, setRoomCreeps } from './functions/room';
 
-Memory.bootFns = () => {
-  setMaxCreepPerSource();
+const bootFns = () => {
+  forEachValue(setMaxCreepPerSource)(Game.rooms);
 };
 
-Memory.bootFns();
-
-export const loop = ErrorMapper.wrapLoop(() => {
+bootFns();
+export const loop = (() => {
   const { creeps: creepsObj, rooms: roomsObj } = Game;
   const creeps = Object.values(creepsObj);
   const rooms = Object.values(roomsObj);
@@ -29,8 +28,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
   );
   console.log();
 });
-
-// Creeps say errors on bobble
 
 // HARFVESTERS SCALING //
 // harvesters start with 7 or 8, max slots around spawner

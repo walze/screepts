@@ -1,37 +1,29 @@
-import { add } from 'ramda';
+import { assoc, dissoc, forEachObjIndexed } from 'ramda';
 import { countHarvestable, countObjectEntries } from '../helpers';
 
-export const setMaxCreepPerSource = () => {
-  // Refactor this ?
-  for (const key in Game.rooms) if (Object.prototype.hasOwnProperty.call(Game.rooms, key)) {
-    const room = Game.rooms[key] as Room;
-    if (room.memory.sources) return;
+export const setMaxCreepPerSource = (room: Room) => {
+  if (room.memory.sources) return console.log('WARNING: trying overriding max CPS starter');
 
-    const sources = room?.find(FIND_SOURCES);
-    const maxCreepsPerSource = sources.map(countHarvestable);
+  const sources = room.find(FIND_SOURCES);
+  const cps = sources.map(countHarvestable);
 
-    room.memory.sources = {} as typeof room.memory.sources;
-
-    room.memory.maxCreepsHarvesting = maxCreepsPerSource.reduce(add, 0);
-
-    sources.map((s, i) => (
-      room.memory.sources[s.id] = {
-        creeps: {},
-        total: maxCreepsPerSource[i]!,
-      }
-    ));
-  }
+  room.memory.sources = sources.reduce((ss, s, i) => ({
+    ...ss,
+    [s.id]: {
+      creeps: {},
+      total: cps[i]!,
+    },
+  }), {});
 };
 
 export const addCreep2Source
-  = (s: Harvestable) => (c: Creep) => c.room.memory.sources[s.id]!.creeps[c.id] = c;
+  = (s: Harvestable) => (c: Creep) =>
+    c.room.memory.sources[s.id]!.creeps = assoc(c.id, c, c.room.memory.sources[s.id]?.creeps);
 
-// Hacky?
 export const removeCreep2Source
     = (c: Creep) => {
-      for (const key in c.room.memory.sources)
-        if (Object.prototype.hasOwnProperty.call(c.room.memory.sources, key))
-          delete c.room.memory.sources[key]?.creeps[c.id];
+      forEachObjIndexed(source =>
+        dissoc(c.id, source.creeps), c.room.memory.sources);
     };
 
 export const countCreepsUsingSource

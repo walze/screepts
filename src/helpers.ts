@@ -53,3 +53,9 @@ export const findLast = <T>(predicate: (value: T, index: number, obj: T[]) => bo
 
   return null;
 };
+
+export const forEachValue = <A>(fn: (a: A[keyof A]) => unknown) => (a: A) => {
+  for (const key in a)
+    if (Object.prototype.hasOwnProperty.call(a, key))
+      fn(a[key]);
+};
