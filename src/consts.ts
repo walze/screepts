@@ -1,17 +1,16 @@
 declare global {
 
   type ReturnCode = ScreepsReturnCode
-    | typeof ERR_NO_TASK
-    | typeof ERR_NEW_BORN
-    | typeof ERR_IDLE
-    | typeof ERR_FINISHED_TASKS
-
+    | -998
+    | -997
+    | -996
+    | -999
   }
 
-export const ERR_NEW_BORN = -998;
-export const ERR_IDLE = -997;
-export const ERR_FINISHED_TASKS = -996;
-export const ERR_NO_TASK = -999;
+export const ERR_NEW_BORN: ReturnCode = -998;
+export const ERR_IDLE: ReturnCode = -997;
+export const ERR_FINISHED_TASKS: ReturnCode = -996;
+export const ERR_NO_TASK: ReturnCode = -999;
 
 export const STORE_STRUCTURES: AnyStoreStructure['structureType'][]
  = [

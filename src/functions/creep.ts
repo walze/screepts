@@ -1,7 +1,8 @@
 
 import { filter, flatten, reduce, repeat } from 'ramda';
 import { ERR_NEW_BORN } from '../consts';
-import { ROLE, ROLES } from '../types';
+import { CreepTaskResult, ROLE, ROLES, subRoles } from '../types';
+import { taskBind } from './makeTask';
 import { runBuilder, runHarvester, runUpgrader } from './role';
 
 export const roleBodyPartMap: { [key in ROLE]: BodyPartConstant[] } = {
@@ -43,22 +44,41 @@ export const getCreeps = reduce<Creep, CreepsByRole>(
   {} as CreepsByRole,
 );
 
-export const runCreep: (c: Creep) => ReturnCode
+const runRole = (r: ROLE) => ({
+  [ROLES.HAVESTER]: (c: Creep) => runHarvester(c),
+  [ROLES.BUILDER]: (c: Creep) => runBuilder(c),
+  [ROLES.UPGRADER]: (c: Creep) => runUpgrader(c),
+
+  [ROLES.FIGHTER]: (c: Creep) => runHarvester(c),
+  [ROLES.RANGER]: (c: Creep) => runHarvester(c),
+  [ROLES.HEALER]: (c: Creep) => runHarvester(c),
+})[r];
+
+export const runCreep: (c: Creep) => CreepTaskResult
   = creep => {
-    if (creep.spawning) return ERR_NEW_BORN;
+    if (creep.spawning) return {
+      creep,
+      code: ERR_NEW_BORN,
+      name: creep.memory.task.name,
+      error: ERR_NEW_BORN,
+    };
 
-    switch (creep.memory.role) {
-    case ROLES.HAVESTER:
-      return runHarvester(creep);
+    const runners = [
+      runRole(creep.memory.role),
+      ...subRoles[creep.memory.role].map(runRole),
+    ];
 
-    case ROLES.BUILDER:
-      return runBuilder(creep);
+    const r = taskBind(...runners)(creep);
 
-    case ROLES.UPGRADER:
-      return runUpgrader(creep);
+    console.log(r.name, r.code, r.error);
 
-    default:
-      throw new Error('unhandled role');
+    if (r.code !== OK) {
+      creep.memory.task.code = 0;
+      creep.memory.task.id = 0;
+      creep.memory.task.name = '';
+      creep.memory.task.repeating = false;
     }
+
+    return r;
   };
 

@@ -6,8 +6,7 @@ import { movable } from '../helpers';
 import { CreepTask, CreepTaskResult } from '../types';
 import { makeTask } from './makeTask';
 
-//
-export const runTasks: (...ts: (CreepTask | Falsy)[]) => (c: Creep) => ReturnCode
+export const runTasks: (...ts: (CreepTask | Falsy)[]) => (c: Creep) => CreepTaskResult
   = (...ts) => c => {
     const { repeating, id } = c.memory.task;
 
@@ -15,19 +14,30 @@ export const runTasks: (...ts: (CreepTask | Falsy)[]) => (c: Creep) => ReturnCod
 
     if (id >= ts.length) {
       c.memory.task.id = 0;
-      return ERR_FINISHED_TASKS;
+      return {
+        creep: c,
+        code: ERR_FINISHED_TASKS,
+        name: c.memory.task.name,
+        error: ERR_FINISHED_TASKS,
+      };
     }
 
     if (!ct) {
       console.log('can not run task', c.name, ct, id);
-      return ERR_NO_TASK;
+      return {
+        creep: c,
+        code: ERR_NO_TASK,
+        name: c.memory.task.name,
+        error: ERR_NO_TASK,
+      };
     }
 
-    const { code } = ct(c);
+    const taskResult = ct(c);
+    const { code } = taskResult;
     if (code === OK) {
       c.memory.task.repeating = true;
 
-      return code;
+      return taskResult;
     }
 
     c.memory.task.id = repeating ? 0 : id + 1;
@@ -57,6 +67,15 @@ export const validate = <T extends any[]>(f: (...ps: [...NonNullable<T>]) => Cre
   return f(...(ps as [...NonNullable<T>]));
 };
 
+const creepCanTransfer
+  = (c: Creep) => c.store.getUsedCapacity() > 0;
+
+export const storableHasCapacity = (storable: AnyCreep | AnyStoreStructure) =>
+  (storable.store.getFreeCapacity(RESOURCE_ENERGY) || 0) > 0;
+
+export const storableIsFull = (storable: AnyCreep | AnyStoreStructure) =>
+  (storable.store.getFreeCapacity(RESOURCE_ENERGY) || 0) < 1;
+
 //
 export const harvest = validate((s: Harvestable) =>
   makeTask(
@@ -67,7 +86,7 @@ export const harvest = validate((s: Harvestable) =>
       return c.harvest(s);
     }, s),
   )(
-    c => c.store.getFreeCapacity() > 0 ? OK : ERR_FULL,
+    c => c.store.getFreeCapacity() > 0 && (c.memory.task.name === 'harvest' || c.memory.task.name === '') ? OK : ERR_FULL,
   ));
 
 //
@@ -76,10 +95,9 @@ export const transfer = validate((storable: AnyCreep | AnyStoreStructure) =>
     'transfer',
     movable(c => {
       removeCreep2Source(c);
-
       return c.transfer(storable, RESOURCE_ENERGY);
     }, storable))(
-    c => c.store.getUsedCapacity() > 0 || (storable.store.getFreeCapacity() || 0) > 0 ? OK : ERR_FULL,
+    c => creepCanTransfer(c) && (storableHasCapacity(storable) && !storableIsFull(storable)) ? OK : ERR_FULL,
   ));
 
 //
@@ -107,3 +125,4 @@ export const upgradeController = validate((ctrl: Parameters<Creep['upgradeContro
     movable(c => c.upgradeController(ctrl), ctrl))(
     c => c.store.getUsedCapacity() > 0 ? OK : ERR_NOT_ENOUGH_ENERGY,
   ));
+

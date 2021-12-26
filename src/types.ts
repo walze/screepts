@@ -8,11 +8,22 @@ export enum ROLES {
   RANGER = 'RANGER',
 }
 
-export type ROLE = keyof typeof ROLES
+export type ROLE = 'HAVESTER' | 'BUILDER' | 'UPGRADER' | 'HEALER' | 'FIGHTER' | 'RANGER'
 
-export type CreepTaskResult = {creep: Creep, code: ReturnCode, name: Tasks, error?: any}
+export const subRoles: { [key in ROLE]: ROLE[] }
+  = {
+    BUILDER: [],
+    FIGHTER: [],
+    HAVESTER: ['BUILDER', 'UPGRADER'],
+    HEALER: [],
+    RANGER: [],
+    UPGRADER: [],
+  };
+
+export type CreepTaskResult = {creep: Creep, code: ReturnCode, name: Tasks | FailTasks, error?: any}
 export type CreepTask = (c: Creep) => CreepTaskResult
 
+export type FailTasks = `fail_${KeysOfType<Creep, (...args: any) => any>}`
 export type Tasks = KeysOfType<Creep, (...args: any) => any> | ''
 
 export type KeysOfType<C, T> = {
@@ -31,7 +42,7 @@ declare global {
   interface CreepMemory {
     role: ROLE
     task: {
-      name: Tasks
+      name: Tasks | FailTasks
       repeating: boolean
       id: number
       code: number

@@ -15,13 +15,17 @@ export const loop = (() => {
   const creeps = Object.values(creepsObj);
   const rooms = Object.values(roomsObj);
 
-  console.log(
-    creeps.map(runCreep),
-    ap([
-      roomCreepSpawner,
-      setRoomCreeps(creeps),
-    ], rooms),
-  );
+  try {
+    console.log(
+      creeps.map(runCreep),
+      ap([
+        roomCreepSpawner,
+        setRoomCreeps(creeps),
+      ], rooms),
+    );
+  } catch (error) {
+    console.log(error);
+  }
 
   console.log(
     '---------------------------------------',
@@ -32,3 +36,5 @@ export const loop = (() => {
 // HARFVESTERS SCALING //
 // harvesters start with 7 or 8, max slots around spawner
 // after container is build, make more harvesters
+
+// TODO: SUBROLES

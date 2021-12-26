@@ -21,7 +21,7 @@ export const runBuilder = (c: Creep) => {
   const construction = findConstruction(room);
 
   return runTasks(
-  // Delete construction?
+  // TODO: Delete construction
     withdraw(storable, construction),
     harvest(source),
     build(construction),
